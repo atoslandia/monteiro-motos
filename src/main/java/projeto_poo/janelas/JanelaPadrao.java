@@ -62,8 +62,8 @@ public class JanelaPadrao extends JFrame{
 	
 	private void botaoPadraoCancelar() {
 		botaoPadraoCancelar = new BotaoPadrao("Clique para cancelar e voltar");
-		botaoPadraoCancelar.setIcon(new ImageIcon("imgs/botao-cancelar.png"));
-		botaoPadraoCancelar.setPressedIcon(new ImageIcon("imgs/botao-cancelarclicado.png"));
+		botaoPadraoCancelar.setIcon(new ImageIcon("imgs/botao-voltar.png"));
+		botaoPadraoCancelar.setPressedIcon(new ImageIcon("imgs/botao-voltarclicado.png"));
 	}
 	
 	private void botaoPadraoConcluir() {
