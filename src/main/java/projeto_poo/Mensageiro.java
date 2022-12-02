@@ -1,5 +1,7 @@
 package projeto_poo;
 
+import java.util.Random;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.SimpleEmail;
 
@@ -23,6 +25,22 @@ public class Mensageiro{
 			simpleEmail.addTo(destinatario.getEmail());
 			simpleEmail.send();
 		} catch (Exception e) {e.printStackTrace();}
+	}
+	
+	public static void enviarHistoricoCorridas(String destinatario) throws Exception {
+		SimpleEmail simpleEmail = new SimpleEmail();
+		simpleEmail.setHostName("smtp.gmail.com");
+		simpleEmail.setSmtpPort(587);
+		simpleEmail.setAuthenticator(new DefaultAuthenticator("projeto.poo.ads@gmail.com", "risagyuofykwmikh"));
+		simpleEmail.setSSLOnConnect(true);
+		simpleEmail.setSubject("Código de segurança");
+		
+		simpleEmail.setFrom("projeto.poo.ads@gmail.com");
+		Random codigo = new Random();
+		String mensagem = "Seu código de segurança: "+codigo.nextInt(1000,9999);
+		simpleEmail.setMsg(mensagem);
+		simpleEmail.addTo(destinatario);
+		simpleEmail.send();
 	}
 
 }

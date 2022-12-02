@@ -7,7 +7,7 @@ public class OuvinteTeclasBloqueadas implements KeyListener{
 	private String teclasEspeciais = "Apenas letras são permitidas";
 	
 	public void keyTyped(KeyEvent e) {
-		char t = e.getKeyChar(); 
+		char t = e.getKeyChar();
 		
 		if(!Character.isLetter(t))
 			e.consume();

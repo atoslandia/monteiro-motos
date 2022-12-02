@@ -11,7 +11,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		new PrimeiroAcesso();
+		new JanelaConfirmarEmail();
 		
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();

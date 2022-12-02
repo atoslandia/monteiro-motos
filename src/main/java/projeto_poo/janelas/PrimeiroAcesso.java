@@ -4,13 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import projeto_poo.ouvintes.OuvinteComponentesPreenchidosDeDados;
+import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
+import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class PrimeiroAcesso extends JanelaPadrao{
 	
@@ -31,6 +36,18 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		setVisible(true);
 	}
 	
+	private JLabel textoNome;
+	private JTextField nome;
+	private JLabel textoSobrenome;
+	private JTextField sobrenome;
+	private JLabel textoEmail;
+	private JTextField email;
+	private JLabel textoSenha;
+	private JPasswordField senha;
+	private JLabel textoSexo;
+	private JRadioButton feminino;
+	private JRadioButton masculino;
+	
 	private void logoPrimeiroAcesso() {
 		JLabel logo = new JLabel(new ImageIcon("imgs/primeiroacesso.png"));
 		logo.setBounds(30, 30, 394, 32);
@@ -47,49 +64,111 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(botaoProsseguir);
 	}
 	
-	
-	
 //	componentes
 	private void caixaNome(){
-		getTextoNome().setBounds(30, 85, 100, 19);
-		getNome().setBounds(140, 85, 200, 20);
+		textoNome = new TextoImagemPadrao("Nome:");
+		textoNome.setBounds(30, 85, 100, 19);
+		add(textoNome);
+		
+		nome = new CaixaTextoPadrao();
+		nome.addKeyListener(getTeclasBloqueadas());
+		nome.setToolTipText(getTeclasBloqueadas().getTeclasEspeciais());
+		nome.setBounds(140, 85, 200, 20);
+		add(nome);
 	}
+	
 	private void caixaSobrenome(){
-		getTextoSobrenome().setBounds(30, 125, 100, 19);
-		getSobrenome().setBounds(140, 125, 200, 20);
+		textoSobrenome = new TextoImagemPadrao("Sobrenome:");
+		textoSobrenome.setBounds(30, 125, 100, 19);
+		add(textoSobrenome);
+		
+		sobrenome = new CaixaTextoPadrao();
+		sobrenome.addKeyListener(getTeclasBloqueadas());
+		sobrenome.setToolTipText(getTeclasBloqueadas().getTeclasEspeciais());
+		sobrenome.setBounds(140, 125, 200, 20);
+		add(sobrenome);
 	}
 	
 	private void caixaEmail() {
-		getTextoEmail().setBounds(30, 165, 100, 19);
-		getEmail().setBounds(140, 165, 200, 20);
+		textoEmail = new JLabel("Email:");
+		textoEmail.setBounds(30, 165, 100, 19);
+		add(textoEmail);
+		
+		email = new CaixaTextoPadrao();
+		email.addKeyListener(getTeclasEspeciais());
+		email.setToolTipText(getTeclasEspeciais().getTeclasEspeciais());
+		email.setBounds(140, 165, 200, 20);
+		add(email);
 	}
 	
 	private void caixaSenha(){
-		getTextoSenha().setBounds(30, 205, 100, 19);
-		getSenha().setBounds(140, 205, 200, 20);
+		textoSenha = new TextoImagemPadrao("Senha:");
+		textoSenha.setBounds(30, 205, 100, 19);
+		add(textoSenha);
+		
+		senha = new CaixaPadraoSenha();
+		senha.addKeyListener(getTeclasEspeciais());
+		senha.setToolTipText(getTeclasEspeciais().getTeclasEspeciais());
+		senha.setBounds(140, 205, 200, 20);
+		add(senha);
 	}
 	
 	private void escolhaSexo() {
-		getTextoSexo().setBounds(30, 245, 100, 19);
-		getFeminino().setBounds(140, 245, 100, 20);
-		getMasculino().setBounds(250, 245, 100, 20);
+		textoSexo = new TextoImagemPadrao("Sexo:");
+		textoSexo.setBounds(30, 245, 100, 19);
+		add(textoSexo);
+		
+		feminino = new OpcaoRadioPadrao("Feminino");
+		feminino.setBounds(140, 245, 100, 20);
+		add(feminino);
+		
+		masculino = new OpcaoRadioPadrao("Masculino");
+		masculino.setBounds(250, 245, 100, 20);
+		add(masculino);
+		
+		ButtonGroup grupo = new ButtonGroup();
+		grupo.getSelection();
+		grupo.add(feminino);
+		grupo.add(masculino);
 	}
 	
-	private class OuvinteBotaoPrimeiroAcesso implements ActionListener{
-
-		public void actionPerformed(ActionEvent e) {
-			//componente.setBorder(BorderFactory.createMatteBorder(1,1,1,1, new Color(231, 110, 84)));
-			System.out.println("ao clicar em prosseguir, primeiro deve"
-							 + "\nverificar se todos os componentes foram"
-							 + "\npreenchidos, se sim, ir para a tela de"
-							 + "\nverificacao do email, e se o codigo estiver"
-							 + "\ncorreto, ir para a tela de login, caso nao"
-							 + "\nestiver, voltar para preencher os dados novamente");
-			
-//			if(!getNome().getText().equals("") && !getEmail().getText().equals("") && ! new String(getSenha().getPassword()).equals("") && getFeminino().isSelected()) 
-//				adm = new Administrador(getNome().getText(), getEmail().getText(), new String(getSenha().getPassword()), Sexo.F);
-//			else if(!getNome().getText().equals("") && !getEmail().getText().equals("") && ! new String(getSenha().getPassword()).equals("") && getMasculino().isSelected())
-//				adm = new Administrador(getNome().getText(), getEmail().getText(), new String(getSenha().getPassword()), Sexo.M);
-		}
+	public JLabel getTextoNome() {
+		return textoNome;
+	}
+	
+	public JTextField getNome() {
+		return nome;
+	}
+	
+	public JLabel getTextoSobrenome() {
+		return textoSobrenome;
+	}
+	
+	public JTextField getSobrenome() {
+		return sobrenome;
+	}
+	
+	public JLabel getTextoEmail() {
+		return textoEmail;
+	}
+	
+	public JTextField getEmail() {
+		return email;
+	}
+	
+	public JLabel getTextoSenha() {
+		return textoSenha;
+	}
+	
+	public JPasswordField getSenha() {
+		return senha;
+	}
+	
+	public JRadioButton getFeminino() {
+		return feminino;
+	}
+	
+	public JRadioButton getMasculino() {
+		return masculino;
 	}
 }

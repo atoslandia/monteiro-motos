@@ -20,13 +20,13 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	}
 	
 	private void logoConfirmarEmail() {
-		JLabel logo = new JLabel(new ImageIcon("imgs/confirmaremail.png"));
+		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/confirmaremail.png"));
 		logo.setBounds(30, 30, 422, 31);
 		add(logo);
 	}
 	
 	private void descricao() {
-		JLabel descricao = new JLabel("Verifique seu e-mail e preencha com o código enviado:");
+		JLabel descricao = new TextoImagemPadrao("Verifique seu e-mail e preencha com o código de segurança recebido:");
 		descricao.setBounds(30, 70, 500, 20);
 		add(descricao);
 	}
