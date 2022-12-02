@@ -13,7 +13,6 @@ public class Programa {
 		
 		new PrimeiroAcesso();
 		
-// consegui acesso		
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();
 //		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("d/M/y");
