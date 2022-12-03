@@ -34,10 +34,8 @@ public class JanelaPadrao extends JFrame{
 		fundoPadrao();
 		
 		/* botoes e imagens*/
-		botaoPadraoProsseguir();
-		botaoPadraoCancelar();
-		botaoPadraoConcluir();
-
+		
+		criarBotoesPadrao();
 		
 		gerarCodigo();
 		
@@ -52,23 +50,12 @@ public class JanelaPadrao extends JFrame{
 	
 	private int codigo;
 
-	private void botaoPadraoProsseguir() {
-		botaoPadraoProsseguir = new BotaoPadrao("Clique para prosseguir");
-		botaoPadraoProsseguir.setIcon(new ImageIcon("imgs/botao-prosseguir.png"));
-		botaoPadraoProsseguir.setPressedIcon(new ImageIcon("imgs/botao-prosseguirclicado.png"));
+	private void criarBotoesPadrao() {
+		botaoPadraoProsseguir = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
+		botaoPadraoVoltar = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
+		botaoPadraoConcluir = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
 	}
 	
-	private void botaoPadraoCancelar() {
-		botaoPadraoVoltar = new BotaoPadrao("Clique para cancelar e voltar");
-		botaoPadraoVoltar.setIcon(new ImageIcon("imgs/botao-voltar.png"));
-		botaoPadraoVoltar.setPressedIcon(new ImageIcon("imgs/botao-voltarclicado.png"));
-	}
-	
-	private void botaoPadraoConcluir() {
-		botaoPadraoConcluir = new BotaoPadrao("Clique para concluir");
-		botaoPadraoConcluir.setIcon(new ImageIcon("imgs/botao-concluir.png"));
-		botaoPadraoConcluir.setPressedIcon(new ImageIcon("imgs/botao-concluirclicado.png"));
-	}
 	
 	private void fundoPadrao() {
 		fundoPadrao = new TextoImagemPadrao(new ImageIcon("imgs/fundo-padrao.png"));

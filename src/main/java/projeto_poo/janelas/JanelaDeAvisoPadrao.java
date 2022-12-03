@@ -33,9 +33,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	}
 	
 	private void botaoVoltarAviso() {
-		botaoProsseguirAviso = new BotaoPadrao("Clique para inserir o e-mail novamente ou no X para fechar o programa");
-		botaoProsseguirAviso.setIcon(new ImageIcon("imgs/botao-voltaraviso.png"));
-		botaoProsseguirAviso.setPressedIcon(new ImageIcon("imgs/botao-voltaravisoclicado.png"));
+		botaoProsseguirAviso = new BotaoPadrao("Clique para inserir o e-mail novamente ou no X para fechar o programa", "imgs/botao-voltaraviso.png","\"imgs/botao-voltaravisoclicado.png\"");
 		botaoProsseguirAviso.setBounds(90, 75, 58, 22);
 		botaoProsseguirAviso.addActionListener(new OuvinteBotaoVoltarAviso());
 		add(botaoProsseguirAviso);

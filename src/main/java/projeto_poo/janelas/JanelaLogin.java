@@ -103,27 +103,20 @@ private void textoSenha() {
 // botoes
 
     private void botaoEntrar() {
-    	botaoEntrar = new BotaoPadrao("Clique para entrar");
-		botaoEntrar.setIcon(new ImageIcon("imgs/botao-entrar.png"));
-		botaoEntrar.setPressedIcon(new ImageIcon("imgs/botao-entrarclicado.png"));
+    	botaoEntrar = new BotaoPadrao("Clique para entrar","imgs/botao-entrar.png","imgs/botao-entrarclicado.png");
         botaoEntrar.setBounds(530, 155, 170, 41);
         add(botaoEntrar);
     }
 
     private void botaoEsqueciSenha() {
-    	
-    	botaoEsqueciSenha = new BotaoPadrao("Clique para redefinir a senha");
-		botaoEsqueciSenha.setIcon(new ImageIcon("imgs/botao-esqueciasenha.png"));
-		botaoEsqueciSenha.setPressedIcon(new ImageIcon("imgs/botao-esqueciasenhaclicado.png"));
+    	botaoEsqueciSenha = new BotaoPadrao("Clique para redefinir a senha", "imgs/botao-esqueciasenha.png","imgs/botao-esqueciasenhaclicado.png");
 		botaoEsqueciSenha.setBounds(530, 215, 170, 26);
         add(botaoEsqueciSenha);
     }
 
     private void botaoCriarConta() {
     	
-		botaoCriarConta = new BotaoPadrao("Clique para redefinir a senha");
-		botaoCriarConta.setIcon(new ImageIcon("imgs/botao-criarconta.png"));
-		botaoCriarConta.setPressedIcon(new ImageIcon("imgs/botao-criarcontaclicado.png"));
+		botaoCriarConta = new BotaoPadrao("Clique para redefinir a senha","imgs/botao-criarconta.png","imgs/botao-criarcontaclicado.png");
 		botaoCriarConta.setBounds(530, 250, 170, 26);
         add(botaoCriarConta);
     }
