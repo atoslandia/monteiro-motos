@@ -13,6 +13,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import projeto_poo.componentes.CaixaPadraoSenha;
+import projeto_poo.componentes.CaixaTextoPadrao;
+import projeto_poo.componentes.OpcaoRadioPadrao;
+import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.ouvintes.OuvinteComponentesPreenchidosDeDados;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
@@ -21,6 +25,10 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	
 	public PrimeiroAcesso() {
 		super("Primeiro acesso");
+		
+		new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", this, false);
+		
+		
 		botaoProsseguir();
 		
 		caixaNome();
@@ -48,6 +56,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	private JRadioButton feminino;
 	private JRadioButton masculino;
 	
+	private JanelaDeAvisoPadrao janelaDeAviso = new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", this, false);
+	
 	private void logoPrimeiroAcesso() {
 		JLabel logo = new JLabel(new ImageIcon("imgs/primeiroacesso.png"));
 		logo.setBounds(30, 30, 394, 32);
@@ -71,8 +81,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(textoNome);
 		
 		nome = new CaixaTextoPadrao();
-		nome.addKeyListener(getTeclasBloqueadas());
-		nome.setToolTipText(getTeclasBloqueadas().getTeclasEspeciais());
+		nome.addKeyListener(new OuvinteTeclasBloqueadas());
+		nome.setToolTipText(new OuvinteTeclasBloqueadas().getTeclasEspeciais());
 		nome.setBounds(140, 85, 200, 20);
 		add(nome);
 	}
@@ -83,8 +93,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(textoSobrenome);
 		
 		sobrenome = new CaixaTextoPadrao();
-		sobrenome.addKeyListener(getTeclasBloqueadas());
-		sobrenome.setToolTipText(getTeclasBloqueadas().getTeclasEspeciais());
+		sobrenome.addKeyListener(new OuvinteTeclasBloqueadas());
+		sobrenome.setToolTipText(new OuvinteTeclasBloqueadas().getTeclasEspeciais());
 		sobrenome.setBounds(140, 125, 200, 20);
 		add(sobrenome);
 	}
@@ -95,8 +105,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(textoEmail);
 		
 		email = new CaixaTextoPadrao();
-		email.addKeyListener(getTeclasEspeciais());
-		email.setToolTipText(getTeclasEspeciais().getTeclasEspeciais());
+		email.addKeyListener(new OuvinteTeclasEspeciais());
+		email.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
 		email.setBounds(140, 165, 200, 20);
 		add(email);
 	}
@@ -107,8 +117,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(textoSenha);
 		
 		senha = new CaixaPadraoSenha();
-		senha.addKeyListener(getTeclasEspeciais());
-		senha.setToolTipText(getTeclasEspeciais().getTeclasEspeciais());
+		senha.addKeyListener(new OuvinteTeclasEspeciais());
+		senha.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
 		senha.setBounds(140, 205, 200, 20);
 		add(senha);
 	}
@@ -170,5 +180,9 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	
 	public JRadioButton getMasculino() {
 		return masculino;
+	}
+
+	public JanelaDeAvisoPadrao getJanelaDeAviso() {
+		return janelaDeAviso;
 	}
 }

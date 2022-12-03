@@ -13,6 +13,7 @@ import javax.swing.plaf.BorderUIResource;
 
 import projeto_poo.Mensageiro;
 import projeto_poo.janelas.JanelaConfirmarEmail;
+import projeto_poo.janelas.JanelaDeAvisoPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.janelas.PrimeiroAcesso;
 
@@ -53,13 +54,12 @@ public class OuvinteComponentesPreenchidosDeDados implements ActionListener{
 		}
 		
 		if(!janela.getNome().getText().equals("") && !janela.getSobrenome().getText().equals("") && !janela.getEmail().getText().equals("") && !new String(janela.getSenha().getPassword()).equals("") && new String(janela.getSenha().getPassword()).length() > 3 && (janela.getFeminino().isSelected() | janela.getMasculino().isSelected())) {
-			
 			try {
-				Mensageiro.enviarHistoricoCorridas(janela.getEmail().getText());
+				Mensageiro.enviarHistoricoCorridas(janela.getEmail().getText(), janela.getCodigo());
 				janela.setVisible(false);
 				new JanelaConfirmarEmail();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				janela.getJanelaDeAviso().setVisible(true);
 			}
 			
 		}

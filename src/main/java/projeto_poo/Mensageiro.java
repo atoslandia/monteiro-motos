@@ -27,7 +27,7 @@ public class Mensageiro{
 		} catch (Exception e) {e.printStackTrace();}
 	}
 	
-	public static void enviarHistoricoCorridas(String destinatario) throws Exception {
+	public static void enviarHistoricoCorridas(String destinatario, int codigo) throws Exception {
 		SimpleEmail simpleEmail = new SimpleEmail();
 		simpleEmail.setHostName("smtp.gmail.com");
 		simpleEmail.setSmtpPort(587);
@@ -36,8 +36,7 @@ public class Mensageiro{
 		simpleEmail.setSubject("Código de segurança");
 		
 		simpleEmail.setFrom("projeto.poo.ads@gmail.com");
-		Random codigo = new Random();
-		String mensagem = "Seu código de segurança: "+codigo.nextInt(1000,9999);
+		String mensagem = "Seu código de segurança: "+codigo;
 		simpleEmail.setMsg(mensagem);
 		simpleEmail.addTo(destinatario);
 		simpleEmail.send();

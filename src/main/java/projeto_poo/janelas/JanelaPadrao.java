@@ -1,32 +1,21 @@
 package projeto_poo.janelas;
 
 import java.awt.Font;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
+import projeto_poo.componentes.BotaoPadrao;
+import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 
 public class JanelaPadrao extends JFrame{
 	
-	private OuvinteTeclasBloqueadas teclasBloqueadas = new OuvinteTeclasBloqueadas();
-	private OuvinteTeclasEspeciais teclasEspeciais = new OuvinteTeclasEspeciais();
-	
-	private JButton botaoPadraoProsseguir;
-	private JButton botaoPadraoCancelar;
-	private JButton botaoPadraoConcluir;
-	
-	private JLabel fundoPadrao;
-	private JLabel barra;
-	
-
-	private JTextField codigo;
-	private JLabel textoCodigo;
 	
 	public JanelaPadrao(String tituloJanela) {
 		
@@ -48,12 +37,21 @@ public class JanelaPadrao extends JFrame{
 		botaoPadraoProsseguir();
 		botaoPadraoCancelar();
 		botaoPadraoConcluir();
+
 		
-		/* caixas e textos */
-		codigo();
+		gerarCodigo();
 		
 	}
 	
+	private JButton botaoPadraoProsseguir;
+	private JButton botaoPadraoVoltar;
+	private JButton botaoPadraoConcluir;
+
+	private JLabel fundoPadrao;
+	private JLabel barra;
+	
+	private int codigo;
+
 	private void botaoPadraoProsseguir() {
 		botaoPadraoProsseguir = new BotaoPadrao("Clique para prosseguir");
 		botaoPadraoProsseguir.setIcon(new ImageIcon("imgs/botao-prosseguir.png"));
@@ -61,9 +59,9 @@ public class JanelaPadrao extends JFrame{
 	}
 	
 	private void botaoPadraoCancelar() {
-		botaoPadraoCancelar = new BotaoPadrao("Clique para cancelar e voltar");
-		botaoPadraoCancelar.setIcon(new ImageIcon("imgs/botao-voltar.png"));
-		botaoPadraoCancelar.setPressedIcon(new ImageIcon("imgs/botao-voltarclicado.png"));
+		botaoPadraoVoltar = new BotaoPadrao("Clique para cancelar e voltar");
+		botaoPadraoVoltar.setIcon(new ImageIcon("imgs/botao-voltar.png"));
+		botaoPadraoVoltar.setPressedIcon(new ImageIcon("imgs/botao-voltarclicado.png"));
 	}
 	
 	private void botaoPadraoConcluir() {
@@ -77,16 +75,9 @@ public class JanelaPadrao extends JFrame{
 		fundoPadrao.setBounds(15, -7, 768, 406);
 	}
 	
-	private void codigo() {
-		textoCodigo = new JLabel("Código:");
-		textoCodigo.setFont(getFont());
-		add(textoCodigo);
-		
-		codigo = new JTextField();
-		codigo.setFont(getFont());
-		codigo.addKeyListener(getTeclasEspeciais());
-		codigo.setToolTipText(getTeclasEspeciais().getTeclasEspeciais());
-		add(codigo);
+	private void gerarCodigo() {
+		Random random = new Random();
+		codigo = random.nextInt(1000, 9999);
 	}
 
 	public JLabel getBarra() {
@@ -101,28 +92,16 @@ public class JanelaPadrao extends JFrame{
 		return botaoPadraoProsseguir;
 	}
 	
-	public JButton getBotaoCancelar() {
-		return botaoPadraoCancelar;
+	public JButton getBotaoVoltar() {
+		return botaoPadraoVoltar;
 	}
 	
 	public JButton getBotaoConcluir() {
 		return botaoPadraoConcluir;
-	}
+	}	
 
-	public JLabel getTextoCodigo() {
-		return textoCodigo;
-	}
-
-	public JTextField getCodigo() {
+	public int getCodigo() {
 		return codigo;
-	}
-
-	public OuvinteTeclasBloqueadas getTeclasBloqueadas() {
-		return teclasBloqueadas;
-	}
-
-	public OuvinteTeclasEspeciais getTeclasEspeciais() {
-		return teclasEspeciais;
 	}
 
 }

@@ -5,14 +5,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import projeto_poo.janelas.JanelaConfirmarEmail;
+import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.PrimeiroAcesso;
 
 public class Programa {
 
 	public static void main(String[] args) {
 		
-		new JanelaConfirmarEmail();
-		
+		new PrimeiroAcesso();
+
+
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();
 //		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("d/M/y");

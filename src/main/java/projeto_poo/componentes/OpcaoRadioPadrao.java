@@ -1,4 +1,4 @@
-package projeto_poo.janelas;
+package projeto_poo.componentes;
 
 import javax.swing.JRadioButton;
 
