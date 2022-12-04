@@ -12,8 +12,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		new PrimeiroAcesso();
-
+		new JanelaLogin();
 
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();

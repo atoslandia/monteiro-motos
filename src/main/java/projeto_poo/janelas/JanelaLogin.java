@@ -1,14 +1,22 @@
 package projeto_poo.janelas;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
+import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Persistencia;
 import projeto_poo.componentes.BotaoPadrao;
 import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
@@ -20,6 +28,7 @@ public class JanelaLogin extends JanelaPadrao{
 	
     private JTextField email;
     private JPasswordField senha;
+    private JComboBox<String> tipoDeConta;
     private JRadioButton passageiro;
     private JRadioButton mototaxista;
 
@@ -35,7 +44,6 @@ public class JanelaLogin extends JanelaPadrao{
         botaoCriarConta();
 
         fundoLogin();
-        
         setVisible(true);
 
     }
@@ -44,7 +52,20 @@ public class JanelaLogin extends JanelaPadrao{
     private JButton botaoEntrar;
     private JButton botaoEsqueciSenha;
     private JButton botaoCriarConta;
+    private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
     
+    private Persistencia persistencia = new Persistencia();
+	CentralDeInformacoes xml;
+	
+//    private void verificarPersistencia() {
+//    	try {
+//			xml = persistencia.recuperarCentral("persistencia.xml");
+//		} catch (Exception e) {
+//			new PrimeiroAcesso();
+//		}
+//    	System.out.println(xml);
+//    }
+	
     private void fundoLogin() {
         JLabel fundoLogin = new TextoImagemPadrao(new ImageIcon("imgs/fundo-login.png"));
         fundoLogin.setBounds(15, -7, 768, 406);
@@ -65,46 +86,52 @@ public class JanelaLogin extends JanelaPadrao{
         email = new CaixaTextoPadrao();
         email.addKeyListener(teclasEspeciais);
         email.setToolTipText(teclasEspeciais.getTeclasEspeciais());
-        email.setBounds(110, 150,200,20);
+        email.setBounds(120, 150,200,20);
         add(email);
 
     }
-private void textoSenha() {
+    private void textoSenha() {
         JLabel textoSenha = new TextoImagemPadrao("Senha: ");
         textoSenha.setBounds(30,200,100,20);
         add(textoSenha);
 
         senha = new CaixaPadraoSenha();
-        OuvinteTeclasEspeciais teSenha = new OuvinteTeclasEspeciais();
-        senha.addKeyListener(teSenha);
-        senha.setToolTipText(teSenha.getTeclasEspeciais());
-        senha.setBounds(110, 200, 200, 20);
+        senha.addKeyListener(teclasEspeciais);
+        senha.setToolTipText(teclasEspeciais.getTeclasEspeciais());
+        senha.setBounds(120, 200, 200, 20);
         add(senha);
     }
 
     private void tipoDeConta() {
-        JLabel tipoDeConta = new TextoImagemPadrao("Tipo de Conta: ");
-        tipoDeConta.setBounds(30 ,250 ,100 ,20);
+        JLabel textoTipoDeConta = new TextoImagemPadrao("Tipo de Conta: ");
+        textoTipoDeConta.setBounds(30 ,250 ,100 ,20);
+        add(textoTipoDeConta);
+        
+        tipoDeConta = new JComboBox<String>(tiposDeConta);
+        
+        tipoDeConta.setBounds(120, 250, 200, 20);
         add(tipoDeConta);
+        
 
-        passageiro = new OpcaoRadioPadrao("Passageiro");
-        passageiro.setBounds(120, 250, 100, 20);
-        add(passageiro);
-
-        mototaxista = new OpcaoRadioPadrao("Mototaxista");
-        mototaxista.setBounds(220, 250, 100, 20);
-        add(mototaxista);
-
-        ButtonGroup grupo = new ButtonGroup();
-        grupo.getSelection();
-        grupo.add(passageiro);
-        grupo.add(mototaxista);
+//        passageiro = new OpcaoRadioPadrao("Passageiro");
+//        passageiro.setBounds(120, 250, 100, 20);
+//        add(passageiro);
+//
+//        mototaxista = new OpcaoRadioPadrao("Mototaxista");
+//        mototaxista.setBounds(220, 250, 100, 20);
+//        add(mototaxista);
+//
+//        ButtonGroup grupo = new ButtonGroup();
+//        grupo.getSelection();
+//        grupo.add(passageiro);
+//        grupo.add(mototaxista);
     }
 // botoes
 
     private void botaoEntrar() {
     	botaoEntrar = new BotaoPadrao("Clique para entrar","imgs/botao-entrar.png","imgs/botao-entrarclicado.png");
         botaoEntrar.setBounds(530, 155, 170, 41);
+        botaoEntrar.addActionListener(new OuvinteEntrar());
         add(botaoEntrar);
     }
 
@@ -135,8 +162,31 @@ private void textoSenha() {
         return mototaxista;
     }
 
-    public JTextField getSenha() {
+    public JPasswordField getSenha() {
         return senha;
     }
+
+	public JComboBox<String> getTipoDeConta() {
+		return tipoDeConta;
+	}
+	
+	private class OuvinteEntrar implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
+			Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
+			
+			System.out.println(getTipoDeConta().getSelectedItem());
+			
+			if(getEmail().getText().equals(""))
+				getEmail().setBorder(bordaErro);
+			else getEmail().setBorder(borda);
+			if(new String(getSenha().getPassword()).length() < 4 || new String(getSenha().getPassword()).equals("")) 
+				getSenha().setBorder(bordaErro);
+			else getSenha().setBorder(borda);
+			
+		}
+		
+	}
 
 }

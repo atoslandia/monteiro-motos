@@ -26,15 +26,13 @@ public class Persistencia {
 		} catch (IOException e) {e.printStackTrace();}
 	}
 	
-	public CentralDeInformacoes recuperarCentral(String nomeDoArquivo) {
+	public CentralDeInformacoes recuperarCentral(String nomeDoArquivo) throws Exception {
 		arquivo = new File(nomeDoArquivo);
-		try {
-			if(arquivo.exists()) {
-				FileInputStream fis = new FileInputStream(arquivo);
-				sx.addPermission(AnyTypePermission.ANY);
-				return (CentralDeInformacoes) sx.fromXML(fis);
-				}
-		} catch (FileNotFoundException e) {e.printStackTrace();}
+		if(arquivo.exists()) {
+			FileInputStream fis = new FileInputStream(arquivo);
+			sx.addPermission(AnyTypePermission.ANY);
+			return (CentralDeInformacoes) sx.fromXML(fis);
+			}
 		return new CentralDeInformacoes();
 	}
 }
