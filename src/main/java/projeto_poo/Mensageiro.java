@@ -27,19 +27,23 @@ public class Mensageiro{
 //		} catch (Exception e) {e.printStackTrace();}
 //	}
 	
-	public static void enviarHistoricoCorridas(String destinatario, int codigo) throws Exception {
-		SimpleEmail simpleEmail = new SimpleEmail();
-		simpleEmail.setHostName("smtp.gmail.com");
-		simpleEmail.setSmtpPort(587);
-		simpleEmail.setAuthenticator(new DefaultAuthenticator("projeto.poo.ads@gmail.com", "risagyuofykwmikh"));
-		simpleEmail.setSSLOnConnect(true);
-		simpleEmail.setSubject("Código de segurança");
+	public static void enviarHistoricoCorridas(String destinatario, String codigo) throws Exception {
 		
-		simpleEmail.setFrom("projeto.poo.ads@gmail.com");
+		SimpleEmail email = new SimpleEmail();
+		
+		email.setHostName("smtp.gmail.com");
+		email.setSmtpPort(587);
+		email.setAuthenticator(new DefaultAuthenticator("projeto.poo.ads@gmail.com", "risagyuofykwmikh"));
+		email.setSSLOnConnect(true);
+		email.setSubject("Código de segurança");
+		
+		email.setFrom("projeto.poo.ads@gmail.com");
 		String mensagem = "Seu código de segurança: "+codigo;
-		simpleEmail.setMsg(mensagem);
-		simpleEmail.addTo(destinatario);
-		simpleEmail.send();
+		email.setMsg(mensagem);
+		
+		
+		email.addTo(destinatario);
+		email.send();
 	}
 
 }

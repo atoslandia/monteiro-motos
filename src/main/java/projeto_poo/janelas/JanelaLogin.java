@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Persistencia;
 import projeto_poo.componentes.BotaoPadrao;
@@ -26,14 +27,11 @@ import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaLogin extends JanelaPadrao{
 	
-    private JTextField email;
-    private JPasswordField senha;
-    private JComboBox<String> tipoDeConta;
-    private JRadioButton passageiro;
-    private JRadioButton mototaxista;
 
     public JanelaLogin() {
         super("Login");
+        
+        
         logoLogin();
         textoEmail();
         textoSenha();
@@ -44,9 +42,18 @@ public class JanelaLogin extends JanelaPadrao{
         botaoCriarConta();
 
         fundoLogin();
+        
         setVisible(true);
+        
+        verificarPersistencia();
 
     }
+
+    private JTextField email;
+    private JPasswordField senha;
+    private JComboBox<String> tipoDeConta;
+    private JRadioButton passageiro;
+    private JRadioButton mototaxista;
 
     private OuvinteTeclasEspeciais teclasEspeciais = new OuvinteTeclasEspeciais();
     private JButton botaoEntrar;
@@ -54,17 +61,17 @@ public class JanelaLogin extends JanelaPadrao{
     private JButton botaoCriarConta;
     private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
     
-    private Persistencia persistencia = new Persistencia();
-	CentralDeInformacoes xml;
 	
-//    private void verificarPersistencia() {
-//    	try {
-//			xml = persistencia.recuperarCentral("persistencia.xml");
-//		} catch (Exception e) {
-//			new PrimeiroAcesso();
-//		}
-//    	System.out.println(xml);
-//    }
+    private void verificarPersistencia() {
+    	try {
+    		CentralDeInformacoes xml = getPersistencia().buscarCentral();
+    		System.out.println(xml);
+		} catch (Exception e) {
+			System.out.println(e);
+			dispose();
+			new PrimeiroAcesso();
+		}
+    }
 	
     private void fundoLogin() {
         JLabel fundoLogin = new TextoImagemPadrao(new ImageIcon("imgs/fundo-login.png"));
@@ -173,17 +180,15 @@ public class JanelaLogin extends JanelaPadrao{
 	private class OuvinteEntrar implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
-			Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
-			Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
 			
 			System.out.println(getTipoDeConta().getSelectedItem());
 			
 			if(getEmail().getText().equals(""))
-				getEmail().setBorder(bordaErro);
-			else getEmail().setBorder(borda);
+				getEmail().setBorder(getBordaErro());
+			else getEmail().setBorder(getBorda());
 			if(new String(getSenha().getPassword()).length() < 4 || new String(getSenha().getPassword()).equals("")) 
-				getSenha().setBorder(bordaErro);
-			else getSenha().setBorder(borda);
+				getSenha().setBorder(getBordaErro());
+			else getSenha().setBorder(getBorda());
 			
 		}
 		

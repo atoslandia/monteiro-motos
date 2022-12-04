@@ -1,23 +1,25 @@
 package projeto_poo.janelas;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import projeto_poo.Administrador;
+import projeto_poo.Mensageiro;
+import projeto_poo.Sexo;
 import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.ouvintes.OuvinteComponentesPreenchidosDeDados;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
@@ -25,9 +27,6 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	
 	public PrimeiroAcesso() {
 		super("Primeiro acesso");
-		
-		new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", this, false);
-		
 		
 		botaoProsseguir();
 		
@@ -44,6 +43,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		setVisible(true);
 	}
 	
+	private PrimeiroAcesso primeiroAcesso;
+	
 	private JLabel textoNome;
 	private JTextField nome;
 	private JLabel textoSobrenome;
@@ -56,8 +57,6 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	private JRadioButton feminino;
 	private JRadioButton masculino;
 	
-	private JanelaDeAvisoPadrao janelaDeAviso = new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", this, false);
-	
 	private void logoPrimeiroAcesso() {
 		JLabel logo = new JLabel(new ImageIcon("imgs/primeiroacesso.png"));
 		logo.setBounds(30, 30, 394, 32);
@@ -68,8 +67,8 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	private void botaoProsseguir() {
 		JButton botaoProsseguir = getBotaoProsseguir();
 		botaoProsseguir.setBounds(530, 185, 170, 41);
-		OuvinteComponentesPreenchidosDeDados componentesPreenchidos = new OuvinteComponentesPreenchidosDeDados(this);
-		botaoProsseguir.addActionListener(componentesPreenchidos);
+		
+		botaoProsseguir.addActionListener(new OuvinteComponentesPreenchidosDeDados());
 			
 		add(botaoProsseguir);
 	}
@@ -182,7 +181,50 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		return masculino;
 	}
 
-	public JanelaDeAvisoPadrao getJanelaDeAviso() {
-		return janelaDeAviso;
+	private class OuvinteComponentesPreenchidosDeDados implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+
+			if(nome.getText().equals(""))
+				nome.setBorder(getBordaErro());
+			else nome.setBorder(getBorda());
+			
+			if(sobrenome.getText().equals(""))
+				sobrenome.setBorder(getBordaErro());
+			else sobrenome.setBorder(getBorda());
+			
+			if(email.getText().equals(""))
+				email.setBorder(getBordaErro());
+			else email.setBorder(getBorda());
+			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals("")) 
+				senha.setBorder(getBordaErro());
+			else senha.setBorder(getBorda());
+			
+			if(!feminino.isSelected() && !masculino.isSelected())	{
+				feminino.setForeground(new Color(231, 110, 84));
+				masculino.setForeground(new Color(231, 110, 84));
+			}
+			else {
+				feminino.setForeground(null);
+				masculino.setForeground(null);
+			}
+			
+			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected())) {
+				try {
+					Administrador adm = new Administrador(nome.getText(), email.getText(), new String(senha.getPassword()), (feminino.isSelected()) ? Sexo.F : Sexo.M);
+					Random c = new Random();
+					String codigo = Integer.toString(c.nextInt(1000,9999));
+					
+					Mensageiro.enviarHistoricoCorridas(getEmail().getText(), codigo);
+					dispose();
+					
+					new JanelaConfirmarEmail(codigo, adm);
+					
+				} catch (Exception e1) {
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", primeiroAcesso);
+				}
+				
+			}
+		}
 	}
 }

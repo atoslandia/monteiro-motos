@@ -1,13 +1,18 @@
 package projeto_poo.janelas;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
 
+import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Persistencia;
 import projeto_poo.componentes.BotaoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
@@ -37,9 +42,14 @@ public class JanelaPadrao extends JFrame{
 		
 		criarBotoesPadrao();
 		
-		gerarCodigo();
-		
 	}
+	
+	private Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
+	private Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
+	
+	
+	private Persistencia persistencia = new Persistencia();
+	
 	
 	private JButton botaoPadraoProsseguir;
 	private JButton botaoPadraoVoltar;
@@ -48,25 +58,17 @@ public class JanelaPadrao extends JFrame{
 	private JLabel fundoPadrao;
 	private JLabel barra;
 	
-	private int codigo;
-
 	private void criarBotoesPadrao() {
 		botaoPadraoProsseguir = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
-		botaoPadraoVoltar = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
-		botaoPadraoConcluir = new BotaoPadrao("Clique para prosseguir", "imgs/botao-prosseguir.png","imgs/botao-prosseguirclicado.png");
+		botaoPadraoVoltar = new BotaoPadrao("Clique para prosseguir", "imgs/botao-voltar.png","imgs/botao-voltarclicado.png");
+		botaoPadraoConcluir = new BotaoPadrao("Clique para prosseguir", "imgs/botao-concluir.png","imgs/botao-concluirclicado.png");
 	}
-	
 	
 	private void fundoPadrao() {
 		fundoPadrao = new TextoImagemPadrao(new ImageIcon("imgs/fundo-padrao.png"));
 		fundoPadrao.setBounds(15, -7, 768, 406);
 	}
 	
-	private void gerarCodigo() {
-		Random random = new Random();
-		codigo = random.nextInt(1000, 9999);
-	}
-
 	public JLabel getBarra() {
 		return barra;
 	}
@@ -87,8 +89,18 @@ public class JanelaPadrao extends JFrame{
 		return botaoPadraoConcluir;
 	}	
 
-	public int getCodigo() {
-		return codigo;
+	public Persistencia getPersistencia() {
+		return persistencia;
 	}
+
+	public Border getBorda() {
+		return borda;
+	}
+
+	public Border getBordaErro() {
+		return bordaErro;
+	}
+
+
 
 }

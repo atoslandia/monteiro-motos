@@ -3,6 +3,14 @@ package projeto_poo;
 import java.time.LocalDate;
 
 public class Passageiro {
+
+	public Passageiro(String n,Sexo s,LocalDate dn,String e) {
+		nome = n;
+		sexo = s;
+		dataNascimento = dn;
+		email = e;
+	
+	}
 	private String nome;
 	private Sexo sexo;
 	private LocalDate dataNascimento;
@@ -28,13 +36,6 @@ public class Passageiro {
 	}
 	public String getEmail() {
 		return email;
-	}
-	
-	public Passageiro(String n,Sexo s,LocalDate dn,String e) {
-		nome = n;
-		sexo = s;
-		dataNascimento = dn;
-		email = e;
 	}
 	
 	public String toString() {

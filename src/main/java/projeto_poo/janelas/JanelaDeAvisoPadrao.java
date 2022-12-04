@@ -12,14 +12,14 @@ import projeto_poo.componentes.TextoImagemPadrao;
 
 public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	
-	public JanelaDeAvisoPadrao(String aviso, JanelaPadrao janela, boolean esconder) {
+	public JanelaDeAvisoPadrao(String aviso, JanelaPadrao janela) {
 		super("Atenção");
 		this.aviso = aviso;
 		setSize(250,150);
-		setVisible(esconder);
 		setLocationRelativeTo(janela);
 		textoAviso();
 		botaoVoltarAviso();
+		setVisible(true);
 	}
 	
 	private String aviso;
@@ -33,7 +33,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	}
 	
 	private void botaoVoltarAviso() {
-		botaoProsseguirAviso = new BotaoPadrao("Clique para inserir o e-mail novamente ou no X para fechar o programa", "imgs/botao-voltaraviso.png","\"imgs/botao-voltaravisoclicado.png\"");
+		botaoProsseguirAviso = getBotaoVoltar();
 		botaoProsseguirAviso.setBounds(90, 75, 58, 22);
 		botaoProsseguirAviso.addActionListener(new OuvinteBotaoVoltarAviso());
 		add(botaoProsseguirAviso);
@@ -41,7 +41,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	
 	private class OuvinteBotaoVoltarAviso implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			setVisible(false);
+			dispose();
 		}
 	}
 

@@ -4,12 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class OuvinteTeclasSenha implements KeyListener{
-	private String teclasEspeciais = "Caracteres permitidos: letras, números, '@', '_', '.'";
+	private String teclasEspeciais = "Caracteres permitidos: letras, números, '@', '_', '.' e '-'";
 	
 	public void keyTyped(KeyEvent e) {
 		char t = e.getKeyChar(); 
 		
-		if(!Character.isLetter(t) && !Character.isDigit(t) && t != '@' && t != '_' && t != '.')
+		if(!Character.isLetter(t) && !Character.isDigit(t) && t != '@' && t != '_' && t != '.' && t != '-')
 			e.consume();
 	}
 

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class CentralDeInformacoes {
 	
+	private Administrador administrador;
 	private ArrayList<Passageiro> todosOsPassageiros = new ArrayList<Passageiro>();
 	private ArrayList<Corrida> todasAsCorridas = new ArrayList<Corrida>();
-	private Administrador administrador;
 	
 	public ArrayList<Passageiro> getTodosOsPassageiros() {
 		return todosOsPassageiros;
