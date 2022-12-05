@@ -27,6 +27,18 @@ import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class PrimeiroAcesso extends JanelaPadrao{
 	
+	private PrimeiroAcesso primeiroAcesso;
+	
+	private JTextField nome;
+	private JTextField sobrenome;
+	private JTextField email;
+	private JPasswordField senha;
+	private JRadioButton feminino;
+	private JRadioButton masculino;
+	private JComboBox<String> dia;
+	private JComboBox<String> mes;
+	private JComboBox<String> ano;
+	
 	public PrimeiroAcesso() {
 		super("Primeiro acesso");
 		
@@ -46,17 +58,7 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		setVisible(true);
 	}
 	
-	private PrimeiroAcesso primeiroAcesso;
-	
-	private JTextField nome;
-	private JTextField sobrenome;
-	private JTextField email;
-	private JPasswordField senha;
-	private JRadioButton feminino;
-	private JRadioButton masculino;
-	private JComboBox<String> dia;
-	private JComboBox<String> mes;
-	private JComboBox<String> ano;
+
 	
 	
 	private void logoPrimeiroAcesso() {
@@ -150,7 +152,7 @@ public class PrimeiroAcesso extends JanelaPadrao{
         
         String[] meses = new String[12];
         String[] dias = new String[31];
-        String[] anos = new String[101];
+        String[] anos = new String[120];
         
         for(int i = 0; i < anos.length; i++) {
         	if(i < meses.length)
@@ -169,7 +171,7 @@ public class PrimeiroAcesso extends JanelaPadrao{
         add(mes);
         ano = new JComboBox<String>(anos);
         ano.setBounds(290, 235, 60, 20);
-        ano.setSelectedIndex(18);
+        ano.setSelectedIndex(19);
         add(ano);
 
     }
@@ -204,7 +206,11 @@ public class PrimeiroAcesso extends JanelaPadrao{
 			
 			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected())) {
 				try {
-					Administrador adm = new Administrador(nome.getText()+" "+sobrenome.getText(), email.getText(), new String(senha.getPassword()), feminino.isSelected() ? Sexo.F : Sexo.M, LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem())));
+					String n = nome.getText();
+					String sn = sobrenome.getText();
+					LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
+					Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
+					Administrador adm = new Administrador(n, sn, data, sexo, email.getText(), new String(senha.getPassword()));
 					Random c = new Random();
 					String codigo = Integer.toString(c.nextInt(1000,9999));
 					

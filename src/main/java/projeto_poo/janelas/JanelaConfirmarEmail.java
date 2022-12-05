@@ -14,19 +14,25 @@ import javax.swing.JTextField;
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Passageiro;
-import projeto_poo.Pessoas;
 import projeto_poo.Sexo;
+import projeto_poo.Usuario;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
 	
-	public JanelaConfirmarEmail(String codigoGerado, Pessoas pessoa) {
+	private JTextField codigo;
+	private String codigoGerado;
+	private Usuario usuario;
+	
+	
+	
+	public JanelaConfirmarEmail(String codigoGerado, Usuario usuario) {
 		super("Confirmar e-mail");
 		
 		this.codigoGerado = codigoGerado;
-		this.pessoa = pessoa;
+		this.usuario = usuario;
 
 		botaoConcluir();
 		botaoVoltar();
@@ -38,11 +44,7 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 		setVisible(true);
 	}
 	
-	private JTextField codigo;
-	private String codigoGerado;
-	
-	private Pessoas pessoa;
-	
+
 	private void logoConfirmarEmail() {
 		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/confirmaremail.png"));
 		logo.setBounds(30, 30, 422, 31);
@@ -89,14 +91,14 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 			if(codigo.getText().equals(codigoGerado)) {
 				try {
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-					if(pessoa instanceof Administrador) {
+					if(usuario instanceof Administrador) {
 						System.out.println("foi criado um administrador");
-						cdi.setAdministrador((Administrador)pessoa);
+						cdi.setAdministrador((Administrador)usuario);
 						getPersistencia().salvarPersistencia(cdi);
 					}
-					else if(pessoa instanceof Passageiro) {
+					else if(usuario instanceof Passageiro) {
 						System.out.println("foi criado um passageiro");
-						cdi.adicionarPassageiro((Passageiro)pessoa);
+						cdi.adicionarPassageiro((Passageiro)usuario);
 						getPersistencia().salvarPersistencia(cdi);
 					}
 					dispose();
