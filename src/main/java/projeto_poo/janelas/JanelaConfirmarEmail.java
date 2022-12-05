@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Passageiro;
+import projeto_poo.Pessoas;
 import projeto_poo.Sexo;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
@@ -20,14 +22,15 @@ import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
 	
-	public JanelaConfirmarEmail(String codigo, Administrador adm) {
+	public JanelaConfirmarEmail(String codigoGerado, Pessoas pessoa) {
 		super("Confirmar e-mail");
 		
 		botaoConcluir();
 		botaoVoltar();
 		
-		codigoGerado = codigo;
-		administrador = adm;
+		this.codigoGerado = codigoGerado;
+		
+		this.pessoa = pessoa;
 		
 		caixaCodigo();
 		descricao();
@@ -39,7 +42,7 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	private JTextField codigo;
 	private String codigoGerado;
 	
-	private Administrador administrador;
+	private Pessoas pessoa;
 	
 	private void logoConfirmarEmail() {
 		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/confirmaremail.png"));
@@ -86,18 +89,25 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 			
 			if(codigo.getText().equals(codigoGerado)) {
 				try {
-					CentralDeInformacoes cdi = new CentralDeInformacoes();
-					cdi.setAdministrador(administrador);
-					getPersistencia().gerarXML(cdi);
+					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+					if(pessoa instanceof Administrador) {
+						System.out.println("foi criado um administrador");
+						cdi.setAdministrador((Administrador)pessoa);
+						getPersistencia().salvarPersistencia(cdi);
+					}
+					else if(pessoa instanceof Passageiro) {
+						System.out.println("foi criado um passageiro");
+						cdi.adicionarPassageiro((Passageiro)pessoa);
+						getPersistencia().salvarPersistencia(cdi);
+					}
+					dispose();
+					new JanelaLogin();
 				} catch (Exception e2) {
-					System.out.println(e2);
+					System.out.println("erro ao inserir codigo "+e2);
 				}
 				
-				dispose();
-				new JanelaLogin();
 			} else
 				codigo.setBorder(getBordaErro());
-				
 		}
 	}
 	

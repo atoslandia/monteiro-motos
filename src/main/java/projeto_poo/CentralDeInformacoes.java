@@ -34,9 +34,8 @@ public class CentralDeInformacoes {
 		if((LocalDate.now().getYear() - passageiro.getDataNascimento().getYear()) < 18)
 			return false;
 		
-		if(passageiro.getEmail().equals(recuperarPassageiroPeloEmail(passageiro.getEmail()).getEmail()))
+		if(passageiro.equals(recuperarPassageiroPeloEmail(passageiro.getEmail())))
 			return false;
-
 		return getTodosOsPassageiros().add(passageiro);
 	}
 	

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import projeto_poo.janelas.JanelaConfirmarEmail;
+import projeto_poo.janelas.JanelaCriarConta;
 import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.PrimeiroAcesso;
 

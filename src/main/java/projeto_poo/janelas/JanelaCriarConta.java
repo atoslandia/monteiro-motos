@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -15,8 +16,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import projeto_poo.Administrador;
+import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
+import projeto_poo.Passageiro;
 import projeto_poo.Sexo;
 import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
@@ -25,28 +27,25 @@ import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
-public class PrimeiroAcesso extends JanelaPadrao{
-	
-	public PrimeiroAcesso() {
-		super("Primeiro acesso");
-		
-		botaoProsseguir();
+public class JanelaCriarConta extends JanelaPadrao{
+	public JanelaCriarConta() {
+		super("Criar conta");
 		
 		caixaNome();
 		caixaSobrenome();
 		caixaEmail();
 		caixaSenha();
 		escolhaSexo();
+		tipoDeConta();
 		dataNascimento();
 		
+		botaoConcluir();
+		botaoVoltar();
+		
+		logoCadastro();
 		add(getFundoPadrao());
-		
-		logoPrimeiroAcesso();
-		
 		setVisible(true);
 	}
-	
-	private PrimeiroAcesso primeiroAcesso;
 	
 	private JTextField nome;
 	private JTextField sobrenome;
@@ -54,25 +53,33 @@ public class PrimeiroAcesso extends JanelaPadrao{
 	private JPasswordField senha;
 	private JRadioButton feminino;
 	private JRadioButton masculino;
+	private JRadioButton passageiro;
+	private JRadioButton mototaxista;
 	private JComboBox<String> dia;
 	private JComboBox<String> mes;
 	private JComboBox<String> ano;
+
 	
-	
-	private void logoPrimeiroAcesso() {
-		JLabel logo = new JLabel(new ImageIcon("imgs/primeiroacesso.png"));
-		logo.setBounds(30, 30, 394, 32);
+	private void logoCadastro() {
+		JLabel logo = new JLabel(new ImageIcon("imgs/criarconta.png"));
+		logo.setBounds(30, 30, 282, 32);
 		add(logo);
 	}
 	
-//	botoes
-	private void botaoProsseguir() {
-		JButton botaoProsseguir = getBotaoProsseguir();
-		botaoProsseguir.setBounds(530, 185, 170, 41);
+	private void botaoConcluir() {
+		JButton botaoProsseguir = getBotaoConcluir();
+		botaoProsseguir.setBounds(530, 170, 170, 41);
 		
 		botaoProsseguir.addActionListener(new OuvinteComponentesPreenchidosDeDados());
 			
 		add(botaoProsseguir);
+	}
+	
+	private void botaoVoltar() {
+		JButton botaoVoltar = getBotaoVoltar();
+		botaoVoltar.setBounds(590, 220, 58, 22);
+		botaoVoltar.addActionListener(new OuvinteBotaoVoltar());
+		add(botaoVoltar);
 	}
 	
 //	componentes
@@ -130,11 +137,11 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		add(textoSexo);
 		
 		feminino = new OpcaoRadioPadrao("Feminino");
-		feminino.setBounds(150, 205, 100, 20);
+		feminino.setBounds(140, 205, 100, 20);
 		add(feminino);
 		
 		masculino = new OpcaoRadioPadrao("Masculino");
-		masculino.setBounds(260, 205, 100, 20);
+		masculino.setBounds(255, 205, 100, 20);
 		add(masculino);
 		
 		ButtonGroup grupo = new ButtonGroup();
@@ -143,37 +150,86 @@ public class PrimeiroAcesso extends JanelaPadrao{
 		grupo.add(masculino);
 	}
 	
-    private void dataNascimento() {
-        JLabel textoTipoDeConta = new TextoImagemPadrao("Nascimento: (dia/mês/ano)");
-        textoTipoDeConta.setBounds(30, 235, 160,20);
+	private void dataNascimento() {
+		JLabel textoTipoDeConta = new TextoImagemPadrao("Nascimento: (dia/mês/ano)");
+		textoTipoDeConta.setBounds( 30, 235, 160,20);
+		add(textoTipoDeConta);
+		
+		String[] meses = new String[12];
+		String[] dias = new String[31];
+		String[] anos = new String[101];
+		
+		for(int i = 0; i < anos.length; i++) {
+			if(i < meses.length)
+				meses[i] = Integer.toString(i+1);
+			if(i < dias.length)
+				dias[i] = Integer.toString(i+1);
+			anos[i] = Integer.toString(LocalDate.now().getYear()-i);
+		}
+		
+		dia = new JComboBox<String>(dias);
+		dia.setBounds(190, 235, 45, 20);
+		add(dia);
+		mes = new JComboBox<String>(meses);
+		mes.setBounds(240, 235, 45, 20);
+		add(mes);
+		ano = new JComboBox<String>(anos);
+		ano.setBounds(290, 235, 60, 20);
+		ano.setSelectedIndex(18);
+		add(ano);
+	}
+	
+    private void tipoDeConta() {
+        JLabel textoTipoDeConta = new TextoImagemPadrao("Tipo de Conta: ");
+        textoTipoDeConta.setBounds(30 , 265, 100 ,20);
         add(textoTipoDeConta);
-        
-        String[] meses = new String[12];
-        String[] dias = new String[31];
-        String[] anos = new String[101];
-        
-        for(int i = 0; i < anos.length; i++) {
-        	if(i < meses.length)
-        		meses[i] = Integer.toString(i+1);
-        	if(i < dias.length)
-        		dias[i] = Integer.toString(i+1);
-        	anos[i] = Integer.toString(LocalDate.now().getYear()-i);
-        }
+        passageiro = new OpcaoRadioPadrao("Passageiro");
+        passageiro.setBounds(140, 265, 100, 20);
+        add(passageiro);
 
-        
-        dia = new JComboBox<String>(dias);
-        dia.setBounds(190, 235, 45, 20);
-        add(dia);
-        mes = new JComboBox<String>(meses);
-        mes.setBounds(240, 235, 45, 20);
-        add(mes);
-        ano = new JComboBox<String>(anos);
-        ano.setBounds(290, 235, 60, 20);
-        ano.setSelectedIndex(18);
-        add(ano);
+        mototaxista = new OpcaoRadioPadrao("Mototaxista");
+        mototaxista.setBounds(250, 265, 100, 20);
+        add(mototaxista);
 
+        ButtonGroup grupo = new ButtonGroup();
+        grupo.getSelection();
+        grupo.add(passageiro);
+        grupo.add(mototaxista);
     }
-
+    
+	
+	public JTextField getNome() {
+		return nome;
+	}
+	
+	public JTextField getSobrenome() {
+		return sobrenome;
+	}
+	
+	public JTextField getEmail() {
+		return email;
+	}
+	
+	public JPasswordField getSenha() {
+		return senha;
+	}
+	
+	public JRadioButton getFeminino() {
+		return feminino;
+	}
+	
+	public JRadioButton getMasculino() {
+		return masculino;
+	}
+	
+	public JRadioButton getPassageiro() {
+		return passageiro;
+	}
+	
+	public JRadioButton getMototaxista() {
+		return mototaxista;
+	}
+	
 	private class OuvinteComponentesPreenchidosDeDados implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
@@ -202,23 +258,42 @@ public class PrimeiroAcesso extends JanelaPadrao{
 				masculino.setForeground(null);
 			}
 			
-			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected())) {
+			if(!passageiro.isSelected() && !mototaxista.isSelected())	{
+				passageiro.setForeground(new Color(231, 110, 84));
+				mototaxista.setForeground(new Color(231, 110, 84));
+			}
+			else {
+				passageiro.setForeground(null);
+				mototaxista.setForeground(null);
+			}
+			
+			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected()) && (passageiro.isSelected() | mototaxista.isSelected())) {
 				try {
-					Administrador adm = new Administrador(nome.getText()+" "+sobrenome.getText(), email.getText(), new String(senha.getPassword()), feminino.isSelected() ? Sexo.F : Sexo.M, LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem())));
+					Passageiro passageiro = new Passageiro(nome.getText()+" "+sobrenome.getText(), email.getText(), new String(senha.getPassword()), feminino.isSelected() ? Sexo.F : Sexo.M, LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem())));
+//					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+//					getPersistencia().salvarPersistencia(cdi);
+					
 					Random c = new Random();
 					String codigo = Integer.toString(c.nextInt(1000,9999));
 					
 					Mensageiro.enviarHistoricoCorridas(email.getText(), codigo);
 					dispose();
 					
-					new JanelaConfirmarEmail(codigo, adm);
+					new JanelaConfirmarEmail(codigo,(Passageiro)passageiro);
 					
-				} catch (Exception e1) {
-					System.out.println(e1);
-					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", primeiroAcesso);
+				} catch (Exception e2) {
+					System.out.println(e2);
 				}
-				
 			}
 		}
 	}
+	
+	private class OuvinteBotaoVoltar implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new JanelaLogin();
+		}
+	}
+	
 }

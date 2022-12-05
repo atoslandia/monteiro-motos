@@ -67,7 +67,6 @@ public class JanelaLogin extends JanelaPadrao{
     		CentralDeInformacoes xml = getPersistencia().buscarCentral();
     		System.out.println(xml);
 		} catch (Exception e) {
-			System.out.println(e);
 			dispose();
 			new PrimeiroAcesso();
 		}
@@ -93,7 +92,7 @@ public class JanelaLogin extends JanelaPadrao{
         email = new CaixaTextoPadrao();
         email.addKeyListener(teclasEspeciais);
         email.setToolTipText(teclasEspeciais.getTeclasEspeciais());
-        email.setBounds(120, 150,200,20);
+        email.setBounds(120, 150, 200, 20);
         add(email);
 
     }
@@ -149,9 +148,9 @@ public class JanelaLogin extends JanelaPadrao{
     }
 
     private void botaoCriarConta() {
-    	
 		botaoCriarConta = new BotaoPadrao("Clique para redefinir a senha","imgs/botao-criarconta.png","imgs/botao-criarcontaclicado.png");
 		botaoCriarConta.setBounds(530, 250, 170, 26);
+		botaoCriarConta.addActionListener(new OuvinteCriarConta());
         add(botaoCriarConta);
     }
 
@@ -189,6 +188,17 @@ public class JanelaLogin extends JanelaPadrao{
 			if(new String(getSenha().getPassword()).length() < 4 || new String(getSenha().getPassword()).equals("")) 
 				getSenha().setBorder(getBordaErro());
 			else getSenha().setBorder(getBorda());
+			
+		}
+		
+	}
+	
+	private class OuvinteCriarConta implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			
+			dispose();
+			new JanelaCriarConta();
 			
 		}
 		

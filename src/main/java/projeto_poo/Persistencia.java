@@ -13,37 +13,28 @@ import com.thoughtworks.xstream.security.AnyTypePermission;
 
 public class Persistencia {
 	
+	XStream xs = new XStream(new DomDriver());
+	File arquivo;
 	
-//	public void salvarCentral(CentralDeInformacoes cdi, String nomeDoArquivo) {
-//		arquivo = new File(nomeDoArquivo);
-//		try {
-//			arquivo.createNewFile();
-//			PrintWriter pw = new PrintWriter(arquivo);
-//			String xml = xs.toXML(cdi);
-//			pw.print(xml);
-//			pw.close();
-//		} catch (IOException e) {e.printStackTrace();}
-//	}
-	
-	public void gerarXML(CentralDeInformacoes adm) throws Exception {
-		XStream xs = new XStream(new DomDriver());
+	public void salvarPersistencia(CentralDeInformacoes pessoa) throws Exception {
+		arquivo = new File("persistencia.xml");
 		xs.addPermission(AnyTypePermission.ANY);
 		xs.alias("CentralDeInformacoes", CentralDeInformacoes.class);
-		String xml = xs.toXML(adm);
-		File arquivo = new File("persistencia.xml");
-		
 		PrintWriter escrever = new PrintWriter(arquivo);
+		String xml = xs.toXML(pessoa);
 		escrever.print(xml);
-		escrever.flush();
 		escrever.close();
 	}
 	
-	public CentralDeInformacoes buscarCentral(/*String nomeDoArquivo*/) throws Exception {
-		FileReader ler = new FileReader("persistencia.xml");
-		XStream xs = new XStream(new DomDriver());
-		xs.addPermission(AnyTypePermission.ANY);
-		xs.alias("CentralDeInformacoes", CentralDeInformacoes.class);
-		CentralDeInformacoes dados = (CentralDeInformacoes)xs.fromXML(ler);
-		return dados;
+	public CentralDeInformacoes buscarCentral() throws Exception {
+		arquivo = new File("persistencia.xml");
+		if(arquivo.exists()) {
+			FileReader ler = new FileReader("persistencia.xml");
+			xs.addPermission(AnyTypePermission.ANY);
+			xs.alias("CentralDeInformacoes", CentralDeInformacoes.class);
+			CentralDeInformacoes dados = (CentralDeInformacoes)xs.fromXML(ler);
+			return dados;
+		}
+		throw new Exception();
 	}
 }

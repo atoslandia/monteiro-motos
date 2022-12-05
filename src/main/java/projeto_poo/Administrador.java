@@ -1,29 +1,29 @@
 package projeto_poo;
 
-public class Administrador {
-	private String nome;
-	private String email;
-	private String senha;
-	private Sexo sexo;
+import java.time.LocalDate;
+
+public class Administrador extends Pessoas{
 	
-	public Administrador(String nome, String email, String senha, Sexo sexo) {
+	public Administrador(String nome, String email, String senha, Sexo sexo, LocalDate dataNascimento) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.sexo = sexo;
+		this.dataNascimento = dataNascimento;
 	}
+
+	private String nome;
+	private String email;
+	private String senha;
+	private Sexo sexo;
+	private LocalDate dataNascimento;
 	
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+
 	public Sexo getSexo() {
 		return sexo;
-	}
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
 	}
 	
 	public String getEmail() {
@@ -34,14 +34,12 @@ public class Administrador {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
-	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "nome: "+nome+" email: "+email+" senha: "+senha+" sexo: "+sexo;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
 	}
 
 }

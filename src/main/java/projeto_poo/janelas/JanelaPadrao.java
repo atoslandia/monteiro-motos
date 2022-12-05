@@ -43,7 +43,6 @@ public class JanelaPadrao extends JFrame{
 		criarBotoesPadrao();
 		
 	}
-	
 	private Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
 	private Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
 	

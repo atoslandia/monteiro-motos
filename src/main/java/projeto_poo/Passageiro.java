@@ -2,15 +2,15 @@ package projeto_poo;
 
 import java.time.LocalDate;
 
-public class Passageiro {
+public class Passageiro extends Pessoas{
 
-	public Passageiro(String n,Sexo s,LocalDate dn,String e) {
-		nome = n;
-		sexo = s;
-		dataNascimento = dn;
-		email = e;
-	
+	public Passageiro(String nome, String email, String senha, Sexo sexo, LocalDate dataNascimento) {
+		this.nome = nome;
+		this.sexo = sexo;
+		this.dataNascimento = dataNascimento;
+		this.email = email;
 	}
+	
 	private String nome;
 	private Sexo sexo;
 	private LocalDate dataNascimento;
@@ -19,21 +19,15 @@ public class Passageiro {
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	
 	public Sexo getSexo() {
 		return sexo;
 	}
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
-	}
+	
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+
 	public String getEmail() {
 		return email;
 	}
