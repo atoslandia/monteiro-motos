@@ -25,17 +25,16 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	public JanelaConfirmarEmail(String codigoGerado, Pessoas pessoa) {
 		super("Confirmar e-mail");
 		
+		this.codigoGerado = codigoGerado;
+		this.pessoa = pessoa;
+
 		botaoConcluir();
 		botaoVoltar();
 		
-		this.codigoGerado = codigoGerado;
-		
-		this.pessoa = pessoa;
-		
 		caixaCodigo();
 		descricao();
-		add(getFundoPadrao());
 		logoConfirmarEmail();
+		add(getFundoPadrao());
 		setVisible(true);
 	}
 	

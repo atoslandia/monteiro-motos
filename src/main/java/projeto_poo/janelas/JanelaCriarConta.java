@@ -270,8 +270,6 @@ public class JanelaCriarConta extends JanelaPadrao{
 			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected()) && (passageiro.isSelected() | mototaxista.isSelected())) {
 				try {
 					Passageiro passageiro = new Passageiro(nome.getText()+" "+sobrenome.getText(), email.getText(), new String(senha.getPassword()), feminino.isSelected() ? Sexo.F : Sexo.M, LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem())));
-//					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-//					getPersistencia().salvarPersistencia(cdi);
 					
 					Random c = new Random();
 					String codigo = Integer.toString(c.nextInt(1000,9999));

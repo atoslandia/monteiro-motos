@@ -65,7 +65,6 @@ public class JanelaLogin extends JanelaPadrao{
     private void verificarPersistencia() {
     	try {
     		CentralDeInformacoes xml = getPersistencia().buscarCentral();
-    		System.out.println(xml);
 		} catch (Exception e) {
 			dispose();
 			new PrimeiroAcesso();
