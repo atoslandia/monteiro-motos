@@ -48,6 +48,7 @@ public class CentralDeInformacoes {
 			if(i.getEmail().equals(email))
 				return i;
 		}
+		
 		throw new UsuarioNaoExisteException();
 	}
 	
