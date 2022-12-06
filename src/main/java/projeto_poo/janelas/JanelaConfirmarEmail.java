@@ -20,7 +20,6 @@ import projeto_poo.Sexo;
 import projeto_poo.Usuario;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.erros.NaoExistePassageiroException;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
@@ -100,8 +99,8 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 						getPersistencia().salvarPersistencia(cdi);
 						System.out.println("foi criado um mototaxista");
 					}
-					else {
-						cdi.setAdministrador((Administrador)usuario);
+					else if(usuario instanceof Administrador){
+						cdi.adicionarUsuario((Administrador)usuario);
 						getPersistencia().salvarPersistencia(cdi);
 						System.out.println("foi criado um administrador");
 					}

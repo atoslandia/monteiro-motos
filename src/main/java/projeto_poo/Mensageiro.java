@@ -5,7 +5,7 @@ import java.util.Random;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.SimpleEmail;
 
-public class Mensageiro{
+public class Mensageiro {
 	
 //	public static void enviarHistoricoCorridas(Passageiro destinatario) {
 //		SimpleEmail simpleEmail = new SimpleEmail();
@@ -27,7 +27,7 @@ public class Mensageiro{
 //		} catch (Exception e) {e.printStackTrace();}
 //	}
 	
-	public static void enviarHistoricoCorridas(String destinatario, String codigo) throws Exception {
+	public static void enviarCodigoEmail(String destinatario, String codigo) throws Exception {
 		
 		SimpleEmail email = new SimpleEmail();
 		

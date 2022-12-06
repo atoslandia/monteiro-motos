@@ -13,11 +13,12 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 
+import projeto_poo.erros.NaoExisteXmlException;
+
 public class Persistencia {
 	
 	XStream xs = new XStream(new DomDriver());
 	File arquivo = new File("persistencia.xml");
-	
 	
 	public void salvarPersistencia(CentralDeInformacoes pessoa) throws Exception {
 		xs.addPermission(AnyTypePermission.ANY);
@@ -27,7 +28,7 @@ public class Persistencia {
 		escrever.close();
 	}
 	
-	public CentralDeInformacoes buscarCentral() throws Exception {
+	public CentralDeInformacoes buscarCentral() throws NaoExisteXmlException, Exception {
 		if(arquivo.exists()) {
 			FileReader ler = new FileReader("persistencia.xml");
 			xs.addPermission(AnyTypePermission.ANY);
@@ -38,6 +39,6 @@ public class Persistencia {
 		String xml = xs.toXML(new CentralDeInformacoes());
 		escrever.print(xml);
 		escrever.close();
-		throw new Exception();
+		throw new NaoExisteXmlException();
 	}
 }

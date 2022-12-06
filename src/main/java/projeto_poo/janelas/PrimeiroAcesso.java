@@ -27,7 +27,7 @@ import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class PrimeiroAcesso extends JanelaPadrao{
 	
-	private PrimeiroAcesso primeiroAcesso;
+	private PrimeiroAcesso estaJanela;
 	
 	private JTextField nome;
 	private JTextField sobrenome;
@@ -205,23 +205,24 @@ public class PrimeiroAcesso extends JanelaPadrao{
 			}
 			
 			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected())) {
+				String n = nome.getText();
+				String sn = sobrenome.getText();
+				LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
+				Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
 				try {
-					String n = nome.getText();
-					String sn = sobrenome.getText();
-					LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
-					Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
-					Administrador adm = new Administrador(n, sn, data, sexo, email.getText(), new String(senha.getPassword()));
+
 					Random c = new Random();
 					String codigo = Integer.toString(c.nextInt(1000,9999));
 					
-					Mensageiro.enviarHistoricoCorridas(email.getText(), codigo);
-					dispose();
-					
+					Mensageiro.enviarCodigoEmail(email.getText(), codigo);
+					Administrador adm = new Administrador(n, sn, data, sexo, email.getText(), new String(senha.getPassword()));
 					new JanelaConfirmarEmail(codigo, adm);
+
+					dispose();
 					
 				} catch (Exception e1) {
 					System.out.println(e1);
-					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", primeiroAcesso);
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", estaJanela);
 				}
 				
 			}

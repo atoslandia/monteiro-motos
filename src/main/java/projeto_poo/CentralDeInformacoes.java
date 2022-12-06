@@ -1,10 +1,14 @@
 package projeto_poo;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+
+import projeto_poo.erros.MenorDeIdadeException;
+import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class CentralDeInformacoes {
 	
-	private Administrador administrador;
 	private ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
 	private ArrayList<Corrida> todasAsCorridas = new ArrayList<Corrida>();
 	
@@ -21,23 +25,16 @@ public class CentralDeInformacoes {
 		this.todasAsCorridas = todasAsCorridas;
 	}
 	
-	public Administrador getAdministrador() {
-		return administrador;
-	}
-	
-	public void setAdministrador(Administrador administrador) {
-		this.administrador = administrador;
-	}
-	
-	public boolean adicionarUsuario(Usuario usuario) {
+	public void adicionarUsuario(Usuario usuario) throws MenorDeIdadeException {
 		try {
 			recuperarUsuarioPeloEmail(usuario.getEmail());
-			
-			/* IF(SE É MAIOR DE 18 ANOS)*/
-			} catch (Exception e) {
-				return false;
+			LocalDate dataAtual = LocalDate.now();
+		    Period periodo = Period.between(usuario.getDataNascimento(), dataAtual);
+			if(periodo.getYears() < 18)
+				throw new MenorDeIdadeException();
+		} catch (Exception e) {
+				todosOsUsuarios.add(usuario);
 		}
-		return todosOsUsuarios.add(usuario);
 	}
 	
 	public boolean adicionarCorrida(Corrida corrida) {
@@ -46,12 +43,12 @@ public class CentralDeInformacoes {
 		return getTodasAsCorridas().add(recuperarCorridaPeloId(corrida.getId()));
 	}
 	
-	public Usuario recuperarUsuarioPeloEmail(String email) throws Exception {
+	public Usuario recuperarUsuarioPeloEmail(String email) throws UsuarioNaoExisteException {
 		for(Usuario i: todosOsUsuarios) {
 			if(i.getEmail().equals(email))
 				return i;
 		}
-		throw new Exception();
+		throw new UsuarioNaoExisteException();
 	}
 	
 	public Corrida recuperarCorridaPeloId(long id) {

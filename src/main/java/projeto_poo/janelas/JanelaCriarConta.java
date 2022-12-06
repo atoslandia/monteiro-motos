@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
 import projeto_poo.Mototaxista;
@@ -26,31 +27,14 @@ import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.erros.UsuarioNaoExisteException;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaCriarConta extends JanelaPadrao{
-	public JanelaCriarConta() {
-		super("Criar conta");
-		
-		caixaNome();
-		caixaSobrenome();
-		caixaEmail();
-		caixaSenha();
-		escolhaSexo();
-		tipoDeConta();
-		dataNascimento();
-		
-		botaoConcluir();
-		botaoVoltar();
-		
-		caixaCodigo();
-		
-		logoCadastro();
-		add(getFundoPadrao());
-		setVisible(true);
-	}
 	
+	private JanelaCriarConta estaJanela;
+
 	private JTextField nome;
 	private JTextField sobrenome;
 	private JTextField email;
@@ -63,21 +47,37 @@ public class JanelaCriarConta extends JanelaPadrao{
 	private JComboBox<String> mes;
 	private JComboBox<String> ano;
 	
-	private JTextField codigo;
-
+	public JanelaCriarConta() {
+		super("Criar conta");
+		
+		caixaNome();
+		caixaSobrenome();
+		caixaEmail();
+		caixaSenha();
+		escolhaSexo();
+		tipoDeConta();
+		dataNascimento();
+		
+		botaoProsseguir();
+		botaoVoltar();
+		
+		logoCadastro();
+		add(getFundoPadrao());
+		setVisible(true);
+	}
 	
+
 	private void logoCadastro() {
 		JLabel logo = new JLabel(new ImageIcon("imgs/criarconta.png"));
 		logo.setBounds(30, 30, 282, 32);
 		add(logo);
 	}
 	
-	private void botaoConcluir() {
-		JButton botaoProsseguir = getBotaoConcluir();
+	private void botaoProsseguir() {
+		JButton botaoProsseguir = getBotaoProsseguir();
 		botaoProsseguir.setBounds(530, 170, 170, 41);
 		
 		botaoProsseguir.addActionListener(new OuvinteComponentesPreenchidosDeDados());
-			
 		add(botaoProsseguir);
 	}
 	
@@ -202,52 +202,6 @@ public class JanelaCriarConta extends JanelaPadrao{
         grupo.add(passageiro);
         grupo.add(mototaxista);
     }
-    
-    private void caixaCodigo() {
-		JLabel textoCodigo = new JLabel("Código:");
-		textoCodigo.setBounds(380, 65, 100, 19);
-		textoCodigo.setVisible(false);
-		add(textoCodigo);
-		
-		codigo = new CaixaTextoPadrao();
-		codigo.addKeyListener(new OuvinteTeclasEspeciais());
-		codigo.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
-		codigo.setBounds(380, 85, 70, 20);
-		codigo.setVisible(false);
-		add(codigo);
-	}
-	
-	public JTextField getNome() {
-		return nome;
-	}
-	
-	public JTextField getSobrenome() {
-		return sobrenome;
-	}
-	
-	public JTextField getEmail() {
-		return email;
-	}
-	
-	public JPasswordField getSenha() {
-		return senha;
-	}
-	
-	public JRadioButton getFeminino() {
-		return feminino;
-	}
-	
-	public JRadioButton getMasculino() {
-		return masculino;
-	}
-	
-	public JRadioButton getPassageiro() {
-		return passageiro;
-	}
-	
-	public JRadioButton getMototaxista() {
-		return mototaxista;
-	}
 	
 	private class OuvinteComponentesPreenchidosDeDados implements ActionListener{
 		
@@ -287,13 +241,26 @@ public class JanelaCriarConta extends JanelaPadrao{
 			}
 			
 			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("") && !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3 && (feminino.isSelected() | masculino.isSelected()) && (passageiro.isSelected() | mototaxista.isSelected())) {
+				String n = nome.getText();
+				String sn = sobrenome.getText();
+				LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
+				Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
 				try {
-					String n = nome.getText();
-					String sn = sobrenome.getText();
-					LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
-					Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
 					
+					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
+					dispose();
 					
+				} catch (UsuarioNaoExisteException e2) {
+
+					Random c = new Random();
+					String codigo = Integer.toString(c.nextInt(1000,9999));
+					
+					try {
+						Mensageiro.enviarCodigoEmail(email.getText(), codigo);
+					} catch (Exception e1) {
+						System.out.println(e1);
+						new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", estaJanela);
+					}
 					
 					Usuario usuario;
 					if(passageiro.isSelected()) {
@@ -301,18 +268,15 @@ public class JanelaCriarConta extends JanelaPadrao{
 					}else {
 						usuario = new Mototaxista(n , sn , data, sexo, email.getText(), new String(senha.getPassword()));
 					}
-					Random c = new Random();
-					String codigo = Integer.toString(c.nextInt(1000,9999));
-					
-					Mensageiro.enviarHistoricoCorridas(email.getText(), codigo);
-					dispose();
 					
 					new JanelaConfirmarEmail(codigo, usuario);
+					dispose();
 					
 				} catch (Exception e2) {
-					System.out.println("Acho que o email foi repetido"+e2);
+					System.out.println(e2);
 				}
-			}
+			} /*else
+			 		avisoPreencherDados.setVisible(true);*/
 		}
 	}
 	

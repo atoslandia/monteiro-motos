@@ -21,6 +21,7 @@ import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Persistencia;
+import projeto_poo.Usuario;
 import projeto_poo.componentes.BotaoPadrao;
 import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
@@ -64,9 +65,6 @@ public class JanelaLogin extends JanelaPadrao{
         verificarPersistencia();
 
     }
-
-    
-    
 	
     private void verificarPersistencia() {
     	try {
@@ -173,24 +171,24 @@ public class JanelaLogin extends JanelaPadrao{
 			if(email.getText().equals(""))
 				email.setBorder(getBordaErro());
 			else email.setBorder(getBorda());
-			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals("")) 
+			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals(""))
 				senha.setBorder(getBordaErro());
 			else senha.setBorder(getBorda());
 			
 			try {
-				if(tipoDeConta.getSelectedItem().equals("Passageiro")) {
-					Passageiro p = (Passageiro)dados.recuperarUsuarioPeloEmail(email.getText());
-					if(p.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("passageiro: "+p);
+				Usuario usuario = dados.recuperarUsuarioPeloEmail(email.getText());
+				if(tipoDeConta.getSelectedItem().equals(tiposDeConta[0]) && usuario instanceof Passageiro) {
+					if(usuario.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("passageiro");
 					}
-				else if(tipoDeConta.getSelectedItem().equals("Mototaxista")) {
-					Mototaxista m = (Mototaxista)dados.recuperarUsuarioPeloEmail(email.getText());
-					if(m.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("mototaxista: "+m);
-				} else {
-					Administrador a = (Administrador)dados.recuperarUsuarioPeloEmail(email.getText());
-					if(a.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("mototaxista: "+a);
+				else if(tipoDeConta.getSelectedItem().equals(tiposDeConta[1]) && usuario instanceof Mototaxista) {
+					if(usuario.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("mototaxista");
+					
+				} else if(tipoDeConta.getSelectedItem().equals(tiposDeConta[2]) && usuario instanceof Administrador){
+					if(usuario.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("adm");
+					
 				}
 					
 				} catch (Exception e1) {
