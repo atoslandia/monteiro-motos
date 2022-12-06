@@ -24,9 +24,6 @@ public class JanelaPadrao extends JFrame{
 	
 	public JanelaPadrao(String tituloJanela) {
 		
-		/* ouvintes */
-		
-		/* padrao da janela */
 		setTitle(tituloJanela);
 		setSize(760, 420);
 		setFont(new Font("Calibrii", Font.BOLD | Font.ITALIC, 12));
@@ -35,11 +32,7 @@ public class JanelaPadrao extends JFrame{
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/* fundo */
 		fundoPadrao();
-		
-		/* botoes e imagens*/
-		
 		criarBotoesPadrao();
 		
 	}

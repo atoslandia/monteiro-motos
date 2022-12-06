@@ -1,18 +1,21 @@
-<CentralDeInformacoes>
+<projeto__poo.CentralDeInformacoes>
   <administrador>
-    <nome>Atos Alves</nome>
+    <nome>Atos</nome>
+    <sobrenome>Alves</sobrenome>
+    <dataNascimento>2003-01-01</dataNascimento>
     <email>atos5000@gmail.com</email>
     <senha>1234</senha>
     <sexo>M</sexo>
-    <dataNascimento>2001-07-13</dataNascimento>
   </administrador>
-  <todosOsPassageiros>
-    <projeto__poo.Passageiro>
-      <nome>Atos Alves</nome>
-      <sexo>M</sexo>
-      <dataNascimento>2001-07-13</dataNascimento>
+  <todosOsUsuarios>
+    <projeto__poo.Mototaxista>
+      <nome>Atos</nome>
+      <sobrenome>Alves</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
       <email>atos5000@gmail.com</email>
-    </projeto__poo.Passageiro>
-  </todosOsPassageiros>
+      <senha>1234</senha>
+      <sexo>M</sexo>
+    </projeto__poo.Mototaxista>
+  </todosOsUsuarios>
   <todasAsCorridas/>
-</CentralDeInformacoes>
+</projeto__poo.CentralDeInformacoes>

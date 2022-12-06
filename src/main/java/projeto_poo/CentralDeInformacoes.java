@@ -1,19 +1,18 @@
 package projeto_poo;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CentralDeInformacoes {
 	
 	private Administrador administrador;
-	private ArrayList<Passageiro> todosOsPassageiros = new ArrayList<Passageiro>();
+	private ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
 	private ArrayList<Corrida> todasAsCorridas = new ArrayList<Corrida>();
 	
-	public ArrayList<Passageiro> getTodosOsPassageiros() {
-		return todosOsPassageiros;
+	public ArrayList<Usuario> getTodosOsUsuarios() {
+		return todosOsUsuarios;
 	}
-	public void setTodosOsPassageiros(ArrayList<Passageiro> todosOsPassageiros) {
-		this.todosOsPassageiros = todosOsPassageiros;
+	public void setTodosOsPassageiros(ArrayList<Usuario> todosOsUsuarios) {
+		this.todosOsUsuarios = todosOsUsuarios;
 	}
 	public ArrayList<Corrida> getTodasAsCorridas() {
 		return todasAsCorridas;
@@ -30,13 +29,15 @@ public class CentralDeInformacoes {
 		this.administrador = administrador;
 	}
 	
-	public boolean adicionarPassageiro(Passageiro passageiro) {
-		if((LocalDate.now().getYear() - passageiro.getDataNascimento().getYear()) < 18)
-			return false;
-		
-		if(passageiro.equals(recuperarPassageiroPeloEmail(passageiro.getEmail())))
-			return false;
-		return getTodosOsPassageiros().add(passageiro);
+	public boolean adicionarUsuario(Usuario usuario) {
+		try {
+			recuperarUsuarioPeloEmail(usuario.getEmail());
+			
+			/* IF(SE É MAIOR DE 18 ANOS)*/
+			} catch (Exception e) {
+				return false;
+		}
+		return todosOsUsuarios.add(usuario);
 	}
 	
 	public boolean adicionarCorrida(Corrida corrida) {
@@ -45,12 +46,12 @@ public class CentralDeInformacoes {
 		return getTodasAsCorridas().add(recuperarCorridaPeloId(corrida.getId()));
 	}
 	
-	public Passageiro recuperarPassageiroPeloEmail(String email) {
-		for(Passageiro i: getTodosOsPassageiros()) {
+	public Usuario recuperarUsuarioPeloEmail(String email) throws Exception {
+		for(Usuario i: todosOsUsuarios) {
 			if(i.getEmail().equals(email))
 				return i;
 		}
-		return null;
+		throw new Exception();
 	}
 	
 	public Corrida recuperarCorridaPeloId(long id) {
@@ -61,10 +62,10 @@ public class CentralDeInformacoes {
 		return null;
 	}
 	
-	public ArrayList<Corrida> recuperarCorridasDeUmPassageiro(String email){
-		ArrayList<Corrida> corridasRecuperadas = null;
-		if(recuperarPassageiroPeloEmail(email) != null)
-			corridasRecuperadas = new ArrayList<Corrida>();
+	public ArrayList<Corrida> recuperarCorridasDeUmPassageiro(String email) throws Exception{
+		
+		ArrayList<Corrida> corridasRecuperadas = new ArrayList<Corrida>();
+		
 		for(Corrida c: getTodasAsCorridas())
 			if(c.getPassageiro().getEmail().equals(email))
 				corridasRecuperadas.add(c);

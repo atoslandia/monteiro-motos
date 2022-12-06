@@ -2,6 +2,7 @@ package projeto_poo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import projeto_poo.janelas.JanelaConfirmarEmail;
@@ -13,7 +14,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		new PrimeiroAcesso();
+		new JanelaCriarConta();
 
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();

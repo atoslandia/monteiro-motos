@@ -21,7 +21,6 @@ public class Persistencia {
 	
 	public void salvarPersistencia(CentralDeInformacoes pessoa) throws Exception {
 		xs.addPermission(AnyTypePermission.ANY);
-		xs.alias("CentralDeInformacoes", CentralDeInformacoes.class);
 		PrintWriter escrever = new PrintWriter(arquivo);
 		String xml = xs.toXML(pessoa);
 		escrever.print(xml);
@@ -32,7 +31,6 @@ public class Persistencia {
 		if(arquivo.exists()) {
 			FileReader ler = new FileReader("persistencia.xml");
 			xs.addPermission(AnyTypePermission.ANY);
-			xs.alias("CentralDeInformacoes", CentralDeInformacoes.class);
 			CentralDeInformacoes dados = (CentralDeInformacoes)xs.fromXML(ler);
 			return dados;
 		}

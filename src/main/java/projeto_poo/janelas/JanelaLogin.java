@@ -1,6 +1,7 @@
 package projeto_poo.janelas;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,8 @@ import javax.swing.border.Border;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Mototaxista;
+import projeto_poo.Passageiro;
 import projeto_poo.Persistencia;
 import projeto_poo.componentes.BotaoPadrao;
 import projeto_poo.componentes.CaixaPadraoSenha;
@@ -27,7 +30,20 @@ import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaLogin extends JanelaPadrao{
 	
+	private JTextField email;
+    private JPasswordField senha;
+    private JComboBox<String> tipoDeConta;
+    private JRadioButton passageiro;
+    private JRadioButton mototaxista;
 
+    private OuvinteTeclasEspeciais teclasEspeciais = new OuvinteTeclasEspeciais();
+    private JButton botaoEntrar;
+    private JButton botaoEsqueciSenha;
+    private JButton botaoCriarConta;
+    private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
+    
+    private CentralDeInformacoes dados;
+	
     public JanelaLogin() {
         super("Login");
         
@@ -49,22 +65,12 @@ public class JanelaLogin extends JanelaPadrao{
 
     }
 
-    private JTextField email;
-    private JPasswordField senha;
-    private JComboBox<String> tipoDeConta;
-    private JRadioButton passageiro;
-    private JRadioButton mototaxista;
-
-    private OuvinteTeclasEspeciais teclasEspeciais = new OuvinteTeclasEspeciais();
-    private JButton botaoEntrar;
-    private JButton botaoEsqueciSenha;
-    private JButton botaoCriarConta;
-    private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
+    
     
 	
     private void verificarPersistencia() {
     	try {
-    		CentralDeInformacoes xml = getPersistencia().buscarCentral();
+    		dados = getPersistencia().buscarCentral();
 		} catch (Exception e) {
 			dispose();
 			new PrimeiroAcesso();
@@ -85,36 +91,36 @@ public class JanelaLogin extends JanelaPadrao{
 
     private void textoEmail() {
         JLabel textoEmail = new TextoImagemPadrao("E-mail: ");
-        textoEmail.setBounds(30, 150, 100, 20);
+        textoEmail.setBounds(30, 120, 100, 20);
         add(textoEmail);
 
         email = new CaixaTextoPadrao();
         email.addKeyListener(teclasEspeciais);
         email.setToolTipText(teclasEspeciais.getTeclasEspeciais());
-        email.setBounds(120, 150, 200, 20);
+        email.setBounds(120, 120, 200, 20);
         add(email);
 
     }
     private void textoSenha() {
         JLabel textoSenha = new TextoImagemPadrao("Senha: ");
-        textoSenha.setBounds(30,200,100,20);
+        textoSenha.setBounds(30,170,100,20);
         add(textoSenha);
 
         senha = new CaixaPadraoSenha();
         senha.addKeyListener(teclasEspeciais);
         senha.setToolTipText(teclasEspeciais.getTeclasEspeciais());
-        senha.setBounds(120, 200, 200, 20);
+        senha.setBounds(120, 170, 200, 20);
         add(senha);
     }
 
     private void tipoDeConta() {
         JLabel textoTipoDeConta = new TextoImagemPadrao("Tipo de Conta: ");
-        textoTipoDeConta.setBounds(30 ,250 ,100 ,20);
+        textoTipoDeConta.setBounds(30, 220, 100, 20);
         add(textoTipoDeConta);
         
         tipoDeConta = new JComboBox<String>(tiposDeConta);
-        
-        tipoDeConta.setBounds(120, 250, 200, 20);
+        tipoDeConta.setFont(new Font("Calibrii", Font.PLAIN, 10));
+        tipoDeConta.setBounds(120, 220, 200, 20);
         add(tipoDeConta);
         
 
@@ -153,54 +159,52 @@ public class JanelaLogin extends JanelaPadrao{
         add(botaoCriarConta);
     }
 
-    public JTextField getEmail() {
-        return email;
-    }
-
-
     public JRadioButton getPassageiro() {
         return passageiro;
     }
-
 
     public JRadioButton getMototaxista() {
         return mototaxista;
     }
 
-    public JPasswordField getSenha() {
-        return senha;
-    }
-
-	public JComboBox<String> getTipoDeConta() {
-		return tipoDeConta;
-	}
-	
 	private class OuvinteEntrar implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
+			if(email.getText().equals(""))
+				email.setBorder(getBordaErro());
+			else email.setBorder(getBorda());
+			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals("")) 
+				senha.setBorder(getBordaErro());
+			else senha.setBorder(getBorda());
 			
-			System.out.println(getTipoDeConta().getSelectedItem());
-			
-			if(getEmail().getText().equals(""))
-				getEmail().setBorder(getBordaErro());
-			else getEmail().setBorder(getBorda());
-			if(new String(getSenha().getPassword()).length() < 4 || new String(getSenha().getPassword()).equals("")) 
-				getSenha().setBorder(getBordaErro());
-			else getSenha().setBorder(getBorda());
-			
-		}
-		
+			try {
+				if(tipoDeConta.getSelectedItem().equals("Passageiro")) {
+					Passageiro p = (Passageiro)dados.recuperarUsuarioPeloEmail(email.getText());
+					if(p.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("passageiro: "+p);
+					}
+				else if(tipoDeConta.getSelectedItem().equals("Mototaxista")) {
+					Mototaxista m = (Mototaxista)dados.recuperarUsuarioPeloEmail(email.getText());
+					if(m.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("mototaxista: "+m);
+				} else {
+					Administrador a = (Administrador)dados.recuperarUsuarioPeloEmail(email.getText());
+					if(a.getSenha().equals(new String(senha.getPassword())))
+						System.out.println("mototaxista: "+a);
+				}
+					
+				} catch (Exception e1) {
+					email.setBorder(getBordaErro());
+					e1.printStackTrace();
+				}
+			}
 	}
 	
 	private class OuvinteCriarConta implements ActionListener{
-
 		public void actionPerformed(ActionEvent e) {
-			
 			dispose();
 			new JanelaCriarConta();
-			
 		}
-		
 	}
 
 }

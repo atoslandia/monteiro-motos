@@ -9,15 +9,18 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Sexo;
 import projeto_poo.Usuario;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.erros.NaoExistePassageiroException;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
@@ -25,8 +28,6 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	private JTextField codigo;
 	private String codigoGerado;
 	private Usuario usuario;
-	
-	
 	
 	public JanelaConfirmarEmail(String codigoGerado, Usuario usuario) {
 		super("Confirmar e-mail");
@@ -44,7 +45,6 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 		setVisible(true);
 	}
 	
-
 	private void logoConfirmarEmail() {
 		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/confirmaremail.png"));
 		logo.setBounds(30, 30, 422, 31);
@@ -91,19 +91,24 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 			if(codigo.getText().equals(codigoGerado)) {
 				try {
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-					if(usuario instanceof Administrador) {
-						System.out.println("foi criado um administrador");
+					if(usuario instanceof Passageiro) {
+						cdi.adicionarUsuario((Passageiro)usuario);
+						getPersistencia().salvarPersistencia(cdi);
+						System.out.println("foi criado um passageiro");
+					} else if(usuario instanceof Mototaxista) {
+						cdi.adicionarUsuario((Mototaxista)usuario);
+						getPersistencia().salvarPersistencia(cdi);
+						System.out.println("foi criado um mototaxista");
+					}
+					else {
 						cdi.setAdministrador((Administrador)usuario);
 						getPersistencia().salvarPersistencia(cdi);
-					}
-					else if(usuario instanceof Passageiro) {
-						System.out.println("foi criado um passageiro");
-						cdi.adicionarPassageiro((Passageiro)usuario);
-						getPersistencia().salvarPersistencia(cdi);
+						System.out.println("foi criado um administrador");
 					}
 					dispose();
 					new JanelaLogin();
 				} catch (Exception e2) {
+					e2.printStackTrace();
 					System.out.println("erro ao inserir codigo "+e2);
 				}
 				
@@ -116,7 +121,10 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 		
 		public void actionPerformed(ActionEvent e) {
 			dispose();
-			new PrimeiroAcesso();
+			if(usuario instanceof Administrador)
+				new PrimeiroAcesso();
+			else
+				new JanelaLogin();
 		}
 		
 	}

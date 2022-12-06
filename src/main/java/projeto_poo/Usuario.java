@@ -20,35 +20,42 @@ public class Usuario {
 		setSenha(senha);
 	}
 	
-	
-	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public Sexo getSexo() {
 		return sexo;
 	}
+	
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
+	
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
+	
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public String getSenha() {
 		return senha;
 	}
+	
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
@@ -57,13 +64,9 @@ public class Usuario {
 		return "nome: "+nome+" email: "+email+" senha: "+senha+" sexo: "+sexo;
 	}
 
-
-
 	public String getSobrenome() {
 		return sobrenome;
 	}
-
-
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;

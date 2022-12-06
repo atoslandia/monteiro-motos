@@ -18,8 +18,10 @@ import javax.swing.JTextField;
 
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
+import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Sexo;
+import projeto_poo.Usuario;
 import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.OpcaoRadioPadrao;
@@ -42,6 +44,8 @@ public class JanelaCriarConta extends JanelaPadrao{
 		botaoConcluir();
 		botaoVoltar();
 		
+		caixaCodigo();
+		
 		logoCadastro();
 		add(getFundoPadrao());
 		setVisible(true);
@@ -58,6 +62,8 @@ public class JanelaCriarConta extends JanelaPadrao{
 	private JComboBox<String> dia;
 	private JComboBox<String> mes;
 	private JComboBox<String> ano;
+	
+	private JTextField codigo;
 
 	
 	private void logoCadastro() {
@@ -197,6 +203,19 @@ public class JanelaCriarConta extends JanelaPadrao{
         grupo.add(mototaxista);
     }
     
+    private void caixaCodigo() {
+		JLabel textoCodigo = new JLabel("Código:");
+		textoCodigo.setBounds(380, 65, 100, 19);
+		textoCodigo.setVisible(false);
+		add(textoCodigo);
+		
+		codigo = new CaixaTextoPadrao();
+		codigo.addKeyListener(new OuvinteTeclasEspeciais());
+		codigo.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
+		codigo.setBounds(380, 85, 70, 20);
+		codigo.setVisible(false);
+		add(codigo);
+	}
 	
 	public JTextField getNome() {
 		return nome;
@@ -273,18 +292,25 @@ public class JanelaCriarConta extends JanelaPadrao{
 					String sn = sobrenome.getText();
 					LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
 					Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
-					Passageiro passageiro = new Passageiro(n , sn , data, sexo, email.getText(), new String(senha.getPassword()));
 					
+					
+					
+					Usuario usuario;
+					if(passageiro.isSelected()) {
+						usuario = new Passageiro(n , sn , data, sexo, email.getText(), new String(senha.getPassword()));
+					}else {
+						usuario = new Mototaxista(n , sn , data, sexo, email.getText(), new String(senha.getPassword()));
+					}
 					Random c = new Random();
 					String codigo = Integer.toString(c.nextInt(1000,9999));
 					
 					Mensageiro.enviarHistoricoCorridas(email.getText(), codigo);
 					dispose();
 					
-					new JanelaConfirmarEmail(codigo,(Passageiro)passageiro);
+					new JanelaConfirmarEmail(codigo, usuario);
 					
 				} catch (Exception e2) {
-					System.out.println(e2);
+					System.out.println("Acho que o email foi repetido"+e2);
 				}
 			}
 		}

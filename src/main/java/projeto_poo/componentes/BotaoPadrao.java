@@ -15,6 +15,5 @@ public class BotaoPadrao extends JButton{
 		setPressedIcon(new ImageIcon(imgClicada));
 		setCursor(cursor);
 	}
-	
 	private Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 }
