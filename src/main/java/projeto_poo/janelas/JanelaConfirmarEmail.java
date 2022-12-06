@@ -120,10 +120,7 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 		
 		public void actionPerformed(ActionEvent e) {
 			dispose();
-			if(usuario instanceof Administrador)
-				new PrimeiroAcesso();
-			else
-				new JanelaLogin();
+			new JanelaLogin();
 		}
 		
 	}

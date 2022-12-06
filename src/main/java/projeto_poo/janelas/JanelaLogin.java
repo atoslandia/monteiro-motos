@@ -153,6 +153,7 @@ public class JanelaLogin extends JanelaPadrao{
     private void botaoEsqueciSenha() {
     	botaoEsqueciSenha = new BotaoPadrao("Clique para redefinir a senha", "imgs/botao-esqueciasenha.png","imgs/botao-esqueciasenhaclicado.png");
 		botaoEsqueciSenha.setBounds(530, 215, 170, 26);
+		botaoEsqueciSenha.addActionListener(new OuvinteEsqueciSenha());
         add(botaoEsqueciSenha);
     }
 
@@ -202,6 +203,16 @@ public class JanelaLogin extends JanelaPadrao{
 					e1.printStackTrace();
 				}
 			}
+	}
+	
+	
+	private class OuvinteEsqueciSenha implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			new JanelaEsqueciMinhaSenha();
+		}
+		
 	}
 	
 	private class OuvinteCriarConta implements ActionListener{
