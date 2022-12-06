@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -27,6 +28,7 @@ import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.erros.UsuarioNaoExisteException;
 import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
@@ -47,11 +49,11 @@ public class JanelaCriarConta extends JanelaPadrao{
 	private JComboBox<String> mes;
 	private JComboBox<String> ano;
 	
-	JLabel avisoPreencherDados;
+	private JLabel avisoPreencherDados;
+	private JLabel avisoUsuarioExiste;
 	
 	public JanelaCriarConta() {
 		super("Criar conta");
-		
 		caixaNome();
 		caixaSobrenome();
 		caixaEmail();
@@ -63,17 +65,41 @@ public class JanelaCriarConta extends JanelaPadrao{
 		botaoProsseguir();
 		botaoVoltar();
 		
-		avisoPreencherDados();
+		avisos();
 		
 		logoCadastro();
 		add(getFundoPadrao());
 		setVisible(true);
 	}
 	
-
+	public JanelaCriarConta(String primeiroCadastro) {
+		super("Criar conta");
+		setTitle(primeiroCadastro);
+		caixaNome();
+		caixaSobrenome();
+		caixaEmail();
+		caixaSenha();
+		escolhaSexo();
+		dataNascimento();
+		
+		botaoProsseguirAdm();
+		
+		avisos();
+		
+		logoPrimeiroAcesso();
+		add(getFundoPadrao());
+		setVisible(true);
+	}
+	
 	private void logoCadastro() {
 		JLabel logo = new JLabel(new ImageIcon("imgs/criarconta.png"));
 		logo.setBounds(30, 30, 282, 32);
+		add(logo);
+	}
+	
+	private void logoPrimeiroAcesso() {
+		JLabel logo = new JLabel(new ImageIcon("imgs/primeiroacesso.png"));
+		logo.setBounds(30, 30, 394, 32);
 		add(logo);
 	}
 	
@@ -81,7 +107,15 @@ public class JanelaCriarConta extends JanelaPadrao{
 		JButton botaoProsseguir = getBotaoProsseguir();
 		botaoProsseguir.setBounds(530, 170, 170, 41);
 		
-		botaoProsseguir.addActionListener(new OuvinteComponentesPreenchidosDeDados());
+		botaoProsseguir.addActionListener(new OuvinteBotaoProsseguir());
+		add(botaoProsseguir);
+	}
+	
+	private void botaoProsseguirAdm() {
+		JButton botaoProsseguir = getBotaoProsseguir();
+		botaoProsseguir.setBounds(530, 170, 170, 41);
+		
+		botaoProsseguir.addActionListener(new OuvinteBotaoProsseguirAdm());
 		add(botaoProsseguir);
 	}
 	
@@ -89,7 +123,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		JButton botaoVoltar = getBotaoVoltar();
 		botaoVoltar.setBounds(590, 220, 58, 22);
 		botaoVoltar.addActionListener(new OuvinteBotaoVoltar());
-		add(botaoVoltar);
+		
 	}
 	
 //	componentes
@@ -207,51 +241,26 @@ public class JanelaCriarConta extends JanelaPadrao{
         grupo.add(mototaxista);
     }
     
-    private void avisoPreencherDados() {
+    private void avisos() {
     	avisoPreencherDados = new TextoImagemPadrao("Preencha todos os dados!");
     	avisoPreencherDados.setForeground(Color.RED);
     	avisoPreencherDados.setVisible(false);
     	avisoPreencherDados.setBounds(120, 65, 150, 20);
     	add(avisoPreencherDados);
+    	
+    	avisoUsuarioExiste = new TextoImagemPadrao("Usuário já cadastrado!");
+    	avisoUsuarioExiste.setForeground(Color.RED);
+    	avisoUsuarioExiste.setVisible(false);
+    	avisoUsuarioExiste.setBounds(120, 65, 150, 20);
+    	add(avisoUsuarioExiste);
     }
 	
-	private class OuvinteComponentesPreenchidosDeDados implements ActionListener{
+	private class OuvinteBotaoProsseguir implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
 
-//			if(nome.getText().equals(""))
-//				nome.setBorder(getBordaErro());
-//			else nome.setBorder(getBorda());
-//			
-//			if(sobrenome.getText().equals(""))
-//				sobrenome.setBorder(getBordaErro());
-//			else sobrenome.setBorder(getBorda());
-//			
-//			if(email.getText().equals(""))
-//				email.setBorder(getBordaErro());
-//			else email.setBorder(getBorda());
-//			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals("")) 
-//				senha.setBorder(getBordaErro());
-//			else senha.setBorder(getBorda());
-//			
-//			if(!feminino.isSelected() && !masculino.isSelected())	{
-//				feminino.setForeground(new Color(231, 110, 84));
-//				masculino.setForeground(new Color(231, 110, 84));
-//			}
-//			else {
-//				feminino.setForeground(null);
-//				masculino.setForeground(null);
-//			}
-//			
-//			if(!passageiro.isSelected() && !mototaxista.isSelected())	{
-//				passageiro.setForeground(new Color(231, 110, 84));
-//				mototaxista.setForeground(new Color(231, 110, 84));
-//			}
-//			else {
-//				passageiro.setForeground(null);
-//				mototaxista.setForeground(null);
-//			}
 			avisoPreencherDados.setVisible(false);
+			avisoUsuarioExiste.setVisible(false);
 			
 			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("")
 					&& !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3
@@ -263,7 +272,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 				try {
 					
 					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
-					dispose();
+					avisoUsuarioExiste.setVisible(true);
 					
 				} catch (UsuarioNaoExisteException e2) {
 					try {
@@ -285,6 +294,41 @@ public class JanelaCriarConta extends JanelaPadrao{
 				}
 			} else
 			 	avisoPreencherDados.setVisible(true);
+		}
+	}
+	
+	private class OuvinteBotaoProsseguirAdm implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			avisoPreencherDados.setVisible(false);
+			avisoUsuarioExiste.setVisible(false);
+			
+			if(!nome.getText().equals("") && !sobrenome.getText().equals("") && !email.getText().equals("")
+					&& !new String(senha.getPassword()).equals("") && new String(senha.getPassword()).length() > 3
+					&& (feminino.isSelected() | masculino.isSelected())) {
+				String n = nome.getText();
+				String sn = sobrenome.getText();
+				LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
+				Sexo sexo = feminino.isSelected() ? Sexo.F : Sexo.M;
+				try {
+
+					Random c = new Random();
+					String codigo = Integer.toString(c.nextInt(1000,9999));
+					
+					Mensageiro.enviarCodigoEmail(email.getText(), codigo);
+					Administrador adm = new Administrador(n, sn, data, sexo, email.getText(), new String(senha.getPassword()));
+					new JanelaConfirmarEmail(codigo, adm);
+
+					dispose();
+					
+				} catch (Exception e1) {
+					System.out.println(e1);
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", estaJanela);
+				}
+				
+			}else 
+				avisoPreencherDados.setVisible(true);
 		}
 	}
 	

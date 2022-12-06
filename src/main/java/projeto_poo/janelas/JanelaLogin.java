@@ -27,6 +27,8 @@ import projeto_poo.componentes.CaixaPadraoSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.erros.AdministradroNaoExisteException;
+import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaLogin extends JanelaPadrao{
@@ -69,9 +71,13 @@ public class JanelaLogin extends JanelaPadrao{
     private void verificarPersistencia() {
     	try {
     		dados = getPersistencia().buscarCentral();
-		} catch (Exception e) {
+    		dados.verificarAdm();
+		} catch (NaoExisteXmlException | AdministradroNaoExisteException e) {
 			dispose();
-			new PrimeiroAcesso();
+			new JanelaCriarConta("Primeiro acesso");
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
 	

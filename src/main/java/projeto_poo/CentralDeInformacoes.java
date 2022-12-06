@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 
+import projeto_poo.erros.AdministradroNaoExisteException;
 import projeto_poo.erros.MenorDeIdadeException;
 import projeto_poo.erros.UsuarioNaoExisteException;
 
@@ -43,12 +44,21 @@ public class CentralDeInformacoes {
 		return getTodasAsCorridas().add(recuperarCorridaPeloId(corrida.getId()));
 	}
 	
+	public void verificarAdm() throws AdministradroNaoExisteException{
+		boolean contemAdm = false;
+		for(Usuario a: todosOsUsuarios) {
+			if(a instanceof Administrador)
+				contemAdm = true;
+		}
+		if(!contemAdm)
+			throw new AdministradroNaoExisteException();
+	}
+	
 	public Usuario recuperarUsuarioPeloEmail(String email) throws UsuarioNaoExisteException {
 		for(Usuario i: todosOsUsuarios) {
-			if(i.getEmail().equals(email))
-				return i;
+					if(i.getEmail().equals(email))
+						return i;
 		}
-		
 		throw new UsuarioNaoExisteException();
 	}
 	
