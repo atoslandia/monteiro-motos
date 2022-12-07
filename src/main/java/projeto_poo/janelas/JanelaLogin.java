@@ -32,9 +32,9 @@ public class JanelaLogin extends JanelaPadrao{
     private JRadioButton passageiro;
     private JRadioButton mototaxista;
 
-    private JButton botaoEntrar;
-    private JButton botaoEsqueciSenha;
-    private JButton botaoCriarConta;
+    private BotaoPadrao botaoEntrar;
+    private BotaoPadrao botaoEsqueciSenha;
+    private BotaoPadrao botaoCriarConta;
     private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
     
     private CentralDeInformacoes dados;
@@ -132,32 +132,30 @@ public class JanelaLogin extends JanelaPadrao{
 // botoes
 
     private void botaoEntrar() {
-    	botaoEntrar = new BotaoPadrao("Clique para entrar","imgs/botao-entrar.png","imgs/botao-entrarclicado.png");
+    	botaoEntrar = new BotaoPadrao();
+    	botaoEntrar.setIcon(new ImageIcon("imgs/botao-entrar.png"));
+    	botaoEntrar.setPressedIcon(new ImageIcon("imgs/botao-entrar.png","imgs/botao-entrarclicado.png"));
         botaoEntrar.setBounds(530, 155, 170, 41);
         botaoEntrar.addActionListener(new OuvinteEntrar());
         add(botaoEntrar);
     }
 
     private void botaoEsqueciSenha() {
-    	botaoEsqueciSenha = new BotaoPadrao("Clique para redefinir a senha", "imgs/botao-esqueciasenha.png","imgs/botao-esqueciasenhaclicado.png");
+    	botaoEsqueciSenha = new BotaoPadrao();
+    	botaoEsqueciSenha.setIcon(new ImageIcon("imgs/botao-esqueciasenha.png"));
+    	botaoEsqueciSenha.setPressedIcon(new ImageIcon("imgs/botao-esqueciasenhaclicado.png"));
 		botaoEsqueciSenha.setBounds(530, 215, 170, 26);
 		botaoEsqueciSenha.addActionListener(new OuvinteEsqueciSenha());
         add(botaoEsqueciSenha);
     }
 
     private void botaoCriarConta() {
-		botaoCriarConta = new BotaoPadrao("Clique para redefinir a senha","imgs/botao-criarconta.png","imgs/botao-criarcontaclicado.png");
+    	botaoCriarConta = new BotaoPadrao();
+		botaoCriarConta.setIcon(new ImageIcon("imgs/botao-criarconta.png"));
+		botaoCriarConta.setPressedIcon(new ImageIcon("imgs/botao-criarcontaclicado.png"));
 		botaoCriarConta.setBounds(530, 250, 170, 26);
 		botaoCriarConta.addActionListener(new OuvinteCriarConta());
         add(botaoCriarConta);
-    }
-
-    public JRadioButton getPassageiro() {
-        return passageiro;
-    }
-
-    public JRadioButton getMototaxista() {
-        return mototaxista;
     }
 
 	private class OuvinteEntrar implements ActionListener{

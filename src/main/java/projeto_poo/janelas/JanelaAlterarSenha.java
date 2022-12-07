@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 
 import projeto_poo.Usuario;
+import projeto_poo.componentes.BotaoConcluir;
 import projeto_poo.componentes.CaixaSenha;
+import projeto_poo.componentes.ComponentesEstaticos;
 import projeto_poo.componentes.TextoImagemPadrao;
 
 public class JanelaAlterarSenha extends JanelaPadrao{
@@ -26,7 +28,7 @@ public class JanelaAlterarSenha extends JanelaPadrao{
 		botoes();
 		logo();
 		
-		add(getFundoPadrao());
+		add(ComponentesEstaticos.fundoPadrao());
 		setVisible(true);
 	}
 	
@@ -37,7 +39,7 @@ public class JanelaAlterarSenha extends JanelaPadrao{
 	}
 	
 	private void botoes() {
-		JButton botaoConcluir = getBotaoConcluir();
+		JButton botaoConcluir = new BotaoConcluir();
 		botaoConcluir.setBounds(500, 155, 170, 41);
 		botaoConcluir.addActionListener(new OuvinteBotaoConcluir());
 		add(botaoConcluir);

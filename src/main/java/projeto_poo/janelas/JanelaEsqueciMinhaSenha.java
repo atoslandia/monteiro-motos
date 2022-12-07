@@ -13,92 +13,53 @@ import javax.swing.JPanel;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
 import projeto_poo.Usuario;
+import projeto_poo.componentes.BotaoPadrao;
+import projeto_poo.componentes.BotaoProsseguir;
+import projeto_poo.componentes.BotaoVoltar;
 import projeto_poo.componentes.CaixaEmail;
+import projeto_poo.componentes.CaixaSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
+import projeto_poo.componentes.ComponentesEstaticos;
+import projeto_poo.componentes.PainelPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 
 	private CaixaTextoPadrao email;
 	private CaixaTextoPadrao codigo;
-	private JLabel textoCodigo;
-	
-	private JButton botaoProsseguir;
-	private JButton botaoConfirmarCodigo;
+	private CaixaSenha senha;
+
 	private JButton botaoConcluir;
 	
 	private JLabel avisoPreencherEmail;
 	private JLabel avisoUsuarioNaoExiste;
 	
+	private InserirEmailPainel inserirEmailPainel;
+	private InserirCodigoPainel inserirCodigoPainel;
+	private RedefinirSenhaPainel redefinirSenhaPainel;
+	
 	private Random c = new Random();
 	private String codigoGerado = Integer.toString(c.nextInt(1000,9999));
+	
 	
 	public JanelaEsqueciMinhaSenha() {
 		super("Verificar e-mail");
 		
-		jlEmail();
-		botoes();
-		inserirCodigo();
 		
-		avisos();
-
-		add(getFundoPadrao());
 		logo();
-		setVisible(true);
 		
+		
+		add(inserirEmailPainel = new InserirEmailPainel());
+		
+		setVisible(true);
 	}
 	
 	private void logo() {
 		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/esqueciminhasenha.png"));
 		logo.setBounds(30, 30, 503, 37);
 		add(logo);
-	}
-	
-	private void jlEmail() {
-		JLabel textoEmail = new TextoImagemPadrao("E-mail: ");
-        textoEmail.setBounds(30, 120, 100, 20);
-        add(textoEmail);
-        
-        email = new CaixaEmail();
-        email.setBounds(120, 120, 200, 20);
-        add(email);
-	}
-
-	private void botoes() {
-		JButton botaoProsseguir = getBotaoProsseguir();
-		botaoProsseguir.setBounds(500, 155, 170, 41);
-		botaoProsseguir.addActionListener(new OuvinteBotaoProsseguir());
-		add(botaoProsseguir);
-		
-		JButton botaoVoltar = getBotaoVoltar();
-		botaoVoltar.setBounds(550, 220, 58, 22);
-		botaoVoltar.addActionListener(new OuvinteBotaoVoltar());
-		add(botaoVoltar);
-		
-		botaoConfirmarCodigo = getBotaoProsseguir();
-		botaoConfirmarCodigo.setBounds(500, 155, 170, 41);
-		botaoConfirmarCodigo.setVisible(false);
-		botaoConfirmarCodigo.addActionListener(new OuvinteBotaoConfirmarCodigo());
-		add(botaoConfirmarCodigo);
-		
-		botaoConcluir = getBotaoProsseguir();
-		botaoConcluir.setBounds(500, 155, 170, 41);
-		botaoConcluir.setVisible(false);
-//		botaoConcluir.addActionListener(new OuvinteBotaoConcluir());
-		add(botaoConcluir);
-	}
-	
-	private void inserirCodigo() {
-		textoCodigo = new TextoImagemPadrao("Insira o código: ");
-		textoCodigo.setBounds(30, 170, 100, 20);
-		textoCodigo.setVisible(false);
-        add(textoCodigo);
-        
-        codigo = new CaixaTextoPadrao();
-        codigo.setBounds(120, 170, 200, 20);
-        codigo.setVisible(false);
-        add(codigo);
 	}
 	
 	private void avisos() {
@@ -115,49 +76,149 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
     	add(avisoUsuarioNaoExiste);
 	}
 	
-	private class OuvinteBotaoProsseguir implements ActionListener{
 
-		public void actionPerformed(ActionEvent e) {
-			avisoPreencherEmail.setVisible(false);
-			avisoUsuarioNaoExiste.setVisible(false);
-			
-			if(!email.getText().equals("")) {
-				try {
-					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
-					Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
-					email.setEditable(false);
-					codigo.setVisible(true);
-					textoCodigo.setVisible(true);
-					
-					botaoProsseguir.setVisible(false);
-					botaoConfirmarCodigo.setVisible(true);
-					
-				} catch (UsuarioNaoExisteException e2) {
-					avisoUsuarioNaoExiste.setVisible(true);
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-		} else
-			avisoPreencherEmail.setVisible(true);
-		}	
+	private class InserirEmailPainel extends PainelPadrao{
+		
+		public InserirEmailPainel() {
+			super();
+			caixaEmail();
+			botaoProsseguir();
+			botaoVoltar();
+			add(ComponentesEstaticos.fundoPadrao());
+		}
+		
+		private void caixaEmail() {
+			JLabel textoEmail = new TextoImagemPadrao("E-mail: ");
+	        textoEmail.setBounds(30, 120, 100, 20);
+	        add(textoEmail);
+	        
+	        email = new CaixaEmail();
+	        email.setBounds(120, 120, 200, 20);
+	        add(email);
+		}
+		
+		private void botaoProsseguir() {
+			BotaoProsseguir botaoConcluir = new BotaoProsseguir();
+			botaoConcluir.setBounds(500, 155, 170, 41);
+			botaoConcluir.addActionListener(new OuvinteBotaoInserirEmail());
+			add(botaoConcluir);
+		}
+		
+		private void botaoVoltar() {
+			JButton botaoVoltar = new BotaoVoltar();
+			botaoVoltar.setBounds(550, 220, 58, 22);
+			add(botaoVoltar);
+		}
+		
 	}
 	
-	
-	private class OuvinteBotaoConfirmarCodigo implements ActionListener{
+	private class InserirCodigoPainel extends PainelPadrao{
+		
+		public InserirCodigoPainel() {
+			super();
+			inserirCodigo();
+			botaoProsseguir();
+			botaoVoltar();
+			add(ComponentesEstaticos.fundoPadrao());
+		}
+		
+		private void inserirCodigo() {
+			TextoImagemPadrao textoCodigo = new TextoImagemPadrao("Insira o código: ");
+			textoCodigo.setBounds(30, 170, 100, 20);
+	        add(textoCodigo);
+	        
+	        codigo = new CaixaTextoPadrao();
+	        codigo.setBounds(120, 170, 200, 20);
+	        add(codigo);
+		}
 
+		private void botaoVoltar() {
+			JButton botaoVoltar = new BotaoVoltar();
+			botaoVoltar.setBounds(550, 220, 58, 22);
+			add(botaoVoltar);
+		}
+		
+		private void botaoProsseguir() {
+			BotaoProsseguir botaoProsseguir = new BotaoProsseguir();
+			botaoProsseguir.setBounds(500, 155, 170, 41);
+			botaoProsseguir.addActionListener(new OuvinteBotaoInserirCodigo());
+			add(botaoProsseguir);
+		}
+		
+	}
+	
+	private class RedefinirSenhaPainel extends PainelPadrao{
+		public RedefinirSenhaPainel() {
+			super();
+			inserirSenha();
+			botaoProsseguir();
+			add(ComponentesEstaticos.fundoPadrao());
+		}
+		
+		private void inserirSenha() {
+			TextoImagemPadrao textoSenha = new TextoImagemPadrao("Senha: ");
+			textoSenha.setBounds(30, 170, 100, 20);
+			add(textoSenha);
+			
+			senha = new CaixaSenha();
+			senha.setBounds(120, 170, 200, 20);
+			add(senha);
+			
+		}
+		
+		private void botaoProsseguir() {
+			botaoConcluir = new BotaoProsseguir();
+			botaoConcluir.setBounds(500, 155, 170, 41);
+			botaoConcluir.addActionListener(new OuvinteBotaoRedefinirSenha());
+			add(botaoConcluir);
+		}
+		
+	}
+	
+	private class OuvinteBotaoInserirEmail implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			try {
+				getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
+				Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
+				inserirEmailPainel.setVisible(false);
+				add(inserirCodigoPainel = new InserirCodigoPainel());
+				
+			} catch (UsuarioNaoExisteException e1) {
+				e1.printStackTrace();
+			} catch (NaoExisteXmlException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+	}
+	
+	private class OuvinteBotaoInserirCodigo implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(codigo.getText().equals(codigoGerado)) {
-//				new JanelaAlterarSenha();
-		} else
-			codigo.setBorder(getBordaErro());
+				inserirCodigoPainel.setVisible(false);
+				add(redefinirSenhaPainel = new RedefinirSenhaPainel());
+			} else
+				codigo.setBorder(getBordaErro());
 		}
 	}
-	private class OuvinteBotaoVoltar implements ActionListener{
-		
+	
+	private class OuvinteBotaoRedefinirSenha implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			dispose();
-			new JanelaLogin();
+			try {
+				CentralDeInformacoes persistencia = getPersistencia().buscarCentral();
+				Usuario usuario = persistencia.recuperarUsuarioPeloEmail(email.getText());
+				usuario.setSenha(new String(senha.getPassword()));
+				getPersistencia().salvarPersistencia(persistencia);
+				System.out.println("deu tudo certo!");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
 		}
-		
 	}
+	
 }

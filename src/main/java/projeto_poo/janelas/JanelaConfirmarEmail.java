@@ -15,7 +15,10 @@ import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
+import projeto_poo.componentes.BotaoConcluir;
+import projeto_poo.componentes.BotaoVoltar;
 import projeto_poo.componentes.CaixaTextoPadrao;
+import projeto_poo.componentes.ComponentesEstaticos;
 import projeto_poo.componentes.TextoImagemPadrao;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
@@ -36,7 +39,7 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 		caixaCodigo();
 		descricao();
 		logoConfirmarEmail();
-		add(getFundoPadrao());
+		add(ComponentesEstaticos.fundoPadrao());
 		setVisible(true);
 	}
 	
@@ -65,14 +68,14 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	}
 	
 	private void botaoConcluir() {
-		JButton botaoConcluir = getBotaoConcluir();
+		JButton botaoConcluir = new BotaoConcluir();
 		botaoConcluir.setBounds(530, 170, 170, 41);
 		botaoConcluir.addActionListener(new OuvinteBotaoConcluir());
 		add(botaoConcluir);
 	}
 
 	private void botaoVoltar() {
-		JButton botaoVoltar = getBotaoVoltar();
+		JButton botaoVoltar = new BotaoVoltar();
 		botaoVoltar.setBounds(590, 220, 58, 22);
 		botaoVoltar.addActionListener(new OuvinteBotaoVoltar());
 		add(botaoVoltar);

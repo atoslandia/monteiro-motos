@@ -21,9 +21,12 @@ import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Sexo;
 import projeto_poo.Usuario;
+import projeto_poo.componentes.BotaoProsseguir;
+import projeto_poo.componentes.BotaoVoltar;
 import projeto_poo.componentes.CaixaEmail;
 import projeto_poo.componentes.CaixaNomeSobrenome;
 import projeto_poo.componentes.CaixaSenha;
+import projeto_poo.componentes.ComponentesEstaticos;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.erros.UsuarioNaoExisteException;
@@ -63,7 +66,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		avisos();
 		
 		logoCadastro();
-		add(getFundoPadrao());
+		add(ComponentesEstaticos.fundoPadrao());
 		setVisible(true);
 	}
 	
@@ -82,7 +85,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		avisos();
 		
 		logoPrimeiroAcesso();
-		add(getFundoPadrao());
+		add(ComponentesEstaticos.fundoPadrao());
 		setVisible(true);
 	}
 	
@@ -99,15 +102,14 @@ public class JanelaCriarConta extends JanelaPadrao{
 	}
 	
 	private void botaoProsseguir() {
-		JButton botaoProsseguir = getBotaoProsseguir();
+		JButton botaoProsseguir = new BotaoProsseguir();
 		botaoProsseguir.setBounds(530, 170, 170, 41);
-		
 		botaoProsseguir.addActionListener(new OuvinteBotaoProsseguir());
 		add(botaoProsseguir);
 	}
 	
 	private void botaoProsseguirAdm() {
-		JButton botaoProsseguir = getBotaoProsseguir();
+		JButton botaoProsseguir = new BotaoProsseguir();
 		botaoProsseguir.setBounds(530, 170, 170, 41);
 		
 		botaoProsseguir.addActionListener(new OuvinteBotaoProsseguirAdm());
@@ -115,7 +117,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 	}
 	
 	private void botaoVoltar() {
-		JButton botaoVoltar = getBotaoVoltar();
+		JButton botaoVoltar = new BotaoVoltar();
 		botaoVoltar.setBounds(590, 220, 58, 22);
 		botaoVoltar.addActionListener(new OuvinteBotaoVoltar());
 		

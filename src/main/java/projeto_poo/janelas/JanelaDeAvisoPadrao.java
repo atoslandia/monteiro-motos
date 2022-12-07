@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import projeto_poo.componentes.BotaoPadrao;
+import projeto_poo.componentes.BotaoProsseguir;
 import projeto_poo.componentes.TextoImagemPadrao;
 
 public class JanelaDeAvisoPadrao extends JanelaPadrao{
@@ -34,7 +35,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	}
 	
 	private void botaoVoltarAviso() {
-		botaoProsseguirAviso = getBotaoVoltar();
+		botaoProsseguirAviso = new BotaoProsseguir();
 		botaoProsseguirAviso.setBounds(90, 75, 58, 22);
 		botaoProsseguirAviso.addActionListener(new OuvinteBotaoVoltarAviso());
 		add(botaoProsseguirAviso);
