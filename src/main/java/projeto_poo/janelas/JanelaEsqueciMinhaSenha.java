@@ -20,18 +20,24 @@ import projeto_poo.componentes.CaixaEmail;
 import projeto_poo.componentes.CaixaSenha;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.ComponentesEstaticos;
+import projeto_poo.componentes.PainelEsqueciSenha;
 import projeto_poo.componentes.PainelPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
-
+	
+	private boolean painelEmailAberto = true;
+	private boolean painelCodigoAberto = false;
+	private boolean painelRedefinirSenhaAberto = false;
+	
 	private CaixaTextoPadrao email;
 	private CaixaTextoPadrao codigo;
 	private CaixaSenha senha;
 
-	private JButton botaoConcluir;
+//	private JButton botaoProsseguir;
+//	private JButton botaoVoltar;
 	
 	private JLabel avisoPreencherEmail;
 	private JLabel avisoUsuarioNaoExiste;
@@ -42,6 +48,7 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	
 	private Random c = new Random();
 	private String codigoGerado = Integer.toString(c.nextInt(1000,9999));
+	
 	
 	
 	public JanelaEsqueciMinhaSenha() {
@@ -76,15 +83,12 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
     	add(avisoUsuarioNaoExiste);
 	}
 	
-
-	private class InserirEmailPainel extends PainelPadrao{
+	
+	private class InserirEmailPainel extends PainelEsqueciSenha{
 		
 		public InserirEmailPainel() {
-			super();
+			super(new OuvinteBotaoProsseguir(), new OuvinteBotaoVoltarEmail());
 			caixaEmail();
-			botaoProsseguir();
-			botaoVoltar();
-			add(ComponentesEstaticos.fundoPadrao());
 		}
 		
 		private void caixaEmail() {
@@ -97,52 +101,30 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	        add(email);
 		}
 		
-		private void botaoProsseguir() {
-			BotaoProsseguir botaoConcluir = new BotaoProsseguir();
-			botaoConcluir.setBounds(500, 155, 170, 41);
-			botaoConcluir.addActionListener(new OuvinteBotaoInserirEmail());
-			add(botaoConcluir);
-		}
-		
-		private void botaoVoltar() {
-			JButton botaoVoltar = new BotaoVoltar();
-			botaoVoltar.setBounds(550, 220, 58, 22);
-			add(botaoVoltar);
-		}
-		
 	}
 	
-	private class InserirCodigoPainel extends PainelPadrao{
+	private class InserirCodigoPainel extends PainelEsqueciSenha{
 		
 		public InserirCodigoPainel() {
-			super();
+			super(new OuvinteBotaoProsseguir(), new OuvinteBotaoVoltarEmail());
+			txtInserirCodigo();
 			inserirCodigo();
-			botaoProsseguir();
-			botaoVoltar();
-			add(ComponentesEstaticos.fundoPadrao());
+		}
+		
+		private void txtInserirCodigo() {
+			TextoImagemPadrao texto = new TextoImagemPadrao("Verifique seu e-mail e preencha com o código enviado:");
+			texto.setBounds(30, 90, 350, 20);
+			add(texto);
 		}
 		
 		private void inserirCodigo() {
 			TextoImagemPadrao textoCodigo = new TextoImagemPadrao("Insira o código: ");
-			textoCodigo.setBounds(30, 170, 100, 20);
+			textoCodigo.setBounds(30, 130, 100, 20);
 	        add(textoCodigo);
 	        
 	        codigo = new CaixaTextoPadrao();
-	        codigo.setBounds(120, 170, 200, 20);
+	        codigo.setBounds(150, 130, 200, 20);
 	        add(codigo);
-		}
-
-		private void botaoVoltar() {
-			JButton botaoVoltar = new BotaoVoltar();
-			botaoVoltar.setBounds(550, 220, 58, 22);
-			add(botaoVoltar);
-		}
-		
-		private void botaoProsseguir() {
-			BotaoProsseguir botaoProsseguir = new BotaoProsseguir();
-			botaoProsseguir.setBounds(500, 155, 170, 41);
-			botaoProsseguir.addActionListener(new OuvinteBotaoInserirCodigo());
-			add(botaoProsseguir);
 		}
 		
 	}
@@ -167,58 +149,69 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 		}
 		
 		private void botaoProsseguir() {
-			botaoConcluir = new BotaoProsseguir();
-			botaoConcluir.setBounds(500, 155, 170, 41);
-			botaoConcluir.addActionListener(new OuvinteBotaoRedefinirSenha());
-			add(botaoConcluir);
+			JButton botaoProsseguir = new BotaoProsseguir();
+			botaoProsseguir.setBounds(500, 155, 170, 41);
+			botaoProsseguir.addActionListener(new OuvinteBotaoProsseguir());
+			add(botaoProsseguir);
 		}
 		
 	}
 	
-	private class OuvinteBotaoInserirEmail implements ActionListener{
+	private class OuvinteBotaoProsseguir implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			try {
-				getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
-				Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
-				inserirEmailPainel.setVisible(false);
-				add(inserirCodigoPainel = new InserirCodigoPainel());
-				
-			} catch (UsuarioNaoExisteException e1) {
-				e1.printStackTrace();
-			} catch (NaoExisteXmlException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(painelEmailAberto) {
+				try {
+					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
+					Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
+					inserirEmailPainel.setVisible(false);
+					painelEmailAberto = false;
+					add(inserirCodigoPainel = new InserirCodigoPainel());
+					painelCodigoAberto = true;
+					
+				} catch (UsuarioNaoExisteException e1) {
+					e1.printStackTrace();
+				} catch (NaoExisteXmlException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}else if(painelCodigoAberto) {
+				if(codigo.getText().equals(codigoGerado)) {
+					inserirCodigoPainel.setVisible(false);
+					painelCodigoAberto = false;
+					add(redefinirSenhaPainel = new RedefinirSenhaPainel());
+				} else
+					codigo.setBorder(getBordaErro());
+			}else
+				try {
+					CentralDeInformacoes persistencia = getPersistencia().buscarCentral();
+					Usuario usuario = persistencia.recuperarUsuarioPeloEmail(email.getText());
+					usuario.setSenha(new String(senha.getPassword()));
+					getPersistencia().salvarPersistencia(persistencia);
+					dispose();
+					new JanelaLogin();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
-			
 		}
-	}
-	
-	private class OuvinteBotaoInserirCodigo implements ActionListener{
+
+	private class OuvinteBotaoVoltarEmail implements ActionListener{
+		
 		public void actionPerformed(ActionEvent e) {
-			if(codigo.getText().equals(codigoGerado)) {
+			if(painelEmailAberto) {
+				dispose();
+				new JanelaLogin();
+			}else
 				inserirCodigoPainel.setVisible(false);
-				add(redefinirSenhaPainel = new RedefinirSenhaPainel());
-			} else
-				codigo.setBorder(getBordaErro());
+			painelCodigoAberto = false;
+			inserirEmailPainel.setVisible(true);
+			painelEmailAberto = true;
 		}
+		
 	}
 	
-	private class OuvinteBotaoRedefinirSenha implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			try {
-				CentralDeInformacoes persistencia = getPersistencia().buscarCentral();
-				Usuario usuario = persistencia.recuperarUsuarioPeloEmail(email.getText());
-				usuario.setSenha(new String(senha.getPassword()));
-				getPersistencia().salvarPersistencia(persistencia);
-				System.out.println("deu tudo certo!");
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			
-		}
-	}
 	
 }
