@@ -1,12 +1,9 @@
 package projeto_poo.janelas;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,22 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
-import projeto_poo.Persistencia;
 import projeto_poo.Usuario;
 import projeto_poo.componentes.BotaoPadrao;
-import projeto_poo.componentes.CaixaPadraoSenha;
-import projeto_poo.componentes.CaixaTextoPadrao;
-import projeto_poo.componentes.OpcaoRadioPadrao;
+import projeto_poo.componentes.CaixaEmail;
+import projeto_poo.componentes.CaixaSenha;
 import projeto_poo.componentes.TextoImagemPadrao;
 import projeto_poo.erros.AdministradroNaoExisteException;
 import projeto_poo.erros.NaoExisteXmlException;
-import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaLogin extends JanelaPadrao{
 	
@@ -39,7 +32,6 @@ public class JanelaLogin extends JanelaPadrao{
     private JRadioButton passageiro;
     private JRadioButton mototaxista;
 
-    private OuvinteTeclasEspeciais teclasEspeciais = new OuvinteTeclasEspeciais();
     private JButton botaoEntrar;
     private JButton botaoEsqueciSenha;
     private JButton botaoCriarConta;
@@ -98,9 +90,7 @@ public class JanelaLogin extends JanelaPadrao{
         textoEmail.setBounds(30, 120, 100, 20);
         add(textoEmail);
 
-        email = new CaixaTextoPadrao();
-        email.addKeyListener(teclasEspeciais);
-        email.setToolTipText(teclasEspeciais.getTeclasEspeciais());
+        email = new CaixaEmail();
         email.setBounds(120, 120, 200, 20);
         add(email);
 
@@ -110,9 +100,7 @@ public class JanelaLogin extends JanelaPadrao{
         textoSenha.setBounds(30,170,100,20);
         add(textoSenha);
 
-        senha = new CaixaPadraoSenha();
-        senha.addKeyListener(teclasEspeciais);
-        senha.setToolTipText(teclasEspeciais.getTeclasEspeciais());
+        senha = new CaixaSenha();
         senha.setBounds(120, 170, 200, 20);
         add(senha);
     }

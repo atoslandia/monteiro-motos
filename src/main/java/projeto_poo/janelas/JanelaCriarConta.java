@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -12,26 +11,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import projeto_poo.Administrador;
-import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Sexo;
 import projeto_poo.Usuario;
-import projeto_poo.componentes.CaixaPadraoSenha;
-import projeto_poo.componentes.CaixaTextoPadrao;
+import projeto_poo.componentes.CaixaEmail;
+import projeto_poo.componentes.CaixaNomeSobrenome;
+import projeto_poo.componentes.CaixaSenha;
 import projeto_poo.componentes.OpcaoRadioPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.erros.UsuarioNaoExisteException;
-import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
-import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 public class JanelaCriarConta extends JanelaPadrao{
 	
@@ -132,10 +127,8 @@ public class JanelaCriarConta extends JanelaPadrao{
 		textoNome.setBounds(30, 85, 100, 19);
 		add(textoNome);
 		
-		nome = new CaixaTextoPadrao();
-		nome.addKeyListener(new OuvinteTeclasBloqueadas());
-		nome.setToolTipText(new OuvinteTeclasBloqueadas().getTeclasEspeciais());
-		nome.setBounds(120, 85, 230, 20);
+		nome = new CaixaNomeSobrenome();
+		setBounds(120, 85, 230, 20);
 		add(nome);
 	}
 	
@@ -144,9 +137,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		textoSobrenome.setBounds(30, 115, 100, 19);
 		add(textoSobrenome);
 		
-		sobrenome = new CaixaTextoPadrao();
-		sobrenome.addKeyListener(new OuvinteTeclasBloqueadas());
-		sobrenome.setToolTipText(new OuvinteTeclasBloqueadas().getTeclasEspeciais());
+		sobrenome = new CaixaNomeSobrenome();
 		sobrenome.setBounds(120, 115, 230, 20);
 		add(sobrenome);
 	}
@@ -156,9 +147,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		textoEmail.setBounds(30, 145, 100, 19);
 		add(textoEmail);
 		
-		email = new CaixaTextoPadrao();
-		email.addKeyListener(new OuvinteTeclasEspeciais());
-		email.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
+		email = new CaixaEmail();
 		email.setBounds(120, 145, 230, 20);
 		add(email);
 	}
@@ -168,9 +157,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 		textoSenha.setBounds(30, 175, 100, 19);
 		add(textoSenha);
 		
-		senha = new CaixaPadraoSenha();
-		senha.addKeyListener(new OuvinteTeclasEspeciais());
-		senha.setToolTipText(new OuvinteTeclasEspeciais().getTeclasEspeciais());
+		senha = new CaixaSenha();
 		senha.setBounds(120, 175, 230, 20);
 		add(senha);
 	}

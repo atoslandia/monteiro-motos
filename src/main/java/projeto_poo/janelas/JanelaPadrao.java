@@ -2,7 +2,6 @@ package projeto_poo.janelas;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -11,12 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
-import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Persistencia;
 import projeto_poo.componentes.BotaoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
-import projeto_poo.ouvintes.OuvinteTeclasEspeciais;
 
 
 public class JanelaPadrao extends JFrame{

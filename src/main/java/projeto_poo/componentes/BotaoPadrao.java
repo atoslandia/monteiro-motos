@@ -16,4 +16,5 @@ public class BotaoPadrao extends JButton{
 		setCursor(cursor);
 	}
 	private Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+	
 }

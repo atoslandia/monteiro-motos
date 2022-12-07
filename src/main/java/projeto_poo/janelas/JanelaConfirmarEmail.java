@@ -4,23 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
-import projeto_poo.Sexo;
 import projeto_poo.Usuario;
 import projeto_poo.componentes.CaixaTextoPadrao;
 import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.ouvintes.OuvinteTeclasBloqueadas;
 
 public class JanelaConfirmarEmail extends JanelaPadrao{
 	
@@ -84,7 +80,6 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 	
 	private class OuvinteBotaoConcluir implements ActionListener {
 		
-		
 		public void actionPerformed(ActionEvent e) {
 			
 			if(codigo.getText().equals(codigoGerado)) {
@@ -93,22 +88,18 @@ public class JanelaConfirmarEmail extends JanelaPadrao{
 					if(usuario instanceof Passageiro) {
 						cdi.adicionarUsuario((Passageiro)usuario);
 						getPersistencia().salvarPersistencia(cdi);
-						System.out.println("foi criado um passageiro");
 					} else if(usuario instanceof Mototaxista) {
 						cdi.adicionarUsuario((Mototaxista)usuario);
 						getPersistencia().salvarPersistencia(cdi);
-						System.out.println("foi criado um mototaxista");
 					}
 					else if(usuario instanceof Administrador){
 						cdi.adicionarUsuario((Administrador)usuario);
 						getPersistencia().salvarPersistencia(cdi);
-						System.out.println("foi criado um administrador");
 					}
 					dispose();
 					new JanelaLogin();
 				} catch (Exception e2) {
 					e2.printStackTrace();
-					System.out.println("erro ao inserir codigo "+e2);
 				}
 				
 			} else
