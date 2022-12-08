@@ -1,7 +1,9 @@
-package projeto_poo.componentes;
+package projeto_poo.caixas;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import projeto_poo.erros.CaixaVaziaException;
 
 public class CaixaNomeSobrenome extends CaixaTextoPadrao{
 	public CaixaNomeSobrenome() {

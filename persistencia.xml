@@ -4,10 +4,34 @@
       <nome>Atos</nome>
       <sobrenome>Alves</sobrenome>
       <dataNascimento>2004-01-01</dataNascimento>
-      <email>robsoncaliban@gmail.com</email>
-      <senha>20205050</senha>
+      <email>atosalvesqueiroz@gmail.com</email>
+      <senha>1234</senha>
       <sexo>M</sexo>
     </projeto__poo.Administrador>
+    <projeto__poo.Passageiro>
+      <nome>Atos</nome>
+      <sobrenome>Alves</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>atos5000@gmail.com</email>
+      <senha>1234</senha>
+      <sexo>M</sexo>
+    </projeto__poo.Passageiro>
+    <projeto__poo.Mototaxista>
+      <nome>Atos</nome>
+      <sobrenome>Alves</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>atos.alves@academico.ifpb.edu.br</email>
+      <senha>1234</senha>
+      <sexo>F</sexo>
+    </projeto__poo.Mototaxista>
+    <projeto__poo.Mototaxista>
+      <nome>Robson</nome>
+      <sobrenome>Caliban</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>robsoncaliban@gmail.com</email>
+      <senha>1234</senha>
+      <sexo>M</sexo>
+    </projeto__poo.Mototaxista>
   </todosOsUsuarios>
   <todasAsCorridas/>
 </projeto__poo.CentralDeInformacoes>

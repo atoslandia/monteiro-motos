@@ -11,19 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 import projeto_poo.Persistencia;
-import projeto_poo.componentes.BotaoPadrao;
-import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.botoes.BotaoPadrao;
+import projeto_poo.diversos.TextoImagemPadrao;
 
 
 public class JanelaPadrao extends JFrame{
 	
 	private Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
 	private Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
-	
 	private Persistencia persistencia = new Persistencia();
-	
-	private JLabel fundoPadrao;
-	private JLabel barra;
 	
 	public JanelaPadrao(String tituloJanela) {
 		
@@ -34,12 +30,8 @@ public class JanelaPadrao extends JFrame{
 		setLayout(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	}
 
-	public JLabel getBarra() {
-		return barra;
-	}
 
 	public Persistencia getPersistencia() {
 		return persistencia;

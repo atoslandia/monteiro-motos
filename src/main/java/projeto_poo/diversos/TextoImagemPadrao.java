@@ -1,4 +1,4 @@
-package projeto_poo.componentes;
+package projeto_poo.diversos;
 
 import java.awt.Font;
 

@@ -8,38 +8,28 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mensageiro;
 import projeto_poo.Usuario;
-import projeto_poo.componentes.BotaoPadrao;
-import projeto_poo.componentes.BotaoProsseguir;
-import projeto_poo.componentes.BotaoVoltar;
-import projeto_poo.componentes.CaixaEmail;
-import projeto_poo.componentes.CaixaSenha;
-import projeto_poo.componentes.CaixaTextoPadrao;
-import projeto_poo.componentes.ComponentesEstaticos;
-import projeto_poo.componentes.PainelEsqueciSenha;
-import projeto_poo.componentes.PainelPadrao;
-import projeto_poo.componentes.TextoImagemPadrao;
-import projeto_poo.erros.NaoExisteXmlException;
+import projeto_poo.botoes.BotaoProsseguir;
+import projeto_poo.botoes.BotaoVoltar;
+import projeto_poo.caixas.CaixaCodigo;
+import projeto_poo.caixas.CaixaEmail;
+import projeto_poo.caixas.CaixaSenha;
+import projeto_poo.caixas.CaixaTextoPadrao;
+import projeto_poo.diversos.ComponentesEstaticos;
+import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.UsuarioNaoExisteException;
+import projeto_poo.paineis.PainelConfirmarEmail;
+import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	
-	private boolean painelEmailAberto = true;
-	private boolean painelCodigoAberto = false;
-	private boolean painelRedefinirSenhaAberto = false;
-	
 	private CaixaTextoPadrao email;
-	private CaixaTextoPadrao codigo;
 	private CaixaSenha senha;
 
-//	private JButton botaoProsseguir;
-//	private JButton botaoVoltar;
-	
-	private JLabel avisoPreencherEmail;
 	private JLabel avisoUsuarioNaoExiste;
 	
 	private InserirEmailPainel inserirEmailPainel;
@@ -49,33 +39,14 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	private Random c = new Random();
 	private String codigoGerado = Integer.toString(c.nextInt(1000,9999));
 	
-	
-	
 	public JanelaEsqueciMinhaSenha() {
 		super("Verificar e-mail");
-		
-		
-		logo();
-		
-		
+		avisos();
 		add(inserirEmailPainel = new InserirEmailPainel());
-		
 		setVisible(true);
 	}
 	
-	private void logo() {
-		JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/esqueciminhasenha.png"));
-		logo.setBounds(30, 30, 503, 37);
-		add(logo);
-	}
-	
 	private void avisos() {
-    	avisoPreencherEmail = new TextoImagemPadrao("Preencha com seu e-mail!");
-    	avisoPreencherEmail.setForeground(Color.RED);
-    	avisoPreencherEmail.setVisible(false);
-    	avisoPreencherEmail.setBounds(120, 100, 150, 20);
-    	add(avisoPreencherEmail);
-    	
     	avisoUsuarioNaoExiste = new TextoImagemPadrao("O usuário não existe!");
     	avisoUsuarioNaoExiste.setForeground(Color.RED);
     	avisoUsuarioNaoExiste.setVisible(false);
@@ -84,11 +55,20 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	}
 	
 	
-	private class InserirEmailPainel extends PainelEsqueciSenha{
+	private class InserirEmailPainel extends PainelPadrao{
 		
 		public InserirEmailPainel() {
-			super(new OuvinteBotaoProsseguir(), new OuvinteBotaoVoltarEmail());
+			super();
 			caixaEmail();
+			prosseguir();
+			voltar();
+			logo();
+		}
+		
+		private void logo() {
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/esqueciminhasenha.png"));
+			logo.setBounds(30, 30, 503, 37);
+			add(logo);
 		}
 		
 		private void caixaEmail() {
@@ -101,30 +81,47 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	        add(email);
 		}
 		
+		private void prosseguir() {
+			BotaoProsseguir prosseguir = new BotaoProsseguir();
+			prosseguir.addActionListener(new OuvinteProsseguirEmail());
+			add(prosseguir);
+		}
+		
+		private void voltar() {
+			BotaoVoltar voltar = new BotaoVoltar();
+			voltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaLogin();
+				}
+			});
+			add(voltar);
+		}
 	}
 	
-	private class InserirCodigoPainel extends PainelEsqueciSenha{
+	private class InserirCodigoPainel extends PainelConfirmarEmail{
 		
 		public InserirCodigoPainel() {
-			super(new OuvinteBotaoProsseguir(), new OuvinteBotaoVoltarEmail());
-			txtInserirCodigo();
-			inserirCodigo();
+			super();
+			prosseguir();
+			voltar();
 		}
 		
-		private void txtInserirCodigo() {
-			TextoImagemPadrao texto = new TextoImagemPadrao("Verifique seu e-mail e preencha com o código enviado:");
-			texto.setBounds(30, 90, 350, 20);
-			add(texto);
+		private void prosseguir() {
+			BotaoProsseguir prosseguir = new BotaoProsseguir();
+			prosseguir.addActionListener(new OuvinteProsseguirCodigo());
+			add(prosseguir);
 		}
 		
-		private void inserirCodigo() {
-			TextoImagemPadrao textoCodigo = new TextoImagemPadrao("Insira o código: ");
-			textoCodigo.setBounds(30, 130, 100, 20);
-	        add(textoCodigo);
-	        
-	        codigo = new CaixaTextoPadrao();
-	        codigo.setBounds(150, 130, 200, 20);
-	        add(codigo);
+		private void voltar() {
+			BotaoVoltar voltar = new BotaoVoltar();
+			voltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					inserirEmailPainel.setVisible(true);
+					inserirCodigoPainel.setVisible(false);
+				}
+			});
+			add(voltar);
 		}
 		
 	}
@@ -135,83 +132,77 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 			inserirSenha();
 			botaoProsseguir();
 			add(ComponentesEstaticos.fundoPadrao());
+			logo();
+		}
+		
+		private void logo() {
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/esqueciminhasenha.png"));
+			logo.setBounds(30, 30, 503, 37);
+			add(logo);
 		}
 		
 		private void inserirSenha() {
 			TextoImagemPadrao textoSenha = new TextoImagemPadrao("Senha: ");
-			textoSenha.setBounds(30, 170, 100, 20);
+			textoSenha.setBounds(30, 120, 200, 20);
 			add(textoSenha);
 			
 			senha = new CaixaSenha();
-			senha.setBounds(120, 170, 200, 20);
+			senha.setBounds(120, 120, 200, 20);
 			add(senha);
 			
 		}
-		
 		private void botaoProsseguir() {
 			JButton botaoProsseguir = new BotaoProsseguir();
-			botaoProsseguir.setBounds(500, 155, 170, 41);
-			botaoProsseguir.addActionListener(new OuvinteBotaoProsseguir());
+			botaoProsseguir.addActionListener(new OuvinteRedefinirSenha());
 			add(botaoProsseguir);
 		}
 		
 	}
 	
-	private class OuvinteBotaoProsseguir implements ActionListener{
+	private class OuvinteProsseguirEmail implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			if(painelEmailAberto) {
+			avisoUsuarioNaoExiste.setVisible(false);
 				try {
-					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.getText());
+					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.pegarConteudo());
 					Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
 					inserirEmailPainel.setVisible(false);
-					painelEmailAberto = false;
 					add(inserirCodigoPainel = new InserirCodigoPainel());
-					painelCodigoAberto = true;
-					
 				} catch (UsuarioNaoExisteException e1) {
-					e1.printStackTrace();
-				} catch (NaoExisteXmlException e1) {
-					// TODO Auto-generated catch block
+					avisoUsuarioNaoExiste.setVisible(true);
 					e1.printStackTrace();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}else if(painelCodigoAberto) {
-				if(codigo.getText().equals(codigoGerado)) {
-					inserirCodigoPainel.setVisible(false);
-					painelCodigoAberto = false;
-					add(redefinirSenhaPainel = new RedefinirSenhaPainel());
-				} else
-					codigo.setBorder(getBordaErro());
-			}else
+		}
+	}
+	
+	private class OuvinteProsseguirCodigo implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
 				try {
-					CentralDeInformacoes persistencia = getPersistencia().buscarCentral();
-					Usuario usuario = persistencia.recuperarUsuarioPeloEmail(email.getText());
-					usuario.setSenha(new String(senha.getPassword()));
-					getPersistencia().salvarPersistencia(persistencia);
-					dispose();
-					new JanelaLogin();
-				} catch (Exception e1) {
+					inserirCodigoPainel.getCodigo().comparar(codigoGerado);
+					inserirCodigoPainel.setVisible(false);
+					add(redefinirSenhaPainel = new RedefinirSenhaPainel());
+				}catch (CaixaVaziaException e1) {
 					e1.printStackTrace();
 				}
 			}
-		}
-
-	private class OuvinteBotaoVoltarEmail implements ActionListener{
-		
-		public void actionPerformed(ActionEvent e) {
-			if(painelEmailAberto) {
-				dispose();
-				new JanelaLogin();
-			}else
-				inserirCodigoPainel.setVisible(false);
-			painelCodigoAberto = false;
-			inserirEmailPainel.setVisible(true);
-			painelEmailAberto = true;
-		}
-		
 	}
 	
-	
+	private class OuvinteRedefinirSenha implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+				try {
+					senha.pegarConteudo();
+					redefinirSenhaPainel.setVisible(false);
+					CentralDeInformacoes persistencia = getPersistencia().buscarCentral();
+					Usuario usuario = persistencia.recuperarUsuarioPeloEmail(email.pegarConteudo());
+					usuario.setSenha(senha.pegarConteudo());
+					getPersistencia().salvarPersistencia(persistencia);
+					dispose();
+					new JanelaDeAvisoPadrao("Senha alterada com sucesso!", new JanelaLogin());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+		}
+	}
 }

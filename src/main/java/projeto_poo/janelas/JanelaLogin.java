@@ -17,10 +17,10 @@ import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
-import projeto_poo.componentes.BotaoPadrao;
-import projeto_poo.componentes.CaixaEmail;
-import projeto_poo.componentes.CaixaSenha;
-import projeto_poo.componentes.TextoImagemPadrao;
+import projeto_poo.botoes.BotaoPadrao;
+import projeto_poo.caixas.CaixaEmail;
+import projeto_poo.caixas.CaixaSenha;
+import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.AdministradroNaoExisteException;
 import projeto_poo.erros.NaoExisteXmlException;
 
@@ -66,7 +66,7 @@ public class JanelaLogin extends JanelaPadrao{
     		dados.verificarAdm();
 		} catch (NaoExisteXmlException | AdministradroNaoExisteException e) {
 			dispose();
-			new JanelaCriarConta("Primeiro acesso");
+			new JanelaPrimeiroAcesso();
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
