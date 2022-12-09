@@ -2,18 +2,24 @@ package administrador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import projeto_poo.Administrador;
+import projeto_poo.Sexo;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoListarCorridas;
+import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalAdministrador extends JanelaPadrao{
+	
+	
 	
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
@@ -30,15 +36,21 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 	private class PainelInicio extends PainelPrincipal{
 		public PainelInicio() {
 			super();
+			opcoes();
 			logo();
-			botoes();
+			botoesBarra();
 			add(getBotaoListarCorridas());
 			add(getBotaoPerfil());
 			add(getBarraInicio());
 			add(getFundoInicio());
 		}
 		
-		private void botoes() {
+		private void opcoes() {
+			BotaoOpcoes listarTodosUsuarios = new BotaoOpcoes("LISTAR TODOS OS USUÁRIOS");
+			add(listarTodosUsuarios);
+		}
+		
+		private void botoesBarra() {
 			getBotaoListarCorridas().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						inicio.setVisible(false);
@@ -68,14 +80,14 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			super();
 			setVisible(false);
 			logo();
-			botoes();
+			botoesBarra();
 			add(getBotaoInicio());
 			add(getBotaoPerfil());
 			add(getBarraListarCorridas());
 			add(getFundoInicio());
 		}
 		
-		private void botoes() {
+		private void botoesBarra() {
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);
@@ -104,14 +116,14 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			super();
 			setVisible(false);
 			logo();
-			botoes();
+			botoesBarra();
 			add(getBotaoInicio());
 			add(getBotaoListarCorridas());
 			add(getBarraPerfil());
 			add(getFundoInicio());
 		}
 		
-		private void botoes() {
+		private void botoesBarra() {
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);
@@ -133,6 +145,11 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			logo.setBounds(30, 30, 309, 31);
 			add(logo);
 		}
+	}
+	
+	public static void main(String[] args) {
+		Administrador adm = new Administrador("Atos", "Alves", LocalDate.of(2001,7,13), Sexo.M, "atos@gmail.com", "1234");
+		new JanelaPrincipalAdministrador(adm);
 	}
 	
 }

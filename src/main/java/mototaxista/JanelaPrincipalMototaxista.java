@@ -14,9 +14,6 @@ import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalMototaxista extends JanelaPadrao{
 	
-	/* modo serio */
-	
-	
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
