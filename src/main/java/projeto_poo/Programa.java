@@ -5,9 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import administrador.JanelaPrincipalAdministrador;
+import mototaxista.JanelaPrincipalMototaxista;
+import passageiro.JanelaPrincipalPassageiro;
 import projeto_poo.janelas.JanelaCriarConta;
 import projeto_poo.janelas.JanelaEsqueciMinhaSenha;
-import projeto_poo.janelas.JanelaInicioAdministrador;
 import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.JanelaPrimeiroAcesso;
 
@@ -15,7 +17,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		new JanelaInicioAdministrador();
+		new JanelaLogin();
 
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();

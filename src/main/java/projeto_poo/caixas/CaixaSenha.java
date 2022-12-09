@@ -7,7 +7,9 @@ import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
 
+import projeto_poo.Usuario;
 import projeto_poo.erros.CaixaVaziaException;
+import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class CaixaSenha extends JPasswordField{
 	
@@ -28,11 +30,16 @@ public class CaixaSenha extends JPasswordField{
 	}
 	
 	public String pegarConteudo() throws CaixaVaziaException {
-		if(new String(super.getPassword()).equals("") && new String(super.getPassword()).length() < 3) {
+		if(new String(getPassword()).equals("") && new String(getPassword()).length() < 3) {
 			setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.RED));
 			throw new CaixaVaziaException();
 		}
-		return new String(super.getPassword());
+		return new String(getPassword());
+	}
+	
+	public void compararSenha(Usuario usuario) throws UsuarioNaoExisteException {
+		if(!usuario.getSenha().equals(new String(getPassword())))
+			throw new UsuarioNaoExisteException();
 	}
 	
 }

@@ -22,8 +22,8 @@ import projeto_poo.botoes.BotaoConcluir;
 import projeto_poo.botoes.BotaoProsseguir;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.caixas.CaixaCodigo;
-import projeto_poo.diversos.ComponentesEstaticos;
-import projeto_poo.diversos.OpcaoRadioPadrao;
+import projeto_poo.diversos.EscolhaSexo;
+import projeto_poo.diversos.EscolhaUsuario;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.UsuarioNaoExisteException;
@@ -33,20 +33,16 @@ import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaCriarConta extends JanelaPadrao{
 	
-	private JRadioButton passageiro;
-	private JRadioButton mototaxista;
+	private EscolhaUsuario tipoUsuario;
 	
 	private Random c = new Random();
 	private String codigoGerado;
-	
-
 	
 	private CriarUsuarioPainel criarUsuarioPainel;
 	private ConfirmarCodigoPainel confirmarCodigoPainel;
 	
 	public JanelaCriarConta() {
 		super("Criar conta");
-		add(ComponentesEstaticos.fundoPadrao());
 		add(criarUsuarioPainel = new CriarUsuarioPainel());
 		setVisible(true);
 	}
@@ -58,6 +54,7 @@ public class JanelaCriarConta extends JanelaPadrao{
     		tipoDeConta();
     		voltar();
     		logoCadastro();
+    		add(getFundoPadrao());
     	}
     	
     	private void logoCadastro() {
@@ -70,18 +67,10 @@ public class JanelaCriarConta extends JanelaPadrao{
     	    JLabel textoTipoDeConta = new TextoImagemPadrao("Tipo de Conta: ");
     	    textoTipoDeConta.setBounds(30 , 265, 100 ,20);
     	    add(textoTipoDeConta);
-    	    passageiro = new OpcaoRadioPadrao("Passageiro");
-    	    passageiro.setBounds(140, 265, 100, 20);
-    	    add(passageiro);
-
-    	    mototaxista = new OpcaoRadioPadrao("Mototaxista");
-    	    mototaxista.setBounds(250, 265, 100, 20);
-    	    add(mototaxista);
-
-    	    ButtonGroup grupo = new ButtonGroup();
-    	    grupo.getSelection();
-    	    grupo.add(passageiro);
-    	    grupo.add(mototaxista);
+    	    
+    	    tipoUsuario = new EscolhaUsuario();
+    	    add(tipoUsuario.getPassageiro());
+    	    add(tipoUsuario.getMototaxista());
     	}
     	
     	private void prosseguir() {
@@ -109,6 +98,7 @@ public class JanelaCriarConta extends JanelaPadrao{
     		super();
     		concluir();
     		voltar();
+    		add(getFundoPadrao());
 		}
     	
     	private void concluir() {
@@ -134,36 +124,32 @@ public class JanelaCriarConta extends JanelaPadrao{
 		
 		public void actionPerformed(ActionEvent e) {
 
-			criarUsuarioPainel.getAvisoPreencherDados().setVisible(false);
-			criarUsuarioPainel.getAvisoUsuarioExiste().setVisible(false);
-			
-			if((criarUsuarioPainel.getFeminino().isSelected() | criarUsuarioPainel.getMasculino().isSelected()) && (passageiro.isSelected() | mototaxista.isSelected())) {
+			getAvisoPreencherDados().setVisible(false);
+			try {
+				criarUsuarioPainel.getNome().pegarConteudo();
+				criarUsuarioPainel.getSobrenome().pegarConteudo();
+				criarUsuarioPainel.getEmail().pegarConteudo();
+				criarUsuarioPainel.getSenha().pegarConteudo();
+				criarUsuarioPainel.getSexo().selecionado();
+				tipoUsuario.selecionado();
+				
+				getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(criarUsuarioPainel.getEmail().pegarConteudo());
+				new JanelaDeAvisoPadrao("Usuário já existente!");
+			} catch (CaixaVaziaException e2) {
+				getAvisoPreencherDados().setVisible(true);
+			} catch (UsuarioNaoExisteException e2) {
 				try {
-					criarUsuarioPainel.getNome().pegarConteudo();
-					criarUsuarioPainel.getSobrenome().pegarConteudo();
-					criarUsuarioPainel.getEmail().pegarConteudo();
-					criarUsuarioPainel.getSenha().pegarConteudo();
-					
-					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(criarUsuarioPainel.getEmail().pegarConteudo());
-					criarUsuarioPainel.getAvisoUsuarioExiste().setVisible(true);
-					
-				} catch (CaixaVaziaException e2) {
-					criarUsuarioPainel.getAvisoPreencherDados().setVisible(true);
-				} catch (UsuarioNaoExisteException e2) {
-					try {
-						codigoGerado = Integer.toString(c.nextInt(1000,9999));
-						Mensageiro.enviarCodigoEmail(criarUsuarioPainel.getEmail().pegarConteudo(), codigoGerado);
-						criarUsuarioPainel.setVisible(false);
-						add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
-					} catch (Exception e1) {
-						System.out.println(e1);
-						new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente");
-					}
-				} catch (Exception e2) {
-					System.out.println(e2);
+					codigoGerado = Integer.toString(c.nextInt(1000,9999));
+					Mensageiro.enviarCodigoEmail(criarUsuarioPainel.getEmail().pegarConteudo(), codigoGerado);
+					criarUsuarioPainel.setVisible(false);
+					add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
+				} catch (Exception e1) {
+					System.out.println(e1);
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente");
 				}
-			} else
-				criarUsuarioPainel.getAvisoPreencherDados().setVisible(true);
+			} catch (Exception e2) {
+				System.out.println(e2);
+			}
 		}
 	}
     
@@ -172,15 +158,9 @@ public class JanelaCriarConta extends JanelaPadrao{
 				try {
 					confirmarCodigoPainel.getCodigo().comparar(codigoGerado);
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-					Usuario usuario = (passageiro.isSelected())? new Passageiro(criarUsuarioPainel.getNome().pegarConteudo(), criarUsuarioPainel.getSobrenome().pegarConteudo(),
-								LocalDate.of(Integer.parseInt((String)criarUsuarioPainel.getAno().getSelectedItem()), Integer.parseInt((String)criarUsuarioPainel.getMes().getSelectedItem()), Integer.parseInt((String)criarUsuarioPainel.getDia().getSelectedItem())),
-								criarUsuarioPainel.getFeminino().isSelected() ? Sexo.F : Sexo.M,
-								criarUsuarioPainel.getEmail().pegarConteudo(), criarUsuarioPainel.getSenha().pegarConteudo())
-									: new Mototaxista(criarUsuarioPainel.getNome().pegarConteudo(), criarUsuarioPainel.getSobrenome().pegarConteudo(),
-											LocalDate.of(Integer.parseInt((String)criarUsuarioPainel.getAno().getSelectedItem()), Integer.parseInt((String)criarUsuarioPainel.getMes().getSelectedItem()), Integer.parseInt((String)criarUsuarioPainel.getDia().getSelectedItem())),
-											criarUsuarioPainel.getFeminino().isSelected() ? Sexo.F : Sexo.M,
-											criarUsuarioPainel.getEmail().getText(), criarUsuarioPainel.getSenha().pegarConteudo());
-					
+					Usuario usuario = tipoUsuario.criarUsuario(criarUsuarioPainel.getNome().pegarConteudo(), criarUsuarioPainel.getSobrenome().pegarConteudo(),
+							criarUsuarioPainel.getDataNascimento().pegarData(),
+							criarUsuarioPainel.getSexo().selecionado(), criarUsuarioPainel.getEmail().getText(), criarUsuarioPainel.getSenha().pegarConteudo());
 					cdi.adicionarUsuario(usuario);
 					getPersistencia().salvarPersistencia(cdi);
 					dispose();
@@ -191,31 +171,3 @@ public class JanelaCriarConta extends JanelaPadrao{
     	}
     }
 }
-
-//public void actionPerformed(ActionEvent e) {
-//
-//	criarUsuarioPainel.getAvisoPreencherDados().setVisible(false);
-//	criarUsuarioPainel.getAvisoUsuarioExiste().setVisible(false);
-//	
-//	if(!criarUsuarioPainel.getNome().getText().equals("") && !criarUsuarioPainel.getSobrenome().getText().equals("") && !criarUsuarioPainel.getEmail().getText().equals("") && !new String(criarUsuarioPainel.getSenha().getPassword()).equals("") && new String(criarUsuarioPainel.getSenha().getPassword()).length() > 3 && (criarUsuarioPainel.getFeminino().isSelected() | criarUsuarioPainel.getMasculino().isSelected()) && (passageiro.isSelected() | mototaxista.isSelected())) {
-//		try {
-//			
-//			getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(criarUsuarioPainel.getEmail().getText());
-//			criarUsuarioPainel.getAvisoUsuarioExiste().setVisible(true);
-//			
-//		} catch (UsuarioNaoExisteException e2) {
-//			try {
-//				codigoGerado = Integer.toString(c.nextInt(1000,9999));
-//				Mensageiro.enviarCodigoEmail(criarUsuarioPainel.getEmail().getText(), codigoGerado);
-//				criarUsuarioPainel.setVisible(false);
-//				add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
-//			} catch (Exception e1) {
-//				System.out.println(e1);
-//				new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente", janela);
-//			}
-//		} catch (Exception e2) {
-//			System.out.println(e2);
-//		}
-//	} else
-//		criarUsuarioPainel.getAvisoPreencherDados().setVisible(true);
-//}

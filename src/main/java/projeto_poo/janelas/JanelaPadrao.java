@@ -15,11 +15,15 @@ import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 
 
-public class JanelaPadrao extends JFrame{
+public abstract class JanelaPadrao extends JFrame{
 	
 	private Border borda = BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK);
 	private Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
 	private Persistencia persistencia = new Persistencia();
+	private TextoImagemPadrao fundoPadrao;
+
+	private TextoImagemPadrao avisoPreencherDados;
+
 	
 	public JanelaPadrao(String tituloJanela) {
 		
@@ -30,8 +34,22 @@ public class JanelaPadrao extends JFrame{
 		setLayout(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fundoPadrao();
+		avisos();
 	}
+	
+	private void avisos() {
+    	avisoPreencherDados = new TextoImagemPadrao("Preencha todos os dados!");
+    	avisoPreencherDados.setForeground(Color.RED);
+    	avisoPreencherDados.setVisible(false);
+    	avisoPreencherDados.setBounds(120, 65, 150, 20);
+    	add(avisoPreencherDados);
+    }
 
+	private void fundoPadrao() {
+		fundoPadrao = new TextoImagemPadrao(new ImageIcon("imgs/fundo-padrao.png"));
+		fundoPadrao.setBounds(15, -7, 768, 406);
+	}
 
 	public Persistencia getPersistencia() {
 		return persistencia;
@@ -44,4 +62,13 @@ public class JanelaPadrao extends JFrame{
 	public Border getBordaErro() {
 		return bordaErro;
 	}
+	
+	public TextoImagemPadrao getFundoPadrao() {
+		return fundoPadrao;
+	}
+	
+	public TextoImagemPadrao getAvisoPreencherDados() {
+		return avisoPreencherDados;
+	}
+
 }

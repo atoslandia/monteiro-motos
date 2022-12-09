@@ -19,7 +19,6 @@ import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoConcluir;
 import projeto_poo.botoes.BotaoProsseguir;
 import projeto_poo.botoes.BotaoVoltar;
-import projeto_poo.diversos.ComponentesEstaticos;
 import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.paineis.PainelConfirmarEmail;
 import projeto_poo.paineis.PainelEntradas;
@@ -33,8 +32,8 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 	
 	public JanelaPrimeiroAcesso() {
 		super("Primeiro acesso");
-		add(ComponentesEstaticos.fundoPadrao());
 		add(criarAdministrador = new CriarAdministrador());
+		add(getFundoPadrao());
 		setVisible(true);
 	}
 	
@@ -86,12 +85,12 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 	private class OuvinteCriarAdministrador implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			criarAdministrador.getAvisoPreencherDados().setVisible(false);
-			if((criarAdministrador.getFeminino().isSelected() | criarAdministrador.getMasculino().isSelected())) {
 				try {
 					criarAdministrador.getNome().pegarConteudo();
 					criarAdministrador.getSobrenome().pegarConteudo();
 					criarAdministrador.getEmail().pegarConteudo();
 					criarAdministrador.getSenha().pegarConteudo();
+					criarAdministrador.getSexo().selecionado();
 					
 					codigoGerado = Integer.toString(c.nextInt(1000,9999));
 					Mensageiro.enviarCodigoEmail(criarAdministrador.getEmail().pegarConteudo(), codigoGerado);
@@ -102,8 +101,6 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 				} catch (Exception e2) {
 					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente!");
 				}
-			}else
-				criarAdministrador.getAvisoPreencherDados().setVisible(true);
 		}
 	}
 	
@@ -113,10 +110,9 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 				confirmarCodigoPainel.getCodigo().comparar(codigoGerado);
 				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 				Usuario usuario = new Administrador(criarAdministrador.getNome().pegarConteudo(), criarAdministrador.getSobrenome().pegarConteudo(),
-										LocalDate.of(Integer.parseInt((String)criarAdministrador.getAno().getSelectedItem()), Integer.parseInt((String)criarAdministrador.getMes().getSelectedItem()), Integer.parseInt((String)criarAdministrador.getDia().getSelectedItem())),
-										criarAdministrador.getFeminino().isSelected() ? Sexo.F : Sexo.M,
+										criarAdministrador.getDataNascimento().pegarData(),
+										criarAdministrador.getSexo().selecionado(),
 										criarAdministrador.getEmail().getText(), criarAdministrador.getSenha().pegarConteudo());
-				
 				cdi.adicionarUsuario(usuario);
 				getPersistencia().salvarPersistencia(cdi);
 				dispose();

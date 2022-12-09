@@ -13,7 +13,8 @@ import javax.swing.JTextField;
 import projeto_poo.caixas.CaixaEmail;
 import projeto_poo.caixas.CaixaNomeSobrenome;
 import projeto_poo.caixas.CaixaSenha;
-import projeto_poo.diversos.OpcaoRadioPadrao;
+import projeto_poo.diversos.ComboDataNascimento;
+import projeto_poo.diversos.EscolhaSexo;
 import projeto_poo.diversos.TextoImagemPadrao;
 
 public class PainelEntradas extends PainelPadrao{
@@ -22,14 +23,8 @@ public class PainelEntradas extends PainelPadrao{
 	private CaixaNomeSobrenome sobrenome;
 	private CaixaEmail email;
 	private CaixaSenha senha;
-	private JRadioButton feminino;
-	private JRadioButton masculino;
-	private JComboBox<String> dia;
-	private JComboBox<String> mes;
-	private JComboBox<String> ano;
-	
-	private TextoImagemPadrao avisoPreencherDados;
-	private TextoImagemPadrao avisoUsuarioExiste;
+	private EscolhaSexo sexo;
+	private ComboDataNascimento dataNascimento;
 	
 	public PainelEntradas() {
 		super();
@@ -39,22 +34,7 @@ public class PainelEntradas extends PainelPadrao{
 		caixaSenha();
 		escolhaSexo();
 		dataNascimento();
-		avisos();
 	}
-	
-	private void avisos() {
-    	avisoPreencherDados = new TextoImagemPadrao("Preencha todos os dados!");
-    	avisoPreencherDados.setForeground(Color.RED);
-    	avisoPreencherDados.setVisible(false);
-    	avisoPreencherDados.setBounds(120, 65, 150, 20);
-    	add(avisoPreencherDados);
-    	
-    	avisoUsuarioExiste = new TextoImagemPadrao("Usuário já cadastrado!");
-    	avisoUsuarioExiste.setForeground(Color.RED);
-    	avisoUsuarioExiste.setVisible(false);
-    	avisoUsuarioExiste.setBounds(120, 65, 150, 20);
-    	add(avisoUsuarioExiste);
-    }
 	
 	private void caixaNome(){
 		JLabel textoNome = new TextoImagemPadrao("Nome:");
@@ -101,18 +81,9 @@ public class PainelEntradas extends PainelPadrao{
 		textoSexo.setBounds(30, 205, 100, 19);
 		add(textoSexo);
 		
-		feminino = new OpcaoRadioPadrao("Feminino");
-		feminino.setBounds(140, 205, 100, 20);
-		add(feminino);
-		
-		masculino = new OpcaoRadioPadrao("Masculino");
-		masculino.setBounds(255, 205, 100, 20);
-		add(masculino);
-		
-		ButtonGroup grupo = new ButtonGroup();
-		grupo.getSelection();
-		grupo.add(feminino);
-		grupo.add(masculino);
+		sexo = new EscolhaSexo();
+		add(sexo.getFeminino());
+		add(sexo.getMasculino());
 	}
 	
 	private void dataNascimento() {
@@ -120,28 +91,10 @@ public class PainelEntradas extends PainelPadrao{
 		textoTipoDeConta.setBounds( 30, 235, 160,20);
 		add(textoTipoDeConta);
 		
-		String[] meses = new String[12];
-		String[] dias = new String[31];
-		String[] anos = new String[101];
-		
-		for(int i = 0; i < anos.length; i++) {
-			if(i < meses.length)
-				meses[i] = Integer.toString(i+1);
-			if(i < dias.length)
-				dias[i] = Integer.toString(i+1);
-			anos[i] = Integer.toString(LocalDate.now().getYear()-i);
-		}
-		
-		dia = new JComboBox<String>(dias);
-		dia.setBounds(190, 235, 45, 20);
-		add(dia);
-		mes = new JComboBox<String>(meses);
-		mes.setBounds(240, 235, 45, 20);
-		add(mes);
-		ano = new JComboBox<String>(anos);
-		ano.setBounds(290, 235, 60, 20);
-		ano.setSelectedIndex(18);
-		add(ano);
+		dataNascimento = new ComboDataNascimento();
+		add(dataNascimento.getDia());
+		add(dataNascimento.getMes());
+		add(dataNascimento.getAno());
 	}
 	
 	public CaixaNomeSobrenome getNome() {
@@ -160,32 +113,12 @@ public class PainelEntradas extends PainelPadrao{
 		return senha;
 	}
 
-	public JRadioButton getFeminino() {
-		return feminino;
+	public EscolhaSexo getSexo() {
+		return sexo;
 	}
 
-	public JRadioButton getMasculino() {
-		return masculino;
-	}
-
-	public JComboBox<String> getDia() {
-		return dia;
-	}
-
-	public JComboBox<String> getMes() {
-		return mes;
-	}
-
-	public JComboBox<String> getAno() {
-		return ano;
+	public ComboDataNascimento getDataNascimento() {
+		return dataNascimento;
 	}
 	
-	public TextoImagemPadrao getAvisoPreencherDados() {
-		return avisoPreencherDados;
-	}
-
-	public TextoImagemPadrao getAvisoUsuarioExiste() {
-		return avisoUsuarioExiste;
-	}
-
 }

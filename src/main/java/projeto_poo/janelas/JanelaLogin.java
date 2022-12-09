@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,22 +21,22 @@ import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.caixas.CaixaEmail;
 import projeto_poo.caixas.CaixaSenha;
+import projeto_poo.diversos.ComboUsuarios;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.AdministradroNaoExisteException;
+import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.NaoExisteXmlException;
+import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class JanelaLogin extends JanelaPadrao{
 	
-	private JTextField email;
-    private JPasswordField senha;
-    private JComboBox<String> tipoDeConta;
-    private JRadioButton passageiro;
-    private JRadioButton mototaxista;
+	private CaixaEmail email;
+    private CaixaSenha senha;
+    private ComboUsuarios tipoDeConta;
 
     private BotaoPadrao botaoEntrar;
     private BotaoPadrao botaoEsqueciSenha;
     private BotaoPadrao botaoCriarConta;
-    private String[] tiposDeConta = {"Passageiro", "Mototaxista", "Administrador"};
     
     private CentralDeInformacoes dados;
 	
@@ -74,19 +75,19 @@ public class JanelaLogin extends JanelaPadrao{
     }
 	
     private void fundoLogin() {
-        JLabel fundoLogin = new TextoImagemPadrao(new ImageIcon("imgs/fundo-login.png"));
+    	TextoImagemPadrao fundoLogin = new TextoImagemPadrao(new ImageIcon("imgs/fundo-login.png"));
         fundoLogin.setBounds(15, -7, 768, 406);
         add(fundoLogin);
     }
 
     private void logoLogin() {
-        JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/logo.png"));
+    	TextoImagemPadrao logo = new TextoImagemPadrao(new ImageIcon("imgs/logo.png"));
         logo.setBounds(30, 30, 470, 31);
         add(logo);
     }
 
     private void textoEmail() {
-        JLabel textoEmail = new TextoImagemPadrao("E-mail: ");
+    	TextoImagemPadrao textoEmail = new TextoImagemPadrao("E-mail: ");
         textoEmail.setBounds(30, 120, 100, 20);
         add(textoEmail);
 
@@ -110,26 +111,10 @@ public class JanelaLogin extends JanelaPadrao{
         textoTipoDeConta.setBounds(30, 220, 100, 20);
         add(textoTipoDeConta);
         
-        tipoDeConta = new JComboBox<String>(tiposDeConta);
-        tipoDeConta.setFont(new Font("Calibrii", Font.PLAIN, 10));
-        tipoDeConta.setBounds(120, 220, 200, 20);
+        tipoDeConta = new ComboUsuarios();
         add(tipoDeConta);
         
-
-//        passageiro = new OpcaoRadioPadrao("Passageiro");
-//        passageiro.setBounds(120, 250, 100, 20);
-//        add(passageiro);
-//
-//        mototaxista = new OpcaoRadioPadrao("Mototaxista");
-//        mototaxista.setBounds(220, 250, 100, 20);
-//        add(mototaxista);
-//
-//        ButtonGroup grupo = new ButtonGroup();
-//        grupo.getSelection();
-//        grupo.add(passageiro);
-//        grupo.add(mototaxista);
     }
-// botoes
 
     private void botaoEntrar() {
     	botaoEntrar = new BotaoPadrao();
@@ -161,31 +146,29 @@ public class JanelaLogin extends JanelaPadrao{
 	private class OuvinteEntrar implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
-			if(email.getText().equals(""))
-				email.setBorder(getBordaErro());
-			else email.setBorder(getBorda());
-			if(new String(senha.getPassword()).length() < 4 || new String(senha.getPassword()).equals(""))
-				senha.setBorder(getBordaErro());
-			else senha.setBorder(getBorda());
 			
 			try {
-				Usuario usuario = dados.recuperarUsuarioPeloEmail(email.getText());
-				if(tipoDeConta.getSelectedItem().equals(tiposDeConta[0]) && usuario instanceof Passageiro) {
-					if(usuario.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("passageiro");
-					}
-				else if(tipoDeConta.getSelectedItem().equals(tiposDeConta[1]) && usuario instanceof Mototaxista) {
-					if(usuario.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("mototaxista");
-					
-				} else if(tipoDeConta.getSelectedItem().equals(tiposDeConta[2]) && usuario instanceof Administrador){
-					if(usuario.getSenha().equals(new String(senha.getPassword())))
-						System.out.println("adm");
-					
-				}
-					
-				} catch (Exception e1) {
-					email.setBorder(getBordaErro());
+				email.pegarConteudo();
+				senha.pegarConteudo();
+				Usuario usuario = dados.recuperarUsuarioPeloEmail(email.pegarConteudo());
+				senha.compararSenha(usuario);
+				tipoDeConta.tipoSelecionado(usuario);
+				dispose();
+//				if(tipoDeConta.passageiro(usuario)) {
+//						System.out.println("passageiro");
+//					}
+//				else if(tipoDeConta.mototaxista(usuario)) {
+//						System.out.println("mototaxista");
+//					
+//				} else if(tipoDeConta.administrador(usuario)){
+//						new JanelaInicioAdministrador(usuario);
+//				}
+				} catch (CaixaVaziaException e1) {
+					getAvisoPreencherDados().setBounds(120, 100, 150, 20);
+					getAvisoPreencherDados().setVisible(true);
+					e1.printStackTrace();
+				} catch (UsuarioNaoExisteException e1) {
+					new JanelaDeAvisoPadrao("Dados incorretos ou não existem!");
 					e1.printStackTrace();
 				}
 			}

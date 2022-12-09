@@ -7,6 +7,6 @@ public class BotaoListarCorridas extends BotaoPadrao{
 		super();
 		setToolTipText("Clique para listar corridas");
 		setIcon(new ImageIcon("imgs/botao-listarcorridas.png"));
-		setBounds(225, 344, 298, 26);
+		setBounds(231, 343, 298, 26);
 	}
 }

@@ -25,7 +25,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 		textoAviso();
 		botaoVoltar();
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
 	
@@ -36,7 +36,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 		textoAviso();
 		botaoVoltar();
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
 	
@@ -49,7 +49,7 @@ public class JanelaDeAvisoPadrao extends JanelaPadrao{
 	
 	private void botaoVoltar() {
 		BotaoVoltar botaoVoltar = new BotaoVoltar();
-		botaoVoltar.setBounds(90, 75, 58, 22);
+		botaoVoltar.setBounds(115, 75, 58, 22);
 		botaoVoltar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

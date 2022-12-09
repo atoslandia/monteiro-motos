@@ -7,6 +7,6 @@ public class BotaoPerfil extends BotaoPadrao{
 		super();
 		setToolTipText("Clique para ver opções do seu perfil");
 		setIcon(new ImageIcon("imgs/botao-perfil.png"));
-		setBounds(580, 344, 116, 25);
+		setBounds(597, 345, 116, 25);
 	}
 }

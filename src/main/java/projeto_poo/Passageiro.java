@@ -8,7 +8,4 @@ public class Passageiro extends Usuario{
 		super(nome, sobrenome, dataNascimento, sexo, email, senha);
 	}
 	
-	
-	
-	
 }

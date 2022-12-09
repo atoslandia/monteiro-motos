@@ -18,7 +18,6 @@ import projeto_poo.caixas.CaixaCodigo;
 import projeto_poo.caixas.CaixaEmail;
 import projeto_poo.caixas.CaixaSenha;
 import projeto_poo.caixas.CaixaTextoPadrao;
-import projeto_poo.diversos.ComponentesEstaticos;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.UsuarioNaoExisteException;
@@ -30,7 +29,7 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	private CaixaTextoPadrao email;
 	private CaixaSenha senha;
 
-	private JLabel avisoUsuarioNaoExiste;
+//	private JLabel avisoUsuarioNaoExiste;
 	
 	private InserirEmailPainel inserirEmailPainel;
 	private InserirCodigoPainel inserirCodigoPainel;
@@ -41,19 +40,9 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	
 	public JanelaEsqueciMinhaSenha() {
 		super("Verificar e-mail");
-		avisos();
 		add(inserirEmailPainel = new InserirEmailPainel());
 		setVisible(true);
 	}
-	
-	private void avisos() {
-    	avisoUsuarioNaoExiste = new TextoImagemPadrao("O usuário não existe!");
-    	avisoUsuarioNaoExiste.setForeground(Color.RED);
-    	avisoUsuarioNaoExiste.setVisible(false);
-    	avisoUsuarioNaoExiste.setBounds(120, 100, 150, 20);
-    	add(avisoUsuarioNaoExiste);
-	}
-	
 	
 	private class InserirEmailPainel extends PainelPadrao{
 		
@@ -63,6 +52,7 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 			prosseguir();
 			voltar();
 			logo();
+			add(getFundoPadrao());
 		}
 		
 		private void logo() {
@@ -105,6 +95,7 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 			super();
 			prosseguir();
 			voltar();
+			add(getFundoPadrao());
 		}
 		
 		private void prosseguir() {
@@ -131,8 +122,8 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 			super();
 			inserirSenha();
 			botaoProsseguir();
-			add(ComponentesEstaticos.fundoPadrao());
 			logo();
+			add(getFundoPadrao());
 		}
 		
 		private void logo() {
@@ -161,14 +152,13 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 	
 	private class OuvinteProsseguirEmail implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			avisoUsuarioNaoExiste.setVisible(false);
 				try {
 					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.pegarConteudo());
 					Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
 					inserirEmailPainel.setVisible(false);
 					add(inserirCodigoPainel = new InserirCodigoPainel());
 				} catch (UsuarioNaoExisteException e1) {
-					avisoUsuarioNaoExiste.setVisible(true);
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente");
 					e1.printStackTrace();
 				} catch (Exception e1) {
 					e1.printStackTrace();

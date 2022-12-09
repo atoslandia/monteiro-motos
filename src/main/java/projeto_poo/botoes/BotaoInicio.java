@@ -7,6 +7,6 @@ public class BotaoInicio extends BotaoPadrao{
 		super();
 		setToolTipText("Clique para retornar para o inicio");
 		setIcon(new ImageIcon("imgs/botao-inicio.png"));
-		setBounds(530, 170, 170, 41);
+		setBounds(50, 343, 110, 26);
 	}
 }
