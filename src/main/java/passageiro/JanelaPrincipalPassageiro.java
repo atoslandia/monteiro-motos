@@ -12,7 +12,7 @@ import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalPassageiro extends JanelaPadrao{
-	
+//	easdhasdbhasbd
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
