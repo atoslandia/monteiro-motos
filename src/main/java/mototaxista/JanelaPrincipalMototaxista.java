@@ -14,6 +14,8 @@ import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalMototaxista extends JanelaPadrao{
 	
+	/* ai ai minha bucetinha*/
+	
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
@@ -25,8 +27,6 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 		add(perfil = new PainelPerfil());
 		setVisible(true);
 	}
-	
-	
 	
 	private class PainelInicio extends PainelPrincipal{
 		public PainelInicio() {

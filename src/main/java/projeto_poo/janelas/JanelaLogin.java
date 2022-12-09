@@ -174,7 +174,6 @@ public class JanelaLogin extends JanelaPadrao{
 			}
 	}
 	
-	
 	private class OuvinteEsqueciSenha implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
