@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
@@ -17,9 +18,10 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
-	
+	private Passageiro passageiro;
 	public JanelaPrincipalPassageiro(Usuario passageiro) {
 		super("Monteiro-motos - "+passageiro.getNome()+" "+passageiro.getSobrenome());
+		this.passageiro = (Passageiro) passageiro;
 		add(inicio = new PainelInicio());
 		add(listarCorridas = new PainelListarCorridas());
 		add(perfil = new PainelPerfil());
@@ -45,7 +47,7 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			iniciarCorrida.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
-					new JanelaSolicitarCorrida();
+					new JanelaSolicitarCorrida(passageiro);
 				}
 			});
 			add(agendarCorrida);

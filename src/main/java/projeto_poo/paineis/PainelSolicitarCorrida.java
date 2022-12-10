@@ -1,6 +1,7 @@
 package projeto_poo.paineis;
 
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import projeto_poo.botoes.BotaoProsseguir;
 import projeto_poo.caixas.CaixaBairroEndereco;
@@ -14,8 +15,10 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	private CaixaBairroEndereco bairro;
 	private CaixaCEPNumero CEP;
 	private CaixaCEPNumero numero;
-	private CaixaTextoPadrao complemento;
+	private JTextField complemento;
 	
+	
+
 	public PainelSolicitarCorrida() {
 		super();
 		caixaEndereco();
@@ -66,7 +69,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoComplemento.setBounds(30, 245, 100, 19);
 		add(textoComplemento);
 		
-		complemento = new CaixaBairroEndereco();
+		complemento = new JTextField();
 		complemento.setBounds(130, 245, 220, 19);
 		add(complemento);
 	}
@@ -86,5 +89,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	public CaixaCEPNumero getNumero() {
 		return numero;
 	}
-	
+	public JTextField getComplemento() {
+		return complemento;
+	}
 }

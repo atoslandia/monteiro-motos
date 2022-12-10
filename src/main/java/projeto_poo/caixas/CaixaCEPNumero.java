@@ -9,7 +9,7 @@ public class CaixaCEPNumero extends CaixaTextoPadrao{
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!Character.isLetterOrDigit(c)) {
+				if(Character.isLetter(c)) {
 					e.consume();
 				}
 			}
