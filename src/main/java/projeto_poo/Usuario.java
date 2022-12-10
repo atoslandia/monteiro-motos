@@ -61,7 +61,7 @@ public abstract class Usuario {
 	}
 
 	public String toString() {
-		return "<html>"+"Nome: "+nome+"<br>"+"Email: "+email+"<br>"+"Senha: "+senha+"<br>"+"Sexo: "+sexo+"</html>";
+		return "<html>"+"Nome: "+nome+" "+sobrenome+"<br><br>"+"Email: "+email+"<br><br>"+"Senha: "+senha+"<br><br>"+"Sexo: "+sexo+"<br><br>"+"Tipo de conta: "+this.getClass().getSimpleName()+"</html>";
 	}
 
 	public String getSobrenome() {

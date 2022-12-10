@@ -15,10 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import projeto_poo.Administrador;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoDetalhar;
+import projeto_poo.botoes.BotaoEspecial;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.caixas.CaixaNomeSobrenome;
@@ -67,6 +69,8 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		}
 	}
 	
+	/* PAINEL LISTA */
+	
 	private class ListaTodosUsuarios extends PainelPadrao{
 		public ListaTodosUsuarios() {
 			filtros();
@@ -98,6 +102,9 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			gerarUsuarios(listaUsuarios);
 			tabela = new JTable(modelo);
 			scroll = new JScrollPane(tabela);
+			tabela.setBackground(new Color(202,202,202));
+			tabela.setDragEnabled(false);
+			tabela.setRowHeight(25);
 			scroll.setBounds(30, 120, 480, 230);
 			scroll.repaint();
 			add(scroll);
@@ -118,6 +125,8 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		}
 	}
 	
+	/* PAINEL DETALHE */
+	
 	private class PainelDetalhe extends PainelPadrao{
 		
 		private Usuario usuario;
@@ -126,10 +135,19 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			this.usuario = usuario;
 			botoes();
 			detalhes();
+			logo();
+			add(getFundoPadrao());
 			setVisible(true);
 		}
 		
 		private void botoes() {
+			BotaoEspecial enviarEmail = new BotaoEspecial("ENVIAR EMAIL");
+			add(enviarEmail);
+			
+			BotaoEspecial gerarPdf = new BotaoEspecial("EDITAR PERFIL");
+			gerarPdf.setLocation(510, 170);
+			add(gerarPdf);
+			
 			BotaoVoltar voltar = new BotaoVoltar();
 			voltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -142,15 +160,13 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		
 		private void detalhes() {
 			TextoImagemPadrao detalhes = new TextoImagemPadrao(usuario.toString());
-			detalhes.setBounds(30, 80, 300, 200);
+			detalhes.setBounds(30, 60, 300, 200);
 			add(detalhes);
-			
-			
 		}
 		
 		private void logo() {
-			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/administrador/todososusuarios.png"));
-			logo.setBounds(30, 21, 451, 40);
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/administrador/detalhesdousuario.png"));
+			logo.setBounds(30, 21, 502, 41);
 			add(logo);
 		}
 		
@@ -195,4 +211,9 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			scroll.repaint();
 		}
 	}
+	
+	public static void main(String[] args) {
+		new JanelaTodosUsuarios();
+	}
+	
 }

@@ -158,10 +158,11 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 					inserirEmailPainel.setVisible(false);
 					add(inserirCodigoPainel = new InserirCodigoPainel());
 				} catch (UsuarioNaoExisteException e1) {
-					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente");
+					new JanelaDeAvisoPadrao(e1.getMessage());
 					e1.printStackTrace();
 				} catch (Exception e1) {
 					e1.printStackTrace();
+					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente");
 				}
 		}
 	}

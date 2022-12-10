@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 
 import projeto_poo.erros.AdministradroNaoExisteException;
+import projeto_poo.erros.CorridaExistenteException;
 import projeto_poo.erros.CorridaNaoExisteException;
 import projeto_poo.erros.MenorDeIdadeException;
 import projeto_poo.erros.NenhumaCorridaException;
@@ -27,9 +28,10 @@ public class CentralDeInformacoes {
 		}
 	}
 	
-	public void adicionarCorrida(Corrida corrida) {
+	public void adicionarCorrida(Corrida corrida) throws CorridaExistenteException {
 		try {
 			recuperarCorridaPeloId(corrida.getId());
+			throw new CorridaExistenteException();
 		} catch (CorridaNaoExisteException e) {
 			todasAsCorridas.add(corrida);
 			e.printStackTrace();

@@ -22,8 +22,10 @@ import projeto_poo.caixas.CaixaDistancia;
 import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
+import projeto_poo.erros.CorridaExistenteException;
 import projeto_poo.erros.CorridaNaoExisteException;
 import projeto_poo.erros.NaoExisteXmlException;
+import projeto_poo.janelas.JanelaDeAvisoPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPadrao;
 import projeto_poo.paineis.PainelSolicitarCorrida;
@@ -165,7 +167,10 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 				getPersistencia().salvarPersistencia(cdi);
 			} catch (CaixaVaziaException e1) {
 				getAvisoPreencherDados().setVisible(true);
-			}catch (Exception e1) {
+			} catch (CorridaExistenteException e2) {
+				e2.printStackTrace();
+				new JanelaDeAvisoPadrao(e2.getMessage());
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			

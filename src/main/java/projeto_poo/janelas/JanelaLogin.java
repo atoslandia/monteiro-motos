@@ -159,7 +159,7 @@ public class JanelaLogin extends JanelaPadrao{
 					getAvisoPreencherDados().setVisible(true);
 					e1.printStackTrace();
 				} catch (UsuarioNaoExisteException e1) {
-					new JanelaDeAvisoPadrao("Dados incorretos ou não existem!");
+					new JanelaDeAvisoPadrao(e1.getMessage());
 					e1.printStackTrace();
 				}
 			}

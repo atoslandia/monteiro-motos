@@ -9,7 +9,6 @@ public class BotaoOpcoes extends BotaoPadrao{
 	private String titulo;
 	
 	public BotaoOpcoes(String titulo) {
-		super();
 		this.titulo = titulo;
 		texto();
 		setIcon(new ImageIcon("imgs/botao-padraoinicio.png"));
