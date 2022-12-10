@@ -9,6 +9,7 @@ import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 
 public class PainelSolicitarCorrida extends PainelPadrao{
+	
 	private CaixaBairroEndereco endereco;
 	private CaixaBairroEndereco bairro;
 	private CaixaCEPNumero CEP;
@@ -16,13 +17,12 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	private CaixaTextoPadrao complemento;
 	
 	public PainelSolicitarCorrida() {
+		super();
 		caixaEndereco();
 		caixaCEP();
 		caixaNumero();
 		caixaBairro();
 		caixaComplemento();
-
-		setVisible(true);
 	}
 	
 	private void caixaEndereco() {

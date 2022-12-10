@@ -97,7 +97,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 					criarAdministrador.setVisible(false);
 					add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
 				} catch (CaixaVaziaException e2) {
-					criarAdministrador.getAvisoPreencherDados().setVisible(true); 
+					criarAdministrador.getAvisoPreencherDados().setVisible(true);
 				} catch (Exception e2) {
 					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente!");
 				}

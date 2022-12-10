@@ -4,8 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class CaixaBairroEndereco extends CaixaTextoPadrao {
+	
 	public CaixaBairroEndereco() {
-		
+		super();
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();

@@ -14,13 +14,12 @@ import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelSolicitarCorrida;
 
 public class JanelaSolicitarCorrida extends JanelaPadrao {
-
 	
-	PainelSolicitarCorrida caixasSolicitarCorrida;
+	private PainelSolicitarCorrida caixasSolicitarCorrida;
 
 	public JanelaSolicitarCorrida() {
 		super("Ponto de encontro");
-		add(new PainelPontoDeEncontro());
+		add(caixasSolicitarCorrida = new PainelPontoDeEncontro());
 		
 		setVisible(true);
 	}
@@ -43,22 +42,22 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			add(botao);
 		}
 	
-		private class OuvinteBotaoProsseguir implements ActionListener {
-
-			public void actionPerformed(ActionEvent e) {
-				try {
-					caixasSolicitarCorrida.getEndereco().pegarConteudo();
-					caixasSolicitarCorrida.getCEP().pegarConteudo();
-					caixasSolicitarCorrida.getBairro().pegarConteudo();
-					caixasSolicitarCorrida.getNumero().pegarConteudo();
-				} catch (CaixaVaziaException e1) {
-					getAvisoPreencherDados().setVisible(true);	
-				}
+	}
+	
+	private class OuvinteBotaoProsseguir implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			try {
+				caixasSolicitarCorrida.getEndereco().pegarConteudo();
+				caixasSolicitarCorrida.getCEP().pegarConteudo();
+				caixasSolicitarCorrida.getBairro().pegarConteudo();
+				caixasSolicitarCorrida.getNumero().pegarConteudo();
+				
+			} catch (CaixaVaziaException e1) {
+				getAvisoPreencherDados().setVisible(true);	
 			}
 		}
 	}
-	
-	
 	
 	
 	public static void main(String[] args) {

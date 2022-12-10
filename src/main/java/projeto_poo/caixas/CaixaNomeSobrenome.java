@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import projeto_poo.erros.CaixaVaziaException;
 
 public class CaixaNomeSobrenome extends CaixaTextoPadrao{
+	
 	public CaixaNomeSobrenome() {
 		super();
 		setToolTipText("Caracteres permitidos: letras");

@@ -15,7 +15,6 @@ import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
-import projeto_poo.janelas.JanelaTodosUsuarios;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalAdministrador extends JanelaPadrao{

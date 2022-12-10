@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 public class CaixaCEPNumero extends CaixaTextoPadrao{
 	public CaixaCEPNumero() {
+		super();
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();

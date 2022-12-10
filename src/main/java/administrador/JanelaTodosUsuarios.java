@@ -1,4 +1,4 @@
-package projeto_poo.janelas;
+package administrador;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +16,7 @@ import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaTodosUsuarios extends JanelaPadrao{
@@ -56,7 +57,6 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 					if(u instanceof Mototaxista)
 						linha[1] = "Passageiro";
 					modelo.addRow(linha);
-
 				}
 				JTable tabela = new JTable(modelo);
 				JScrollPane scroll = new JScrollPane(tabela);
