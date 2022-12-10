@@ -39,38 +39,38 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	}
 	private void caixaCEP() {
 		TextoImagemPadrao textoCEP = new TextoImagemPadrao("CEP: ");
-		textoCEP.setBounds(30, 125, 100, 19);
+		textoCEP.setBounds(30, 119, 100, 19);
 		add(textoCEP);
 		
 		CEP = new CaixaCEPNumero();
-		CEP.setBounds(130, 125, 220, 19);
+		CEP.setBounds(130, 119, 220, 19);
 		add(CEP);
 	}
 	private void caixaNumero() {
 		TextoImagemPadrao textoNumero = new TextoImagemPadrao("Número: ");
-		textoNumero.setBounds(30, 165, 100, 19);
+		textoNumero.setBounds(30, 153, 100, 19);
 		add(textoNumero);
 		
 		numero = new CaixaCEPNumero();
-		numero.setBounds(130, 165, 220, 19);
+		numero.setBounds(130, 153, 220, 19);
 		add(numero);
 	}
 	private void caixaBairro() {
 		TextoImagemPadrao textoBairro = new TextoImagemPadrao("Bairro: ");
-		textoBairro.setBounds(30, 205, 100, 19);
+		textoBairro.setBounds(30, 187, 100, 19);
 		add(textoBairro);
 		
 		bairro = new CaixaBairroEndereco();
-		bairro.setBounds(130, 205, 220, 19);
+		bairro.setBounds(130, 187, 220, 19);
 		add(bairro);
 	}
 	private void caixaComplemento() {
 		TextoImagemPadrao textoComplemento = new TextoImagemPadrao("Complemento: ");
-		textoComplemento.setBounds(30, 245, 100, 19);
+		textoComplemento.setBounds(30, 221, 100, 19);
 		add(textoComplemento);
 		
 		complemento = new JTextField();
-		complemento.setBounds(130, 245, 220, 19);
+		complemento.setBounds(130, 221, 220, 19);
 		add(complemento);
 	}
 
