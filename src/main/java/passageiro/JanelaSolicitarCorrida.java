@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Corrida;
 import projeto_poo.Destino;
 import projeto_poo.Passageiro;
 import projeto_poo.PontoDeEncontro;
@@ -20,6 +22,8 @@ import projeto_poo.caixas.CaixaDistancia;
 import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
+import projeto_poo.erros.CorridaNaoExisteException;
+import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPadrao;
 import projeto_poo.paineis.PainelSolicitarCorrida;
@@ -32,10 +36,11 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	private PainelPontoDeEncontro painelPontoDeEncontro;
 	
 	private PontoDeEncontro enderecoPontoDeEncontro;
-	private Destino ederecoDestino;
+	private Destino enderecoDestino;
 	
 	private CaixaDistancia distancia;
 	
+
 	public JanelaSolicitarCorrida(Passageiro passageiro) {
 		super("Ponto de encontro");
 		this.passageiro = passageiro;
@@ -142,6 +147,32 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			}
 		}
 	}
+	
+	private class OuvinteBotaoSolicitar implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			try {
+				getAvisoPreencherDados().setVisible(false);
+				String endereco = painelDestino.getEndereco().pegarConteudo();
+				String CEP = painelDestino.getCEP().pegarConteudo();
+				String bairro = painelDestino.getBairro().pegarConteudo();
+				int numero = Integer.parseInt(painelDestino.getNumero().pegarConteudo());
+				String complemento = painelDestino.getComplemento().getText();
+				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo()); 
+				enderecoDestino = new Destino(endereco, CEP, numero, bairro, complemento, caixaDistancia);
+				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+				Corrida corrida = new Corrida(enderecoPontoDeEncontro,enderecoDestino, passageiro);
+				cdi.adicionarCorrida(corrida);
+				getPersistencia().salvarPersistencia(cdi);
+			} catch (CaixaVaziaException e1) {
+				getAvisoPreencherDados().setVisible(true);
+			}catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
 	private class OuvinteBotaoAgendar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			
