@@ -26,8 +26,10 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			botaoVoltar();
 			botaoProceguir();
 		}
+		
 		private void botaoProceguir() {
 			BotaoProsseguir botao = new BotaoProsseguir();
+			botao.addActionListener(null);
 			add(botao);
 		}
 		private void botaoVoltar() {
@@ -35,6 +37,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			add(botao);
 		}
 		
+
 	}
 	
 	public static void main(String[] args) {

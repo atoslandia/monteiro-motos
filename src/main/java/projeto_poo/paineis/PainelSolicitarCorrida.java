@@ -3,16 +3,16 @@ package projeto_poo.paineis;
 import javax.swing.JLabel;
 
 import projeto_poo.botoes.BotaoProsseguir;
-import projeto_poo.caixas.CaixaEndereco;
-import projeto_poo.caixas.CaixaNumeros;
+import projeto_poo.caixas.CaixaBairroEndereco;
+import projeto_poo.caixas.CaixaCEPNumero;
 import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 
 public class PainelSolicitarCorrida extends PainelPadrao{
-	private CaixaEndereco endereco;
-	private CaixaEndereco bairro;
-	private CaixaNumeros CEP;
-	private CaixaNumeros numero;
+	private CaixaBairroEndereco endereco;
+	private CaixaBairroEndereco bairro;
+	private CaixaCEPNumero CEP;
+	private CaixaCEPNumero numero;
 	private CaixaTextoPadrao complemento;
 	
 	public PainelSolicitarCorrida() {
@@ -30,7 +30,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoEndereco.setBounds(30, 85, 100, 19);
 		add(textoEndereco);
 		
-		endereco = new CaixaEndereco();
+		endereco = new CaixaBairroEndereco();
 		endereco.setBounds(130, 85, 220, 19);
 		add(endereco);
 	}
@@ -39,7 +39,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoCEP.setBounds(30, 125, 100, 19);
 		add(textoCEP);
 		
-		CEP = new CaixaNumeros();
+		CEP = new CaixaCEPNumero();
 		CEP.setBounds(130, 125, 220, 19);
 		add(CEP);
 	}
@@ -48,7 +48,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoNumero.setBounds(30, 165, 100, 19);
 		add(textoNumero);
 		
-		numero = new CaixaNumeros();
+		numero = new CaixaCEPNumero();
 		numero.setBounds(130, 165, 220, 19);
 		add(numero);
 	}
@@ -57,7 +57,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoBairro.setBounds(30, 205, 100, 19);
 		add(textoBairro);
 		
-		bairro = new CaixaEndereco();
+		bairro = new CaixaBairroEndereco();
 		bairro.setBounds(130, 205, 220, 19);
 		add(bairro);
 	}
@@ -66,7 +66,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		textoComplemento.setBounds(30, 245, 100, 19);
 		add(textoComplemento);
 		
-		complemento = new CaixaEndereco();
+		complemento = new CaixaBairroEndereco();
 		complemento.setBounds(130, 245, 220, 19);
 		add(complemento);
 	}

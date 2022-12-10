@@ -154,15 +154,6 @@ public class JanelaLogin extends JanelaPadrao{
 				senha.compararSenha(usuario);
 				tipoDeConta.tipoSelecionado(usuario);
 				dispose();
-//				if(tipoDeConta.passageiro(usuario)) {
-//						System.out.println("passageiro");
-//					}
-//				else if(tipoDeConta.mototaxista(usuario)) {
-//						System.out.println("mototaxista");
-//					
-//				} else if(tipoDeConta.administrador(usuario)){
-//						new JanelaInicioAdministrador(usuario);
-//				}
 				} catch (CaixaVaziaException e1) {
 					getAvisoPreencherDados().setBounds(120, 100, 150, 20);
 					getAvisoPreencherDados().setVisible(true);
