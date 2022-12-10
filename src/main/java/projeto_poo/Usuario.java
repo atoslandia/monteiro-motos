@@ -2,7 +2,7 @@ package projeto_poo;
 
 import java.time.LocalDate;
 
-public class Usuario {
+public abstract class Usuario {
 	
 	private String nome;
 	private String sobrenome;
@@ -61,7 +61,7 @@ public class Usuario {
 	}
 
 	public String toString() {
-		return "nome: "+nome+" email: "+email+" senha: "+senha+" sexo: "+sexo;
+		return "<html>"+"Nome: "+nome+"<br>"+"Email: "+email+"<br>"+"Senha: "+senha+"<br>"+"Sexo: "+sexo+"</html>";
 	}
 
 	public String getSobrenome() {

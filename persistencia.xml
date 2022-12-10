@@ -1,12 +1,12 @@
 <projeto__poo.CentralDeInformacoes>
   <todosOsUsuarios>
     <projeto__poo.Administrador>
-      <nome>Atos</nome>
-      <sobrenome>Alves</sobrenome>
+      <nome>Jorge</nome>
+      <sobrenome>Administrador</sobrenome>
       <dataNascimento>2004-01-01</dataNascimento>
       <email>atosalvesqueiroz@gmail.com</email>
       <senha>1234</senha>
-      <sexo>M</sexo>
+      <sexo>MASCULINO</sexo>
     </projeto__poo.Administrador>
     <projeto__poo.Mototaxista>
       <nome>Robson</nome>
@@ -14,7 +14,7 @@
       <dataNascimento>2004-01-01</dataNascimento>
       <email>robsoncaliban@gmail.com</email>
       <senha>1234</senha>
-      <sexo>M</sexo>
+      <sexo>MASCULINO</sexo>
     </projeto__poo.Mototaxista>
     <projeto__poo.Passageiro>
       <nome>Atos</nome>
@@ -22,15 +22,39 @@
       <dataNascimento>2004-01-01</dataNascimento>
       <email>atos.alves@academico.ifpb.edu.br</email>
       <senha>1234</senha>
-      <sexo>M</sexo>
+      <sexo>MASCULINO</sexo>
     </projeto__poo.Passageiro>
     <projeto__poo.Mototaxista>
-      <nome>Atos</nome>
-      <sobrenome>Alves</sobrenome>
+      <nome>Mateus</nome>
+      <sobrenome>Alcantra</sobrenome>
       <dataNascimento>2001-07-13</dataNascimento>
       <email>atos5000@gmail.com</email>
       <senha>1234</senha>
-      <sexo>M</sexo>
+      <sexo>MASCULINO</sexo>
+    </projeto__poo.Mototaxista>
+    <projeto__poo.Passageiro>
+      <nome>Gilmar</nome>
+      <sobrenome>Dias</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>atos.alves@academico.ifpb.edu.br</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
+    </projeto__poo.Passageiro>
+    <projeto__poo.Passageiro>
+      <nome>Tiago</nome>
+      <sobrenome>Butico</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>atos.alves@academico.ifpb.edu.br</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
+    </projeto__poo.Passageiro>
+    <projeto__poo.Mototaxista>
+      <nome>Junio</nome>
+      <sobrenome>Souza</sobrenome>
+      <dataNascimento>2001-07-13</dataNascimento>
+      <email>atos5000@gmail.com</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
     </projeto__poo.Mototaxista>
   </todosOsUsuarios>
   <todasAsCorridas/>

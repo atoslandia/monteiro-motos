@@ -15,12 +15,9 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	private CaixaBairroEndereco bairro;
 	private CaixaCEPNumero CEP;
 	private CaixaCEPNumero numero;
-	private JTextField complemento;
-	
-	
+	private CaixaTextoPadrao complemento;
 
 	public PainelSolicitarCorrida() {
-		super();
 		caixaEndereco();
 		caixaCEP();
 		caixaNumero();
@@ -29,7 +26,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	}
 	
 	private void caixaEndereco() {
-		TextoImagemPadrao textoEndereco = new TextoImagemPadrao("Endereço: ");
+		TextoImagemPadrao textoEndereco = new TextoImagemPadrao("Endereço*: ");
 		textoEndereco.setBounds(30, 85, 100, 19);
 		add(textoEndereco);
 		
@@ -38,39 +35,39 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		add(endereco);
 	}
 	private void caixaCEP() {
-		TextoImagemPadrao textoCEP = new TextoImagemPadrao("CEP: ");
-		textoCEP.setBounds(30, 119, 100, 19);
+		TextoImagemPadrao textoCEP = new TextoImagemPadrao("CEP*: ");
+		textoCEP.setBounds(30, 115, 100, 19);
 		add(textoCEP);
 		
 		CEP = new CaixaCEPNumero();
-		CEP.setBounds(130, 119, 220, 19);
+		CEP.setBounds(130, 115, 220, 19);
 		add(CEP);
 	}
 	private void caixaNumero() {
-		TextoImagemPadrao textoNumero = new TextoImagemPadrao("Número: ");
-		textoNumero.setBounds(30, 153, 100, 19);
+		TextoImagemPadrao textoNumero = new TextoImagemPadrao("Número*: ");
+		textoNumero.setBounds(30, 145, 100, 19);
 		add(textoNumero);
 		
 		numero = new CaixaCEPNumero();
-		numero.setBounds(130, 153, 220, 19);
+		numero.setBounds(130, 145, 220, 19);
 		add(numero);
 	}
 	private void caixaBairro() {
-		TextoImagemPadrao textoBairro = new TextoImagemPadrao("Bairro: ");
-		textoBairro.setBounds(30, 187, 100, 19);
+		TextoImagemPadrao textoBairro = new TextoImagemPadrao("Bairro*: ");
+		textoBairro.setBounds(30, 175, 100, 19);
 		add(textoBairro);
 		
 		bairro = new CaixaBairroEndereco();
-		bairro.setBounds(130, 187, 220, 19);
+		bairro.setBounds(130, 175, 220, 19);
 		add(bairro);
 	}
 	private void caixaComplemento() {
 		TextoImagemPadrao textoComplemento = new TextoImagemPadrao("Complemento: ");
-		textoComplemento.setBounds(30, 221, 100, 19);
+		textoComplemento.setBounds(30, 205, 100, 19);
 		add(textoComplemento);
 		
-		complemento = new JTextField();
-		complemento.setBounds(130, 221, 220, 19);
+		complemento = new CaixaTextoPadrao();
+		complemento.setBounds(130, 205, 220, 19);
 		add(complemento);
 	}
 

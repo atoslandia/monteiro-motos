@@ -161,10 +161,4 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			add(logo);
 		}
 	}
-	
-	public static void main(String[] args) {
-		Administrador adm = new Administrador("Atos", "Alves", LocalDate.of(2001,7,13), Sexo.M, "atos@gmail.com", "1234");
-		new JanelaTodosUsuarios();
-	}
-	
 }

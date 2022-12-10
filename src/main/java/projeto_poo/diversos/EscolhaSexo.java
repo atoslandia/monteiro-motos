@@ -32,9 +32,9 @@ public class EscolhaSexo extends JRadioButton {
 	
 	public Sexo selecionado() throws CaixaVaziaException {
 		if(feminino.isSelected())
-			return Sexo.F;
+			return Sexo.FEMININO;
 		if(masculino.isSelected())
-			return Sexo.M;
+			return Sexo.MASCULINO;
 		throw new CaixaVaziaException();
 	}
 

@@ -32,7 +32,7 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 		public PainelInicio() {
 			super();
 			logo();
-			botoes();
+			botoesBarra();
 			botaoOpcoes();
 			add(getBotaoListarCorridas());
 			add(getBotaoPerfil());
@@ -42,20 +42,17 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 		
 		private void botaoOpcoes() {
 			BotaoOpcoes iniciarCorrida = new BotaoOpcoes("INICIAR CORRIDA");
-			BotaoOpcoes agendarCorrida = new BotaoOpcoes("AGENDAR CORRIDA");
-			agendarCorrida.setLocation(30, 160);
 			iniciarCorrida.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
 					new JanelaSolicitarCorrida(passageiro);
 				}
 			});
-			add(agendarCorrida);
 			add(iniciarCorrida);
 		}
 		
 		
-		private void botoes() {
+		private void botoesBarra() {
 			getBotaoListarCorridas().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						inicio.setVisible(false);
@@ -85,14 +82,14 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			super();
 			setVisible(false);
 			logo();
-			botoes();
+			botoesBarra();
 			add(getBotaoInicio());
 			add(getBotaoPerfil());
 			add(getBarraListarCorridas());
 			add(getFundoInicio());
 		}
 		
-		private void botoes() {
+		private void botoesBarra() {
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);
@@ -121,14 +118,14 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			super();
 			setVisible(false);
 			logo();
-			botoes();
+			botoesBarra();
 			add(getBotaoInicio());
 			add(getBotaoListarCorridas());
 			add(getBarraPerfil());
 			add(getFundoInicio());
 		}
 		
-		private void botoes() {
+		private void botoesBarra() {
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);

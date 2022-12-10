@@ -10,7 +10,9 @@ import javax.swing.JTextField;
 import projeto_poo.Passageiro;
 import projeto_poo.PontoDeEncontro;
 import projeto_poo.Usuario;
+import projeto_poo.botoes.BotaoAgendar;
 import projeto_poo.botoes.BotaoProsseguir;
+import projeto_poo.botoes.BotaoSolicitar;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.caixas.CaixaCEPNumero;
 import projeto_poo.caixas.CaixaDistancia;
@@ -22,7 +24,7 @@ import projeto_poo.paineis.PainelSolicitarCorrida;
 
 public class JanelaSolicitarCorrida extends JanelaPadrao {
 	private PainelDestino painelDestino;
-	private PainelPontoDeEncontro caixasSolicitarCorrida;
+	private PainelPontoDeEncontro painelPontoDeEncontro;
 	private PontoDeEncontro encontro;
 	private Usuario passageiro;
 	private CaixaDistancia distancia;
@@ -30,8 +32,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	public JanelaSolicitarCorrida(Passageiro passageiro) {
 		super("Ponto de encontro");
 		this.passageiro = passageiro;
-		add(caixasSolicitarCorrida = new PainelPontoDeEncontro());
-		add(painelDestino = new PainelDestino());
+		add(painelPontoDeEncontro = new PainelPontoDeEncontro());
 		setVisible(true);
 	}
 	
@@ -39,9 +40,16 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	private class PainelPontoDeEncontro extends PainelSolicitarCorrida{
 		
 		public PainelPontoDeEncontro() {
-			add(getFundoPadrao());
 			botaoVoltar();
 			botaoProceguir();
+			logo();
+			add(getFundoPadrao());
+		}
+		
+		private void logo() {
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/passageiro/pontodeencontro.png"));
+			logo.setBounds(30, 30, 474, 32);
+			add(logo);
 		}
 		
 		private void botaoProceguir() {
@@ -51,7 +59,12 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		}
 		private void botaoVoltar() {
 			BotaoVoltar botao = new BotaoVoltar();
-			botao.addActionListener(new OuvinteBotaoVoltar());
+			botao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaPrincipalPassageiro(passageiro);
+				}
+			});
 			add(botao);
 		}
 	
@@ -59,12 +72,16 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	
 	private class PainelDestino extends PainelSolicitarCorrida{
 		public PainelDestino() {
-			
-			add(getFundoPadrao());
 			caixaDistancia();
-			botaoVoltar();
-			setVisible(false);
-			
+			botoes();
+			logo();
+			add(getFundoPadrao());
+		}
+		
+		private void logo() {
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/passageiro/destino.png"));
+			logo.setBounds(30, 30, 474, 32);
+			add(logo);
 		}
 		
 		private void caixaDistancia() {
@@ -73,13 +90,24 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			add(textoDistancia);
 			
 			distancia = new CaixaDistancia();
-			distancia.setBounds(130, 255, 220, 19);
+			distancia.setBounds(130, 235, 220, 19);
 			add(distancia);
 		}
 		
-		private void botaoVoltar() {
+		private void botoes() {
+			BotaoSolicitar solicitar = new BotaoSolicitar();
+			add(solicitar);
+			
+			BotaoAgendar agendar = new BotaoAgendar();
+			add(agendar);
+			
 			BotaoVoltar botao = new BotaoVoltar();
-			botao.addActionListener(new OuvinteBotaoVoltarDestino());
+			botao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					painelPontoDeEncontro.setVisible(true);
+				}
+			});
 			add(botao);
 		}
 		
@@ -88,39 +116,20 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	private class OuvinteBotaoProsseguir implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			
+			getAvisoPreencherDados().setVisible(false);
 			try {
-				
-				String endereco = caixasSolicitarCorrida.getEndereco().pegarConteudo();
-				String CEP = caixasSolicitarCorrida.getCEP().pegarConteudo();
-				String bairro = caixasSolicitarCorrida.getBairro().pegarConteudo();
-				int numero = Integer.parseInt(caixasSolicitarCorrida.getNumero().pegarConteudo());
-				String complemento = caixasSolicitarCorrida.getComplemento().getText();
+				add(painelDestino = new PainelDestino());
+				String endereco = painelPontoDeEncontro.getEndereco().pegarConteudo();
+				String CEP = painelPontoDeEncontro.getCEP().pegarConteudo();
+				String bairro = painelPontoDeEncontro.getBairro().pegarConteudo();
+				int numero = Integer.parseInt(painelPontoDeEncontro.getNumero().pegarConteudo());
+				String complemento = painelPontoDeEncontro.getComplemento().getText();
 				encontro = new PontoDeEncontro(endereco, CEP, numero, bairro, complemento);
-				caixasSolicitarCorrida.setVisible(false);
-				painelDestino.setVisible(true);
+				painelPontoDeEncontro.setVisible(false);
 			} catch (CaixaVaziaException e1) {
 				getAvisoPreencherDados().setVisible(true);	
 			}
 		}
 	}
-	private class OuvinteBotaoVoltar implements ActionListener{
 
-		public void actionPerformed(ActionEvent e) {
-			dispose();
-			new JanelaPrincipalPassageiro(passageiro);
-		}
-		
-	}
-	private class OuvinteBotaoVoltarDestino implements ActionListener{
-
-		public void actionPerformed(ActionEvent e) {
-			painelDestino.setVisible(false);
-			caixasSolicitarCorrida.setVisible(true);
-		}
-		
-	}
-	
-
-	
 }

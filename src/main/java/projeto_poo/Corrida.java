@@ -2,7 +2,7 @@ package projeto_poo;
 
 public class Corrida {
 	private long id;
-	private PontoDeEncontro endereco;
+	private PontoDeEncontro pontoDeEncontro;
 	private Destino destino;
 	private Passageiro passageiro;
 	
@@ -10,11 +10,11 @@ public class Corrida {
 		id = System.currentTimeMillis();
 	}
 	
-	public Corrida(PontoDeEncontro e, Destino d, String cep, int numero , String bairro, String complemento , Passageiro p) {
+	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro) {
 		id = System.currentTimeMillis();
-		endereco = e;
-		destino = d;
-		passageiro = p;
+		this.pontoDeEncontro = pontoDeEncontro;
+		this.destino = destino;
+		this.passageiro = passageiro;
 	}
 	
 	public Passageiro getPassageiro() {
@@ -29,9 +29,8 @@ public class Corrida {
 	}
 	
 	public String toString() {
-	    String[] primeiroNome = getPassageiro().getNome().split(" ");
-		if(getPassageiro().getSexo().equals(Sexo.F))
-			return (primeiroNome[0]+" pede para pega-la em "+ endereco.getEndereco());
-		return (primeiroNome[0]+" pede para pega-lo em "+ endereco.getEndereco());
+		if(passageiro.getSexo().equals(Sexo.FEMININO))
+			return passageiro.getNome()+" pede para pega-la em "+ pontoDeEncontro.getEndereco();
+		return passageiro.getNome()+" pede para pega-lo em "+ pontoDeEncontro.getEndereco();
 	}
 }

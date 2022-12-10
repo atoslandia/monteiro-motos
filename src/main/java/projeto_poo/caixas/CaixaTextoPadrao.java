@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 
 import projeto_poo.erros.CaixaVaziaException;
 
-public abstract class CaixaTextoPadrao extends JTextField{
+public class CaixaTextoPadrao extends JTextField{
 	
 	public CaixaTextoPadrao(){
 		setSelectionColor(new Color(255, 204, 0));
