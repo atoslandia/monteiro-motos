@@ -7,12 +7,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import projeto_poo.Usuario;
+import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalPassageiro extends JanelaPadrao{
-//	easdhasdbhasbd
+
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
@@ -25,18 +26,32 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 		setVisible(true);
 	}
 	
-	
-	
 	private class PainelInicio extends PainelPrincipal{
 		public PainelInicio() {
 			super();
 			logo();
 			botoes();
+			botaoOpcoes();
 			add(getBotaoListarCorridas());
 			add(getBotaoPerfil());
 			add(getBarraInicio());
 			add(getFundoInicio());
 		}
+		
+		private void botaoOpcoes() {
+			BotaoOpcoes iniciarCorrida = new BotaoOpcoes("INICIAR CORRIDA");
+			BotaoOpcoes agendarCorrida = new BotaoOpcoes("AGENDAR CORRIDA");
+			agendarCorrida.setLocation(30, 160);
+			iniciarCorrida.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaSolicitarCorrida();
+				}
+			});
+			add(agendarCorrida);
+			add(iniciarCorrida);
+		}
+		
 		
 		private void botoes() {
 			getBotaoListarCorridas().addActionListener(new ActionListener() {
