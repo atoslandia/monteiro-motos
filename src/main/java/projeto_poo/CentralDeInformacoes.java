@@ -5,26 +5,15 @@ import java.time.Period;
 import java.util.ArrayList;
 
 import projeto_poo.erros.AdministradroNaoExisteException;
+import projeto_poo.erros.CorridaNaoExisteException;
 import projeto_poo.erros.MenorDeIdadeException;
+import projeto_poo.erros.NenhumaCorridaException;
 import projeto_poo.erros.UsuarioNaoExisteException;
 
 public class CentralDeInformacoes {
 	
 	private ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
 	private ArrayList<Corrida> todasAsCorridas = new ArrayList<Corrida>();
-	
-	public ArrayList<Usuario> getTodosOsUsuarios() {
-		return todosOsUsuarios;
-	}
-	public void setTodosOsPassageiros(ArrayList<Usuario> todosOsUsuarios) {
-		this.todosOsUsuarios = todosOsUsuarios;
-	}
-	public ArrayList<Corrida> getTodasAsCorridas() {
-		return todasAsCorridas;
-	}
-	public void setTodasAsCorridas(ArrayList<Corrida> todasAsCorridas) {
-		this.todasAsCorridas = todasAsCorridas;
-	}
 	
 	public void adicionarUsuario(Usuario usuario) throws MenorDeIdadeException {
 		try {
@@ -38,10 +27,13 @@ public class CentralDeInformacoes {
 		}
 	}
 	
-	public boolean adicionarCorrida(Corrida corrida) {
-		if(recuperarCorridaPeloId(corrida.getId()) == null)
-				return false;
-		return getTodasAsCorridas().add(recuperarCorridaPeloId(corrida.getId()));
+	public void adicionarCorrida(Corrida corrida) {
+		try {
+			recuperarCorridaPeloId(corrida.getId());
+		} catch (CorridaNaoExisteException e) {
+			todasAsCorridas.add(corrida);
+			e.printStackTrace();
+		}
 	}
 	
 	public void verificarAdm() throws AdministradroNaoExisteException{
@@ -62,23 +54,29 @@ public class CentralDeInformacoes {
 		throw new UsuarioNaoExisteException();
 	}
 	
-	public Corrida recuperarCorridaPeloId(long id) {
-		for(Corrida c: getTodasAsCorridas()) {
+	public Corrida recuperarCorridaPeloId(long id) throws CorridaNaoExisteException {
+		for(Corrida c: todasAsCorridas) {
 			if(c.getId() == id)
 				return c;
 		}
-		return null;
+		throw new CorridaNaoExisteException();
 	}
 	
-	public ArrayList<Corrida> recuperarCorridasDeUmPassageiro(String email) throws Exception{
-		
+	public ArrayList<Corrida> recuperarCorridasDeUmPassageiro(String email) throws NenhumaCorridaException {
 		ArrayList<Corrida> corridasRecuperadas = new ArrayList<Corrida>();
-		
-		for(Corrida c: getTodasAsCorridas())
+		for(Corrida c: todasAsCorridas)
 			if(c.getPassageiro().getEmail().equals(email))
 				corridasRecuperadas.add(c);
+		if(corridasRecuperadas.size() == 0)
+			throw new NenhumaCorridaException();
 		return corridasRecuperadas;
 	}
 	
+	public ArrayList<Usuario> getTodosOsUsuarios() {
+		return todosOsUsuarios;
+	}
+	public ArrayList<Corrida> getTodasAsCorridas() {
+		return todasAsCorridas;
+	}
 	
 }

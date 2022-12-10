@@ -6,10 +6,6 @@ public class Corrida {
 	private Destino destino;
 	private Passageiro passageiro;
 	
-	public Corrida() {
-		id = System.currentTimeMillis();
-	}
-	
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro) {
 		id = System.currentTimeMillis();
 		this.pontoDeEncontro = pontoDeEncontro;
@@ -20,14 +16,15 @@ public class Corrida {
 	public Passageiro getPassageiro() {
 		return passageiro;
 	}
-	public void setPassageiro(Passageiro passageiro) {
-		this.passageiro = passageiro;
-	}
 	
 	public long getId() {
 		return id;
 	}
 	
+	public Destino getDestino() {
+		return destino;
+	}
+
 	public String toString() {
 		if(passageiro.getSexo().equals(Sexo.FEMININO))
 			return passageiro.getNome()+" pede para pega-la em "+ pontoDeEncontro.getEndereco();

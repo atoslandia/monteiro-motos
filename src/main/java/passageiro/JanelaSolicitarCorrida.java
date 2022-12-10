@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import projeto_poo.Destino;
 import projeto_poo.Passageiro;
 import projeto_poo.PontoDeEncontro;
 import projeto_poo.Usuario;
@@ -20,13 +21,19 @@ import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.janelas.JanelaPadrao;
+import projeto_poo.paineis.PainelPadrao;
 import projeto_poo.paineis.PainelSolicitarCorrida;
 
 public class JanelaSolicitarCorrida extends JanelaPadrao {
+	
+	private Passageiro passageiro;
+	
 	private PainelDestino painelDestino;
 	private PainelPontoDeEncontro painelPontoDeEncontro;
-	private PontoDeEncontro encontro;
-	private Usuario passageiro;
+	
+	private PontoDeEncontro enderecoPontoDeEncontro;
+	private Destino ederecoDestino;
+	
 	private CaixaDistancia distancia;
 	
 	public JanelaSolicitarCorrida(Passageiro passageiro) {
@@ -35,7 +42,6 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		add(painelPontoDeEncontro = new PainelPontoDeEncontro());
 		setVisible(true);
 	}
-	
 	
 	private class PainelPontoDeEncontro extends PainelSolicitarCorrida{
 		
@@ -86,7 +92,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		
 		private void caixaDistancia() {
 			TextoImagemPadrao textoDistancia = new TextoImagemPadrao("Distancia (Km): ");
-			textoDistancia.setBounds(30, 255, 100, 19);
+			textoDistancia.setBounds(30, 235, 100, 19);
 			add(textoDistancia);
 			
 			distancia = new CaixaDistancia();
@@ -113,23 +119,37 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		
 	}
 	
+	private class Agendar extends PainelPadrao{
+		public Agendar() {
+		}
+	}
+	
 	private class OuvinteBotaoProsseguir implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			getAvisoPreencherDados().setVisible(false);
 			try {
+				getAvisoPreencherDados().setVisible(false);
 				add(painelDestino = new PainelDestino());
 				String endereco = painelPontoDeEncontro.getEndereco().pegarConteudo();
 				String CEP = painelPontoDeEncontro.getCEP().pegarConteudo();
 				String bairro = painelPontoDeEncontro.getBairro().pegarConteudo();
 				int numero = Integer.parseInt(painelPontoDeEncontro.getNumero().pegarConteudo());
 				String complemento = painelPontoDeEncontro.getComplemento().getText();
-				encontro = new PontoDeEncontro(endereco, CEP, numero, bairro, complemento);
+				enderecoPontoDeEncontro = new PontoDeEncontro(endereco, CEP, numero, bairro, complemento);
 				painelPontoDeEncontro.setVisible(false);
 			} catch (CaixaVaziaException e1) {
 				getAvisoPreencherDados().setVisible(true);	
 			}
 		}
 	}
-
+	private class OuvinteBotaoAgendar implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	public static void main(String[] args) {
+		new JanelaSolicitarCorrida(null);
+	}
+	
 }
