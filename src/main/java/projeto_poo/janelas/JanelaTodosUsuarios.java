@@ -1,43 +1,29 @@
 package projeto_poo.janelas;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.LayoutStyle;
-import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import projeto_poo.Mototaxista;
+import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.diversos.TextoImagemPadrao;
-import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaTodosUsuarios extends JanelaPadrao{
-
 	private ListaTodosUsuarios listaTodosUsuarios;
 	private Lista lista;
 	
 	public JanelaTodosUsuarios() {
 		super("Lista de todos os usuários");
-		
 		add(listaTodosUsuarios = new ListaTodosUsuarios());
 		add(lista = new Lista());
 		setVisible(true);
@@ -49,17 +35,33 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			super();
 			setBackground(Color.red);
 			setBounds(30, 80, 420, 275);
-			listaUsuarios();
+			setPreferredSize(new Dimension(420, getComponentCount()*50));
+			painelUsuarios();
 		}		
-		private void listaUsuarios() {
+		private void painelUsuarios() {
 			ArrayList<Usuario> usuarios;
+			
+			DefaultTableModel modelo = new DefaultTableModel();
+			modelo.addColumn("Nome");
+			modelo.addColumn("Tipo de conta");
+			
+			
 			try {
 				usuarios = getPersistencia().buscarCentral().getTodosOsUsuarios();
-				for(int i = 0; i < usuarios.size(); i++) {
-					BotaoOpcoes botao = new BotaoOpcoes(usuarios.get(i).getNome());
-					botao.setLocation(30, -10+((i+1)*50));
-					add(botao);
+				Object[] linha = new Object[2];
+				for(Usuario u: usuarios) {
+					linha[0] = u.getNome()+" "+u.getSobrenome();
+					if(u instanceof Passageiro)
+						linha[1] = "Passageiro";
+					if(u instanceof Mototaxista)
+						linha[1] = "Passageiro";
+					modelo.addRow(linha);
+
 				}
+				JTable tabela = new JTable(modelo);
+				JScrollPane scroll = new JScrollPane(tabela);
+				scroll.setSize(420,	275);
+				add(scroll);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
