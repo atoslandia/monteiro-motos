@@ -26,7 +26,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 	}
 	
 	private void caixaEndereco() {
-		JLabel textoEndereco = new TextoImagemPadrao("Endereço: ");
+		TextoImagemPadrao textoEndereco = new TextoImagemPadrao("Endereço: ");
 		textoEndereco.setBounds(30, 85, 100, 19);
 		add(textoEndereco);
 		
@@ -35,7 +35,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		add(endereco);
 	}
 	private void caixaCEP() {
-		JLabel textoCEP = new TextoImagemPadrao("CEP: ");
+		TextoImagemPadrao textoCEP = new TextoImagemPadrao("CEP: ");
 		textoCEP.setBounds(30, 125, 100, 19);
 		add(textoCEP);
 		
@@ -44,7 +44,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		add(CEP);
 	}
 	private void caixaNumero() {
-		JLabel textoNumero = new TextoImagemPadrao("Número: ");
+		TextoImagemPadrao textoNumero = new TextoImagemPadrao("Número: ");
 		textoNumero.setBounds(30, 165, 100, 19);
 		add(textoNumero);
 		
@@ -53,7 +53,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		add(numero);
 	}
 	private void caixaBairro() {
-		JLabel textoBairro = new TextoImagemPadrao("Bairro: ");
+		TextoImagemPadrao textoBairro = new TextoImagemPadrao("Bairro: ");
 		textoBairro.setBounds(30, 205, 100, 19);
 		add(textoBairro);
 		
@@ -62,7 +62,7 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		add(bairro);
 	}
 	private void caixaComplemento() {
-		JLabel textoComplemento = new TextoImagemPadrao("Complemento: ");
+		TextoImagemPadrao textoComplemento = new TextoImagemPadrao("Complemento: ");
 		textoComplemento.setBounds(30, 245, 100, 19);
 		add(textoComplemento);
 		
@@ -70,9 +70,21 @@ public class PainelSolicitarCorrida extends PainelPadrao{
 		complemento.setBounds(130, 245, 220, 19);
 		add(complemento);
 	}
-	
 
-	
-	
+	public CaixaBairroEndereco getEndereco() {
+		return endereco;
+	}
+
+	public CaixaBairroEndereco getBairro() {
+		return bairro;
+	}
+
+	public CaixaCEPNumero getCEP() {
+		return CEP;
+	}
+
+	public CaixaCEPNumero getNumero() {
+		return numero;
+	}
 	
 }
