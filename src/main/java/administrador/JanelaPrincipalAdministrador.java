@@ -15,6 +15,7 @@ import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
+import projeto_poo.janelas.JanelaTodosUsuarios;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalAdministrador extends JanelaPadrao{
@@ -48,6 +49,15 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 		private void opcoes() {
 			BotaoOpcoes listarTodosUsuarios = new BotaoOpcoes("LISTAR TODOS OS USUÁRIOS");
 			add(listarTodosUsuarios);
+			
+			BotaoOpcoes valorCreditos = new BotaoOpcoes("VALOR DE CRÉDITO REINVIDICADO");
+			valorCreditos.setLocation(30, 140);
+			add(valorCreditos);
+			
+			BotaoOpcoes manterCaixa = new BotaoOpcoes("MANTER CAIXA");
+			manterCaixa.setLocation(30, 190);
+			add(manterCaixa);
+			
 		}
 		
 		private void botoesBarra() {
@@ -117,10 +127,16 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			setVisible(false);
 			logo();
 			botoesBarra();
+			opcoes();
 			add(getBotaoInicio());
 			add(getBotaoListarCorridas());
 			add(getBarraPerfil());
 			add(getFundoInicio());
+		}
+		
+		private void opcoes() {
+			BotaoOpcoes editarPerfil = new BotaoOpcoes("EDITAR PERFIL");
+			add(editarPerfil);
 		}
 		
 		private void botoesBarra() {
@@ -149,7 +165,7 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 	
 	public static void main(String[] args) {
 		Administrador adm = new Administrador("Atos", "Alves", LocalDate.of(2001,7,13), Sexo.M, "atos@gmail.com", "1234");
-		new JanelaPrincipalAdministrador(adm);
+		new JanelaTodosUsuarios();
 	}
 	
 }

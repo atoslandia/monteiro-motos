@@ -14,7 +14,7 @@ public class BotaoOpcoes extends BotaoPadrao{
 		texto();
 		setIcon(new ImageIcon("imgs/botao-padraoinicio.png"));
 		setPressedIcon(new ImageIcon("imgs/botao-padraoinicioclicado.png"));
-		setBounds(30, 100, 358, 35);
+		setBounds(30, 90, 358, 35);
 	}
 	
 	private void texto() {
