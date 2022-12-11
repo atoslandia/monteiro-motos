@@ -22,6 +22,7 @@ import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.caixas.CaixaCEPNumero;
 import projeto_poo.caixas.CaixaDistancia;
 import projeto_poo.caixas.CaixaTextoPadrao;
+import projeto_poo.diversos.ComboDataNascimento;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.CorridaExistenteException;
@@ -38,7 +39,9 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	
 	private PainelDestino painelDestino;
 	private PainelPontoDeEncontro painelPontoDeEncontro;
+	private PainelAgendar painelAgendar;
 	
+	ComboDataNascimento dataMarcada;
 	private PontoDeEncontro enderecoPontoDeEncontro;
 	private Destino enderecoDestino;
 	
@@ -115,6 +118,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			add(solicitar);
 			
 			BotaoAgendar agendar = new BotaoAgendar();
+			agendar.addActionListener(new OuvinteBotaoAgendar());
 			add(agendar);
 			
 			BotaoVoltar botao = new BotaoVoltar();
@@ -129,8 +133,47 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		
 	}
 	
-	private class Agendar extends PainelPadrao{
-		public Agendar() {
+	private class PainelAgendar extends PainelPadrao{
+		public PainelAgendar() {
+			add(getFundoPadrao());
+			botaoProsseguir();
+			botaoVoltar();
+			agendamento();	
+		}
+		private void agendamento() {
+			TextoImagemPadrao dia = new TextoImagemPadrao("Dia: ");
+			dia.setBounds(30, 85, 100, 19);
+			TextoImagemPadrao mes = new TextoImagemPadrao("Mes: ");
+			mes.setBounds(30, 129, 100, 19);
+			TextoImagemPadrao ano = new TextoImagemPadrao("Ano: ");
+			ano.setBounds(30, 173, 100, 19);
+			dataMarcada = new ComboDataNascimento();
+			dataMarcada.getDia().setBounds(130, 85, 220, 19);
+			dataMarcada.getMes().setBounds(130,129,220,19);
+			dataMarcada.getAno().setBounds(130, 173, 220, 19);
+			add(ano);
+			add(dia);
+			add(mes);
+			add(dataMarcada.getDia());
+			add(dataMarcada.getMes());
+			add(dataMarcada.getAno());
+		}
+		
+		
+		private void botaoProsseguir() {
+			BotaoProsseguir botao = new BotaoProsseguir();
+			botao.addActionListener(new OuvinteBotaoProsseguirAgendar());
+			add(botao);
+		}
+		private void botaoVoltar() {
+			BotaoVoltar botao = new BotaoVoltar();
+			botao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					painelDestino.setVisible(true);
+				}
+			});
+			add(botao);
 		}
 	}
 	
@@ -151,6 +194,36 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 				getAvisoPreencherDados().setVisible(true);	
 			}
 		}
+	}
+	
+	private class OuvinteBotaoProsseguirAgendar implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			try {
+				getAvisoPreencherDados().setVisible(false);
+				String endereco = painelDestino.getEndereco().pegarConteudo();
+				String CEP = painelDestino.getCEP().pegarConteudo();
+				String bairro = painelDestino.getBairro().pegarConteudo();
+				int numero = Integer.parseInt(painelDestino.getNumero().pegarConteudo());
+				String complemento = painelDestino.getComplemento().getText();
+				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo()); 
+				enderecoDestino = new Destino(endereco, CEP, numero, bairro, complemento, caixaDistancia);
+				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+				LocalDate data = dataMarcada.pegarData();
+				Corrida corrida = new Corrida(enderecoPontoDeEncontro, enderecoDestino, passageiro, data);
+				cdi.adicionarCorrida(corrida);
+				getPersistencia().salvarPersistencia(cdi);
+				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"Aguarde a reinvidicação no local e "+"<br>"+"na data marcada."+"</html>", new JanelaPrincipalPassageiro(passageiro));
+			} catch (CaixaVaziaException e1) {
+				getAvisoPreencherDados().setVisible(true);
+			} catch (CorridaExistenteException e2) {
+				e2.printStackTrace();
+				new JanelaDeAvisoPadrao(e2.getMessage());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
 	private class OuvinteBotaoSolicitar implements ActionListener{
@@ -184,13 +257,9 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	
 	private class OuvinteBotaoAgendar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			painelDestino.setVisible(false);
+			add(painelAgendar = new PainelAgendar());
 		}
-	}
-	
-	public static void main(String[] args) {
-		
-		new JanelaSolicitarCorrida(new Passageiro("Atos", "Alves", LocalDate.of(2001, 7, 13), Sexo.MASCULINO, "atos@", "123"));
 	}
 	
 }

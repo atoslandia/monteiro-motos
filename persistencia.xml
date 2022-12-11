@@ -59,21 +59,21 @@
   </todosOsUsuarios>
   <todasAsCorridas>
     <projeto__poo.Corrida>
-      <id>1670717997642</id>
+      <id>1670727120999</id>
       <pontoDeEncontro>
-        <endereco>dadad</endereco>
-        <CEP>888</CEP>
-        <numero>9999</numero>
-        <bairro>asdadas</bairro>
+        <endereco>sdad</endereco>
+        <CEP>1231</CEP>
+        <numero>312</numero>
+        <bairro>sdadssa</bairro>
         <complemento></complemento>
       </pontoDeEncontro>
       <destino>
-        <endereco>dadas</endereco>
-        <CEP>2222</CEP>
-        <numero>2222</numero>
-        <bairro>dadad</bairro>
+        <endereco>asda</endereco>
+        <CEP>1231</CEP>
+        <numero>31</numero>
+        <bairro>sadasd</bairro>
         <complemento></complemento>
-        <distancia>2222.0</distancia>
+        <distancia>31.0</distancia>
       </destino>
       <passageiro>
         <nome>Atos</nome>
@@ -83,6 +83,7 @@
         <senha>1234</senha>
         <sexo>MASCULINO</sexo>
       </passageiro>
+      <agendamento>2022-02-04</agendamento>
     </projeto__poo.Corrida>
   </todasAsCorridas>
 </projeto__poo.CentralDeInformacoes>
