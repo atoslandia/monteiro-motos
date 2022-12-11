@@ -25,15 +25,11 @@ public class CentralDeInformacoes {
 		this.valorCreditoReinvidicacao = valorCreditoReinvidicacao;
 	}
 	
-	public void adicionarUsuario(Usuario usuario) throws MenorDeIdadeException {
+	public void adicionarUsuario(Usuario usuario) {
 		try {
-			LocalDate dataAtual = LocalDate.now();
-			Period periodo = Period.between(usuario.getDataNascimento(), dataAtual);
-			if(periodo.getYears() < 18)
-				throw new MenorDeIdadeException();
 			recuperarUsuarioPeloEmail(usuario.getEmail());
 		} catch (Exception e) {
-				todosOsUsuarios.add(usuario);
+			todosOsUsuarios.add(usuario);
 		}
 	}
 	

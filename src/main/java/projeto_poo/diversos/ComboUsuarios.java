@@ -13,10 +13,15 @@ import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
 import projeto_poo.erros.UsuarioNaoExisteException;
+import projeto_poo.janelas.JanelaDeAvisoPadrao;
+import projeto_poo.janelas.JanelaLogin;
 
 public class ComboUsuarios extends JComboBox<String>{
 
-	public ComboUsuarios() {
+	private JanelaLogin janela;
+	
+	public ComboUsuarios(JanelaLogin janela) {
+		this.janela = janela;
 		setFont(new Font("Calibrii", Font.PLAIN, 10));
 		setBounds(120, 220, 200, 20);
 		addItem("Passageiro");
@@ -25,11 +30,29 @@ public class ComboUsuarios extends JComboBox<String>{
 	}
 
 	public void tipoSelecionado(Usuario usuario) throws UsuarioNaoExisteException {
-		if(getSelectedItem().equals("Administrador") && usuario instanceof Administrador)
-			new JanelaPrincipalAdministrador((Administrador)usuario);
-		if(getSelectedItem().equals("Passageiro") && usuario instanceof Passageiro)
-			new JanelaPrincipalPassageiro(usuario);
-		if(getSelectedItem().equals("Mototaxista") && usuario instanceof Mototaxista)
-			new JanelaPrincipalMototaxista(usuario);
+				
+		String selecionado = (String) getSelectedItem();
+		
+		switch (selecionado) {
+		case "Administrador":
+			if(usuario instanceof Administrador) {
+				janela.dispose();
+				new JanelaPrincipalAdministrador((Administrador)usuario);
+				break;
+			}
+		case "Passageiro":
+			if(usuario instanceof Passageiro) {
+				janela.dispose();
+				new JanelaPrincipalPassageiro((Passageiro)usuario);
+				break;
+			}
+		case "Mototaxista":
+			if(usuario instanceof Mototaxista) {
+				janela.dispose();
+				new JanelaPrincipalMototaxista((Mototaxista)usuario);
+				break;
+			}
+			new JanelaDeAvisoPadrao("Usuário não encontrado");
+		}
 	}
 }

@@ -20,6 +20,7 @@ import projeto_poo.botoes.BotaoConcluir;
 import projeto_poo.botoes.BotaoProsseguir;
 import projeto_poo.botoes.BotaoVoltar;
 import projeto_poo.erros.CaixaVaziaException;
+import projeto_poo.erros.MenorDeIdadeException;
 import projeto_poo.paineis.PainelConfirmarEmail;
 import projeto_poo.paineis.PainelEntradas;
 
@@ -33,7 +34,6 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 	public JanelaPrimeiroAcesso() {
 		super("Primeiro acesso");
 		add(criarAdministrador = new CriarAdministrador());
-		add(getFundoPadrao());
 		setVisible(true);
 	}
 	
@@ -42,6 +42,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 			super();
 			prosseguir();
 			logoPrimeiroAcesso();
+			add(getFundoPadrao());
 		}
 		
 		private void logoPrimeiroAcesso() {
@@ -63,6 +64,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
     		super();
     		concluir();
     		voltar();
+    		add(getFundoPadrao());
 		}
 		
     	private void concluir() {
@@ -91,6 +93,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 					criarAdministrador.getEmail().pegarConteudo();
 					criarAdministrador.getSenha().pegarConteudo();
 					criarAdministrador.getSexo().selecionado();
+					criarAdministrador.getDataNascimento().pegarDataNascimento();
 					
 					codigoGerado = Integer.toString(c.nextInt(1000,9999));
 					Mensageiro.enviarCodigoEmail(criarAdministrador.getEmail().pegarConteudo(), "CÓDIGO DE SEGURANÇA", "Seu código de segurança: "+codigoGerado);
@@ -98,6 +101,8 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 					add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
 				} catch (CaixaVaziaException e2) {
 					criarAdministrador.getAvisoPreencherDados().setVisible(true);
+				} catch (MenorDeIdadeException e2) {
+					new JanelaDeAvisoPadrao("Permitido apenas maiores de 18 anos!");
 				} catch (Exception e2) {
 					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente!");
 				}
@@ -110,7 +115,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 				confirmarCodigoPainel.getCodigo().comparar(codigoGerado);
 				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 				Usuario usuario = new Administrador(criarAdministrador.getNome().pegarConteudo(), criarAdministrador.getSobrenome().pegarConteudo(),
-										criarAdministrador.getDataNascimento().pegarData(),
+										criarAdministrador.getDataNascimento().pegarDataNascimento(),
 										criarAdministrador.getSexo().selecionado(),
 										criarAdministrador.getEmail().getText(), criarAdministrador.getSenha().pegarConteudo());
 				cdi.adicionarUsuario(usuario);

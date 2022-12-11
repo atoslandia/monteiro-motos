@@ -1,81 +1,14 @@
 <projeto__poo.CentralDeInformacoes>
   <todosOsUsuarios>
     <projeto__poo.Administrador>
-      <nome>Jorge</nome>
-      <sobrenome>Administrador</sobrenome>
-      <dataNascimento>2000-03-05</dataNascimento>
-      <email>atosalvesqueiroz@gmail.com</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Administrador>
-    <projeto__poo.Mototaxista>
-      <nome>Robson</nome>
-      <sobrenome>BATISTA</sobrenome>
-      <dataNascimento>2003-11-11</dataNascimento>
-      <email>robsoncaliban@gmail.com</email>
-      <senha>1234</senha>
-      <sexo>FEMININO</sexo>
-    </projeto__poo.Mototaxista>
-    <projeto__poo.Administrador>
-      <nome>atos</nome>
-      <sobrenome>alves</sobrenome>
+      <nome>Atos</nome>
+      <sobrenome>Alves</sobrenome>
       <dataNascimento>2001-07-13</dataNascimento>
       <email>atos5000@gmail.com</email>
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
     </projeto__poo.Administrador>
-    <projeto__poo.Passageiro>
-      <nome>Tiago</nome>
-      <sobrenome>TIBURCIO</sobrenome>
-      <dataNascimento>2000-04-06</dataNascimento>
-      <email>atos.alves@academico.ifpb.edu.br</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Passageiro>
-    <projeto__poo.Mototaxista>
-      <nome>Junio</nome>
-      <sobrenome>Souza</sobrenome>
-      <dataNascimento>2001-07-13</dataNascimento>
-      <email>atos5000@gmail.com</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Mototaxista>
-    <projeto__poo.Passageiro>
-      <nome>Gilmar</nome>
-      <sobrenome>Gonçalves</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
-      <email>atos.alves@academico.ifpb.edu.br</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Passageiro>
   </todosOsUsuarios>
-  <todasAsCorridas>
-    <projeto__poo.Corrida>
-      <id>1670727120999</id>
-      <pontoDeEncontro>
-        <endereco>sdad</endereco>
-        <CEP>1231</CEP>
-        <numero>312</numero>
-        <bairro>sdadssa</bairro>
-        <complemento></complemento>
-      </pontoDeEncontro>
-      <destino>
-        <endereco>asda</endereco>
-        <CEP>1231</CEP>
-        <numero>31</numero>
-        <bairro>sadasd</bairro>
-        <complemento></complemento>
-        <distancia>31.0</distancia>
-      </destino>
-      <passageiro>
-        <nome>Atos</nome>
-        <sobrenome>Alves</sobrenome>
-        <dataNascimento>2004-01-01</dataNascimento>
-        <email>atos.alves@academico.ifpb.edu.br</email>
-        <senha>1234</senha>
-        <sexo>MASCULINO</sexo>
-      </passageiro>
-      <agendamento>2022-02-04</agendamento>
-    </projeto__poo.Corrida>
-  </todasAsCorridas>
+  <todasAsCorridas/>
+  <valorCreditoReinvidicacao>0.0</valorCreditoReinvidicacao>
 </projeto__poo.CentralDeInformacoes>

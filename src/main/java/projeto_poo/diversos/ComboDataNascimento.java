@@ -2,8 +2,11 @@ package projeto_poo.diversos;
 
 import java.awt.Font;
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.swing.JComboBox;
+
+import projeto_poo.erros.MenorDeIdadeException;
 
 public class ComboDataNascimento extends JComboBox<String>{
 	
@@ -38,6 +41,15 @@ public class ComboDataNascimento extends JComboBox<String>{
 		ano = new JComboBox<String>(anos);
 		ano.setBounds(290, 235, 60, 20);
 		ano.setSelectedIndex(18);
+	}
+	
+	public LocalDate pegarDataNascimento() throws MenorDeIdadeException {
+		LocalDate data = LocalDate.of(Integer.parseInt((String)ano.getSelectedItem()), Integer.parseInt((String)mes.getSelectedItem()), Integer.parseInt((String)dia.getSelectedItem()));
+		LocalDate dataAtual = LocalDate.now();
+		Period periodo = Period.between(data, dataAtual);
+		if(periodo.getYears() < 18)
+			throw new MenorDeIdadeException();
+		return data;
 	}
 	
 	public LocalDate pegarData() {

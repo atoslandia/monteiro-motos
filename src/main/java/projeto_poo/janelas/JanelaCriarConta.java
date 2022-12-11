@@ -131,6 +131,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 				criarUsuarioPainel.getEmail().pegarConteudo();
 				criarUsuarioPainel.getSenha().pegarConteudo();
 				criarUsuarioPainel.getSexo().selecionado();
+				criarUsuarioPainel.getDataNascimento().pegarDataNascimento();
 				tipoUsuario.selecionado();
 				
 				getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(criarUsuarioPainel.getEmail().pegarConteudo());
@@ -159,7 +160,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 					confirmarCodigoPainel.getCodigo().comparar(codigoGerado);
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 					Usuario usuario = tipoUsuario.criarUsuario(criarUsuarioPainel.getNome().pegarConteudo(), criarUsuarioPainel.getSobrenome().pegarConteudo(),
-							criarUsuarioPainel.getDataNascimento().pegarData(),
+							criarUsuarioPainel.getDataNascimento().pegarDataNascimento(),
 							criarUsuarioPainel.getSexo().selecionado(), criarUsuarioPainel.getEmail().getText(), criarUsuarioPainel.getSenha().pegarConteudo());
 					cdi.adicionarUsuario(usuario);
 					getPersistencia().salvarPersistencia(cdi);

@@ -111,7 +111,7 @@ public class JanelaLogin extends JanelaPadrao{
         textoTipoDeConta.setBounds(30, 220, 100, 20);
         add(textoTipoDeConta);
         
-        tipoDeConta = new ComboUsuarios();
+        tipoDeConta = new ComboUsuarios(this);
         add(tipoDeConta);
         
     }
@@ -153,7 +153,6 @@ public class JanelaLogin extends JanelaPadrao{
 				Usuario usuario = dados.recuperarUsuarioPeloEmail(email.pegarConteudo());
 				senha.compararSenha(usuario);
 				tipoDeConta.tipoSelecionado(usuario);
-				dispose();
 				} catch (CaixaVaziaException e1) {
 					getAvisoPreencherDados().setBounds(120, 100, 150, 20);
 					getAvisoPreencherDados().setVisible(true);

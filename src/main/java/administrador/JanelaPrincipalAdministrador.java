@@ -58,6 +58,12 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			add(listarTodosUsuarios);
 			
 			BotaoOpcoes valorCreditos = new BotaoOpcoes("VALOR DE CRÉDITO REINVIDICADO");
+			valorCreditos.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaValorCreditoReinvidicacao(administrador);
+				}
+			});
 			valorCreditos.setLocation(30, 140);
 			add(valorCreditos);
 			
