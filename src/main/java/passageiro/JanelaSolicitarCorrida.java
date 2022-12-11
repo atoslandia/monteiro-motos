@@ -29,6 +29,7 @@ import projeto_poo.erros.CorridaExistenteException;
 import projeto_poo.erros.CorridaNaoExisteException;
 import projeto_poo.erros.NaoExisteXmlException;
 import projeto_poo.janelas.JanelaDeAvisoPadrao;
+import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPadrao;
 import projeto_poo.paineis.PainelSolicitarCorrida;
@@ -260,6 +261,10 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			painelDestino.setVisible(false);
 			add(painelAgendar = new PainelAgendar());
 		}
+	}
+	
+	public static void main(String[] args) {
+		new JanelaLogin();
 	}
 	
 }
