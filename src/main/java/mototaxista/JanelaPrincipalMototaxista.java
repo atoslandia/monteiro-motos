@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 
 import projeto_poo.Mototaxista;
 import projeto_poo.Usuario;
+import projeto_poo.botoes.BotaoEspecial;
+import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
@@ -18,8 +20,11 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
 	
-	public JanelaPrincipalMototaxista(Usuario mototaxista) {
+	private Mototaxista mototaxista;
+	
+	public JanelaPrincipalMototaxista(Mototaxista mototaxista) {
 		super("Monteiro-motos - "+mototaxista.getNome()+" "+mototaxista.getSobrenome());
+		this.mototaxista = mototaxista;
 		add(inicio = new PainelInicio());
 		add(listarCorridas = new PainelListarCorridas());
 		add(perfil = new PainelPerfil());
@@ -29,6 +34,7 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 	private class PainelInicio extends PainelPrincipal{
 		public PainelInicio() {
 			super();
+			totalCreditos();
 			logo();
 			botoes();
 			add(getBotaoListarCorridas());
@@ -37,7 +43,19 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 			add(getFundoInicio());
 		}
 		
+		private void totalCreditos() {
+			TextoImagemPadrao textoTotalCreditos = new TextoImagemPadrao("Creditos de reinvidicação: "+mototaxista.getCreditos());
+			textoTotalCreditos.setBounds(30, 67, 200, 20);
+			add(textoTotalCreditos);
+		}
+		
 		private void botoes() {
+			
+			BotaoOpcoes comprarCreditos = new BotaoOpcoes("COMPRAR CRÉDITOS DE REINVIDICAÇÃO");
+			add(comprarCreditos);
+			
+			
+			
 			getBotaoListarCorridas().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						inicio.setVisible(false);

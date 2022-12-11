@@ -38,21 +38,23 @@ public class ComboUsuarios extends JComboBox<String>{
 			if(usuario instanceof Administrador) {
 				janela.dispose();
 				new JanelaPrincipalAdministrador((Administrador)usuario);
-				break;
-			}
+			}else
+				new JanelaDeAvisoPadrao("Usuário não encontrado");
+			break;
 		case "Passageiro":
 			if(usuario instanceof Passageiro) {
 				janela.dispose();
 				new JanelaPrincipalPassageiro((Passageiro)usuario);
-				break;
-			}
+			}else
+				new JanelaDeAvisoPadrao("Usuário não encontrado");
+			break;
 		case "Mototaxista":
 			if(usuario instanceof Mototaxista) {
 				janela.dispose();
 				new JanelaPrincipalMototaxista((Mototaxista)usuario);
-				break;
-			}
-			new JanelaDeAvisoPadrao("Usuário não encontrado");
+			}else
+				new JanelaDeAvisoPadrao("Usuário não encontrado");
+			break;
 		}
 	}
 }
