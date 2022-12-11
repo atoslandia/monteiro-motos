@@ -93,7 +93,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 					criarAdministrador.getSexo().selecionado();
 					
 					codigoGerado = Integer.toString(c.nextInt(1000,9999));
-					Mensageiro.enviarCodigoEmail(criarAdministrador.getEmail().pegarConteudo(), codigoGerado);
+					Mensageiro.enviarCodigoEmail(criarAdministrador.getEmail().pegarConteudo(), "CÓDIGO DE SEGURANÇA", "Seu código de segurança: "+codigoGerado);
 					criarAdministrador.setVisible(false);
 					add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
 				} catch (CaixaVaziaException e2) {

@@ -140,7 +140,7 @@ public class JanelaCriarConta extends JanelaPadrao{
 			} catch (UsuarioNaoExisteException e2) {
 				try {
 					codigoGerado = Integer.toString(c.nextInt(1000,9999));
-					Mensageiro.enviarCodigoEmail(criarUsuarioPainel.getEmail().pegarConteudo(), codigoGerado);
+					Mensageiro.enviarCodigoEmail(criarUsuarioPainel.getEmail().pegarConteudo(), "CÓDIGO DE SEGURANÇA", "Seu código de segurança: "+codigoGerado);
 					criarUsuarioPainel.setVisible(false);
 					add(confirmarCodigoPainel = new ConfirmarCodigoPainel());
 				} catch (Exception e1) {

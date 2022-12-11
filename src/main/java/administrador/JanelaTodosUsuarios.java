@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,9 +20,13 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import projeto_poo.Administrador;
+import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Mensageiro;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
+import projeto_poo.Sexo;
 import projeto_poo.Usuario;
+import projeto_poo.botoes.BotaoConcluir;
 import projeto_poo.botoes.BotaoDetalhar;
 import projeto_poo.botoes.BotaoEspecial;
 import projeto_poo.botoes.BotaoOpcoes;
@@ -32,99 +37,112 @@ import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.ComboFiltroTodosUsuarios;
 import projeto_poo.diversos.TabelaUsuarios;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.erros.CaixaVaziaException;
 import projeto_poo.erros.NaoExisteXmlException;
+import projeto_poo.erros.UsuarioNaoExisteException;
+import projeto_poo.janelas.JanelaDeAvisoPadrao;
 import projeto_poo.janelas.JanelaPadrao;
+import projeto_poo.paineis.PainelEditarPerfil;
+import projeto_poo.paineis.PainelEntradas;
 import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaTodosUsuarios extends JanelaPadrao{
 	
-	private CaixaTextoPadrao assunto;
-	private JTextArea conteudo;
-	private JScrollPane js;
-	
 	private PainelDetalhe painelDetalhe;
 	private ListaTodosUsuarios painelListaTodosUsuarios;
 	private EnviarEmail painelEnviarEmail;
+	private EditarPerfil editarPerfil;
+	
+	private ComboFiltroTodosUsuarios filtro;
+	
+	private CaixaNomeSobrenome filtroTexto;
+	private ArrayList<Usuario> listaFiltrada = new ArrayList<>();
+	private ArrayList<Usuario> lista = new ArrayList<>();
 	
 	private JScrollPane scroll;
 	private JTable tabela;
 	private DefaultTableModel modelo;
-	private ArrayList<Usuario> listaUsuarios;
-	private CaixaNomeSobrenome filtroTexto;
 	
-	public JanelaTodosUsuarios() {
+	private Administrador administrador;
+	
+	public JanelaTodosUsuarios(Administrador administrador) {
 		super("Lista de todos os usuários");
-		iniciarValor();
+		gerarLista();
+		this.administrador = administrador;
 		add(painelListaTodosUsuarios = new ListaTodosUsuarios());
 		setVisible(true);
 	}
 	
-	private void iniciarValor() {
+	/* PAINEL LISTA */
+	
+	private void gerarLista() {
+		
 		try {
-			listaUsuarios = getPersistencia().buscarCentral().getTodosOsUsuarios();
+			lista = getPersistencia().buscarCentral().getTodosOsUsuarios();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void gerarUsuarios(ArrayList<Usuario> usuarios) {
-		Object[] linha = new Object[2];
-		for(Usuario u: usuarios) {
-			linha[0] = u.getNome()+" "+u.getSobrenome();
-			if(u instanceof Passageiro)
-				linha[1] = "Passageiro";
-			if(u instanceof Mototaxista)
-				linha[1] = "Mototaxista";
-			modelo.addRow(linha);
-		}
-	}
-	
-	/* PAINEL LISTA */
-	
 	private class ListaTodosUsuarios extends PainelPadrao{
+		
 		public ListaTodosUsuarios() {
-			filtros();
-			painelUsuarios();
+			gerarTabela();
 			botoes();
 			logo();
 			add(getFundoPadrao());
 		}
 		
-		private void filtros() {
+		private void gerarTabela() {
+			
 			TextoImagemPadrao texto = new TextoImagemPadrao("Filtros: ");
 			texto.setBounds(30, 85, 50, 20);
 			add(texto);
-			filtroTexto = new CaixaNomeSobrenome();
-			filtroTexto.setText("");
-			filtroTexto.setBounds(280, 85, 230, 20);
-			filtroTexto.addKeyListener(new OuvinteFiltroTexto());
-			add(filtroTexto);
-
-			ComboFiltroTodosUsuarios filtro = new ComboFiltroTodosUsuarios();
-			add(filtro);
 			
-		}
-		
-		private void painelUsuarios() {
+			filtro = new ComboFiltroTodosUsuarios();
+			filtro.addActionListener(new OuvinteComboFiltro());
+			add(filtro);
+				
+			filtroTexto = new CaixaNomeSobrenome();
+			filtroTexto.addKeyListener(new OuvinteTextoFiltro());
+			filtroTexto.setBounds(280, 85, 230, 20);
+			
 			modelo = new DefaultTableModel();
 			modelo.addColumn("Nome");
 			modelo.addColumn("Tipo de conta");
-			gerarUsuarios(listaUsuarios);
+			for(Usuario u: lista) {
+				Object[] linha = new Object[2];
+				linha[0] = u.getNome()+" "+u.getSobrenome();
+				listaFiltrada.add(u);
+				if(u instanceof Passageiro)
+					linha[1] = "Passageiro";
+				if(u instanceof Mototaxista)
+					linha[1] = "Mototaxista";
+				modelo.addRow(linha);
+			}
+			add(filtroTexto);
+			
 			tabela = new JTable(modelo);
-			scroll = new JScrollPane(tabela);
 			tabela.setBackground(new Color(202,202,202));
 			tabela.setDragEnabled(false);
 			tabela.setRowHeight(25);
+			scroll = new JScrollPane(tabela);
 			scroll.setBounds(30, 120, 480, 230);
 			scroll.repaint();
 			add(scroll);
 		}
-			
+		
 		private void botoes() {
 			BotaoDetalhar detalhar = new BotaoDetalhar();
 			detalhar.addActionListener(new OuvinteBotaoDetalhar());
 			add(detalhar);
 			BotaoVoltar voltar = new BotaoVoltar();
+			voltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaPrincipalAdministrador(administrador);
+				}
+			});
 			add(voltar);
 		}
 		
@@ -157,6 +175,7 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			
 			BotaoEspecial editarPerfil = new BotaoEspecial("EDITAR PERFIL");
 			editarPerfil.setLocation(510, 170);
+			editarPerfil.addActionListener(new OuvinteEditarPerfil());
 			add(editarPerfil);
 			
 			BotaoVoltar voltar = new BotaoVoltar();
@@ -183,13 +202,41 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 	}
 	
 	private class EnviarEmail extends PainelPadrao{
-		public EnviarEmail() {
+		
+		private CaixaTextoPadrao assunto;
+		private JTextArea corpo;
+		
+		public EnviarEmail(Usuario usuario) {
+			logo();
 			botoes();
 			caixasTextos();
 			add(getFundoPadrao());
 		}
 		
+		private void logo() {
+			JLabel logo = new TextoImagemPadrao(new ImageIcon("imgs/administrador/enviaremail.png"));
+			logo.setBounds(30, 30, 328, 31);
+			add(logo);
+		}
+		
 		private void botoes() {
+			
+			BotaoConcluir concluir = new BotaoConcluir();
+			concluir.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Mensageiro.enviarCodigoEmail(listaFiltrada.get(tabela.getSelectedRow()).getEmail(), assunto.getText(), corpo.getText());
+						new JanelaDeAvisoPadrao("E-mail enviado com sucesso!");
+						setVisible(false);
+						painelDetalhe.setVisible(true);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+			add(concluir);
+			
 			BotaoVoltar voltar = new BotaoVoltar();
 			voltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -202,47 +249,159 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		
 		private void caixasTextos() {
 			JLabel textoAssunto = new TextoImagemPadrao("Assunto: ");
-			textoAssunto.setBounds(30, 90, 100, 20);
+			textoAssunto.setBounds(30, 90, 80, 20);
 	        add(textoAssunto);
 	        
 	        assunto = new CaixaTextoPadrao();
-	        assunto.setBounds(120, 90, 200, 20);
+	        assunto.setBounds(100, 90, 340, 20);
 	        add(assunto);
 	        
-	        conteudo = new JTextArea();
-	        conteudo.setBounds(30, 120, 290, 200);
-	        conteudo.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK));
-	        js = new JScrollPane(conteudo);
-	        add(js);
+	        JLabel textoCorpo = new TextoImagemPadrao("Corpo: ");
+	        textoCorpo.setBounds(30, 120, 80, 20);
+	        add(textoCorpo);
+	        
+	        corpo = new JTextArea();
+	        corpo.setBounds(100, 120, 340, 200);
+	        corpo.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK));
+	        corpo.setLineWrap(true);
+	        add(corpo);
 		}
 		
+	}
+	
+	private class EditarPerfil extends PainelEditarPerfil{
+		
+		private Usuario usuario;
+		
+		public EditarPerfil(Usuario usuario) {
+			super(usuario);
+			this.usuario = usuario;
+			botoes();
+			add(getFundoPadrao());
+		}
+		
+		private void botoes() {
+			BotaoConcluir concluir = new BotaoConcluir();
+			concluir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						usuario.setNome(getNome().pegarConteudo());
+						usuario.setSobrenome(getSobrenome().pegarConteudo());
+						usuario.setEmail(getEmail().pegarConteudo());
+						usuario.setSenha(getSenha().pegarConteudo());
+						usuario.setDataNascimento(getDataNascimento().pegarData());
+						CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+						cdi.atualizarUsuario(usuario);
+						getPersistencia().salvarPersistencia(cdi);
+						new JanelaDeAvisoPadrao("Usuário editado com sucesso!");
+						setVisible(false);
+						painelDetalhe.setVisible(true);
+					} catch (CaixaVaziaException e1) {
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+				}
+			});
+			add(concluir);
+			
+			BotaoVoltar voltar = new BotaoVoltar();
+			voltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setVisible(false);
+					painelDetalhe.setVisible(true);
+				}
+			});
+			add(voltar);
+		}
+		
+		
+	}
+	
+	private class OuvinteEditar implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	private class OuvinteEditarPerfil implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			add(editarPerfil = new EditarPerfil(listaFiltrada.get(tabela.getSelectedRow())));
+			painelDetalhe.setVisible(false);
+		}
 	}
 	
 	private class OuvinteBotaoDetalhar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			add(painelDetalhe = new PainelDetalhe(listaUsuarios.get(tabela.getSelectedRow())));
+			add(painelDetalhe = new PainelDetalhe(listaFiltrada.get(tabela.getSelectedRow())));
 			painelListaTodosUsuarios.setVisible(false);
 		}
 	}
 	
-	private class OuvinteFiltroTexto implements KeyListener{
-		public void keyPressed(KeyEvent e) {
-		}
-
+	private class OuvinteTextoFiltro implements KeyListener{
 		public void keyTyped(KeyEvent e) {
 		}
-		
+		public void keyPressed(KeyEvent e) {
+		}
 		public void keyReleased(KeyEvent e) {
-			String filtro = filtroTexto.getText();
-			if(filtro.equals("")) {
-				modelo.setNumRows(0);
-				gerarUsuarios(listaUsuarios);
+			String f = filtroTexto.getText();
+			if(Character.isLetter(e.getKeyChar()) || e.getKeyCode() == 8 /*quando apertar backspace*/ || e.getKeyCode() == 127 /*quando apertar delete*/) {
+				listaFiltrada.clear();
+				modelo.setRowCount(0);
+				for(Usuario u: lista) {
+					Object[] linha = new Object[2];
+					String filtroCombo = (String)filtro.getSelectedItem();
+					
+					switch (filtroCombo) {
+					case "Todos usuários":
+						if(u.getNome().contains(f) | u.getSobrenome().contains(f)) {
+							linha[0] = u.getNome()+" "+u.getSobrenome();
+							listaFiltrada.add(u);
+						if(u instanceof Passageiro)
+							linha[1] = "Passageiro";
+						if(u instanceof Mototaxista)
+							linha[1] = "Mototaxista";
+						modelo.addRow(linha);
+						}
+						break;
+					case "Apenas passageiros":
+						if(u instanceof Passageiro) {
+							linha[0] = u.getNome()+" "+u.getSobrenome();
+							listaFiltrada.add(u);
+							linha[1] = "Passageiro";
+						modelo.addRow(linha);
+						}
+						break;
+					case "Apenas mototaxistas":
+						if(u instanceof Mototaxista) {
+							linha[0] = u.getNome()+" "+u.getSobrenome();
+							listaFiltrada.add(u);
+							linha[1] = "Mototaxista";
+						modelo.addRow(linha);
+						}
+					default:
+						break;
+					}
+					
+					
+				}
 			}
-			if(Character.isLetter(e.getKeyChar())) {
-				modelo.setNumRows(0);
-				Object[] linha = new Object[2];
-				for(Usuario u: listaUsuarios) {
-					if(u.getNome().contains(filtro) || u.getSobrenome().contains(filtro)) {
+		}
+	}
+	
+	private class OuvinteComboFiltro implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+			String filtroCombo =(String)filtro.getSelectedItem();
+			if(listaFiltrada.size() == 0)
+				listaFiltrada = lista;
+				
+			switch (filtroCombo) {
+				case "Todos usuários":
+					modelo.setRowCount(0);
+					for(Usuario u: listaFiltrada) {
+						Object[] linha = new Object[2];
 						linha[0] = u.getNome()+" "+u.getSobrenome();
 						if(u instanceof Passageiro)
 							linha[1] = "Passageiro";
@@ -250,21 +409,38 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 							linha[1] = "Mototaxista";
 						modelo.addRow(linha);
 					}
-				}
+					break;
+				case "Apenas passageiros":
+					modelo.setRowCount(0);
+					for(Usuario u: listaFiltrada) {
+						if(u instanceof Passageiro) {
+							Object[] linha = new Object[2];
+							linha[0] = u.getNome()+" "+u.getSobrenome();
+							linha[1] = "Passageiro";
+							modelo.addRow(linha);
+						}
+					}
+					break;
+				case "Apenas mototaxistas":
+					modelo.setRowCount(0);
+					for(Usuario u: listaFiltrada) {
+						if(u instanceof Mototaxista) {
+							Object[] linha = new Object[2];
+							linha[0] = u.getNome()+" "+u.getSobrenome();
+							linha[1] = "Mototaxista";
+							modelo.addRow(linha);
+						}
+					}
+					break;
 			}
-			scroll.repaint();
 		}
 	}
 	
 	private class OuvinteEnviarEmail implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			painelDetalhe.setVisible(false);
-			add(painelEnviarEmail = new EnviarEmail());
+			add(painelEnviarEmail = new EnviarEmail(administrador));
 		}
-	}
-	
-	public static void main(String[] args) {
-		new JanelaTodosUsuarios();
 	}
 	
 }

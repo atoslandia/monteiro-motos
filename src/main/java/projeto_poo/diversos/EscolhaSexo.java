@@ -25,7 +25,6 @@ public class EscolhaSexo extends JRadioButton {
 		masculino.setBounds(255, 205, 100, 20);
 		
 		ButtonGroup grupo = new ButtonGroup();
-		grupo.getSelection();
 		grupo.add(feminino);
 		grupo.add(masculino);
 	}

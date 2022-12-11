@@ -3,47 +3,31 @@
     <projeto__poo.Administrador>
       <nome>Jorge</nome>
       <sobrenome>Administrador</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
+      <dataNascimento>2000-03-05</dataNascimento>
       <email>atosalvesqueiroz@gmail.com</email>
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
     </projeto__poo.Administrador>
     <projeto__poo.Mototaxista>
       <nome>Robson</nome>
-      <sobrenome>Caliban</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
+      <sobrenome>BATISTA</sobrenome>
+      <dataNascimento>2003-11-11</dataNascimento>
       <email>robsoncaliban@gmail.com</email>
       <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
+      <sexo>FEMININO</sexo>
     </projeto__poo.Mototaxista>
-    <projeto__poo.Passageiro>
-      <nome>Atos</nome>
-      <sobrenome>Alves</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
-      <email>atos.alves@academico.ifpb.edu.br</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Passageiro>
-    <projeto__poo.Mototaxista>
-      <nome>Mateus</nome>
-      <sobrenome>Alcantra</sobrenome>
+    <projeto__poo.Administrador>
+      <nome>atos</nome>
+      <sobrenome>alves</sobrenome>
       <dataNascimento>2001-07-13</dataNascimento>
       <email>atos5000@gmail.com</email>
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
-    </projeto__poo.Mototaxista>
-    <projeto__poo.Passageiro>
-      <nome>Gilmar</nome>
-      <sobrenome>Dias</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
-      <email>atos.alves@academico.ifpb.edu.br</email>
-      <senha>1234</senha>
-      <sexo>MASCULINO</sexo>
-    </projeto__poo.Passageiro>
+    </projeto__poo.Administrador>
     <projeto__poo.Passageiro>
       <nome>Tiago</nome>
-      <sobrenome>Butico</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
+      <sobrenome>TIBURCIO</sobrenome>
+      <dataNascimento>2000-04-06</dataNascimento>
       <email>atos.alves@academico.ifpb.edu.br</email>
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
@@ -56,6 +40,14 @@
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
     </projeto__poo.Mototaxista>
+    <projeto__poo.Passageiro>
+      <nome>Gilmar</nome>
+      <sobrenome>Gonçalves</sobrenome>
+      <dataNascimento>2004-01-01</dataNascimento>
+      <email>atos.alves@academico.ifpb.edu.br</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
+    </projeto__poo.Passageiro>
   </todosOsUsuarios>
   <todasAsCorridas>
     <projeto__poo.Corrida>

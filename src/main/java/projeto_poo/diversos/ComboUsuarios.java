@@ -26,7 +26,7 @@ public class ComboUsuarios extends JComboBox<String>{
 
 	public void tipoSelecionado(Usuario usuario) throws UsuarioNaoExisteException {
 		if(getSelectedItem().equals("Administrador") && usuario instanceof Administrador)
-			new JanelaPrincipalAdministrador(usuario);
+			new JanelaPrincipalAdministrador((Administrador)usuario);
 		if(getSelectedItem().equals("Passageiro") && usuario instanceof Passageiro)
 			new JanelaPrincipalPassageiro(usuario);
 		if(getSelectedItem().equals("Mototaxista") && usuario instanceof Mototaxista)

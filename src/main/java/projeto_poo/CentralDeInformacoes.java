@@ -28,6 +28,14 @@ public class CentralDeInformacoes {
 		}
 	}
 	
+	public void atualizarUsuario(Usuario usuario) {
+		try {
+			todosOsUsuarios.set(todosOsUsuarios.indexOf(recuperarUsuarioPeloEmail(usuario.getEmail())), usuario);
+		} catch (UsuarioNaoExisteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void adicionarCorrida(Corrida corrida) throws CorridaExistenteException {
 		try {
 			recuperarCorridaPeloId(corrida.getId());

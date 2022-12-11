@@ -154,7 +154,7 @@ public class JanelaEsqueciMinhaSenha extends JanelaPadrao {
 		public void actionPerformed(ActionEvent e) {
 				try {
 					getPersistencia().buscarCentral().recuperarUsuarioPeloEmail(email.pegarConteudo());
-					Mensageiro.enviarCodigoEmail(email.getText(), codigoGerado);
+					Mensageiro.enviarCodigoEmail(email.getText(), "CÓDIGO DE SEGURANÇA", "Seu código de segurança: "+codigoGerado);
 					inserirEmailPainel.setVisible(false);
 					add(inserirCodigoPainel = new InserirCodigoPainel());
 				} catch (UsuarioNaoExisteException e1) {

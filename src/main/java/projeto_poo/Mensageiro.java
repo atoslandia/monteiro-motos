@@ -27,7 +27,7 @@ public class Mensageiro {
 //		} catch (Exception e) {e.printStackTrace();}
 //	}
 	
-	public static void enviarCodigoEmail(String destinatario, String codigo) throws Exception {
+	public static void enviarCodigoEmail(String destinatario, String assunto, String corpo) throws Exception {
 		
 		SimpleEmail email = new SimpleEmail();
 		
@@ -35,10 +35,10 @@ public class Mensageiro {
 		email.setSmtpPort(587);
 		email.setAuthenticator(new DefaultAuthenticator("projeto.poo.ads@gmail.com", "risagyuofykwmikh"));
 		email.setSSLOnConnect(true);
-		email.setSubject("Código de segurança");
+		email.setSubject(assunto);
 		
 		email.setFrom("projeto.poo.ads@gmail.com");
-		String mensagem = "Seu código de segurança: "+codigo;
+		String mensagem = corpo;
 		email.setMsg(mensagem);
 		
 		

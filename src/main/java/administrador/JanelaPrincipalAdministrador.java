@@ -14,19 +14,21 @@ import projeto_poo.botoes.BotaoListarCorridas;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.janelas.JanelaEditarPerfil;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
 public class JanelaPrincipalAdministrador extends JanelaPadrao{
-	
-	
+
+	private Administrador administrador;
 	
 	private PainelInicio inicio;
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
 	
-	public JanelaPrincipalAdministrador(Usuario administrador) {
+	public JanelaPrincipalAdministrador(Administrador administrador) {
 		super("Monteiro-motos - "+administrador.getNome()+" "+administrador.getSobrenome());
+		this.administrador = administrador;
 		add(inicio = new PainelInicio());
 		add(listarCorridas = new PainelListarCorridas());
 		add(perfil = new PainelPerfil());
@@ -47,6 +49,12 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 		
 		private void opcoes() {
 			BotaoOpcoes listarTodosUsuarios = new BotaoOpcoes("LISTAR TODOS OS USUÁRIOS");
+			listarTodosUsuarios.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaTodosUsuarios(administrador);
+				}
+			});
 			add(listarTodosUsuarios);
 			
 			BotaoOpcoes valorCreditos = new BotaoOpcoes("VALOR DE CRÉDITO REINVIDICADO");
@@ -135,6 +143,12 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 		
 		private void opcoes() {
 			BotaoOpcoes editarPerfil = new BotaoOpcoes("EDITAR PERFIL");
+			editarPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaEditarPerfil(administrador);
+				}
+			});
 			add(editarPerfil);
 		}
 		
