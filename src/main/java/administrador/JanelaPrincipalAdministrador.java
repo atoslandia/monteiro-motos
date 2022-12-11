@@ -14,7 +14,6 @@ import projeto_poo.botoes.BotaoListarCorridas;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoPadrao;
 import projeto_poo.diversos.TextoImagemPadrao;
-import projeto_poo.janelas.JanelaEditarPerfil;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
@@ -157,7 +156,7 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			editarPerfil.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
-					new JanelaEditarPerfil(administrador);
+					new JanelaEditarPerfilAdministrador(administrador);
 				}
 			});
 			add(editarPerfil);
