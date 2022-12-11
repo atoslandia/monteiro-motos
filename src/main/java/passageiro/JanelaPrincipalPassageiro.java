@@ -19,7 +19,7 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
 	private Passageiro passageiro;
-	public JanelaPrincipalPassageiro(Usuario passageiro) {
+	public JanelaPrincipalPassageiro(Passageiro passageiro) {
 		super("Monteiro-motos - "+passageiro.getNome()+" "+passageiro.getSobrenome());
 		this.passageiro = (Passageiro) passageiro;
 		add(inicio = new PainelInicio());
@@ -89,6 +89,8 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			add(getFundoInicio());
 		}
 		
+		
+		
 		private void botoesBarra() {
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -123,6 +125,28 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			add(getBotaoListarCorridas());
 			add(getBarraPerfil());
 			add(getFundoInicio());
+			botaoOpcoes();
+		}
+		
+		private void botaoOpcoes() {
+			BotaoOpcoes editarPerfil = new BotaoOpcoes("EDITAR PERFIL");
+			editarPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaEditarPerfil(passageiro);
+				}
+			});
+			BotaoOpcoes excluirPerfil = new BotaoOpcoes("EXCLUIR PERFIL");
+			excluirPerfil.setLocation(30, 135);
+			excluirPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaExcluirPerfil(passageiro);
+				}
+			});
+			
+			add(excluirPerfil);
+			add(editarPerfil);
 		}
 		
 		private void botoesBarra() {

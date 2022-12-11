@@ -2,7 +2,13 @@ package passageiro;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -264,7 +270,10 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	}
 	
 	public static void main(String[] args) {
-		new JanelaLogin();
+		Calendar hora = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East"));
+		int horario = hora.get(Calendar.HOUR_OF_DAY);
+		System.out.println(horario);
+		
 	}
 	
 }

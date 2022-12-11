@@ -8,6 +8,14 @@
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
     </projeto__poo.Administrador>
+    <projeto__poo.Passageiro>
+      <nome>Robson</nome>
+      <sobrenome>Caliban</sobrenome>
+      <dataNascimento>2004-02-28</dataNascimento>
+      <email>robsoncaliban@gmail.com</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
+    </projeto__poo.Passageiro>
   </todosOsUsuarios>
   <todasAsCorridas/>
   <valorCreditoReinvidicacao>0.0</valorCreditoReinvidicacao>
