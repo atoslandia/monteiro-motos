@@ -52,6 +52,12 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 		private void botoes() {
 			
 			BotaoOpcoes comprarCreditos = new BotaoOpcoes("COMPRAR CRÉDITOS DE REINVIDICAÇÃO");
+			comprarCreditos.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaComprarCreditosDeReinvidicacao(mototaxista);
+				}
+			});
 			add(comprarCreditos);
 			
 			
@@ -129,6 +135,16 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 		}
 		
 		private void botoes() {
+			
+			BotaoOpcoes editarPerfil = new BotaoOpcoes("EDITAR PERFIL");
+			editarPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaEditarPerfilMototaxista(mototaxista);
+				}
+			});
+			add(editarPerfil);
+			
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);

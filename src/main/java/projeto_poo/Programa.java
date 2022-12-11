@@ -16,8 +16,7 @@ import projeto_poo.janelas.JanelaPrimeiroAcesso;
 public class Programa {
 
 	public static void main(String[] args) {
-		
-		new JanelaPrincipalMototaxista(new Mototaxista("atos","alves",LocalDate.of(2001,7,13),Sexo.MASCULINO,"atos5000@gmail.com","1234"));
+		new JanelaLogin();
 //		Scanner leitor = new Scanner(System.in);
 //		Persistencia persistencia = new Persistencia();
 //		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("d/M/y");
