@@ -168,9 +168,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 				Corrida corrida = new Corrida(enderecoPontoDeEncontro,enderecoDestino, passageiro);
 				cdi.adicionarCorrida(corrida);
 				getPersistencia().salvarPersistencia(cdi);
-				System.out.println("antes de abrir a janela");
-				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"aguarde a reinvidicação."+"</html>", new JanelaPrincipalPassageiro(passageiro));
-				System.out.println("depois ");
+				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"Aguarde a reinvidicação no local."+"</html>", new JanelaPrincipalPassageiro(passageiro));
 			} catch (CaixaVaziaException e1) {
 				getAvisoPreencherDados().setVisible(true);
 			} catch (CorridaExistenteException e2) {

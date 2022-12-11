@@ -59,90 +59,28 @@
   </todosOsUsuarios>
   <todasAsCorridas>
     <projeto__poo.Corrida>
-      <id>1670711963431</id>
+      <id>1670717997642</id>
       <pontoDeEncontro>
-        <endereco>casa de mãe pantanha</endereco>
-        <CEP>5850000</CEP>
-        <numero>70</numero>
-        <bairro>centro</bairro>
+        <endereco>dadad</endereco>
+        <CEP>888</CEP>
+        <numero>9999</numero>
+        <bairro>asdadas</bairro>
         <complemento></complemento>
       </pontoDeEncontro>
       <destino>
-        <endereco>ifpb</endereco>
-        <CEP>5850000</CEP>
-        <numero>1</numero>
-        <bairro>longe</bairro>
+        <endereco>dadas</endereco>
+        <CEP>2222</CEP>
+        <numero>2222</numero>
+        <bairro>dadad</bairro>
         <complemento></complemento>
-        <distancia>100000.0</distancia>
-      </destino>
-    </projeto__poo.Corrida>
-    <projeto__poo.Corrida>
-      <id>1670712147783</id>
-      <pontoDeEncontro>
-        <endereco>fsdfsd</endereco>
-        <CEP>324234</CEP>
-        <numero>23123</numero>
-        <bairro>efwfwvcw</bairro>
-        <complemento></complemento>
-      </pontoDeEncontro>
-      <destino>
-        <endereco>wafsdf</endereco>
-        <CEP>234234</CEP>
-        <numero>42342</numero>
-        <bairro>sfdsdvsfsdf</bairro>
-        <complemento></complemento>
-        <distancia>234234.0</distancia>
-      </destino>
-    </projeto__poo.Corrida>
-    <projeto__poo.Corrida>
-      <id>1670712338314</id>
-      <pontoDeEncontro>
-        <endereco>werwefw</endereco>
-        <CEP>234234</CEP>
-        <numero>234234</numero>
-        <bairro>fsfsdfsdf</bairro>
-        <complemento></complemento>
-      </pontoDeEncontro>
-      <destino>
-        <endereco>rwerwe</endereco>
-        <CEP>4323422</CEP>
-        <numero>234234</numero>
-        <bairro>wrwefwefsd</bairro>
-        <complemento></complemento>
-        <distancia>2.3423424E7</distancia>
+        <distancia>2222.0</distancia>
       </destino>
       <passageiro>
         <nome>Atos</nome>
         <sobrenome>Alves</sobrenome>
-        <dataNascimento>2001-07-13</dataNascimento>
-        <email>atos@</email>
-        <senha>123</senha>
-        <sexo>MASCULINO</sexo>
-      </passageiro>
-    </projeto__poo.Corrida>
-    <projeto__poo.Corrida>
-      <id>1670712438886</id>
-      <pontoDeEncontro>
-        <endereco>werwerwe</endereco>
-        <CEP>1234234</CEP>
-        <numero>23424</numero>
-        <bairro>sdfsdfsd</bairro>
-        <complemento></complemento>
-      </pontoDeEncontro>
-      <destino>
-        <endereco>werfwef</endereco>
-        <CEP>43234</CEP>
-        <numero>234234</numero>
-        <bairro>wwfwsdf</bairro>
-        <complemento></complemento>
-        <distancia>234234.0</distancia>
-      </destino>
-      <passageiro>
-        <nome>Atos</nome>
-        <sobrenome>Alves</sobrenome>
-        <dataNascimento>2001-07-13</dataNascimento>
-        <email>atos@</email>
-        <senha>123</senha>
+        <dataNascimento>2004-01-01</dataNascimento>
+        <email>atos.alves@academico.ifpb.edu.br</email>
+        <senha>1234</senha>
         <sexo>MASCULINO</sexo>
       </passageiro>
     </projeto__poo.Corrida>
