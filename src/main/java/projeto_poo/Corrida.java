@@ -1,6 +1,9 @@
 package projeto_poo;
 
 import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class Corrida {
 	private long id;
@@ -10,18 +13,24 @@ public class Corrida {
 	private LocalDate agendamento;
 	
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro) {
-		id = System.currentTimeMillis();
+		this.id = System.currentTimeMillis();
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
 		this.passageiro = passageiro;
 	}
 	
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro, LocalDate data) {
-		id = System.currentTimeMillis();
+		this.id = data.toEpochDay();
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
 		this.passageiro = passageiro;
 		this.agendamento = data;
+	}
+	
+	public String horaCriada() {
+		Date data = new Date(id);
+		int dia = data.getSeconds();
+		return Integer.toString(dia);
 	}
 	
 	public Passageiro getPassageiro() {

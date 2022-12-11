@@ -15,16 +15,33 @@ public class CentralDeInformacoes {
 	
 	private ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
 	private ArrayList<Corrida> todasAsCorridas = new ArrayList<Corrida>();
+	private float valorCreditoReinvidicacao;
+	
+	public float getValorCreditoReinvidicacao() {
+		return valorCreditoReinvidicacao;
+	}
+	
+	public void setValorCreditoReinvidicacao(float valorCreditoReinvidicacao) {
+		this.valorCreditoReinvidicacao = valorCreditoReinvidicacao;
+	}
 	
 	public void adicionarUsuario(Usuario usuario) throws MenorDeIdadeException {
 		try {
-			recuperarUsuarioPeloEmail(usuario.getEmail());
 			LocalDate dataAtual = LocalDate.now();
-		    Period periodo = Period.between(usuario.getDataNascimento(), dataAtual);
+			Period periodo = Period.between(usuario.getDataNascimento(), dataAtual);
 			if(periodo.getYears() < 18)
 				throw new MenorDeIdadeException();
+			recuperarUsuarioPeloEmail(usuario.getEmail());
 		} catch (Exception e) {
 				todosOsUsuarios.add(usuario);
+		}
+	}
+	
+	public void removerUsuario(Usuario usuario) {
+		try {
+			todosOsUsuarios.remove(todosOsUsuarios.indexOf(recuperarUsuarioPeloEmail(usuario.getEmail())));
+		} catch (UsuarioNaoExisteException e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -41,7 +41,6 @@ public class Mensageiro {
 		String mensagem = corpo;
 		email.setMsg(mensagem);
 		
-		
 		email.addTo(destinatario);
 		email.send();
 	}

@@ -98,10 +98,15 @@ public class JanelaPrincipalAdministrador extends JanelaPadrao{
 			setVisible(false);
 			logo();
 			botoesBarra();
+			todasAsCorridas();
 			add(getBotaoInicio());
 			add(getBotaoPerfil());
 			add(getBarraListarCorridas());
 			add(getFundoInicio());
+		}
+		
+		private void todasAsCorridas() {
+			
 		}
 		
 		private void botoesBarra() {

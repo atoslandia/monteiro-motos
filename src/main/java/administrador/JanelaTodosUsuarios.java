@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import projeto_poo.Administrador;
 import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Corrida;
 import projeto_poo.Mensageiro;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
@@ -76,7 +77,6 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 	/* PAINEL LISTA */
 	
 	private void gerarLista() {
-		
 		try {
 			lista = getPersistencia().buscarCentral().getTodosOsUsuarios();
 		} catch (Exception e) {
@@ -440,6 +440,7 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		public void actionPerformed(ActionEvent e) {
 			painelDetalhe.setVisible(false);
 			add(painelEnviarEmail = new EnviarEmail(administrador));
+			
 		}
 	}
 	
