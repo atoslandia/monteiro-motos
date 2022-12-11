@@ -1,14 +1,22 @@
 package passageiro;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import projeto_poo.Corrida;
+import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoOpcoes;
+import projeto_poo.caixas.CaixaNomeSobrenome;
+import projeto_poo.diversos.ComboFiltroTodosUsuarios;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
@@ -22,10 +30,25 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	public JanelaPrincipalPassageiro(Passageiro passageiro) {
 		super("Monteiro-motos - "+passageiro.getNome()+" "+passageiro.getSobrenome());
 		this.passageiro = (Passageiro) passageiro;
+		verificarCorridaAceita();
 		add(inicio = new PainelInicio());
 		add(listarCorridas = new PainelListarCorridas());
 		add(perfil = new PainelPerfil());
 		setVisible(true);
+	}
+	
+	private void verificarCorridaAceita() {
+		try {
+			for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
+				if(c.isCorridaAceita()) {
+					dispose();
+					new JanelaCorridaConcluida(passageiro);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 	}
 	
 	private class PainelInicio extends PainelPrincipal{
@@ -78,17 +101,46 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	}
 	
 	private class PainelListarCorridas extends PainelPrincipal {
+		
+		private DefaultTableModel modelo;
+		private JTable tabela;
+		private JScrollPane scroll;
+		
+		
 		public PainelListarCorridas() {
 			super();
-			setVisible(false);
+			listaCorridas();
 			logo();
 			botoesBarra();
 			add(getBotaoInicio());
 			add(getBotaoPerfil());
 			add(getBarraListarCorridas());
 			add(getFundoInicio());
+			setVisible(false);
 		}
 		
+		private void listaCorridas() {
+			try {
+				modelo = new DefaultTableModel();
+				modelo.addColumn("Endereço");
+				modelo.addColumn("Data");
+				for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
+					Object[] linha = new Object[2];
+					linha[0] = c.getDestino().getEndereco();
+					linha[1] = "##/##/##";
+					modelo.addRow(linha);
+				}
+				tabela = new JTable(modelo);
+				tabela.setBackground(new Color(202,202,202));
+				tabela.setDragEnabled(false);
+				tabela.setRowHeight(25);
+				scroll = new JScrollPane(tabela);
+				scroll.setBounds(30, 70, 480, 230);
+				add(scroll);
+				} catch (Exception e) {
+					e.printStackTrace();
+			}
+		}
 		
 		
 		private void botoesBarra() {

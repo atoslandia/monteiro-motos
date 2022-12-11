@@ -16,7 +16,44 @@
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
     </projeto__poo.Passageiro>
+    <projeto__poo.Mototaxista>
+      <nome>Roberto</nome>
+      <sobrenome>Cuaberto</sobrenome>
+      <dataNascimento>2001-09-18</dataNascimento>
+      <email>atosalvesqueiroz@gmail.com</email>
+      <senha>1234</senha>
+      <sexo>MASCULINO</sexo>
+      <creditos>4</creditos>
+    </projeto__poo.Mototaxista>
   </todosOsUsuarios>
-  <todasAsCorridas/>
+  <todasAsCorridas>
+    <projeto__poo.Corrida>
+      <corridaAceita>false</corridaAceita>
+      <id>1670799751287</id>
+      <pontoDeEncontro>
+        <endereco>Minha casa</endereco>
+        <CEP>123</CEP>
+        <numero>321</numero>
+        <bairro>centro</bairro>
+        <complemento></complemento>
+      </pontoDeEncontro>
+      <destino>
+        <endereco>Casa de Atos</endereco>
+        <CEP>321</CEP>
+        <numero>123</numero>
+        <bairro>centro</bairro>
+        <complemento>prox correios</complemento>
+        <distancia>1.0</distancia>
+      </destino>
+      <passageiro>
+        <nome>Robson</nome>
+        <sobrenome>Caliban</sobrenome>
+        <dataNascimento>2004-02-28</dataNascimento>
+        <email>robsoncaliban@gmail.com</email>
+        <senha>1234</senha>
+        <sexo>MASCULINO</sexo>
+      </passageiro>
+    </projeto__poo.Corrida>
+  </todasAsCorridas>
   <valorCreditoReinvidicacao>10.25</valorCreditoReinvidicacao>
 </projeto__poo.CentralDeInformacoes>

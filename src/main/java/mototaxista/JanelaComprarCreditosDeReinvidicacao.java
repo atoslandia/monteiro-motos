@@ -111,7 +111,7 @@ public class JanelaComprarCreditosDeReinvidicacao extends JanelaPadrao{
 						mototaxista.setCreditos(mototaxista.getCreditos() + quantidade);
 						CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 						cdi.atualizarUsuario(mototaxista);
-						
+						getPersistencia().salvarPersistencia(cdi);
 						dispose();
 						new JanelaPrincipalMototaxista(mototaxista);
 					} catch (Exception e1) {

@@ -15,10 +15,12 @@ import projeto_poo.paineis.PainelEditarPerfil;
 public class JanelaEditarPerfilMototaxista extends JanelaPadrao{
 	
 	private Usuario usuario;
+	private PainelEditar painelEditar;
 	
 	public JanelaEditarPerfilMototaxista(Usuario usuario) {
 		super("Editar perfil");
 		this.usuario = usuario;
+		add(painelEditar = new PainelEditar());
 		setVisible(true);
 	}
 	

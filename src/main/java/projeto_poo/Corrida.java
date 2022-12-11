@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class Corrida {
+	private boolean corridaAceita;
 	private long id;
 	private PontoDeEncontro pontoDeEncontro;
 	private Destino destino;
@@ -13,6 +14,7 @@ public class Corrida {
 	private LocalDate agendamento;
 	
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro) {
+		this.corridaAceita = false;
 		this.id = System.currentTimeMillis();
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
@@ -20,6 +22,7 @@ public class Corrida {
 	}
 	
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro, LocalDate data) {
+		this.corridaAceita = false;
 		this.id = data.toEpochDay();
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
@@ -27,11 +30,12 @@ public class Corrida {
 		this.agendamento = data;
 	}
 	
-	public String horaCriada() {
-		Date data = new Date(id);
-		int dia = data.getSeconds();
-		return Integer.toString(dia);
-	}
+//	public String dataDaCorrida() {
+//		Date data = new Date(id);
+//		int mes = data.getMonth();
+//		int ano = data.getYear();
+//		return dia+"/"+mes+1+"/"+ano;
+//	}
 	
 	public Passageiro getPassageiro() {
 		return passageiro;
@@ -52,6 +56,14 @@ public class Corrida {
 		if(passageiro.getSexo().equals(Sexo.FEMININO))
 			return passageiro.getNome()+" pede para pega-la em "+ pontoDeEncontro.getEndereco();
 		return passageiro.getNome()+" pede para pega-lo em "+ pontoDeEncontro.getEndereco();
+	}
+
+	public boolean isCorridaAceita() {
+		return corridaAceita;
+	}
+
+	public void setCorridaAceita(boolean corridaAceita) {
+		this.corridaAceita = corridaAceita;
 	}
 
 }
