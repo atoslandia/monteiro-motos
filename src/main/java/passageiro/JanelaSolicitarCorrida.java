@@ -2,6 +2,7 @@ package passageiro;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import projeto_poo.Corrida;
 import projeto_poo.Destino;
 import projeto_poo.Passageiro;
 import projeto_poo.PontoDeEncontro;
+import projeto_poo.Sexo;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoAgendar;
 import projeto_poo.botoes.BotaoProsseguir;
@@ -109,6 +111,7 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		
 		private void botoes() {
 			BotaoSolicitar solicitar = new BotaoSolicitar();
+			solicitar.addActionListener(new OuvinteBotaoSolicitar());
 			add(solicitar);
 			
 			BotaoAgendar agendar = new BotaoAgendar();
@@ -165,6 +168,9 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 				Corrida corrida = new Corrida(enderecoPontoDeEncontro,enderecoDestino, passageiro);
 				cdi.adicionarCorrida(corrida);
 				getPersistencia().salvarPersistencia(cdi);
+				System.out.println("antes de abrir a janela");
+				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"aguarde a reinvidicação."+"</html>", new JanelaPrincipalPassageiro(passageiro));
+				System.out.println("depois ");
 			} catch (CaixaVaziaException e1) {
 				getAvisoPreencherDados().setVisible(true);
 			} catch (CorridaExistenteException e2) {
@@ -185,7 +191,8 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 	}
 	
 	public static void main(String[] args) {
-		new JanelaSolicitarCorrida(null);
+		
+		new JanelaSolicitarCorrida(new Passageiro("Atos", "Alves", LocalDate.of(2001, 7, 13), Sexo.MASCULINO, "atos@", "123"));
 	}
 	
 }

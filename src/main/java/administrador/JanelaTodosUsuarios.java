@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import projeto_poo.Administrador;
@@ -23,7 +26,9 @@ import projeto_poo.botoes.BotaoDetalhar;
 import projeto_poo.botoes.BotaoEspecial;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.botoes.BotaoVoltar;
+import projeto_poo.caixas.CaixaEmail;
 import projeto_poo.caixas.CaixaNomeSobrenome;
+import projeto_poo.caixas.CaixaTextoPadrao;
 import projeto_poo.diversos.ComboFiltroTodosUsuarios;
 import projeto_poo.diversos.TabelaUsuarios;
 import projeto_poo.diversos.TextoImagemPadrao;
@@ -33,8 +38,13 @@ import projeto_poo.paineis.PainelPadrao;
 
 public class JanelaTodosUsuarios extends JanelaPadrao{
 	
+	private CaixaTextoPadrao assunto;
+	private JTextArea conteudo;
+	private JScrollPane js;
+	
 	private PainelDetalhe painelDetalhe;
-	private ListaTodosUsuarios listaTodosUsuarios;
+	private ListaTodosUsuarios painelListaTodosUsuarios;
+	private EnviarEmail painelEnviarEmail;
 	
 	private JScrollPane scroll;
 	private JTable tabela;
@@ -45,7 +55,7 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 	public JanelaTodosUsuarios() {
 		super("Lista de todos os usuários");
 		iniciarValor();
-		add(listaTodosUsuarios = new ListaTodosUsuarios());
+		add(painelListaTodosUsuarios = new ListaTodosUsuarios());
 		setVisible(true);
 	}
 	
@@ -142,16 +152,17 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 		
 		private void botoes() {
 			BotaoEspecial enviarEmail = new BotaoEspecial("ENVIAR EMAIL");
+			enviarEmail.addActionListener(new OuvinteEnviarEmail());
 			add(enviarEmail);
 			
-			BotaoEspecial gerarPdf = new BotaoEspecial("EDITAR PERFIL");
-			gerarPdf.setLocation(510, 170);
-			add(gerarPdf);
+			BotaoEspecial editarPerfil = new BotaoEspecial("EDITAR PERFIL");
+			editarPerfil.setLocation(510, 170);
+			add(editarPerfil);
 			
 			BotaoVoltar voltar = new BotaoVoltar();
 			voltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					listaTodosUsuarios.setVisible(true);
+					painelListaTodosUsuarios.setVisible(true);
 					setVisible(false);
 				}
 			});
@@ -169,15 +180,48 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			logo.setBounds(30, 21, 502, 41);
 			add(logo);
 		}
+	}
+	
+	private class EnviarEmail extends PainelPadrao{
+		public EnviarEmail() {
+			botoes();
+			caixasTextos();
+			add(getFundoPadrao());
+		}
 		
+		private void botoes() {
+			BotaoVoltar voltar = new BotaoVoltar();
+			voltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					painelDetalhe.setVisible(true);
+					setVisible(false);
+				}
+			});
+			add(voltar);
+		}
 		
+		private void caixasTextos() {
+			JLabel textoAssunto = new TextoImagemPadrao("Assunto: ");
+			textoAssunto.setBounds(30, 90, 100, 20);
+	        add(textoAssunto);
+	        
+	        assunto = new CaixaTextoPadrao();
+	        assunto.setBounds(120, 90, 200, 20);
+	        add(assunto);
+	        
+	        conteudo = new JTextArea();
+	        conteudo.setBounds(30, 120, 290, 200);
+	        conteudo.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK));
+	        js = new JScrollPane(conteudo);
+	        add(js);
+		}
 		
 	}
 	
 	private class OuvinteBotaoDetalhar implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			add(painelDetalhe = new PainelDetalhe(listaUsuarios.get(tabela.getSelectedRow())));
-			listaTodosUsuarios.setVisible(false);
+			painelListaTodosUsuarios.setVisible(false);
 		}
 	}
 	
@@ -209,6 +253,13 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 				}
 			}
 			scroll.repaint();
+		}
+	}
+	
+	private class OuvinteEnviarEmail implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			painelDetalhe.setVisible(false);
+			add(painelEnviarEmail = new EnviarEmail());
 		}
 	}
 	
