@@ -11,12 +11,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import projeto_poo.Corrida;
-import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
-import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoOpcoes;
-import projeto_poo.caixas.CaixaNomeSobrenome;
-import projeto_poo.diversos.ComboFiltroTodosUsuarios;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
@@ -27,22 +23,23 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	private PainelListarCorridas listarCorridas;
 	private PainelPerfil perfil;
 	private Passageiro passageiro;
+	
 	public JanelaPrincipalPassageiro(Passageiro passageiro) {
 		super("Monteiro-motos - "+passageiro.getNome()+" "+passageiro.getSobrenome());
 		this.passageiro = (Passageiro) passageiro;
-		verificarCorridaAceita();
 		add(inicio = new PainelInicio());
 		add(listarCorridas = new PainelListarCorridas());
 		add(perfil = new PainelPerfil());
 		setVisible(true);
+		verificarCorridaAceita();
 	}
 	
 	private void verificarCorridaAceita() {
 		try {
 			for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
 				if(c.isCorridaAceita()) {
+					new JanelaCorridaConcluida(c);
 					dispose();
-					new JanelaCorridaConcluida(passageiro);
 				}
 			}
 		} catch (Exception e) {
@@ -123,11 +120,14 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 			try {
 				modelo = new DefaultTableModel();
 				modelo.addColumn("Endereço");
-				modelo.addColumn("Data");
+				modelo.addColumn("Status");
 				for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
 					Object[] linha = new Object[2];
 					linha[0] = c.getDestino().getEndereco();
-					linha[1] = "##/##/##";
+					if(c.isCorridaAceita())
+						linha[1] = "Em espera";
+					else
+						linha[1] = "Reinvidicada";
 					modelo.addRow(linha);
 				}
 				tabela = new JTable(modelo);

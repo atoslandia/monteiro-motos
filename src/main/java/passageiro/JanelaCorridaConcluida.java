@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
+import projeto_poo.CentralDeInformacoes;
+import projeto_poo.Corrida;
 import projeto_poo.Mototaxista;
 import projeto_poo.Passageiro;
 import projeto_poo.Usuario;
@@ -27,17 +28,14 @@ public class JanelaCorridaConcluida extends JanelaPadrao {
 	private TextoImagemPadrao avaliacao;
 	private BotaoBloquear bloquear;
 	
-	private Usuario passageiro;
+	private Corrida corrida;
 	
-	public JanelaCorridaConcluida(Usuario passageiro) {
+	public JanelaCorridaConcluida(Corrida corrida) {
 		super("Corrida concluida");
-		this.passageiro = passageiro;
+		this.corrida = corrida;
 		add(getFundoPadrao());
 		logo();
 		avaliar();
-		
-		
-		
 		setVisible(true);
 	}
 	private void logo() {
@@ -65,14 +63,27 @@ public class JanelaCorridaConcluida extends JanelaPadrao {
 		add(avaliacao);
 		
 		bloquear = new BotaoBloquear();
+		bloquear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		bloquear.setEnabled(false);
 		add(bloquear);
 		
 		BotaoConcluir concluir = new BotaoConcluir();
 		concluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new JanelaPrincipalPassageiro((Passageiro)passageiro);
+				try {
+					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
+					corrida.setCorridaAceita(false);
+					cdi.atualizarCorrida(corrida);
+					getPersistencia().salvarPersistencia(cdi);
+					dispose();
+					new JanelaPrincipalPassageiro((Passageiro)corrida.getPassageiro());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		add(concluir);

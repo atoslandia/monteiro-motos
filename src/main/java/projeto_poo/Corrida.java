@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Corrida {
 	private boolean corridaAceita;
+	private Mototaxista mototaxistaBloqueado;
 	private long id;
 	private PontoDeEncontro pontoDeEncontro;
 	private Destino destino;
@@ -64,6 +65,14 @@ public class Corrida {
 
 	public void setCorridaAceita(boolean corridaAceita) {
 		this.corridaAceita = corridaAceita;
+	}
+
+	public Mototaxista getMototaxistaBloqueado() {
+		return mototaxistaBloqueado;
+	}
+
+	public void setMototaxistaBloqueado(Mototaxista mototaxistaBloqueado) {
+		this.mototaxistaBloqueado = mototaxistaBloqueado;
 	}
 
 }

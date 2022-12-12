@@ -45,6 +45,7 @@ public class JanelaEditarPerfilMototaxista extends JanelaPadrao{
 						new JanelaPrincipalMototaxista((Mototaxista)usuario);
 						new JanelaDeAvisoPadrao("Usuário editado com sucesso!");
 					}catch (Exception e2) {
+						e2.printStackTrace();
 					}
 				}
 			});

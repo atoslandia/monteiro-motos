@@ -1,16 +1,22 @@
 package mototaxista;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import projeto_poo.Corrida;
 import projeto_poo.Mototaxista;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoEspecial;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.janelas.JanelaDeAvisoPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
@@ -87,18 +93,71 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 	}
 	
 	private class PainelListarCorridas extends PainelPrincipal {
+		
+		private DefaultTableModel modelo;
+		private JTable tabela;
+		private JScrollPane scroll;
+		
 		public PainelListarCorridas() {
 			super();
-			setVisible(false);
+			gerarLista();
 			logo();
 			botoes();
 			add(getBotaoInicio());
 			add(getBotaoPerfil());
 			add(getBarraListarCorridas());
 			add(getFundoInicio());
+			setVisible(false);
+		}
+		
+		private void gerarLista() {
+			try {
+				modelo = new DefaultTableModel();
+				modelo.addColumn("Endereço");
+				modelo.addColumn("Data");
+				int numero = 1;
+				for(Corrida c: getPersistencia().buscarCentral().getTodasAsCorridas()) {
+					Object[] linha = new Object[2];
+					if(c.isCorridaAceita()) {
+						linha[0] = "corrida "+numero++;
+						linha[1] = "##/##/##";
+					}
+					modelo.addRow(linha);
+				}
+				tabela = new JTable(modelo);
+				tabela.setBackground(new Color(202,202,202));
+				tabela.setDragEnabled(false);
+				tabela.setRowHeight(25);
+				scroll = new JScrollPane(tabela);
+				scroll.setBounds(30, 70, 480, 230);
+				add(scroll);
+				} catch (Exception e) {
+					e.printStackTrace();
+			}
 		}
 		
 		private void botoes() {
+			
+			BotaoEspecial reinvidicar = new BotaoEspecial("REINVIDICAR");
+			reinvidicar.setLocation(520,170);
+			reinvidicar.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					try {
+						if(mototaxista.getCreditos() > 0) {
+							mototaxista.setCreditos(mototaxista.getCreditos()-1);
+							new JanelaCorridaReinvidicada(mototaxista, getPersistencia().buscarCentral().getTodasAsCorridas().get(tabela.getSelectedRow()));
+							dispose();
+						}else
+							new JanelaDeAvisoPadrao("Você não possui créditos de reinvidicação");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			);
+			add(reinvidicar);
+			
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);

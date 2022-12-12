@@ -49,6 +49,14 @@ public class CentralDeInformacoes {
 		}
 	}
 	
+	public void atualizarCorrida(Corrida corrida) {
+		try {
+			todasAsCorridas.set(todasAsCorridas.indexOf(recuperarCorridaPeloId(corrida.getId())), corrida);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void adicionarCorrida(Corrida corrida) throws CorridaExistenteException {
 		try {
 			recuperarCorridaPeloId(corrida.getId());
