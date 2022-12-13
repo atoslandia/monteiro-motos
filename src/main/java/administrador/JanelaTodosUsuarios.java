@@ -285,9 +285,9 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			concluir.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
+						System.out.println("Fui apertado!");
 						usuario.setNome(getNome().pegarConteudo());
 						usuario.setSobrenome(getSobrenome().pegarConteudo());
-						usuario.setEmail(getEmail().pegarConteudo());
 						usuario.setSenha(getSenha().pegarConteudo());
 						usuario.setDataNascimento(getDataNascimento().pegarData());
 						CentralDeInformacoes cdi = getPersistencia().buscarCentral();
@@ -309,6 +309,7 @@ public class JanelaTodosUsuarios extends JanelaPadrao{
 			BotaoVoltar voltar = new BotaoVoltar();
 			voltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					System.out.println("Fui apertado02!");
 					setVisible(false);
 					painelDetalhe.setVisible(true);
 				}

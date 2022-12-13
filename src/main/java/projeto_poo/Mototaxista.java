@@ -7,6 +7,7 @@ import projeto_poo.erros.SemCreditosException;
 public class Mototaxista extends Usuario{
 	
 	private int creditos;
+	private Corrida corridasEmAguardo;
 
 	public Mototaxista(String nome, String sobrenome, LocalDate dataNascimento, Sexo sexo, String email, String senha) {
 		super(nome, sobrenome, dataNascimento, sexo, email, senha);
@@ -22,6 +23,14 @@ public class Mototaxista extends Usuario{
 
 	public void setCreditos(int creditos) {
 		this.creditos = creditos;
+	}
+
+	public Corrida getCorridasEmAguardo() {
+		return corridasEmAguardo;
+	}
+
+	public void setCorridasEmAguardo(Corrida corridasEmAguardo) {
+		this.corridasEmAguardo = corridasEmAguardo;
 	}
 
 }

@@ -20,6 +20,7 @@ import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.SemCreditosException;
 import projeto_poo.janelas.JanelaDeAvisoPadrao;
+import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
@@ -127,15 +128,25 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 				ArrayList<Corrida> corridasEmEspera = new ArrayList<>();
 				for(Corrida c: getPersistencia().buscarCentral().getTodasAsCorridas()) {
 					if(c.getEstadoDaCorrida().equals("Em espera")) {
-						corridasEmEspera.add(c);
+						corridasEmEspera.add(c);	
 					}
-					Object[] linha = new Object[2];
-					if(c.getEstadoDaCorrida().equals("Em espera")) {
+				}
+				
+				for(Corrida a: corridasEmEspera) {
+					if(corridasEmEspera.size() > 0) {
+						Object[] linha = new Object[2];
 						linha[0] = "corrida "+numero++;
 						linha[1] = "##/##/##";
+						modelo.addRow(linha);
 					}
-					modelo.addRow(linha);
 				}
+//					Object[] linha = new Object[2];
+//					if(c.getEstadoDaCorrida().equals("Em espera")) {
+//						linha[0] = "corrida "+numero++;
+//						linha[1] = "##/##/##";
+//					}
+				
+				
 				tabela = new JTable(modelo);
 				tabela.setBackground(new Color(202,202,202));
 				tabela.setDragEnabled(false);
@@ -215,7 +226,24 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 				}
 			});
 			add(editarPerfil);
-			
+			BotaoOpcoes excluirPerfil = new BotaoOpcoes("EXCLUIR PERFIL");
+			excluirPerfil.setLocation(30, 135);
+			excluirPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaExcluirPerfilMototaxista(mototaxista);	
+				}
+			});
+			add(excluirPerfil);
+			BotaoOpcoes sairDaConta = new BotaoOpcoes("SAIR");
+			sairDaConta.setLocation(30, 180);
+			sairDaConta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaLogin();
+				}
+			});
+			add(sairDaConta);
 			getBotaoInicio().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						listarCorridas.setVisible(false);

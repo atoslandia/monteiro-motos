@@ -16,6 +16,7 @@ import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
 import projeto_poo.erros.CorridaEmEsperaException;
 import projeto_poo.erros.CorridaReinvidicadaException;
+import projeto_poo.janelas.JanelaLogin;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
@@ -201,7 +202,15 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 					new JanelaExcluirPerfil(passageiro);
 				}
 			});
-			
+			BotaoOpcoes sairDaConta = new BotaoOpcoes("SAIR");
+			sairDaConta.setLocation(30, 180);
+			sairDaConta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new JanelaLogin();
+				}
+			});
+			add(sairDaConta);
 			add(excluirPerfil);
 			add(editarPerfil);
 		}

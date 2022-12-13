@@ -19,11 +19,11 @@
     <projeto__poo.Mototaxista>
       <nome>Robson</nome>
       <sobrenome>Caliban</sobrenome>
-      <dataNascimento>2004-01-01</dataNascimento>
+      <dataNascimento>2003-02-28</dataNascimento>
       <email>robsoncaliban@gmail.com</email>
       <senha>1234</senha>
       <sexo>MASCULINO</sexo>
-      <creditos>2</creditos>
+      <creditos>5</creditos>
     </projeto__poo.Mototaxista>
   </todosOsUsuarios>
   <todasAsCorridas>
@@ -53,7 +53,7 @@
         <sexo>MASCULINO</sexo>
       </passageiro>
       <agendamento>2022-10-28</agendamento>
-      <estadoDaCorrida>Em espera</estadoDaCorrida>
+      <estadoDaCorrida>Reinvidicada</estadoDaCorrida>
     </projeto__poo.Corrida>
     <projeto__poo.Corrida>
       <id>1670890452</id>
@@ -83,6 +83,62 @@
       <agendamento>+4576712-09-05</agendamento>
       <estadoDaCorrida>Concluída</estadoDaCorrida>
     </projeto__poo.Corrida>
+    <projeto__poo.Corrida>
+      <id>1670897318</id>
+      <pontoDeEncontro>
+        <endereco>lugarzin perfeito</endereco>
+        <CEP>5850000</CEP>
+        <numero>254</numero>
+        <bairro>blaublau</bairro>
+        <complemento></complemento>
+      </pontoDeEncontro>
+      <destino>
+        <endereco>ruazinmha boa</endereco>
+        <CEP>5555</CEP>
+        <numero>8888</numero>
+        <bairro>asd</bairro>
+        <complemento></complemento>
+        <distancia>9.0</distancia>
+      </destino>
+      <passageiro>
+        <nome>Atos</nome>
+        <sobrenome>Alves</sobrenome>
+        <dataNascimento>2004-01-01</dataNascimento>
+        <email>atos5000@gmail.com</email>
+        <senha>1234</senha>
+        <sexo>MASCULINO</sexo>
+      </passageiro>
+      <agendamento>+4576731-06-24</agendamento>
+      <estadoDaCorrida>Concluída</estadoDaCorrida>
+    </projeto__poo.Corrida>
+    <projeto__poo.Corrida>
+      <id>1670898462</id>
+      <pontoDeEncontro>
+        <endereco>abluia</endereco>
+        <CEP>55555</CEP>
+        <numero>88</numero>
+        <bairro>asdad</bairro>
+        <complemento></complemento>
+      </pontoDeEncontro>
+      <destino>
+        <endereco>euaua</endereco>
+        <CEP>5555</CEP>
+        <numero>22</numero>
+        <bairro>asd</bairro>
+        <complemento>afa</complemento>
+        <distancia>22.0</distancia>
+      </destino>
+      <passageiro>
+        <nome>Atos</nome>
+        <sobrenome>Alves</sobrenome>
+        <dataNascimento>2004-01-01</dataNascimento>
+        <email>atos5000@gmail.com</email>
+        <senha>1234</senha>
+        <sexo>MASCULINO</sexo>
+      </passageiro>
+      <agendamento>2022-01-01</agendamento>
+      <estadoDaCorrida>Em espera</estadoDaCorrida>
+    </projeto__poo.Corrida>
   </todasAsCorridas>
-  <valorCreditoReinvidicacao>0.0</valorCreditoReinvidicacao>
+  <valorCreditoReinvidicacao>1.5</valorCreditoReinvidicacao>
 </projeto__poo.CentralDeInformacoes>
