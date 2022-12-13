@@ -33,9 +33,9 @@ public class JanelaCorridaConcluida extends JanelaPadrao {
 	public JanelaCorridaConcluida(Corrida corrida) {
 		super("Corrida concluida");
 		this.corrida = corrida;
-		add(getFundoPadrao());
-		logo();
 		avaliar();
+		logo();
+		add(getFundoPadrao());
 		setVisible(true);
 	}
 	private void logo() {
@@ -75,8 +75,8 @@ public class JanelaCorridaConcluida extends JanelaPadrao {
 		concluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					corrida.setEstadoDaCorrida("Concluída");
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-					corrida.setCorridaAceita(false);
 					cdi.atualizarCorrida(corrida);
 					getPersistencia().salvarPersistencia(cdi);
 					dispose();

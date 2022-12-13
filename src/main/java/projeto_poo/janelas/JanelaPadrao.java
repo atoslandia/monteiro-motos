@@ -2,6 +2,7 @@ package projeto_poo.janelas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -21,7 +22,6 @@ public abstract class JanelaPadrao extends JFrame{
 	private Border bordaErro = BorderFactory.createMatteBorder(2,2,2,2, new Color(231, 110, 84));
 	private Persistencia persistencia = new Persistencia();
 	private TextoImagemPadrao fundoPadrao;
-
 	private TextoImagemPadrao avisoPreencherDados;
 
 	

@@ -188,13 +188,16 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				getAvisoPreencherDados().setVisible(false);
 				add(painelDestino = new PainelDestino());
+
+				getAvisoPreencherDados().setVisible(false);
+				
 				String endereco = painelPontoDeEncontro.getEndereco().pegarConteudo();
 				String CEP = painelPontoDeEncontro.getCEP().pegarConteudo();
 				String bairro = painelPontoDeEncontro.getBairro().pegarConteudo();
 				int numero = Integer.parseInt(painelPontoDeEncontro.getNumero().pegarConteudo());
 				String complemento = painelPontoDeEncontro.getComplemento().getText();
+				
 				enderecoPontoDeEncontro = new PontoDeEncontro(endereco, CEP, numero, bairro, complemento);
 				painelPontoDeEncontro.setVisible(false);
 			} catch (CaixaVaziaException e1) {
@@ -208,16 +211,21 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				getAvisoPreencherDados().setVisible(false);
+				
 				String endereco = painelDestino.getEndereco().pegarConteudo();
 				String CEP = painelDestino.getCEP().pegarConteudo();
 				String bairro = painelDestino.getBairro().pegarConteudo();
 				int numero = Integer.parseInt(painelDestino.getNumero().pegarConteudo());
 				String complemento = painelDestino.getComplemento().getText();
-				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo()); 
+				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo());
+				
 				enderecoDestino = new Destino(endereco, CEP, numero, bairro, complemento, caixaDistancia);
+				Corrida corrida = new Corrida(enderecoPontoDeEncontro, enderecoDestino, passageiro);
+				
+				corrida.setAgendamento(dataMarcada.pegarData());
+				corrida.setEstadoDaCorrida("Em espera");
+				
 				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
-				LocalDate data = dataMarcada.pegarData();
-				Corrida corrida = new Corrida(enderecoPontoDeEncontro, enderecoDestino, passageiro, data);
 				cdi.adicionarCorrida(corrida);
 				getPersistencia().salvarPersistencia(cdi);
 				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"Aguarde a reinvidicação no local e "+"<br>"+"na data marcada."+"</html>", new JanelaPrincipalPassageiro(passageiro));
@@ -237,15 +245,20 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				getAvisoPreencherDados().setVisible(false);
+				
 				String endereco = painelDestino.getEndereco().pegarConteudo();
 				String CEP = painelDestino.getCEP().pegarConteudo();
 				String bairro = painelDestino.getBairro().pegarConteudo();
 				int numero = Integer.parseInt(painelDestino.getNumero().pegarConteudo());
 				String complemento = painelDestino.getComplemento().getText();
-				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo()); 
+				float caixaDistancia = Float.parseFloat(distancia.pegarConteudo());
+				
 				enderecoDestino = new Destino(endereco, CEP, numero, bairro, complemento, caixaDistancia);
-				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 				Corrida corrida = new Corrida(enderecoPontoDeEncontro,enderecoDestino, passageiro);
+
+				corrida.setEstadoDaCorrida("Em espera");
+				
+				CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 				cdi.adicionarCorrida(corrida);
 				getPersistencia().salvarPersistencia(cdi);
 				new JanelaDeAvisoPadrao("<html>"+"Corrida solicitada com sucesso!"+"<br>"+"Aguarde a reinvidicação no local."+"</html>", new JanelaPrincipalPassageiro(passageiro));
@@ -268,12 +281,4 @@ public class JanelaSolicitarCorrida extends JanelaPadrao {
 			add(painelAgendar = new PainelAgendar());
 		}
 	}
-	
-	public static void main(String[] args) {
-		Calendar hora = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East"));
-		int horario = hora.get(Calendar.HOUR_OF_DAY);
-		System.out.println(horario);
-		
-	}
-	
 }

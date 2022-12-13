@@ -14,6 +14,8 @@ import projeto_poo.Corrida;
 import projeto_poo.Passageiro;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.erros.CorridaEmEsperaException;
+import projeto_poo.erros.CorridaReinvidicadaException;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
 
@@ -35,13 +37,19 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 	}
 	
 	private void verificarCorridaAceita() {
+		Corrida corrida = null;
 		try {
 			for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
-				if(c.isCorridaAceita()) {
-					new JanelaCorridaConcluida(c);
-					dispose();
-				}
+				corrida = c;
+				corrida.getEstadoDaCorrida();
+				System.out.println("meu estado: "+corrida.getEstadoDaCorrida());
 			}
+			System.out.println("estou realmente sendo verificado?");
+		} catch (CorridaReinvidicadaException e) {
+			new JanelaCorridaConcluida(corrida);
+			dispose();
+		} catch (CorridaEmEsperaException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,10 +132,7 @@ public class JanelaPrincipalPassageiro extends JanelaPadrao{
 				for(Corrida c: getPersistencia().buscarCentral().recuperarCorridasDeUmPassageiro(passageiro.getEmail())) {
 					Object[] linha = new Object[2];
 					linha[0] = c.getDestino().getEndereco();
-					if(c.isCorridaAceita())
-						linha[1] = "Em espera";
-					else
-						linha[1] = "Reinvidicada";
+					linha[1] = c.getEstadoDaCorrida();
 					modelo.addRow(linha);
 				}
 				tabela = new JTable(modelo);

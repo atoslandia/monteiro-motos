@@ -17,7 +17,7 @@ public class CaixaSenha extends JPasswordField{
 		setSelectionColor(new Color(255, 204, 0));
 		setFont(getFont());
 		setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.BLACK));
-		setToolTipText("Mínimo 4 caracteres, permitidos: letras, números, '@', '_', '.', '-', '+'");
+		setToolTipText("Mínimo 4 caracteres: letras, números, '@', '_', '.', '-', '+'");
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				char t = e.getKeyChar(); 
@@ -30,7 +30,7 @@ public class CaixaSenha extends JPasswordField{
 	}
 	
 	public String pegarConteudo() throws CaixaVaziaException {
-		if(new String(getPassword()).equals("") && new String(getPassword()).length() < 3) {
+		if(new String(getPassword()).equals("") | new String(super.getPassword()).length() < 4) {
 			setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.RED));
 			throw new CaixaVaziaException();
 		}

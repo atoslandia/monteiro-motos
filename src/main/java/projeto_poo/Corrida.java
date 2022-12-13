@@ -1,34 +1,31 @@
 package projeto_poo;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import projeto_poo.erros.CorridaEmEsperaException;
+import projeto_poo.erros.CorridaReinvidicadaException;
+
 public class Corrida {
-	private boolean corridaAceita;
 	private Mototaxista mototaxistaBloqueado;
 	private long id;
 	private PontoDeEncontro pontoDeEncontro;
 	private Destino destino;
 	private Passageiro passageiro;
+	
 	private LocalDate agendamento;
 	
+	private String estadoDaCorrida;
+
 	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro) {
-		this.corridaAceita = false;
-		this.id = System.currentTimeMillis();
+		this.id = LocalDate.now().toEpochSecond(LocalTime.now(), ZoneOffset.UTC);
+		this.agendamento = LocalDate.ofEpochDay(id);
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
 		this.passageiro = passageiro;
-	}
-	
-	public Corrida(PontoDeEncontro pontoDeEncontro, Destino destino, Passageiro passageiro, LocalDate data) {
-		this.corridaAceita = false;
-		this.id = data.toEpochDay();
-		this.pontoDeEncontro = pontoDeEncontro;
-		this.destino = destino;
-		this.passageiro = passageiro;
-		this.agendamento = data;
 	}
 	
 //	public String dataDaCorrida() {
@@ -59,14 +56,8 @@ public class Corrida {
 		return passageiro.getNome()+" pede para pega-lo em "+ pontoDeEncontro.getEndereco();
 	}
 
-	public boolean isCorridaAceita() {
-		return corridaAceita;
-	}
 
-	public void setCorridaAceita(boolean corridaAceita) {
-		this.corridaAceita = corridaAceita;
-	}
-
+	
 	public Mototaxista getMototaxistaBloqueado() {
 		return mototaxistaBloqueado;
 	}
@@ -74,5 +65,19 @@ public class Corrida {
 	public void setMototaxistaBloqueado(Mototaxista mototaxistaBloqueado) {
 		this.mototaxistaBloqueado = mototaxistaBloqueado;
 	}
+	
+	public String getEstadoDaCorrida() throws CorridaReinvidicadaException {
+		if(estadoDaCorrida.equals("Reinvidicada"))
+			throw new CorridaReinvidicadaException();
+		return estadoDaCorrida;
+	}
 
+	public void setEstadoDaCorrida(String estadoDaCorrida) {
+		this.estadoDaCorrida = estadoDaCorrida;
+	}
+
+	public void setAgendamento(LocalDate agendamento) {
+		this.agendamento = agendamento;
+	}
+	
 }

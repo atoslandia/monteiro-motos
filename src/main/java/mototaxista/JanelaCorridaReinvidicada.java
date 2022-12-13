@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import projeto_poo.CentralDeInformacoes;
 import projeto_poo.Corrida;
@@ -42,17 +41,15 @@ public class JanelaCorridaReinvidicada extends JanelaPadrao{
 		concluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					corrida.setCorridaAceita(true);
+					corrida.setEstadoDaCorrida("Reinvidicada");
 					CentralDeInformacoes cdi = getPersistencia().buscarCentral();
 					cdi.atualizarCorrida(corrida);
 					getPersistencia().salvarPersistencia(cdi);
 					dispose();
 					new JanelaDeAvisoPadrao("Corrida concluída com sucesso!", new JanelaPrincipalMototaxista((Mototaxista)mototaxista));
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		add(concluir);

@@ -3,6 +3,7 @@ package mototaxista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,11 +12,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import projeto_poo.Corrida;
+import projeto_poo.Mensageiro;
 import projeto_poo.Mototaxista;
 import projeto_poo.Usuario;
 import projeto_poo.botoes.BotaoEspecial;
 import projeto_poo.botoes.BotaoOpcoes;
 import projeto_poo.diversos.TextoImagemPadrao;
+import projeto_poo.erros.SemCreditosException;
 import projeto_poo.janelas.JanelaDeAvisoPadrao;
 import projeto_poo.janelas.JanelaPadrao;
 import projeto_poo.paineis.PainelPrincipal;
@@ -50,9 +53,14 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 		}
 		
 		private void totalCreditos() {
-			TextoImagemPadrao textoTotalCreditos = new TextoImagemPadrao("Creditos de reinvidicação: "+mototaxista.getCreditos());
-			textoTotalCreditos.setBounds(30, 67, 200, 20);
-			add(textoTotalCreditos);
+			TextoImagemPadrao textoTotalCreditos;
+			try {
+				textoTotalCreditos = new TextoImagemPadrao("Creditos de reinvidicação: "+mototaxista.getCreditos());
+				textoTotalCreditos.setBounds(30, 67, 200, 20);
+				add(textoTotalCreditos);
+			} catch (SemCreditosException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		private void botoes() {
@@ -116,9 +124,13 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 				modelo.addColumn("Endereço");
 				modelo.addColumn("Data");
 				int numero = 1;
+				ArrayList<Corrida> corridasEmEspera = new ArrayList<>();
 				for(Corrida c: getPersistencia().buscarCentral().getTodasAsCorridas()) {
+					if(c.getEstadoDaCorrida().equals("Em espera")) {
+						corridasEmEspera.add(c);
+					}
 					Object[] linha = new Object[2];
-					if(c.isCorridaAceita()) {
+					if(c.getEstadoDaCorrida().equals("Em espera")) {
 						linha[0] = "corrida "+numero++;
 						linha[1] = "##/##/##";
 					}
@@ -144,12 +156,12 @@ public class JanelaPrincipalMototaxista extends JanelaPadrao{
 				
 				public void actionPerformed(ActionEvent e) {
 					try {
-						if(mototaxista.getCreditos() > 0) {
-							mototaxista.setCreditos(mototaxista.getCreditos()-1);
-							new JanelaCorridaReinvidicada(mototaxista, getPersistencia().buscarCentral().getTodasAsCorridas().get(tabela.getSelectedRow()));
-							dispose();
-						}else
-							new JanelaDeAvisoPadrao("Você não possui créditos de reinvidicação");
+						mototaxista.setCreditos(mototaxista.getCreditos()-1);
+						new JanelaCorridaReinvidicada(mototaxista, getPersistencia().buscarCentral().getTodasAsCorridas().get(tabela.getSelectedRow()));
+						Mensageiro.enviarCodigoEmail(getPersistencia().buscarCentral().getTodasAsCorridas().get(tabela.getSelectedRow()).getPassageiro().getEmail(), "STATUS DA CORRIDA", mototaxista.getNome()+" "+mototaxista.getSobrenome()+" está indo para o ponto de encontro definido, Aguarde.");
+						dispose();
+					} catch (SemCreditosException e1) {
+						new JanelaDeAvisoPadrao("Você não possui créditos de reinvidicação");
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}

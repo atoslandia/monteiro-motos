@@ -102,7 +102,7 @@ public class JanelaPrimeiroAcesso extends JanelaPadrao{
 				} catch (CaixaVaziaException e2) {
 					criarAdministrador.getAvisoPreencherDados().setVisible(true);
 				} catch (MenorDeIdadeException e2) {
-					new JanelaDeAvisoPadrao("Permitido apenas maiores de 18 anos!");
+					new JanelaDeAvisoPadrao("Você precisa ser maior de 18 anos!");
 				} catch (Exception e2) {
 					new JanelaDeAvisoPadrao("E-mail incorreto ou inexistente!");
 				}

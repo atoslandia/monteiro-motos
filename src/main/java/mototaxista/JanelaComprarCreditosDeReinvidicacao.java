@@ -103,7 +103,7 @@ public class JanelaComprarCreditosDeReinvidicacao extends JanelaPadrao{
 		BotaoConcluir concluir = new BotaoConcluir();
 		concluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(valorTotal != 0) {
+				if(quantidade != 0) {
 					try {
 						GeradorDeRelatorios.gerarBoleto(mototaxista, valorTotal);
 						File arquivo = new File("boleto.pdf");
