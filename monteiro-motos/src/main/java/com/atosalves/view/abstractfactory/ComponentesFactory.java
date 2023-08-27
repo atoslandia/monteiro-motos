@@ -14,10 +14,8 @@ public class ComponentesFactory {
 		return new Texto(texto);
 	}
 
-	public ComboTipoUsuario criarComboTipoUsuario(
-		TiposUsuarios[] tipos
-	) {
-		return new ComboTipoUsuario(tipos);
+	public TipoUsuarioCombo criarComboTipoUsuario(TiposUsuarios[] tipos) {
+		return new TipoUsuarioCombo(tipos);
 	}
 
 	public Botao criarBotao(String titulo) {

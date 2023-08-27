@@ -2,16 +2,15 @@ package com.atosalves.view.builder;
 
 import com.atosalves.view.PainelPadrao;
 import com.atosalves.view.abstractfactory.Botao;
-import com.atosalves.view.abstractfactory.ComboTipoUsuario;
 import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
 import com.atosalves.view.abstractfactory.TextoCaixa;
+import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
 import java.awt.event.ActionListener;
 
 public class ConstrutorPainel {
 
 	// padrão de projeto builder fluent
-
 	private PainelPadrao tela;
 	private ComponentesFactory fabrica;
 
@@ -48,7 +47,7 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel comboBox(ComboTipoUsuario combo) {
+	public ConstrutorPainel comboBox(TipoUsuarioCombo combo) {
 		tela.add(combo);
 
 		return this;
