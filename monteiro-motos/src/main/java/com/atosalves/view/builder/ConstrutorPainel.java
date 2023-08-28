@@ -6,6 +6,7 @@ import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
 import com.atosalves.view.abstractfactory.TextoCaixa;
 import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ConstrutorPainel {
@@ -25,9 +26,16 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel botao(String titulo, ActionListener acao) {
+	public ConstrutorPainel botao(String titulo, Runnable runnable) {
 		Botao botao = fabrica.criarBotao(titulo);
-		botao.addActionListener(acao);
+		botao.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					runnable.run();
+				}
+			}
+		);
 		tela.add(botao);
 
 		return this;

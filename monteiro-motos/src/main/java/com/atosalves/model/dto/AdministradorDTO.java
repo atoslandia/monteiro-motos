@@ -1,3 +1,3 @@
 package com.atosalves.model.dto;
 
-public class AdministradorDTO {}
+public record AdministradorDTO(String nome, String email, String senha) {}

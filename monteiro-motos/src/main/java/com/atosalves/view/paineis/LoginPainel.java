@@ -13,6 +13,7 @@ public class LoginPainel extends PainelPadrao {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuarios.values());
+		construirComponentes();
 		setVisible(true);
 	}
 
@@ -22,7 +23,13 @@ public class LoginPainel extends PainelPadrao {
 			.caixaTexto("email", email)
 			.senhaCaixa("senha", senha)
 			.comboBox(combo)
-			.botao("ENTRAR", null)
+			.botao(
+				"ENTRAR",
+				() -> {
+					System.out.println(combo.getSelectedItem());
+				}
+			)
+			.botao("CADASTRAR", () -> System.out.println("cadastrou"))
 			.construir();
 	}
 }

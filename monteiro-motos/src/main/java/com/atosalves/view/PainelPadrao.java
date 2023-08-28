@@ -16,7 +16,6 @@ public abstract class PainelPadrao extends JPanel {
 		fabrica = new ComponentesFactory();
 		construtor = new ConstrutorPainel(this);
 		setLayout(layout);
-		construirComponentes();
 	}
 
 	public abstract void construirComponentes();

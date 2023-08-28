@@ -1,3 +1,3 @@
 package com.atosalves.model.dto;
 
-public class MototaxistaDTO {}
+public record MototaxistaDTO(String nome, String email, String senha) {}
