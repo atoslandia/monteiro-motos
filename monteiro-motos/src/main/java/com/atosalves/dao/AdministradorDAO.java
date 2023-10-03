@@ -1,3 +1,3 @@
-package com.atosalves.model.dao;
+package com.atosalves.dao;
 
 public class AdministradorDAO {}

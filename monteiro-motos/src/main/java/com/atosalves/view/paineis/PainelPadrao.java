@@ -1,4 +1,4 @@
-package com.atosalves.view;
+package com.atosalves.view.paineis;
 
 import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.builder.ConstrutorPainel;

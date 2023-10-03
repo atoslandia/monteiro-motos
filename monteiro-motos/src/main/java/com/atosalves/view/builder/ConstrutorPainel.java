@@ -1,11 +1,11 @@
 package com.atosalves.view.builder;
 
-import com.atosalves.view.PainelPadrao;
 import com.atosalves.view.abstractfactory.Botao;
 import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
 import com.atosalves.view.abstractfactory.TextoCaixa;
 import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
+import com.atosalves.view.paineis.PainelPadrao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

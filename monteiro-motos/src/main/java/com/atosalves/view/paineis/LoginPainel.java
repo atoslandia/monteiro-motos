@@ -1,6 +1,5 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.view.PainelPadrao;
 import com.atosalves.view.abstractfactory.*;
 
 public class LoginPainel extends PainelPadrao {
@@ -14,7 +13,6 @@ public class LoginPainel extends PainelPadrao {
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuarios.values());
 		construirComponentes();
-		setVisible(true);
 	}
 
 	@Override
@@ -29,7 +27,7 @@ public class LoginPainel extends PainelPadrao {
 					System.out.println(combo.getSelectedItem());
 				}
 			)
-			.botao("CADASTRAR", () -> System.out.println("cadastrou"))
+			.botao("CADASTRAR", null)
 			.construir();
 	}
 }

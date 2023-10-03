@@ -1,6 +1,5 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.view.PainelPadrao;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
 import com.atosalves.view.abstractfactory.TextoCaixa;
 import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
@@ -18,6 +17,8 @@ public class CadastroPainel extends PainelPadrao {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuarios.values());
+		construirComponentes();
+
 		setVisible(true);
 	}
 

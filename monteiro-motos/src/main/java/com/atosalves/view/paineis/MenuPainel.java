@@ -1,8 +1,6 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.view.PainelPadrao;
-
-public class InicioPainel extends PainelPadrao {
+public class MenuPainel extends PainelPadrao {
 
 	@Override
 	public void construirComponentes() {
