@@ -1,11 +1,11 @@
 package com.atosalves;
 
-import com.atosalves.view.JanelaPrincipal;
-import com.atosalves.view.paineis.LoginPainel;
+import com.atosalves.controller.TrocadorDeTelaController;
 
 public class Main {
 
 	public static void main(String[] args) {
-		var j = new JanelaPrincipal(new LoginPainel());
+		var trocadorDeTelaController = new TrocadorDeTelaController();
+		trocadorDeTelaController.iniciarTela();
 	}
 }

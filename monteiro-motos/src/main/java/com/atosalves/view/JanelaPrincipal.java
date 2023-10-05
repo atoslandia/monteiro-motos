@@ -1,19 +1,25 @@
 package com.atosalves.view;
 
 import com.atosalves.view.paineis.PainelPadrao;
+import java.awt.Font;
+import javax.swing.JFrame;
 
-public class JanelaPrincipal extends JanelaPadrao {
+public class JanelaPrincipal extends JFrame {
 
-	public JanelaPrincipal(PainelPadrao primeiroPainel) {
+	public JanelaPrincipal() {
+		setSize(760, 420);
+		setFont(new Font("Calibrii", Font.BOLD | Font.ITALIC, 12));
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("MONTEIRO MOTOS");
 		setVisible(true);
-		trocaDePainel(primeiroPainel);
 	}
 
-	private void trocaDePainel(PainelPadrao painel) {
-		getContentPane().removeAll(); // Remove todos os componentes da janela
-		getContentPane().add(painel); // Adiciona o novo painel à janela
-		revalidate(); // Atualiza a janela
+	public void setPainel(PainelPadrao painel) {
+		getContentPane().removeAll();
+		getContentPane().add(painel);
+		revalidate();
 		repaint();
 	}
 }

@@ -4,20 +4,17 @@ import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.abstractfactory.*;
 
-public class LoginPainel extends PainelPadrao {
+public class LoginPainel extends PainelPadrao<UsuarioController> {
 
 	private TextoCaixa email;
 	private SenhaCaixa senha;
 	private TipoUsuarioCombo combo;
-
-	private UsuarioController usuarioController;
 
 	public LoginPainel() {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
 		construirComponentes();
-		// usuarioController = new UsuarioController(this);
 	}
 
 	@Override
@@ -28,15 +25,15 @@ public class LoginPainel extends PainelPadrao {
 			.comboBox(combo)
 			.botao(
 				"ENTRAR",
-				() ->
-					usuarioController.loginBotao(
-						new LoginDTO(
-							email.getText(),
-							new String(senha.getPassword())
-						)
-					)
+				() -> {
+					LoginDTO data = new LoginDTO(
+						email.getText(),
+						new String(senha.getPassword())
+					);
+					controller.loginBotao(data);
+				}
 			)
-			// .botao("CADASTRAR", () -> usuarioController.cadastroBotao())
+			.botao("CADASTRAR", () -> controller.cadastroBotao())
 			.construir();
 	}
 }

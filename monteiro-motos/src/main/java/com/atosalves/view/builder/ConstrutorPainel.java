@@ -1,5 +1,6 @@
 package com.atosalves.view.builder;
 
+import com.atosalves.controller.Controller;
 import com.atosalves.view.abstractfactory.Botao;
 import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
@@ -61,7 +62,7 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public PainelPadrao construir() {
+	public Object construir() {
 		return tela;
 	}
 }
