@@ -3,7 +3,7 @@ package com.atosalves.view.paineis;
 public class MenuPainel extends PainelPadrao {
 
 	@Override
-	public void construirComponentes() {
+	protected void construirComponentes() {
 		construtor
 			.texto("INICIO")
 			.botao("VOLTAR", null)

@@ -1,6 +1,6 @@
 package com.atosalves.view.abstractfactory;
 
-public enum TiposUsuarios {
+public enum TiposUsuario {
 	PASSAGEIRO,
 	MOTOTAXISTA,
 	ADMINISTRADOR,

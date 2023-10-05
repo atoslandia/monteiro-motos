@@ -6,8 +6,14 @@ public class JanelaPrincipal extends JanelaPadrao {
 
 	public JanelaPrincipal(PainelPadrao primeiroPainel) {
 		setTitle("MONTEIRO MOTOS");
-		add(primeiroPainel);
-		primeiroPainel.setVisible(true);
 		setVisible(true);
+		trocaDePainel(primeiroPainel);
+	}
+
+	private void trocaDePainel(PainelPadrao painel) {
+		getContentPane().removeAll(); // Remove todos os componentes da janela
+		getContentPane().add(painel); // Adiciona o novo painel à janela
+		revalidate(); // Atualiza a janela
+		repaint();
 	}
 }

@@ -7,15 +7,9 @@ public class OpcaoUsuario extends PainelPadrao {
 	}
 
 	@Override
-	public void construirComponentes() {
+	protected void construirComponentes() {
 		construtor
-			.botao(
-				"ADMINISTRADOR",
-				() -> {
-					this.setVisible(false);
-					add(new LoginPainel());
-				}
-			)
+			.botao("ADMINISTRADOR", null)
 			.botao("PASSAGEIRO", null)
 			.botao("MOTOTAXISTA", null)
 			.construir();

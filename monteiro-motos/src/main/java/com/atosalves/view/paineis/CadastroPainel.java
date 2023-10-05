@@ -3,7 +3,7 @@ package com.atosalves.view.paineis;
 import com.atosalves.view.abstractfactory.SenhaCaixa;
 import com.atosalves.view.abstractfactory.TextoCaixa;
 import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
-import com.atosalves.view.abstractfactory.TiposUsuarios;
+import com.atosalves.view.abstractfactory.TiposUsuario;
 
 public class CadastroPainel extends PainelPadrao {
 
@@ -16,14 +16,12 @@ public class CadastroPainel extends PainelPadrao {
 		this.nome = fabrica.criarCaixaTexto();
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
-		this.combo = fabrica.criarComboTipoUsuario(TiposUsuarios.values());
+		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
 		construirComponentes();
-
-		setVisible(true);
 	}
 
 	@Override
-	public void construirComponentes() {
+	protected void construirComponentes() {
 		construtor
 			.caixaTexto("NOME", nome)
 			.caixaTexto("EMAIL", email)
