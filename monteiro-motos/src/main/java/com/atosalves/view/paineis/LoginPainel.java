@@ -1,57 +1,45 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.controller.LoginController;
+import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginPainel extends PainelPadrao {
 
-	private TextoCaixa email;
-
-	private SenhaCaixa senha;
+	private CaixaTexto email;
+	private CaixaSenha senha;
 	private TipoUsuarioCombo combo;
 
 	private Botao entrar;
 	private Botao cadastrar;
 
 	public LoginPainel() {
-		entrarOuvinte();
-		cadastrarOuvinte();
+		entrar();
+		cadastrar();
 	}
 
-	private void entrarOuvinte() {
-		entrar.addActionListener(
-			new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					var controller = new LoginController();
+	private void entrar() {
+		entrar.aoClicar(() -> {
+			var controller = new UsuarioController();
 
-					if (controller.login(data())) {
-						proximoPainel(new MenuPainel());
-					} else {
-						// TODO janela de erro
-					}
-				}
+			if (controller.login(data())) {
+				setPainel(new MenuPainel());
+			} else {
+				// TODO janela de erro
 			}
-		);
+		});
+	}
+
+	private void cadastrar() {
+		cadastrar.aoClicar(() -> {
+			var cadastro = new CadastroEditarUsuarioPainel();
+			setPainel(cadastro);
+		});
 	}
 
 	private LoginDTO data() {
 		return new LoginDTO(email.pegarCampo(), senha.pegarCampo());
-	}
-
-	private void cadastrarOuvinte() {
-		cadastrar.addActionListener(
-			new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					proximoPainel(new CadastroPainel());
-				}
-			}
-		);
 	}
 
 	@Override

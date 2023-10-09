@@ -25,7 +25,7 @@ public abstract class PainelPadrao extends JPanel {
 		construirComponentes();
 	}
 
-	protected void proximoPainel(PainelPadrao painel) {
+	protected void setPainel(PainelPadrao painel) {
 		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(
 			this
 		);

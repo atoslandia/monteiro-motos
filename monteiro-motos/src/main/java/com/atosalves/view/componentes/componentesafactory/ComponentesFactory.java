@@ -5,12 +5,12 @@ import com.atosalves.view.componentes.*;
 
 public class ComponentesFactory {
 
-	public SenhaCaixa criarCaixaSenha() {
-		return new SenhaCaixa();
+	public CaixaSenha criarCaixaSenha() {
+		return new CaixaSenha();
 	}
 
-	public TextoCaixa criarCaixaTexto() {
-		return new TextoCaixa();
+	public CaixaTexto criarCaixaTexto() {
+		return new CaixaTexto();
 	}
 
 	public Texto criarTexto(String texto) {

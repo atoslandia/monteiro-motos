@@ -1,8 +1,8 @@
 package com.atosalves.view.builder;
 
 import com.atosalves.view.componentes.Botao;
-import com.atosalves.view.componentes.SenhaCaixa;
-import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.componentes.CaixaSenha;
+import com.atosalves.view.componentes.CaixaTexto;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
@@ -30,14 +30,14 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel caixaTexto(String titulo, TextoCaixa caixa) {
+	public ConstrutorPainel caixaTexto(String titulo, CaixaTexto caixa) {
 		tela.add(fabrica.criarTexto(titulo));
 		tela.add(caixa);
 
 		return this;
 	}
 
-	public ConstrutorPainel senhaCaixa(String titulo, SenhaCaixa senha) {
+	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenha senha) {
 		tela.add(fabrica.criarTexto(titulo));
 		tela.add(senha);
 
