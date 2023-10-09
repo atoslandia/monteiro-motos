@@ -1,29 +1,39 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.controller.Controller;
-import com.atosalves.view.abstractfactory.ComponentesFactory;
 import com.atosalves.view.builder.ConstrutorPainel;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-public abstract class PainelPadrao<T extends Controller> extends JPanel {
+// TODO implementar o template method quando for finalizar a estilização
+public abstract class PainelPadrao extends JPanel {
 
+	// TODO apagar depois
 	private GridLayout layout;
+
 	protected ComponentesFactory fabrica;
 	protected ConstrutorPainel construtor;
-
-	protected T controller;
 
 	public PainelPadrao() {
 		layout = new GridLayout(0, 2, 5, 5);
 		fabrica = new ComponentesFactory();
 		construtor = new ConstrutorPainel(this);
 		setLayout(layout);
+		instanciarComponentes();
+		construirComponentes();
+	}
+
+	protected void proximoPainel(PainelPadrao painel) {
+		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(
+			this
+		);
+
+		janela.setPainel(painel);
 	}
 
 	protected abstract void construirComponentes();
 
-	public void setController(T controller) {
-		this.controller = controller;
-	}
+	protected abstract void instanciarComponentes();
 }

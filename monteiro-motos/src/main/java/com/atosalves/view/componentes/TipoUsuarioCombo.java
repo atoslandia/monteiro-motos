@@ -1,5 +1,6 @@
-package com.atosalves.view.abstractfactory;
+package com.atosalves.view.componentes;
 
+import com.atosalves.enums.TiposUsuario;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 

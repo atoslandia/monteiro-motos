@@ -1,4 +1,4 @@
-package com.atosalves.view.abstractfactory;
+package com.atosalves.view.componentes;
 
 import com.atosalves.view.util.Tema;
 import java.awt.Dimension;
@@ -10,8 +10,7 @@ public class Botao extends JButton {
 	private int arcWidth = 35;
 	private int arcHeight = 35;
 
-	public Botao(String titulo) {
-		setText(titulo);
+	public Botao() {
 		setBackground(Tema.BOTAO_COR);
 		setForeground(Tema.TEXTO_COR);
 		setFont(Tema.TEXTO_FONTE);

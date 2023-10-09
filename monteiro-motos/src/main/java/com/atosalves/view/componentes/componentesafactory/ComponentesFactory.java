@@ -1,4 +1,7 @@
-package com.atosalves.view.abstractfactory;
+package com.atosalves.view.componentes.componentesafactory;
+
+import com.atosalves.enums.TiposUsuario;
+import com.atosalves.view.componentes.*;
 
 public class ComponentesFactory {
 
@@ -18,7 +21,7 @@ public class ComponentesFactory {
 		return new TipoUsuarioCombo(tipos);
 	}
 
-	public Botao criarBotao(String titulo) {
-		return new Botao(titulo);
+	public Botao criarBotao() {
+		return new Botao();
 	}
 }

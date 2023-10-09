@@ -1,14 +1,11 @@
 package com.atosalves.view.builder;
 
-import com.atosalves.controller.Controller;
-import com.atosalves.view.abstractfactory.Botao;
-import com.atosalves.view.abstractfactory.ComponentesFactory;
-import com.atosalves.view.abstractfactory.SenhaCaixa;
-import com.atosalves.view.abstractfactory.TextoCaixa;
-import com.atosalves.view.abstractfactory.TipoUsuarioCombo;
+import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.componentes.SenhaCaixa;
+import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.componentes.TipoUsuarioCombo;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ConstrutorPainel {
 
@@ -27,18 +24,9 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel botao(String titulo, Runnable runnable) {
-		Botao botao = fabrica.criarBotao(titulo);
-		botao.addActionListener(
-			new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					runnable.run();
-				}
-			}
-		);
+	public ConstrutorPainel botao(String titulo, Botao botao) {
+		botao.setText(titulo);
 		tela.add(botao);
-
 		return this;
 	}
 
@@ -62,7 +50,7 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public Object construir() {
+	public PainelPadrao construir() {
 		return tela;
 	}
 }

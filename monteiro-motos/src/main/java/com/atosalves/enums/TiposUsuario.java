@@ -1,4 +1,4 @@
-package com.atosalves.view.abstractfactory;
+package com.atosalves.enums;
 
 public enum TiposUsuario {
 	PASSAGEIRO,

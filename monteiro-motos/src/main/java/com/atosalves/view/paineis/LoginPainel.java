@@ -1,20 +1,58 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.controller.UsuarioController;
+import com.atosalves.controller.LoginController;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.view.abstractfactory.*;
+import com.atosalves.enums.TiposUsuario;
+import com.atosalves.view.componentes.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LoginPainel extends PainelPadrao<UsuarioController> {
+public class LoginPainel extends PainelPadrao {
 
 	private TextoCaixa email;
+
 	private SenhaCaixa senha;
 	private TipoUsuarioCombo combo;
 
+	private Botao entrar;
+	private Botao cadastrar;
+
+	private LoginController controller;
+
 	public LoginPainel() {
-		this.email = fabrica.criarCaixaTexto();
-		this.senha = fabrica.criarCaixaSenha();
-		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
-		construirComponentes();
+		this.controller = new LoginController();
+		entrarOuvinte();
+		cadastrarOuvinte();
+	}
+
+	private LoginDTO data() {
+		return new LoginDTO(email.pegarCampo(), senha.pegarCampo());
+	}
+
+	private void entrarOuvinte() {
+		entrar.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (controller.login(data())) {
+						// TODO abrir menu
+					} else {
+						// TODO janela de erro
+					}
+				}
+			}
+		);
+	}
+
+	private void cadastrarOuvinte() {
+		cadastrar.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					proximoPainel(new CadastroPainel());
+				}
+			}
+		);
 	}
 
 	@Override
@@ -23,17 +61,17 @@ public class LoginPainel extends PainelPadrao<UsuarioController> {
 			.caixaTexto("email", email)
 			.senhaCaixa("senha", senha)
 			.comboBox(combo)
-			.botao(
-				"ENTRAR",
-				() -> {
-					LoginDTO data = new LoginDTO(
-						email.getText(),
-						new String(senha.getPassword())
-					);
-					controller.loginBotao(data);
-				}
-			)
-			.botao("CADASTRAR", () -> controller.cadastroBotao())
+			.botao("ENTRAR", entrar)
+			.botao("CADASTRAR", cadastrar)
 			.construir();
+	}
+
+	@Override
+	protected void instanciarComponentes() {
+		this.email = fabrica.criarCaixaTexto();
+		this.senha = fabrica.criarCaixaSenha();
+		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
+		this.entrar = fabrica.criarBotao();
+		this.cadastrar = fabrica.criarBotao();
 	}
 }
