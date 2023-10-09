@@ -5,7 +5,7 @@ import com.atosalves.dto.CadastroDTO;
 public class CadastroController {
 
 	public boolean cadastrar(CadastroDTO data) {
-		// TODO consultar model para verificar dados e retornar
+		// TODO r: consultar model para verificar dados e retornar
 		return true;
 	}
 }

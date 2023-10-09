@@ -1,5 +1,7 @@
 package com.atosalves.view.paineis;
 
+import com.atosalves.controller.CadastroController;
+import com.atosalves.dto.CadastroDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.SenhaCaixa;
@@ -18,14 +20,44 @@ public class CadastroPainel extends PainelPadrao {
 	private Botao cadastro;
 	private Botao voltar;
 
-	public CadastroPainel() {}
+	public CadastroPainel() {
+		cadastroOuvinte();
+		voltarOuvinte();
+	}
 
 	private void cadastroOuvinte() {
 		cadastro.addActionListener(
 			new ActionListener() {
 				@Override
-				public void actionPerformed(ActionEvent e) {}
+				public void actionPerformed(ActionEvent e) {
+					var controller = new CadastroController();
+
+					if (controller.cadastrar(data())) {
+						// TODO abrir menu
+					} else {
+						// TODO janela de erro
+					}
+				}
 			}
+		);
+	}
+
+	private void voltarOuvinte() {
+		voltar.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					proximoPainel(new LoginPainel());
+				}
+			}
+		);
+	}
+
+	private CadastroDTO data() {
+		return new CadastroDTO(
+			nome.pegarCampo(),
+			email.pegarCampo(),
+			senha.pegarCampo()
 		);
 	}
 

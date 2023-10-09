@@ -17,16 +17,9 @@ public class LoginPainel extends PainelPadrao {
 	private Botao entrar;
 	private Botao cadastrar;
 
-	private LoginController controller;
-
 	public LoginPainel() {
-		this.controller = new LoginController();
 		entrarOuvinte();
 		cadastrarOuvinte();
-	}
-
-	private LoginDTO data() {
-		return new LoginDTO(email.pegarCampo(), senha.pegarCampo());
 	}
 
 	private void entrarOuvinte() {
@@ -34,14 +27,20 @@ public class LoginPainel extends PainelPadrao {
 			new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					var controller = new LoginController();
+
 					if (controller.login(data())) {
-						// TODO abrir menu
+						proximoPainel(new MenuPainel());
 					} else {
 						// TODO janela de erro
 					}
 				}
 			}
 		);
+	}
+
+	private LoginDTO data() {
+		return new LoginDTO(email.pegarCampo(), senha.pegarCampo());
 	}
 
 	private void cadastrarOuvinte() {
