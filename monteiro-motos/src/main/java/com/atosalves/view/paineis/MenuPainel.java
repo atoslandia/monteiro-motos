@@ -1,6 +1,5 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
 
 public class MenuPainel extends PainelPadrao {

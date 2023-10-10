@@ -3,8 +3,6 @@ package com.atosalves.view.componentes;
 import com.atosalves.view.util.Tema;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public class Botao extends JButton {
@@ -48,13 +46,6 @@ public class Botao extends JButton {
 	}
 
 	public void aoClicar(Runnable aoClicar) {
-		addActionListener(
-			new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					aoClicar.run();
-				}
-			}
-		);
+		addActionListener(evento -> aoClicar.run());
 	}
 }
