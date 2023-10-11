@@ -11,6 +11,12 @@ public class Tema {
 		20
 	);
 
+	public static final Font TEXTO_FONTE_FORTE = new Font(
+		"Helvetica",
+		Font.BOLD | Font.ITALIC,
+		40
+	);
+
 	public static final Color BOTAO_COR = new Color(255, 205, 0);
 	public static final Color BOTAO_FUNDO_COR = new Color(220, 170, 0);
 

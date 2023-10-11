@@ -17,7 +17,7 @@ public class CaixaPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		// TODO trocar *VALOR* por uma função do controller
-		construtor.texto("*VALOR*").botao("VOLTAR", voltar).construir();
+		construtor.texto("*VALOR*", true).botao("VOLTAR", voltar).construir();
 	}
 
 	@Override

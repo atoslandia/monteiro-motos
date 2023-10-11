@@ -43,10 +43,12 @@ public class LoginPainel extends PainelPadrao {
 	}
 
 	@Override
-	protected void construirComponentes() {
+	void construirComponentes() {
 		construtor
-			.caixaTexto("email", email)
-			.senhaCaixa("senha", senha)
+			.definirNumComponentes(6)
+			.texto("MONTEIRO MOTOS", true)
+			.caixaTexto("EMAIL:", email)
+			.senhaCaixa("SENHA:", senha)
 			.comboBox(combo)
 			.botao("ENTRAR", entrar)
 			.botao("CADASTRAR", cadastrar)
@@ -54,7 +56,7 @@ public class LoginPainel extends PainelPadrao {
 	}
 
 	@Override
-	protected void instanciarComponentes() {
+	void instanciarComponentes() {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());

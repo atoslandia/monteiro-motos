@@ -16,7 +16,10 @@ public class ListaPainel extends PainelPadrao {
 
 	@Override
 	protected void construirComponentes() {
-		construtor.texto("USUÁRIOS OU CORRIDAS").botao("VOLTAR", voltar).construir();
+		construtor
+			.texto("USUÁRIOS OU CORRIDAS", true)
+			.botao("VOLTAR", voltar)
+			.construir();
 	}
 
 	@Override

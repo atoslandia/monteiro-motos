@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 public abstract class JanelaPadrao extends JFrame {
 
 	public JanelaPadrao() {
-		setSize(760, 420);
+		setSize(768, 412);
 		setFont(Tema.TEXTO_FONTE);
 		setLocationRelativeTo(null);
 		setResizable(false);
