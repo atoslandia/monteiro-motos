@@ -14,6 +14,8 @@ public class ConstrutorPainel {
 	private int contadorComponentes;
 	private int numComponentes;
 
+	private int espacoEntreComponentes = 38;
+
 	// padrão de projeto builder fluent
 	private PainelPadrao tela;
 	private ComponentesFactory fabrica;
@@ -31,9 +33,8 @@ public class ConstrutorPainel {
 	private int calcularPosicaoVertical() {
 		int posicao = 0;
 		if (contadorComponentes <= numComponentes + 1) {
-			posicao = contadorComponentes++ * 48;
+			posicao = contadorComponentes++ * espacoEntreComponentes;
 		}
-		System.out.println("posicao definida: " + posicao);
 		return posicao;
 	}
 
@@ -45,12 +46,12 @@ public class ConstrutorPainel {
 	private Texto textoFabrica(String titulo, boolean fonteGrande) {
 		var texto = fabrica.criarTexto(titulo);
 		if (fonteGrande) {
-			texto.setFont(Tema.TEXTO_FONTE_FORTE);
+			texto.setFont(Tema.TEXTO_FONTE_MUITO_FORTE);
 		}
 		texto.setBounds(
 			10,
 			calcularPosicaoVertical(),
-			texto.getFontMetrics(texto.getFont()).stringWidth(titulo),
+			texto.getFontMetrics(texto.getFont()).stringWidth(titulo) + 10,
 			50
 		);
 		return texto;

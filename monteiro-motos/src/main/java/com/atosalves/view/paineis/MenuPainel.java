@@ -1,10 +1,7 @@
 package com.atosalves.view.paineis;
 
 import com.atosalves.view.componentes.*;
-import java.awt.BorderLayout;
 import java.awt.ScrollPane;
-import java.awt.Scrollbar;
-import javax.swing.JScrollPane;
 
 public class MenuPainel extends PainelPadrao {
 
@@ -48,7 +45,7 @@ public class MenuPainel extends PainelPadrao {
 			.botao("DEFINIR VALOR DE CRÉTIDO DE REINVIDICAÇÃO", valorCredito)
 			.botao("DADOS DO CAIXA", caixa)
 			// todos tem
-			.botao("LISTAR CORRIDAS", corridas)
+			.botao("CORRIDAS", corridas)
 			.botao("EDITAR PERFIL", editar)
 			.botao("SAIR", sair)
 			.construir();

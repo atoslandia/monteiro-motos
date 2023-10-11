@@ -13,7 +13,7 @@ public class Botao extends JButton {
 	public Botao() {
 		setBackground(Tema.BOTAO_COR);
 		setForeground(Tema.TEXTO_COR);
-		setFont(Tema.TEXTO_FONTE);
+		setFont(Tema.TEXTO_FONTE_FORTE);
 		setOpaque(false);
 		setContentAreaFilled(false);
 		setBorderPainted(false);
