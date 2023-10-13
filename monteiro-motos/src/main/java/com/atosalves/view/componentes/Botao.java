@@ -1,19 +1,22 @@
 package com.atosalves.view.componentes;
 
 import com.atosalves.view.util.Tema;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JButton;
+import lombok.Setter;
 
 public class Botao extends JButton {
 
-	private int arcWidth = 35;
-	private int arcHeight = 35;
+	@Setter
+	private int larguraCurva = 35;
+
+	@Setter
+	private int alturaCurva = 35;
 
 	public Botao() {
-		setBackground(Tema.BOTAO_COR);
-		setForeground(Tema.TEXTO_COR);
-		setFont(Tema.TEXTO_FONTE_FORTE);
+		setBackground(Tema.AMARELO);
+		setForeground(Tema.PRETO);
+		setFont(Tema.FONTE_FORTE);
 		setOpaque(false);
 		setContentAreaFilled(false);
 		setBorderPainted(false);
@@ -22,7 +25,7 @@ public class Botao extends JButton {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (getModel().isArmed()) {
-			g.setColor(Tema.BOTAO_FUNDO_COR);
+			g.setColor(Tema.AMARELO_ESCURO);
 		} else {
 			g.setColor(getBackground());
 		}
@@ -32,17 +35,11 @@ public class Botao extends JButton {
 			0,
 			getSize().width - 1,
 			getSize().height - 1,
-			arcWidth,
-			arcHeight
+			larguraCurva,
+			alturaCurva
 		);
 
 		super.paintComponent(g);
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		// TODO alterar depois
-		return new Dimension(100, 40);
 	}
 
 	public void aoClicar(Runnable aoClicar) {

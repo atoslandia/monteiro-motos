@@ -19,7 +19,7 @@ public class ListaPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		construtor
-			.texto("USUÁRIOS OU CORRIDAS", Tema.TEXTO_FONTE_MUITO_FORTE)
+			.texto("USUÁRIOS OU CORRIDAS", Tema.FONTE_MUITO_FORTE)
 			.botao("VOLTAR", voltar)
 			.construir();
 	}

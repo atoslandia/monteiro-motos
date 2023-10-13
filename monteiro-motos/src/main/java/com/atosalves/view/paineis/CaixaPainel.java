@@ -20,7 +20,7 @@ public class CaixaPainel extends PainelPadrao {
 	protected void construirComponentes() {
 		// TODO trocar *VALOR* por uma função do controller
 		construtor
-			.texto("*VALOR*", Tema.TEXTO_FONTE_MUITO_FORTE)
+			.texto("*VALOR*", Tema.FONTE_MUITO_FORTE)
 			.botao("VOLTAR", voltar)
 			.construir();
 	}

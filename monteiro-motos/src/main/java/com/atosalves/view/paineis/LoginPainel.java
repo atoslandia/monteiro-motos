@@ -17,6 +17,7 @@ public class LoginPainel extends PainelPadrao {
 	private Botao cadastrar;
 
 	public LoginPainel() {
+		setFundo(Tema.FUNDO_LOGIN);
 		entrar();
 		cadastrar();
 	}
@@ -47,7 +48,7 @@ public class LoginPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		construtor
-			.texto("MONTEIRO MOTOS", Tema.TEXTO_FONTE_MUITO_FORTE)
+			.texto("MONTEIRO MOTOS", Tema.FONTE_MUITO_FORTE)
 			.caixaTexto("EMAIL:", email)
 			.senhaCaixa("SENHA:", senha)
 			.comboBox(combo)

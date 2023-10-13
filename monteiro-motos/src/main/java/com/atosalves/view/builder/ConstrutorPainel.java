@@ -7,6 +7,7 @@ import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
+import com.atosalves.view.paineis.ShowMenuPainel;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
 
@@ -14,7 +15,7 @@ public class ConstrutorPainel {
 
 	private int contadorComponentes;
 
-	private int espacoEntreComponentes = 38;
+	private int espacoEntreComponentes = 45;
 
 	// padrão de projeto builder fluent
 	private PainelPadrao tela;
@@ -54,7 +55,7 @@ public class ConstrutorPainel {
 			10,
 			calcularPosicaoVertical(),
 			botao.getFontMetrics(botao.getFont()).stringWidth(titulo) + 40,
-			40
+			35
 		);
 
 		tela.add(botao);
@@ -63,7 +64,7 @@ public class ConstrutorPainel {
 	}
 
 	public ConstrutorPainel caixaTexto(String titulo, CaixaTexto caixa) {
-		var texto = textoFabrica(titulo, Tema.TEXTO_FONTE_FORTE);
+		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
 		caixa.setBounds(
 			10 + texto.getText().length() * 15,
 			texto.getY() + 8,
@@ -78,7 +79,7 @@ public class ConstrutorPainel {
 	}
 
 	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenha senha) {
-		var texto = textoFabrica(titulo, Tema.TEXTO_FONTE_FORTE);
+		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
 
 		senha.setBounds(
 			10 + texto.getText().length() * 15,
@@ -99,7 +100,8 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel painel(PainelPadrao painel) {
+	public ConstrutorPainel painel(ShowMenuPainel painel) {
+		painel.setBounds(0, 50, 768, 250);
 		tela.add(painel);
 		return this;
 	}
