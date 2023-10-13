@@ -1,6 +1,7 @@
 package com.atosalves.view.paineis;
 
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.paineis.menu.MenuPainel;
 
 public class ValorCreditoPainel extends PainelPadrao {
 

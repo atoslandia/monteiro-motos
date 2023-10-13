@@ -4,6 +4,8 @@ import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.paineis.menu.MenuPainel;
+import com.atosalves.view.util.Tema;
 
 public class LoginPainel extends PainelPadrao {
 
@@ -43,10 +45,9 @@ public class LoginPainel extends PainelPadrao {
 	}
 
 	@Override
-	void construirComponentes() {
+	protected void construirComponentes() {
 		construtor
-			.definirNumComponentes(6)
-			.texto("MONTEIRO MOTOS", true)
+			.texto("MONTEIRO MOTOS", Tema.TEXTO_FONTE_MUITO_FORTE)
 			.caixaTexto("EMAIL:", email)
 			.senhaCaixa("SENHA:", senha)
 			.comboBox(combo)
@@ -56,7 +57,7 @@ public class LoginPainel extends PainelPadrao {
 	}
 
 	@Override
-	void instanciarComponentes() {
+	protected void instanciarComponentes() {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
 		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());

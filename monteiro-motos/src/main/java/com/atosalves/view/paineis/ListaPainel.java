@@ -1,6 +1,8 @@
 package com.atosalves.view.paineis;
 
 import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.paineis.menu.MenuPainel;
+import com.atosalves.view.util.Tema;
 
 public class ListaPainel extends PainelPadrao {
 
@@ -17,7 +19,7 @@ public class ListaPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		construtor
-			.texto("USUÁRIOS OU CORRIDAS", true)
+			.texto("USUÁRIOS OU CORRIDAS", Tema.TEXTO_FONTE_MUITO_FORTE)
 			.botao("VOLTAR", voltar)
 			.construir();
 	}

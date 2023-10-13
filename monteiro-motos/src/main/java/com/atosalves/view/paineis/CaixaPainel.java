@@ -1,6 +1,8 @@
 package com.atosalves.view.paineis;
 
 import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.paineis.menu.MenuPainel;
+import com.atosalves.view.util.Tema;
 
 public class CaixaPainel extends PainelPadrao {
 
@@ -17,7 +19,10 @@ public class CaixaPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		// TODO trocar *VALOR* por uma função do controller
-		construtor.texto("*VALOR*", true).botao("VOLTAR", voltar).construir();
+		construtor
+			.texto("*VALOR*", Tema.TEXTO_FONTE_MUITO_FORTE)
+			.botao("VOLTAR", voltar)
+			.construir();
 	}
 
 	@Override

@@ -57,7 +57,6 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		construtor
-			.definirNumComponentes(6)
 			.caixaTexto("NOME: ", nome)
 			.caixaTexto("EMAIL:", email)
 			.senhaCaixa("SENHA:", senha)

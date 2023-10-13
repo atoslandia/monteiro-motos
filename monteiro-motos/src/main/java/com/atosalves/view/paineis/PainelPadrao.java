@@ -11,8 +11,8 @@ import javax.swing.SwingUtilities;
 // TODO implementar o template method quando for finalizar a estilização
 public abstract class PainelPadrao extends JPanel {
 
-	ComponentesFactory fabrica;
-	ConstrutorPainel construtor;
+	protected ComponentesFactory fabrica;
+	protected ConstrutorPainel construtor;
 
 	public PainelPadrao() {
 		setLayout(null);
@@ -23,7 +23,7 @@ public abstract class PainelPadrao extends JPanel {
 		construirComponentes();
 	}
 
-	void setPainel(PainelPadrao painel) {
+	protected void setPainel(PainelPadrao painel) {
 		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(
 			this
 		);
@@ -31,9 +31,9 @@ public abstract class PainelPadrao extends JPanel {
 		janela.setPainel(painel);
 	}
 
-	abstract void construirComponentes();
+	protected abstract void construirComponentes();
 
-	abstract void instanciarComponentes();
+	protected abstract void instanciarComponentes();
 
 	@Override
 	protected void paintComponent(Graphics g) {

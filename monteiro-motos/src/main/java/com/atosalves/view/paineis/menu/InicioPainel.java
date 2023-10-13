@@ -1,40 +1,22 @@
-package com.atosalves.view.paineis;
+package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.componentes.*;
-import java.awt.ScrollPane;
+import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.paineis.PainelPadrao;
+import com.atosalves.view.util.Tema;
 
-public class MenuPainel extends PainelPadrao {
+public class InicioPainel extends PainelPadrao {
 
 	private Botao solicitarCorrida;
 	private Botao compraCredito;
-	private Botao corridas;
 	private Botao usuarios;
 	private Botao reinvidicarCorrida;
 	private Botao valorCredito;
 	private Botao caixa;
-	private Botao editar;
-	private Botao sair;
-
-	public MenuPainel() {
-		add(new ScrollPane());
-		caixa();
-		sair();
-	}
-
-	private void caixa() {
-		caixa.aoClicar(() -> setPainel(new CaixaPainel()));
-	}
-
-	private void sair() {
-		sair.aoClicar(() -> setPainel(new LoginPainel()));
-	}
 
 	@Override
 	protected void construirComponentes() {
-		// TODO r: buscar usuario
 		construtor
-			.definirNumComponentes(9)
-			.texto("BEM VINDO(A)", true)
+			.texto("INICIO", Tema.TEXTO_FONTE_MUITO_FORTE)
 			// TODO se for passageiro
 			.botao("SOLICITAR CORRIDA", solicitarCorrida)
 			.botao("COMPRAR CRÉDITOS", compraCredito)
@@ -44,10 +26,6 @@ public class MenuPainel extends PainelPadrao {
 			.botao("LISTAR TODOS OS USUÁRIOS", usuarios)
 			.botao("DEFINIR VALOR DE CRÉTIDO DE REINVIDICAÇÃO", valorCredito)
 			.botao("DADOS DO CAIXA", caixa)
-			// todos tem
-			.botao("CORRIDAS", corridas)
-			.botao("EDITAR PERFIL", editar)
-			.botao("SAIR", sair)
 			.construir();
 	}
 
@@ -55,12 +33,9 @@ public class MenuPainel extends PainelPadrao {
 	protected void instanciarComponentes() {
 		this.solicitarCorrida = fabrica.criarBotao();
 		this.compraCredito = fabrica.criarBotao();
-		this.corridas = fabrica.criarBotao();
 		this.usuarios = fabrica.criarBotao();
 		this.reinvidicarCorrida = fabrica.criarBotao();
 		this.valorCredito = fabrica.criarBotao();
 		this.caixa = fabrica.criarBotao();
-		this.editar = fabrica.criarBotao();
-		this.sair = fabrica.criarBotao();
 	}
 }
