@@ -1,14 +1,14 @@
 package com.atosalves.view.paineis.menu;
 
 import com.atosalves.view.componentes.*;
-import com.atosalves.view.paineis.LoginPainel;
+import com.atosalves.view.paineis.PainelInterno;
 import com.atosalves.view.paineis.PainelPadrao;
-import com.atosalves.view.paineis.ShowMenuPainel;
+import com.atosalves.view.paineis.inicio.LoginPainel;
 import com.atosalves.view.util.Tema;
 
 public class MenuPainel extends PainelPadrao {
 
-	private ShowMenuPainel painel;
+	private PainelInterno painel;
 
 	private Botao inicio;
 	private Botao corridas;
@@ -82,7 +82,7 @@ public class MenuPainel extends PainelPadrao {
 
 	@Override
 	protected void instanciarComponentes() {
-		painel = new ShowMenuPainel();
+		painel = new MenuPainelInterno();
 
 		this.corridas = fabrica.criarBotao();
 		this.inicio = fabrica.criarBotao();

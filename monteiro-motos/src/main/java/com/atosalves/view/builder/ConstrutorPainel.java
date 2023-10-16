@@ -6,8 +6,9 @@ import com.atosalves.view.componentes.CaixaTexto;
 import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.paineis.PainelInterno;
 import com.atosalves.view.paineis.PainelPadrao;
-import com.atosalves.view.paineis.ShowMenuPainel;
+import com.atosalves.view.paineis.menu.MenuPainelInterno;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
 
@@ -100,7 +101,7 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel painel(ShowMenuPainel painel) {
+	public ConstrutorPainel painel(PainelInterno painel) {
 		painel.setBounds(0, 50, 768, 250);
 		tela.add(painel);
 		return this;

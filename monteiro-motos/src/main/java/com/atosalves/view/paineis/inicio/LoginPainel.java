@@ -1,9 +1,10 @@
-package com.atosalves.view.paineis;
+package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 

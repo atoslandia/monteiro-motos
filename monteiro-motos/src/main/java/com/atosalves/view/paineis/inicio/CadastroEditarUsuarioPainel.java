@@ -1,9 +1,10 @@
-package com.atosalves.view.paineis;
+package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.paineis.PainelPadrao;
 import lombok.Getter;
 
 public class CadastroEditarUsuarioPainel extends PainelPadrao {

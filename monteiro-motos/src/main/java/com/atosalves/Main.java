@@ -1,7 +1,7 @@
 package com.atosalves;
 
 import com.atosalves.view.janelas.JanelaPrincipal;
-import com.atosalves.view.paineis.LoginPainel;
+import com.atosalves.view.paineis.inicio.LoginPainel;
 
 public class Main {
 
