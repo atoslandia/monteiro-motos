@@ -5,26 +5,20 @@ import com.atosalves.dto.CadastroDTO;
 import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.PainelPadrao;
-import lombok.Getter;
+import com.atosalves.view.util.Tema;
 
 public class CadastroEditarUsuarioPainel extends PainelPadrao {
 
-	@Getter
-	private CaixaTexto nome;
-
-	@Getter
-	private CaixaTexto email;
-
-	@Getter
-	private CaixaSenha senha;
-
-	@Getter
+	private CaixaTextoComponente nome;
+	private CaixaTextoComponente email;
+	private CaixaSenhaComponente senha;
 	private TipoUsuarioCombo combo;
 
-	private Botao cadastro;
-	private Botao voltar;
+	private BotaoComponente cadastro;
+	private BotaoComponente voltar;
 
 	public CadastroEditarUsuarioPainel() {
+		setFundo(Tema.FUNDO_LOGIN);
 		cadastro();
 		voltar();
 	}
@@ -34,9 +28,9 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 			var controller = new UsuarioController();
 
 			if (controller.cadastrar(data())) {
-				// TODO abrir menu
+				// TODO: abrir menu
 			} else {
-				// TODO janela de erro
+				// TODO: janela de erro
 			}
 		});
 	}
@@ -57,7 +51,15 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 
 	@Override
 	protected void construirComponentes() {
+		this.nome = fabrica.criarCaixaTexto();
+		this.email = fabrica.criarCaixaTexto();
+		this.senha = fabrica.criarCaixaSenha();
+		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
+		this.cadastro = fabrica.criarBotao();
+		this.voltar = fabrica.criarBotao();
+
 		construtor
+			.texto("CADASTRE-SE", Tema.FONTE_MUITO_FORTE)
 			.caixaTexto("NOME: ", nome)
 			.caixaTexto("EMAIL:", email)
 			.senhaCaixa("SENHA:", senha)
@@ -65,15 +67,5 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 			.botao("CADASTRAR", cadastro)
 			.botao("VOLTAR", voltar)
 			.construir();
-	}
-
-	@Override
-	protected void instanciarComponentes() {
-		this.nome = fabrica.criarCaixaTexto();
-		this.email = fabrica.criarCaixaTexto();
-		this.senha = fabrica.criarCaixaSenha();
-		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
-		this.cadastro = fabrica.criarBotao();
-		this.voltar = fabrica.criarBotao();
 	}
 }

@@ -5,12 +5,12 @@ import com.atosalves.view.componentes.*;
 
 public class ComponentesFactory {
 
-	public CaixaSenha criarCaixaSenha() {
-		return new CaixaSenha();
+	public CaixaSenhaComponente criarCaixaSenha() {
+		return new CaixaSenhaComponente();
 	}
 
-	public CaixaTexto criarCaixaTexto() {
-		return new CaixaTexto();
+	public CaixaTextoComponente criarCaixaTexto() {
+		return new CaixaTextoComponente();
 	}
 
 	public Texto criarTexto(String texto) {
@@ -21,7 +21,11 @@ public class ComponentesFactory {
 		return new TipoUsuarioCombo(tipos);
 	}
 
-	public Botao criarBotao() {
-		return new Botao();
+	public BotaoComponente criarBotao() {
+		return new BotaoComponente();
+	}
+
+	public BotaoComponente criarBotaoMenu() {
+		return new BotaoMenu();
 	}
 }

@@ -3,17 +3,10 @@ package com.atosalves.view.componentes;
 import com.atosalves.view.util.Tema;
 import java.awt.Graphics;
 import javax.swing.JButton;
-import lombok.Setter;
 
-public class Botao extends JButton {
+public class BotaoComponente extends JButton implements Componente {
 
-	@Setter
-	private int larguraCurva = 35;
-
-	@Setter
-	private int alturaCurva = 35;
-
-	public Botao() {
+	public BotaoComponente() {
 		setBackground(Tema.AMARELO);
 		setForeground(Tema.PRETO);
 		setFont(Tema.FONTE_FORTE);
@@ -30,14 +23,7 @@ public class Botao extends JButton {
 			g.setColor(getBackground());
 		}
 
-		g.fillRoundRect(
-			0,
-			0,
-			getSize().width - 1,
-			getSize().height - 1,
-			larguraCurva,
-			alturaCurva
-		);
+		g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, 35, 35);
 
 		super.paintComponent(g);
 	}

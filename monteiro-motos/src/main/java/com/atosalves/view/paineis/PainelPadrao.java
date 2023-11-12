@@ -2,7 +2,7 @@ package com.atosalves.view.paineis;
 
 import com.atosalves.view.builder.ConstrutorPainel;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.janelas.JanelaPrincipal;
+import com.atosalves.view.janelas.Janela;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
@@ -23,21 +23,16 @@ public abstract class PainelPadrao extends JPanel {
 
 		fabrica = new ComponentesFactory();
 		construtor = new ConstrutorPainel(this);
-		instanciarComponentes();
 		construirComponentes();
-	}
-
-	protected void setPainel(PainelPadrao painel) {
-		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(
-			this
-		);
-
-		janela.setPainel(painel);
 	}
 
 	protected abstract void construirComponentes();
 
-	protected abstract void instanciarComponentes();
+	protected void setPainel(PainelPadrao painel) {
+		Janela janela = (Janela) SwingUtilities.getWindowAncestor(this);
+
+		janela.setPainel(painel);
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {

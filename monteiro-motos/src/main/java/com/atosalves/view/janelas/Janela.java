@@ -1,11 +1,16 @@
 package com.atosalves.view.janelas;
 
 import com.atosalves.view.paineis.PainelPadrao;
+import javax.swing.JFrame;
 
-public class JanelaPrincipal extends JanelaPadrao {
+public class Janela extends JFrame {
 
-	public JanelaPrincipal(PainelPadrao painel) {
-		super();
+	public Janela(PainelPadrao painel) {
+		setSize(768, 412);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("MONTEIRO MOTOS");
 		setVisible(true);
 		setPainel(painel);
 	}

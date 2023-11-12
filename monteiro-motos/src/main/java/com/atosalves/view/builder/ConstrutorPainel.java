@@ -1,14 +1,12 @@
 package com.atosalves.view.builder;
 
-import com.atosalves.view.componentes.Botao;
-import com.atosalves.view.componentes.CaixaSenha;
-import com.atosalves.view.componentes.CaixaTexto;
+import com.atosalves.view.componentes.BotaoComponente;
+import com.atosalves.view.componentes.CaixaSenhaComponente;
+import com.atosalves.view.componentes.CaixaTextoComponente;
 import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.paineis.PainelInterno;
 import com.atosalves.view.paineis.PainelPadrao;
-import com.atosalves.view.paineis.menu.MenuPainelInterno;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
 
@@ -17,6 +15,8 @@ public class ConstrutorPainel {
 	private int contadorComponentes;
 
 	private int espacoEntreComponentes = 45;
+
+	private int posicaoHorizontal = 10;
 
 	// padrão de projeto builder fluent
 	private PainelPadrao tela;
@@ -42,7 +42,7 @@ public class ConstrutorPainel {
 		texto.setFont(fonte);
 
 		texto.setBounds(
-			10,
+			posicaoHorizontal,
 			calcularPosicaoVertical(),
 			texto.getFontMetrics(texto.getFont()).stringWidth(titulo) + 10,
 			50
@@ -50,10 +50,10 @@ public class ConstrutorPainel {
 		return texto;
 	}
 
-	public ConstrutorPainel botao(String titulo, Botao botao) {
+	public ConstrutorPainel botao(String titulo, BotaoComponente botao) {
 		botao.setText(titulo);
 		botao.setBounds(
-			10,
+			posicaoHorizontal,
 			calcularPosicaoVertical(),
 			botao.getFontMetrics(botao.getFont()).stringWidth(titulo) + 40,
 			35
@@ -64,10 +64,10 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel caixaTexto(String titulo, CaixaTexto caixa) {
+	public ConstrutorPainel caixaTexto(String titulo, CaixaTextoComponente caixa) {
 		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
 		caixa.setBounds(
-			10 + texto.getText().length() * 15,
+			posicaoHorizontal + texto.getText().length() * 15,
 			texto.getY() + 8,
 			200,
 			35
@@ -79,11 +79,11 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenha senha) {
+	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenhaComponente senha) {
 		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
 
 		senha.setBounds(
-			10 + texto.getText().length() * 15,
+			posicaoHorizontal + texto.getText().length() * 15,
 			texto.getY() + 8,
 			200,
 			35
@@ -97,13 +97,7 @@ public class ConstrutorPainel {
 
 	public ConstrutorPainel comboBox(TipoUsuarioCombo combo) {
 		tela.add(combo);
-		combo.setBounds(10, calcularPosicaoVertical(), 289, 35);
-		return this;
-	}
-
-	public ConstrutorPainel painel(PainelInterno painel) {
-		painel.setBounds(0, 50, 768, 250);
-		tela.add(painel);
+		combo.setBounds(posicaoHorizontal, calcularPosicaoVertical(), 289, 35);
 		return this;
 	}
 

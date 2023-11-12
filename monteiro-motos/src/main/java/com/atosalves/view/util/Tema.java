@@ -31,6 +31,9 @@ public class Tema {
 	public static final Color PRETO = new Color(48, 48, 48);
 	public static final Color CINZA = new Color(204, 204, 204);
 
+	// TODO: apagar depois
+	public static final Color VERMELHO = new Color(255, 0, 0);
+
 	public static final Image FUNDO_CINZA = new ImageIcon(
 		"C:\\Users\\Atos\\Desktop\\projetos faculdade\\2projetopp\\monteiro-motos-remake\\monteiro-motos\\src\\main\\resources\\fundo-padrao.png"
 	)
