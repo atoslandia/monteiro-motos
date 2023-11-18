@@ -9,7 +9,6 @@ import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
-import javax.swing.ButtonGroup;
 
 public class ConstrutorPainel {
 
