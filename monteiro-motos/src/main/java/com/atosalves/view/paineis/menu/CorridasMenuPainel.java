@@ -1,16 +1,16 @@
 package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.componentes.BotaoComponente;
+import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.inicio.LoginPainel;
 import com.atosalves.view.util.Tema;
 
 public class CorridasMenuPainel extends PainelPadrao {
 
-	private BotaoComponente inicioMenu;
-	private BotaoComponente corridasMenu;
-	private BotaoComponente editarMenu;
-	private BotaoComponente sair;
+	private Botao inicioMenu;
+	private Botao corridasMenu;
+	private Botao editarMenu;
+	private Botao sair;
 
 	public CorridasMenuPainel() {
 		inicioMenu();

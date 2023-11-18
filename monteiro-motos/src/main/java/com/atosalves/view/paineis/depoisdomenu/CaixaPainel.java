@@ -1,13 +1,13 @@
 package com.atosalves.view.paineis.depoisdomenu;
 
-import com.atosalves.view.componentes.BotaoComponente;
+import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.menu.InicioMenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class CaixaPainel extends PainelPadrao {
 
-	private BotaoComponente voltar;
+	private Botao voltar;
 
 	public CaixaPainel() {
 		voltar();
@@ -20,10 +20,7 @@ public class CaixaPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		voltar = fabrica.criarBotao();
-		// TODO trocar *VALOR* por uma função do controller
-		construtor
-			.texto("*VALOR*", Tema.FONTE_MUITO_FORTE)
-			.botao("VOLTAR", voltar)
-			.construir();
+		// TODO: trocar *VALOR* por uma função do controller
+		construtor.texto("*VALOR*", Tema.FONTE_MUITO_FORTE).botao("VOLTAR", voltar).construir();
 	}
 }

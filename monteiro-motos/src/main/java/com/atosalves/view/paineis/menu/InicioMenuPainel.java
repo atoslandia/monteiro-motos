@@ -1,28 +1,36 @@
 package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.componentes.BotaoComponente;
+import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.paineis.PainelPadrao;
+import com.atosalves.view.paineis.depoisdomenu.DepositarSaldo;
 import com.atosalves.view.paineis.inicio.LoginPainel;
 import com.atosalves.view.util.Tema;
 
 public class InicioMenuPainel extends PainelPadrao {
 
-	private BotaoComponente solicitarCorrida;
-	private BotaoComponente compraCredito;
-	private BotaoComponente usuarios;
-	private BotaoComponente valorCredito;
-	private BotaoComponente caixa;
+	private Botao solicitarCorrida;
+	private Botao depositar;
+	private Botao usuarios;
+	private Botao valorCredito;
+	private Botao caixa;
 
-	private BotaoComponente inicioMenu;
-	private BotaoComponente corridasMenu;
-	private BotaoComponente editarMenu;
+	private Botao inicioMenu;
+	private Botao corridasMenu;
+	private Botao editarMenu;
 
-	private BotaoComponente sair;
+	private Botao sair;
 
 	public InicioMenuPainel() {
+		botaoDepositar();
 		corridasMenu();
 		editarMenu();
 		sair();
+	}
+
+	private void botaoDepositar() {
+		depositar.aoClicar(() -> {
+			setPainel(new DepositarSaldo());
+		});
 	}
 
 	private void corridasMenu() {
@@ -40,7 +48,7 @@ public class InicioMenuPainel extends PainelPadrao {
 	@Override
 	protected void construirComponentes() {
 		this.solicitarCorrida = fabrica.criarBotao();
-		this.compraCredito = fabrica.criarBotao();
+		this.depositar = fabrica.criarBotao();
 		this.usuarios = fabrica.criarBotao();
 		this.valorCredito = fabrica.criarBotao();
 		this.caixa = fabrica.criarBotao();
@@ -53,10 +61,10 @@ public class InicioMenuPainel extends PainelPadrao {
 
 		construtor
 			.texto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE)
-			// TODO se for passageiro
+			// TODO: se for passageiro
 			.botao("SOLICITAR CORRIDA", solicitarCorrida)
-			.botao("COMPRAR CRÉDITOS", compraCredito)
-			// TODO se for adminastro
+			.botao("DEPOSITAR SALDO", depositar)
+			// TODO: se for adminastro
 			.botao("LISTAR TODOS OS USUÁRIOS", usuarios)
 			.botao("DEFINIR VALOR DE CRÉTIDO DE REINVIDICAÇÃO", valorCredito)
 			.botao("DADOS DO CAIXA", caixa)

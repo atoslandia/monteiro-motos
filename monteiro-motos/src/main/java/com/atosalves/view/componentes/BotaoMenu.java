@@ -3,7 +3,7 @@ package com.atosalves.view.componentes;
 import com.atosalves.view.util.Tema;
 import java.awt.Graphics;
 
-public class BotaoMenu extends BotaoComponente {
+public class BotaoMenu extends Botao {
 
 	public BotaoMenu() {
 		setFont(Tema.FONTE_MUITO_FORTE);
@@ -27,7 +27,6 @@ public class BotaoMenu extends BotaoComponente {
 			setForeground(Tema.AMARELO);
 		}
 
-		// Pintar o botão sem cantos arredondados
 		g.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
 
 		super.paintComponent(g);

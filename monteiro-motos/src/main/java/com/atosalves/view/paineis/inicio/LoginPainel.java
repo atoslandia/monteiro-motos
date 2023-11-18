@@ -2,7 +2,6 @@ package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.menu.InicioMenuPainel;
@@ -10,20 +9,29 @@ import com.atosalves.view.util.Tema;
 
 public class LoginPainel extends PainelPadrao {
 
-	private CaixaTextoComponente email;
-	private CaixaSenhaComponente senha;
-	private TipoUsuarioCombo combo;
+	private CaixaTexto email;
+	private CaixaSenha senha;
 
-	private BotaoComponente entrar;
-	private BotaoComponente cadastrar;
+	private TipoUsuarioCombo tipoUsuarioCombo;
+
+	private Botao entrar;
+	private Botao cadastrar;
 
 	public LoginPainel() {
 		setFundo(Tema.FUNDO_LOGIN);
-		entrar();
-		cadastrar();
+		botaoEntrar();
+		botaoCadastrar();
 	}
 
-	private void entrar() {
+	private LoginDTO data() {
+		System.out.println(email.pegarCampo());
+		System.out.println(senha.pegarCampo());
+		System.out.println(tipoUsuarioCombo.pegarSelecionado());
+
+		return new LoginDTO(email.pegarCampo(), senha.pegarCampo(), tipoUsuarioCombo.pegarSelecionado());
+	}
+
+	private void botaoEntrar() {
 		entrar.aoClicar(() -> {
 			var controller = new UsuarioController();
 
@@ -35,25 +43,18 @@ public class LoginPainel extends PainelPadrao {
 		});
 	}
 
-	private void cadastrar() {
+	private void botaoCadastrar() {
 		cadastrar.aoClicar(() -> {
 			var cadastro = new CadastroEditarUsuarioPainel();
 			setPainel(cadastro);
 		});
 	}
 
-	private LoginDTO data() {
-		System.out.println(email.pegarCampo());
-		System.out.println(senha.pegarCampo());
-
-		return new LoginDTO(email.pegarCampo(), senha.pegarCampo());
-	}
-
 	@Override
 	protected void construirComponentes() {
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
-		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
+		this.tipoUsuarioCombo = fabrica.criarComboTipoUsuario();
 		this.entrar = fabrica.criarBotao();
 		this.cadastrar = fabrica.criarBotao();
 
@@ -61,7 +62,7 @@ public class LoginPainel extends PainelPadrao {
 			.texto("MONTEIRO MOTOS", Tema.FONTE_MUITO_FORTE)
 			.caixaTexto("EMAIL:", email)
 			.senhaCaixa("SENHA:", senha)
-			.comboBox(combo)
+			.comboBox(tipoUsuarioCombo)
 			.botao("ENTRAR", entrar)
 			.botao("CADASTRAR", cadastrar)
 			.construir();

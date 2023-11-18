@@ -1,10 +1,15 @@
 package com.atosalves.dao;
 
-import com.atosalves.dto.CadastroDTO;
-import com.atosalves.dto.LoginDTO;
+import java.util.Set;
 
-public interface DAO {
-	public boolean cadastrar(CadastroDTO data);
+public interface DAO<T, K> {
+	public Set<T> recuperarTodos();
 
-	public boolean verificarLogin(LoginDTO data);
+	public boolean cadastrar(T entidade);
+
+	public T recuperarPeloId(K id);
+
+	public T update(T entidade);
+
+	public void delete();
 }

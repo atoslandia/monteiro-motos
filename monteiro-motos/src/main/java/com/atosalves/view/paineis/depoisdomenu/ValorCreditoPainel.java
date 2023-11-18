@@ -6,9 +6,9 @@ import com.atosalves.view.paineis.menu.InicioMenuPainel;
 
 public class ValorCreditoPainel extends PainelPadrao {
 
-	private CaixaTextoComponente valor;
-	private BotaoComponente definir;
-	private BotaoComponente voltar;
+	private CaixaTexto valor;
+	private Botao definir;
+	private Botao voltar;
 
 	public ValorCreditoPainel() {
 		voltar();
@@ -24,10 +24,6 @@ public class ValorCreditoPainel extends PainelPadrao {
 		this.definir = fabrica.criarBotao();
 		this.voltar = fabrica.criarBotao();
 
-		construtor
-			.caixaTexto("VALOR", valor)
-			.botao("DEFINIR", definir)
-			.botao("VOLTAR", voltar)
-			.construir();
+		construtor.caixaTexto("VALOR", valor).botao("DEFINIR", definir).botao("VOLTAR", voltar).construir();
 	}
 }

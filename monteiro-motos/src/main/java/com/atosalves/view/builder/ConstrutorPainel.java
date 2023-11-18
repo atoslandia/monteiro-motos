@@ -1,14 +1,15 @@
 package com.atosalves.view.builder;
 
-import com.atosalves.view.componentes.BotaoComponente;
-import com.atosalves.view.componentes.CaixaSenhaComponente;
-import com.atosalves.view.componentes.CaixaTextoComponente;
+import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.componentes.CaixaSenha;
+import com.atosalves.view.componentes.CaixaTexto;
 import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
+import javax.swing.ButtonGroup;
 
 public class ConstrutorPainel {
 
@@ -50,7 +51,7 @@ public class ConstrutorPainel {
 		return texto;
 	}
 
-	public ConstrutorPainel botao(String titulo, BotaoComponente botao) {
+	public ConstrutorPainel botao(String titulo, Botao botao) {
 		botao.setText(titulo);
 		botao.setBounds(
 			posicaoHorizontal,
@@ -64,14 +65,9 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel caixaTexto(String titulo, CaixaTextoComponente caixa) {
+	public ConstrutorPainel caixaTexto(String titulo, CaixaTexto caixa) {
 		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
-		caixa.setBounds(
-			posicaoHorizontal + texto.getText().length() * 15,
-			texto.getY() + 8,
-			200,
-			35
-		);
+		caixa.setBounds(posicaoHorizontal + texto.getText().length() * 15, texto.getY() + 8, 200, 35);
 
 		tela.add(texto);
 		tela.add(caixa);
@@ -79,15 +75,10 @@ public class ConstrutorPainel {
 		return this;
 	}
 
-	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenhaComponente senha) {
+	public ConstrutorPainel senhaCaixa(String titulo, CaixaSenha senha) {
 		var texto = textoFabrica(titulo, Tema.FONTE_FORTE);
 
-		senha.setBounds(
-			posicaoHorizontal + texto.getText().length() * 15,
-			texto.getY() + 8,
-			200,
-			35
-		);
+		senha.setBounds(posicaoHorizontal + texto.getText().length() * 15, texto.getY() + 8, 200, 35);
 
 		tela.add(texto);
 		tela.add(senha);
@@ -97,7 +88,7 @@ public class ConstrutorPainel {
 
 	public ConstrutorPainel comboBox(TipoUsuarioCombo combo) {
 		tela.add(combo);
-		combo.setBounds(posicaoHorizontal, calcularPosicaoVertical(), 289, 35);
+		combo.setBounds(posicaoHorizontal, calcularPosicaoVertical() + 7, 289, 30);
 		return this;
 	}
 

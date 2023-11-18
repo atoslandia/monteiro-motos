@@ -4,9 +4,9 @@ import com.atosalves.view.util.Tema;
 import java.awt.Graphics;
 import javax.swing.JButton;
 
-public class BotaoComponente extends JButton implements Componente {
+public class Botao extends JButton implements Componente {
 
-	public BotaoComponente() {
+	public Botao() {
 		setBackground(Tema.AMARELO);
 		setForeground(Tema.PRETO);
 		setFont(Tema.FONTE_FORTE);

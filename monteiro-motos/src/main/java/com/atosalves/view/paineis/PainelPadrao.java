@@ -2,7 +2,7 @@ package com.atosalves.view.paineis;
 
 import com.atosalves.view.builder.ConstrutorPainel;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.janelas.Janela;
+import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
@@ -29,7 +29,7 @@ public abstract class PainelPadrao extends JPanel {
 	protected abstract void construirComponentes();
 
 	protected void setPainel(PainelPadrao painel) {
-		Janela janela = (Janela) SwingUtilities.getWindowAncestor(this);
+		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
 
 		janela.setPainel(painel);
 	}
@@ -37,7 +37,7 @@ public abstract class PainelPadrao extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// TODO mudar fundo depois
+		// TODO: mudar fundo depois
 		g.drawImage(fundo, 0, 0, this);
 	}
 }

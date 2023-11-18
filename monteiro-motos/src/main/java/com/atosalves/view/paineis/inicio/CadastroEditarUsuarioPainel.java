@@ -2,20 +2,19 @@ package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.CadastroDTO;
-import com.atosalves.enums.TiposUsuario;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.util.Tema;
 
 public class CadastroEditarUsuarioPainel extends PainelPadrao {
 
-	private CaixaTextoComponente nome;
-	private CaixaTextoComponente email;
-	private CaixaSenhaComponente senha;
+	private CaixaTexto nome;
+	private CaixaTexto email;
+	private CaixaSenha senha;
 	private TipoUsuarioCombo combo;
 
-	private BotaoComponente cadastro;
-	private BotaoComponente voltar;
+	private Botao cadastro;
+	private Botao voltar;
 
 	public CadastroEditarUsuarioPainel() {
 		setFundo(Tema.FUNDO_LOGIN);
@@ -42,11 +41,7 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 	}
 
 	private CadastroDTO data() {
-		return new CadastroDTO(
-			nome.pegarCampo(),
-			email.pegarCampo(),
-			senha.pegarCampo()
-		);
+		return new CadastroDTO(nome.pegarCampo(), email.pegarCampo(), senha.pegarCampo());
 	}
 
 	@Override
@@ -54,7 +49,7 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 		this.nome = fabrica.criarCaixaTexto();
 		this.email = fabrica.criarCaixaTexto();
 		this.senha = fabrica.criarCaixaSenha();
-		this.combo = fabrica.criarComboTipoUsuario(TiposUsuario.values());
+		this.combo = fabrica.criarComboTipoUsuario();
 		this.cadastro = fabrica.criarBotao();
 		this.voltar = fabrica.criarBotao();
 

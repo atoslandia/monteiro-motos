@@ -1,3 +1,5 @@
 package com.atosalves.dto;
 
-public record LoginDTO(String email, String senha) {}
+import com.atosalves.enums.TiposUsuario;
+
+public record LoginDTO(String email, String senha, TiposUsuario tiposUsuario) {}

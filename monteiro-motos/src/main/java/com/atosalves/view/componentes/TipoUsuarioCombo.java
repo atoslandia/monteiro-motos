@@ -9,4 +9,8 @@ public class TipoUsuarioCombo extends JComboBox<TiposUsuario> implements Compone
 	public TipoUsuarioCombo(TiposUsuario[] tipos) {
 		setModel(new DefaultComboBoxModel<TiposUsuario>(tipos));
 	}
+
+	public TiposUsuario pegarSelecionado() {
+		return (TiposUsuario) getSelectedItem();
+	}
 }

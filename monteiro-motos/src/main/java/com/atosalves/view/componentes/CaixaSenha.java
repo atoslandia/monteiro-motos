@@ -2,9 +2,7 @@ package com.atosalves.view.componentes;
 
 import javax.swing.JPasswordField;
 
-public class CaixaSenhaComponente
-	extends JPasswordField
-	implements ComponenteCaixa, Componente {
+public class CaixaSenha extends JPasswordField implements ComponenteCaixa, Componente {
 
 	@Override
 	public String pegarCampo() {
