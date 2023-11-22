@@ -14,7 +14,7 @@ public class ConstrutorPainel {
 
 	private int contadorComponentes;
 
-	private int espacoEntreComponentes = 45;
+	private int espacoEntreComponentes = 40;
 
 	private int posicaoHorizontal = 10;
 

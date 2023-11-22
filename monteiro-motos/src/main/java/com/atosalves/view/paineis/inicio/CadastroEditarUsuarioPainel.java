@@ -55,9 +55,10 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 
 		construtor
 			.texto("CADASTRE-SE", Tema.FONTE_MUITO_FORTE)
-			.caixaTexto("NOME: ", nome)
-			.caixaTexto("EMAIL:", email)
-			.senhaCaixa("SENHA:", senha)
+			.caixaTexto("NOME ", nome)
+			.caixaTexto("SOBRENOME ", nome)
+			.caixaTexto("EMAIL ", email)
+			.senhaCaixa("SENHA ", senha)
 			.comboBox(combo)
 			.botao("CADASTRAR", cadastro)
 			.botao("VOLTAR", voltar)
