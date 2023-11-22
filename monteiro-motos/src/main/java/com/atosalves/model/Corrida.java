@@ -1,6 +1,7 @@
 package com.atosalves.model;
 
 import com.atosalves.model.statepattern.CorridaEmAndamento;
+import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,15 +17,35 @@ public class Corrida {
 	private Long id;
 
 	private CorridaState estado;
+
 	private Mototaxista mototaxista;
 	private Passageiro passageiro;
 	private Endereco endereco;
 
 	public Corrida(Mototaxista mototaxista, Passageiro passageiro, Endereco endereco) {
 		this.id = System.currentTimeMillis();
-		this.estado = new CorridaEmAndamento(this);
+		this.estado = new CorridaPendente(this);
 		this.mototaxista = mototaxista;
 		this.passageiro = passageiro;
 		this.endereco = endereco;
 	}
+
+	public void acionarCorrida(){
+
+	}
+	
+	public void aceitarCorrida(){
+
+	}
+
+	public void reivindicarCorrida(){
+
+	}
+
+	public void cancelarCorrida(){
+
+	}
+
+
+
 }

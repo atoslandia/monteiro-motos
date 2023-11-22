@@ -2,11 +2,9 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.model.Corrida;
 
+public class CorridaPendente extends CorridaState {
 
-public class CorridaFinalizada extends CorridaState {
-
-
-    public CorridaFinalizada(Corrida corrida) {
+    public CorridaPendente(Corrida corrida) {
         super(corrida);
         //TODO Auto-generated constructor stub
     }
@@ -35,4 +33,7 @@ public class CorridaFinalizada extends CorridaState {
         throw new UnsupportedOperationException("Unimplemented method 'cancelarCorrida'");
     }
     
+
+
+
 }
