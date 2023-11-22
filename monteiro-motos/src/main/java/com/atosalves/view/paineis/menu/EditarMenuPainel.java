@@ -3,6 +3,7 @@ package com.atosalves.view.paineis.menu;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.inicio.LoginPainel;
+import com.atosalves.view.util.Tema;
 
 public class EditarMenuPainel extends PainelPadrao {
 
@@ -43,7 +44,8 @@ public class EditarMenuPainel extends PainelPadrao {
 		this.sair = fabrica.criarBotao();
 
 		construtor
-			.botao("EDITAR PERFIL", editar)
+			.texto("EDITAR PERFIL", Tema.FONTE_MUITO_FORTE)
+			.caixaTexto("NOME", null)
 			.botao("INICIO", inicioMenu)
 			.botao("CORRIDAS", corridasMenu)
 			.botao("EDITAR", editarMenu)
