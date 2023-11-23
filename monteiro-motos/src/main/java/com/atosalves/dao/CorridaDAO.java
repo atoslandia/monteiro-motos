@@ -1,10 +1,13 @@
 package com.atosalves.dao;
 
 import com.atosalves.model.Corrida;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class CorridaDAO implements DAO<Corrida, Long> {
+public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 
 	private Set<Corrida> corridas = new HashSet<>();
 

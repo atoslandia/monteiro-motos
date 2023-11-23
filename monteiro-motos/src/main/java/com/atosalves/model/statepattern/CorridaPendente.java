@@ -6,7 +6,6 @@ public class CorridaPendente extends CorridaState {
 
     public CorridaPendente(Corrida corrida) {
         super(corrida);
-        //TODO Auto-generated constructor stub
     }
 
     @Override

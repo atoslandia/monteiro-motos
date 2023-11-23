@@ -1,6 +1,8 @@
 package com.atosalves.model;
 
 import com.atosalves.dao.UsuarioDAO;
+import com.atosalves.dto.CadastroDTO;
+
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -39,7 +41,7 @@ public class Usuario {
 	// 	return usuarioDAO.verificarLogin(data);
 	// }
 
-	// public void cadastrarUsuario(CadastroDTO data) {
-	// 	usuarioDAO.cadastrar(data);
-	// }
+	public void cadastrarUsuario(CadastroDTO data) {
+		usuarioDAO.cadastrar(data);
+	}
 }

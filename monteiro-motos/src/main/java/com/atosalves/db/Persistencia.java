@@ -10,13 +10,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Persistencia {
 
 	private XStream xs = new XStream(new DomDriver());
 	private File arquivo = new File("persistencia.xml");
 
-	public void salvarUsuarios(ArrayList<UsuarioDAO> usuarios) throws Exception {
+	public void salvarUsuarios(Set<Usuario> usuarios) throws Exception {
 		xs.addPermission(AnyTypePermission.ANY);
 		PrintWriter escrever = new PrintWriter(arquivo);
 		String xml = xs.toXML(usuarios);

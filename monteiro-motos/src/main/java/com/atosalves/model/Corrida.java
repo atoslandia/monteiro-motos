@@ -1,6 +1,5 @@
 package com.atosalves.model;
 
-import com.atosalves.model.statepattern.CorridaEmAndamento;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import lombok.Data;
@@ -31,19 +30,19 @@ public class Corrida {
 	}
 
 	public void acionarCorrida(){
-
+		estado.acionarCorrida();
 	}
-	
-	public void aceitarCorrida(){
 
+	public void aceitarCorrida(){
+		estado.aceitarCorrida();
 	}
 
 	public void reivindicarCorrida(){
-
+		estado.reivindicarCorrida();
 	}
 
 	public void cancelarCorrida(){
-
+		estado.cancelarCorrida();
 	}
 
 

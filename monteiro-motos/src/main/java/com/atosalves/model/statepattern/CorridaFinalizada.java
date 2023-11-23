@@ -5,10 +5,8 @@ import com.atosalves.model.Corrida;
 
 public class CorridaFinalizada extends CorridaState {
 
-
     public CorridaFinalizada(Corrida corrida) {
         super(corrida);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
