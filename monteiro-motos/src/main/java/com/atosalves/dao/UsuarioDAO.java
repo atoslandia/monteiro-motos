@@ -13,10 +13,9 @@ public class UsuarioDAO implements DAO<CadastroDTO, String> {
 	private Persistencia persistencia;
 
 	public UsuarioDAO(){
-		persistencia = new Persistencia();
+		persistencia = Persistencia.getInstance();
 		usuarios = persistencia.carregarUsuarios();
 	}
-
 
 	@Override
 	public boolean cadastrar(CadastroDTO entidade) {
@@ -49,7 +48,7 @@ public class UsuarioDAO implements DAO<CadastroDTO, String> {
 	}
 
 	@Override
-	public void delete() {
+	public void deletePeloId(String id) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'delete'");
 	}

@@ -2,6 +2,11 @@ package com.atosalves.model;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Passageiro extends Usuario {
 
 	private GerenciadorDePagamento gerenciadorDePagamento;

@@ -9,7 +9,7 @@ public interface BuscaCorridasDAO {
 
     public List<Corrida> buscarCorridasPendenetes();
 
-    public List<Corrida> buscarCorridasEmandamento();
+    public List<Corrida> buscarCorridasEmAndamento();
 
     public List<Corrida> buscarCorridasCanceladas();
 

@@ -3,9 +3,7 @@ package com.atosalves.dao;
 import com.atosalves.model.Corrida;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 
@@ -31,7 +29,7 @@ public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public void delete() {
+	public void deletePeloId(Long id) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'delete'");
 	}
@@ -43,7 +41,7 @@ public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasEmandamento() {
+	public List<Corrida> buscarCorridasEmAndamento() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasEmandamento'");
 	}
