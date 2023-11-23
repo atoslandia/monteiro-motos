@@ -1,3 +1,5 @@
 package com.atosalves.dto;
 
-public record CadastroDTO(String nome, String email, String senha) {}
+import java.time.LocalDate;
+
+public record CadastroDTO(String nome, String sobrenome, LocalDate dataNascimento, String email, String senha) {}

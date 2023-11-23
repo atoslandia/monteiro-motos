@@ -9,13 +9,8 @@ import java.util.Set;
 
 public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 
-	private Set<Corrida> corridas = new HashSet<>();
+	private ArrayList<Corrida> corridas = new ArrayList<>();
 
-	@Override
-	public Set<Corrida> recuperarTodos() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'recuperarTodos'");
-	}
 
 	@Override
 	public boolean cadastrar(Corrida entidade) {
@@ -39,5 +34,29 @@ public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 	public void delete() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'delete'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasPendenetes() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasPendenetes'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasEmandamento() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasEmandamento'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasCanceladas() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasCanceladas'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasReivindicadas() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasReivindicadas'");
 	}
 }

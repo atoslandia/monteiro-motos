@@ -2,41 +2,44 @@ package com.atosalves.dao;
 
 import com.atosalves.db.Persistencia;
 import com.atosalves.dto.CadastroDTO;
-import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Usuario;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.Map;
 
 // TODO r: classe para conectar com o banco de dados
 public class UsuarioDAO implements DAO<CadastroDTO, String> {
 
-	private Set<Usuario> usuarios = new HashSet<>();
+	private Map<String, Usuario> usuarios;
+	private Persistencia persistencia;
 
-	@Override
-	public Set<CadastroDTO> recuperarTodos() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'recuperarTodos'");
+	public UsuarioDAO(){
+		persistencia = new Persistencia();
+		usuarios = persistencia.carregarUsuarios();
 	}
+
 
 	@Override
 	public boolean cadastrar(CadastroDTO entidade) {
-		Usuario u = new Usuario(entidade.nome(), null, null, entidade.email(), null);
-		usuarios.add(u);
-
-		Persistencia p = new Persistencia();
-		try {
-			p.salvarUsuarios(usuarios);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(recuperarPeloId(entidade.email()) != null){
+			Usuario usuario = new Usuario(entidade.nome(), entidade.sobrenome(), entidade.dataNascimento(),
+		 								entidade.email(), entidade.senha());
+			usuarios.put(usuario.getEmail(), usuario);
+			persistencia.salvarUsuarios(usuarios);
+			return true;
 		}
-		return true;
+		return false;
+		
 	}
 
 	@Override
 	public CadastroDTO recuperarPeloId(String id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'recuperarPeloId'");
+		Usuario usuario = usuarios.get(id);
+		if(usuario == null){
+			return null;
+		}
+		// CadastroDTO usuarioDTO = new CadastroDTO(usu, id, null, id, id);
+
+		return null;
 	}
 
 	@Override
