@@ -1,18 +1,16 @@
 package com.atosalves.dao;
 
+import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
+import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.model.Corrida;
-import java.util.HashSet;
-import java.util.Set;
 
-public class CorridaDAO implements DAO<Corrida, Long> {
+import java.util.ArrayList;
+import java.util.List;
 
-	private Set<Corrida> corridas = new HashSet<>();
+public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 
-	@Override
-	public Set<Corrida> recuperarTodos() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'recuperarTodos'");
-	}
+	private ArrayList<Corrida> corridas = new ArrayList<>();
+
 
 	@Override
 	public boolean cadastrar(Corrida entidade) {
@@ -27,14 +25,32 @@ public class CorridaDAO implements DAO<Corrida, Long> {
 	}
 
 	@Override
-	public Corrida update(Corrida entidade) {
+	public void deletePeloId(Long id) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'update'");
+		throw new UnsupportedOperationException("Unimplemented method 'delete'");
 	}
 
 	@Override
-	public void delete() {
+	public List<Corrida> buscarCorridasPendenetes() {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'delete'");
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasPendenetes'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasEmAndamento() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasEmandamento'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasCanceladas() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasCanceladas'");
+	}
+
+	@Override
+	public List<Corrida> buscarCorridasReivindicadas() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'buscarCorridasReivindicadas'");
 	}
 }
