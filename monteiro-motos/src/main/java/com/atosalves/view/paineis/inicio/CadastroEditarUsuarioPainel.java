@@ -43,7 +43,7 @@ public class CadastroEditarUsuarioPainel extends PainelPadrao {
 	}
 
 	private CadastroDTO data() {
-		return new CadastroDTO(nome.pegarCampo(), email.pegarCampo(), senha.pegarCampo());
+		return null;
 	}
 
 	@Override
