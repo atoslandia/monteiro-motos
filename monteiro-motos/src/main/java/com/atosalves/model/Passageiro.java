@@ -11,9 +11,11 @@ public class Passageiro extends Usuario {
 
 	private GerenciadorDePagamento gerenciadorDePagamento;
 
-	public Passageiro(String nome, String sobrenome, LocalDate dataNascimento, String email, String senha) {
-		super(nome, sobrenome, dataNascimento, email, senha);
+	public Passageiro(String nome, LocalDate dataNascimento, String email, String senha) {
+		super(nome, dataNascimento, email, senha);
 		this.gerenciadorDePagamento = new GerenciadorDePagamento(0f);
+	}
+	public Passageiro(){
 	}
 
 	public void depositar(float valor) {

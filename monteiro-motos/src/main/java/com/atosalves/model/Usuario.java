@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 
 	private String nome;
-	private String sobrenome;
 	private LocalDate dataNascimento;
 
 	@Include
@@ -21,9 +20,8 @@ public class Usuario {
 
 	private String senha;
 
-	public Usuario(String nome, String sobrenome, LocalDate dataNascimento, String email, String senha) {
+	public Usuario(String nome, LocalDate dataNascimento, String email, String senha) {
 		this.nome = nome;
-		this.sobrenome = sobrenome;
 		this.dataNascimento = dataNascimento;
 		this.email = email;
 		this.senha = senha;

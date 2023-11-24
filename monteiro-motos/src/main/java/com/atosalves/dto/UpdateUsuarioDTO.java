@@ -1,4 +1,4 @@
 package com.atosalves.dto;
 
-public record UpdateUsuarioDTO(String nome, String sobrenome, String senha) {
+public record UpdateUsuarioDTO(String nome, String senha) {
 }

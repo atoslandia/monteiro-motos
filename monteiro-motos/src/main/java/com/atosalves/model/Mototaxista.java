@@ -10,8 +10,10 @@ public class Mototaxista extends Usuario {
 
 	private int avaliacao;
 
-	public Mototaxista(String nome, String sobrenome, LocalDate dataNascimento, String email, String senha) {
-		super(nome, sobrenome, dataNascimento, email, senha);
+	public Mototaxista() {}
+
+	public Mototaxista(String nome, LocalDate dataNascimento, String email, String senha) {
+		super(nome, dataNascimento, email, senha);
 		this.avaliacao = 0;
 	}
 }
