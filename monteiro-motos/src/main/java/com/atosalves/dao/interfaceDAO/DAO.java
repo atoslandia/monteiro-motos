@@ -1,4 +1,4 @@
-package com.atosalves.dao;
+package com.atosalves.dao.interfaceDAO;
 
 
 public interface DAO<T, K> {
@@ -7,8 +7,6 @@ public interface DAO<T, K> {
 	public boolean cadastrar(T entidade);
 
 	public T recuperarPeloId(K id);
-
-	public T update(T entidade);
 
 	public void deletePeloId(K id);
 }

@@ -6,12 +6,18 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import com.atosalves.dao.interfaceDAO.DAO;
+import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.Persistencia;
+import com.atosalves.dto.CadastroDTO;
+import com.atosalves.dto.MototaxistaDTO;
 import com.atosalves.dto.PassageiroDTO;
+import com.atosalves.dto.UpdateUsuarioDTO;
+import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
 
-public class PassageiroDAO implements DAO<PassageiroDTO, String>{
+public class PassageiroDAO implements DAO<PassageiroDTO, String>, UpdateDAO<PassageiroDTO,UpdateUsuarioDTO, String>{
 
     private Map<String, Usuario> usuarios;
 	private Persistencia persistencia;
@@ -23,9 +29,23 @@ public class PassageiroDAO implements DAO<PassageiroDTO, String>{
     //     var usu = new Passageiro("robson", null, data , "robson@gmail.com", "1234");
     //     var dto =  new PassageiroDTO(usu);
     //     var teste = new PassageiroDAO();
+        
+    //     var mototaxista = new Mototaxista("atos", null, data, "atos@gmail.com", "5555");
+    //     var dto02 = new MototaxistaDTO(mototaxista);
+    //     var teste02 = new MototaxistaDAO();
+
+
     //     System.out.println(teste.cadastrar(dto));
     //     System.out.println(teste.recuperarPeloId(usu.getEmail()));
-    //     // teste.deletePeloId(usu.getEmail());
+    //     UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO("atos", "alves", "4321");
+    //     System.out.println(teste.update(updateUsuarioDTO, usu.getEmail()));
+
+    //     // System.out.println(teste02.cadastrar(dto02));
+    //     System.out.println(teste02.recuperarPeloId(mototaxista.getEmail()));
+
+        
+
+    //     teste.deletePeloId(usu.getEmail());
     // }
 
     public PassageiroDAO() {
@@ -35,6 +55,7 @@ public class PassageiroDAO implements DAO<PassageiroDTO, String>{
 
     @Override
     public boolean cadastrar(PassageiroDTO entidade) {
+        usuarios = persistencia.carregarUsuarios();
         Usuario usuario = entidade.passageiro();
         LocalDate dataDeNascimento = usuario.getDataNascimento();
         LocalDate dataAtual = LocalDate.now();
@@ -64,9 +85,16 @@ public class PassageiroDAO implements DAO<PassageiroDTO, String>{
     }
 
     @Override
-    public PassageiroDTO update(PassageiroDTO entidade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public PassageiroDTO update(UpdateUsuarioDTO entidade, String id) {
+        PassageiroDTO passageiroDTO = recuperarPeloId(id);
+        Passageiro passageiro = passageiroDTO.passageiro();
+
+        passageiro.setNome(entidade.nome());
+        passageiro.setSobrenome(entidade.sobrenome());
+        passageiro.setSenha(entidade.senha());
+
+        persistencia.salvarUsuarios(usuarios);
+        return new PassageiroDTO(passageiro);
     }
     
     @Override

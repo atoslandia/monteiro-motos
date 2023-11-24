@@ -1,4 +1,4 @@
-package com.atosalves.dao;
+package com.atosalves.dao.interfaceDAO;
 
 import java.util.List;
 

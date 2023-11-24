@@ -1,5 +1,7 @@
 package com.atosalves.dao;
 
+import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
+import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.model.Corrida;
 
 import java.util.ArrayList;
@@ -20,12 +22,6 @@ public class CorridaDAO implements DAO<Corrida, Long>, BuscaCorridasDAO {
 	public Corrida recuperarPeloId(Long id) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'recuperarPeloId'");
-	}
-
-	@Override
-	public Corrida update(Corrida entidade) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'update'");
 	}
 
 	@Override

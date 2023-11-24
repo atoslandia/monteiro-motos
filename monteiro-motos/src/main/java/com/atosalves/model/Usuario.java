@@ -1,16 +1,11 @@
 package com.atosalves.model;
 
-import com.atosalves.dao.UsuarioDAO;
-import com.atosalves.dto.CadastroDTO;
 
 import java.time.LocalDate;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.EqualsAndHashCode.Include;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @NoArgsConstructor
