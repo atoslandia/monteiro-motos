@@ -18,6 +18,10 @@ public class ComponentesFactory {
 		return new Texto(texto, fonte);
 	}
 
+	public DataCaixa criarDataCaixa() {
+		return new DataCaixa();
+	}
+
 	public TipoUsuarioCombo criarComboTipoUsuario() {
 		return new TipoUsuarioCombo(TiposUsuario.values());
 	}

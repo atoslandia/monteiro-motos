@@ -5,6 +5,7 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.builder.PainelBuilderImpl;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.menu.InicioMenuPainel;
 import com.atosalves.view.util.Tema;
@@ -40,7 +41,7 @@ public class LoginPainel extends PainelPadrao {
 			if (controller.login(data())) {
 				setPainel(new InicioMenuPainel());
 			} else {
-				// TODO: janela de erro
+				new JanelaDeErro("Usuário não encontrado");
 			}
 		});
 	}

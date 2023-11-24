@@ -7,7 +7,7 @@ public class UsuarioController {
 
 	public boolean login(LoginDTO data) {
 		// TODO: r: consultar model para verificar dados e retornar
-		return true;
+		return false;
 	}
 
 	public boolean cadastrar(CadastroDTO data) {

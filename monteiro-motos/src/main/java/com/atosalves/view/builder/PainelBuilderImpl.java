@@ -1,6 +1,7 @@
 package com.atosalves.view.builder;
 
 import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.componentes.DataCaixa;
 import com.atosalves.view.componentes.SenhaCaixa;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
@@ -62,6 +63,13 @@ public class PainelBuilderImpl implements PainelBuilder {
 		posicionador.posicionarComponente(botao);
 		tela.add(botao);
 
+		return this;
+	}
+
+	@Override
+	public PainelBuilder setDataCaixa(DataCaixa dataCaixa) {
+		tela.add(dataCaixa);
+		posicionador.posicionarComponente(dataCaixa);
 		return this;
 	}
 
