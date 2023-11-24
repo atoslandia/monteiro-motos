@@ -6,7 +6,9 @@ import javax.swing.JButton;
 
 public class Botao extends JButton implements Componente {
 
-	public Botao() {
+	public Botao(String titulo) {
+		setText(titulo);
+		setToolTipText(titulo);
 		setBackground(Tema.AMARELO);
 		setForeground(Tema.PRETO);
 		setFont(Tema.FONTE_FORTE);

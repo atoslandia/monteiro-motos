@@ -1,6 +1,6 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.view.builder.ConstrutorPainel;
+import com.atosalves.view.builder.PainelBuilderImpl;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.Graphics;
@@ -12,21 +12,22 @@ import lombok.Setter;
 // TODO implementar o template method quando for finalizar a estilização
 public abstract class PainelPadrao extends JPanel {
 
-	protected ComponentesFactory fabrica;
-	protected ConstrutorPainel construtor;
-
 	@Setter
 	private Image fundo;
 
 	public PainelPadrao() {
 		setLayout(null);
-
-		fabrica = new ComponentesFactory();
-		construtor = new ConstrutorPainel(this);
-		construirComponentes();
+		construirComponentes(new ComponentesFactory(), new PainelBuilderImpl(this));
 	}
 
-	protected abstract void construirComponentes();
+	protected void construirComponentes(ComponentesFactory fabrica, PainelBuilderImpl builder) {
+		inicializarComponentes(fabrica);
+		montarComponentes(builder);
+	}
+
+	protected abstract void inicializarComponentes(ComponentesFactory fabrica);
+
+	protected abstract PainelPadrao montarComponentes(PainelBuilderImpl construtor);
 
 	protected void setPainel(PainelPadrao painel) {
 		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);

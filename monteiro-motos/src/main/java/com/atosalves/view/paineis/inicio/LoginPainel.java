@@ -2,22 +2,24 @@ package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
+import com.atosalves.view.builder.PainelBuilderImpl;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
 import com.atosalves.view.paineis.PainelPadrao;
 import com.atosalves.view.paineis.menu.InicioMenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class LoginPainel extends PainelPadrao {
 
-	private CaixaTexto email;
-	private CaixaSenha senha;
-
+	private TextoCaixa email;
+	private SenhaCaixa senha;
 	private TipoUsuarioCombo tipoUsuarioCombo;
 
 	private Botao entrar;
 	private Botao cadastrar;
 
 	public LoginPainel() {
+		super();
 		setFundo(Tema.FUNDO_LOGIN);
 		botaoEntrar();
 		botaoCadastrar();
@@ -51,20 +53,23 @@ public class LoginPainel extends PainelPadrao {
 	}
 
 	@Override
-	protected void construirComponentes() {
-		this.email = fabrica.criarCaixaTexto();
-		this.senha = fabrica.criarCaixaSenha();
-		this.tipoUsuarioCombo = fabrica.criarComboTipoUsuario();
-		this.entrar = fabrica.criarBotao();
-		this.cadastrar = fabrica.criarBotao();
+	protected void inicializarComponentes(ComponentesFactory factory) {
+		this.email = factory.criarCaixaTexto();
+		this.senha = factory.criarCaixaSenha();
+		this.tipoUsuarioCombo = factory.criarComboTipoUsuario();
+		this.entrar = factory.criarBotao("ENTRAR");
+		this.cadastrar = factory.criarBotao("CADASTRAR");
+	}
 
-		construtor
-			.texto("MONTEIRO MOTOS", Tema.FONTE_MUITO_FORTE)
-			.caixaTexto("EMAIL:", email)
-			.senhaCaixa("SENHA:", senha)
-			.comboBox(tipoUsuarioCombo)
-			.botao("ENTRAR", entrar)
-			.botao("CADASTRAR", cadastrar)
+	@Override
+	protected PainelPadrao montarComponentes(PainelBuilderImpl builder) {
+		return builder
+			.setTexto("MONTEIRO MOTOS", Tema.FONTE_MUITO_FORTE)
+			.setTextoCaixa("EMAIL", email)
+			.setSenhaCaixa(senha)
+			.setTipoUsuarioCombo(tipoUsuarioCombo)
+			.setBotao(entrar)
+			.setBotao(cadastrar)
 			.construir();
 	}
 }

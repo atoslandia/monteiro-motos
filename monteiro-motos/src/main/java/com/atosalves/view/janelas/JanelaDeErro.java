@@ -1,6 +1,7 @@
 package com.atosalves.view.janelas;
 
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.util.Tema;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.text.ParseException;
@@ -31,7 +32,7 @@ public class JanelaDeErro extends Janela {
 	}
 
 	private void menssagemDeErro(String menssagemDeErro) {
-		var texto = fabrica.criarTexto(menssagemDeErro);
+		var texto = fabrica.criarTexto(menssagemDeErro, Tema.FONTE_FORTE);
 		texto.setBounds(0, 0, 300, 100);
 		add(texto);
 	}

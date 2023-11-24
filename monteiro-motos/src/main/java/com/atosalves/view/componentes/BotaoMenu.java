@@ -5,7 +5,8 @@ import java.awt.Graphics;
 
 public class BotaoMenu extends Botao {
 
-	public BotaoMenu() {
+	public BotaoMenu(String titulo) {
+		super(titulo);
 		setFont(Tema.FONTE_MUITO_FORTE);
 		setForeground(Tema.AMARELO);
 		setBackground(Tema.PRETO);
