@@ -1,62 +1,38 @@
 package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.builder.PainelBuilderImpl;
-import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.paineis.PainelPadrao;
-import com.atosalves.view.paineis.inicio.LoginPainel;
+import com.atosalves.view.paineis.ConstrutorPainel;
+import com.atosalves.view.paineis.Painel;
+import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class CorridasMenuPainel extends PainelPadrao {
+public class CorridasMenuPainel extends ConstrutorPainel {
 
-	private Botao inicioMenu;
-	private Botao corridasMenu;
-	private Botao editarMenu;
-	private Botao sair;
-
-	public CorridasMenuPainel() {
-		corridasMenu.setBounds(199, 300, 345, 80);
-		corridasMenu.setEnabled(false);
-
-		inicioMenu.setBounds(0, 300, 200, 80);
-		editarMenu.setBounds(543, 300, 210, 80);
-
-		sair.setBounds(630, 10, 100, 35);
-
-		inicioMenu();
-		editarMenu();
-		sair();
-	}
-
-	private void editarMenu() {
-		editarMenu.aoClicar(() -> setPainel(new EditarMenuPainel()));
-	}
-
-	private void inicioMenu() {
-		inicioMenu.aoClicar(() -> setPainel(new InicioMenuPainel()));
-	}
-
-	private void sair() {
-		sair.aoClicar(() -> setPainel(new LoginPainel()));
+	public CorridasMenuPainel(ComponentesFactory factory) {
+		super(factory);
 	}
 
 	@Override
-	protected void inicializarComponentes(ComponentesFactory fabrica) {
-		this.inicioMenu = fabrica.criarBotaoMenu("INICIO");
-		this.corridasMenu = fabrica.criarBotaoMenu("CORRIDAS");
-		this.editarMenu = fabrica.criarBotaoMenu("EDITAR");
-
-		this.sair = fabrica.criarBotao("SAIR");
-	}
+	protected void inicializarComponentes() {}
 
 	@Override
-	protected PainelPadrao montarComponentes(PainelBuilderImpl construtor) {
-		return construtor
+	public Painel construirPainel() {
+		Painel painel = new PainelBuilderImpl()
 			.setTexto("CORRIDAS", Tema.FONTE_MUITO_FORTE)
-			.setBotao(inicioMenu)
-			.setBotao(corridasMenu)
-			.setBotao(editarMenu)
-			.setBotao(sair)
+			.setBotaoMenu("INICIO")
+			.setBotaoMenu("CORRIDAS")
+			.setBotaoMenu("EDITAR")
+			.setBotao("SAIR")
 			.construir();
+
+		painel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
+		painel.getBotao("CORRIDAS").setEnabled(false);
+
+		painel.getBotao("INICIO").setBounds(0, 300, 200, 80);
+		painel.getBotao("EDITAR").setBounds(543, 300, 210, 80);
+
+		painel.getBotao("SAIR").setBounds(630, 10, 100, 35);
+
+		return painel;
 	}
 }

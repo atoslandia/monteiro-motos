@@ -1,13 +1,13 @@
 package com.atosalves.view.paineis.depoisdomenu;
 
-import com.atosalves.view.builder.PainelBuilderImpl;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.paineis.PainelPadrao;
+import com.atosalves.view.paineis.Painel;
+import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class DepositarSaldo extends PainelPadrao {
+public class DepositarSaldo extends Painel {
 
 	private TextoCaixa valor;
 	private Botao depositar;
@@ -21,7 +21,7 @@ public class DepositarSaldo extends PainelPadrao {
 	}
 
 	@Override
-	protected PainelPadrao montarComponentes(PainelBuilderImpl construtor) {
+	protected Painel montarComponentes(PainelBuilderImpl construtor) {
 		return construtor
 			.setTexto("DEPOSITAR SALDO", Tema.FONTE_MUITO_FORTE)
 			.setTextoCaixa("VALOR", valor)

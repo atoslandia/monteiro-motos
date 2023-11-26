@@ -1,4 +1,4 @@
-package com.atosalves.view.builder;
+package com.atosalves.view.paineis.painelbuilder;
 
 import javax.swing.JComponent;
 

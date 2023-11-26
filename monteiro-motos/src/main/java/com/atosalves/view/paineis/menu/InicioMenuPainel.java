@@ -1,84 +1,43 @@
 package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.builder.PainelBuilderImpl;
-import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.paineis.PainelPadrao;
-import com.atosalves.view.paineis.depoisdomenu.DepositarSaldo;
-import com.atosalves.view.paineis.inicio.LoginPainel;
+import com.atosalves.view.paineis.ConstrutorPainel;
+import com.atosalves.view.paineis.Painel;
+import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class InicioMenuPainel extends PainelPadrao {
+public class InicioMenuPainel extends ConstrutorPainel {
 
-	private Botao solicitarCorrida;
-	private Botao depositar;
-	private Botao caixa;
-
-	private Botao inicioMenu;
-	private Botao corridasMenu;
-	private Botao editarMenu;
-
-	private Botao sair;
-
-	public InicioMenuPainel() {
-		inicioMenu.setBounds(0, 300, 200, 80);
-		inicioMenu.setEnabled(false);
-
-		corridasMenu.setBounds(199, 300, 345, 80);
-		editarMenu.setBounds(543, 300, 210, 80);
-
-		sair.setBounds(630, 10, 100, 35);
-
-		botaoDepositar();
-		corridasMenu();
-		editarMenu();
-		sair();
-	}
-
-	private void botaoDepositar() {
-		depositar.aoClicar(() -> {
-			setPainel(new DepositarSaldo());
-		});
-	}
-
-	private void corridasMenu() {
-		corridasMenu.aoClicar(() -> setPainel(new CorridasMenuPainel()));
-	}
-
-	private void editarMenu() {
-		editarMenu.aoClicar(() -> setPainel(new EditarMenuPainel()));
-	}
-
-	private void sair() {
-		sair.aoClicar(() -> setPainel(new LoginPainel()));
+	public InicioMenuPainel(ComponentesFactory factory) {
+		super(factory);
 	}
 
 	@Override
-	protected void inicializarComponentes(ComponentesFactory fabrica) {
-		this.solicitarCorrida = fabrica.criarBotao("SOLICITAR CORRIDA");
-		this.depositar = fabrica.criarBotao("DEPOSITAR");
-		this.caixa = fabrica.criarBotao("HISTÓRICO DE COMPRAS");
-
-		this.inicioMenu = fabrica.criarBotaoMenu("INICIO");
-		this.corridasMenu = fabrica.criarBotaoMenu("CORRIDAS");
-		this.editarMenu = fabrica.criarBotaoMenu("EDITAR");
-
-		this.sair = fabrica.criarBotao("SAIR");
-	}
+	protected void inicializarComponentes() {}
 
 	@Override
-	protected PainelPadrao montarComponentes(PainelBuilderImpl construtor) {
-		return construtor
+	public Painel construirPainel() {
+		Painel painel = new PainelBuilderImpl()
 			.setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE)
 			// TODO: se for passageiro
-			.setBotao(solicitarCorrida)
-			.setBotao(depositar)
-			.setBotao(caixa)
+			.setBotao("SOLICITAR CORRIDA")
+			.setBotao("DEPOSITAR")
+			.setBotao("EXTRATO")
 			// menu
-			.setBotao(inicioMenu)
-			.setBotao(corridasMenu)
-			.setBotao(editarMenu)
-			.setBotao(sair)
+			.setBotaoMenu("INICIO")
+			.setBotaoMenu("CORRIDAS")
+			.setBotaoMenu("EDITAR")
+			.setBotao("SAIR")
 			.construir();
+
+		painel.getBotao("INICIO").setBounds(0, 300, 200, 80);
+		painel.getBotao("INICIO").setEnabled(false);
+
+		painel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
+		painel.getBotao("EDITAR").setBounds(543, 300, 210, 80);
+
+		painel.getBotao("SAIR").setBounds(630, 10, 100, 35);
+
+		return painel;
 	}
 }

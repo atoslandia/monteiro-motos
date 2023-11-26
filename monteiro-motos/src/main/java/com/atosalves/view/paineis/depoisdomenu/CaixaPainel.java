@@ -1,13 +1,13 @@
 package com.atosalves.view.paineis.depoisdomenu;
 
-import com.atosalves.view.builder.PainelBuilderImpl;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
-import com.atosalves.view.paineis.PainelPadrao;
+import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.menu.InicioMenuPainel;
+import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class CaixaPainel extends PainelPadrao {
+public class CaixaPainel extends Painel {
 
 	private Botao voltar;
 
@@ -25,7 +25,7 @@ public class CaixaPainel extends PainelPadrao {
 	}
 
 	@Override
-	protected PainelPadrao montarComponentes(PainelBuilderImpl construtor) {
+	protected Painel montarComponentes(PainelBuilderImpl construtor) {
 		return construtor.setTexto("*VALOR*", Tema.FONTE_MUITO_FORTE).setBotao(voltar).construir();
 	}
 }
