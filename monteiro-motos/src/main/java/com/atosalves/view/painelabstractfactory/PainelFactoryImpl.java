@@ -1,18 +1,16 @@
 package com.atosalves.view.painelabstractfactory;
 
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.inicio.CadastroEditarUsuarioPainel;
-import com.atosalves.view.paineis.inicio.LoginPainel;
-import com.atosalves.view.paineis.menu.CorridasMenuPainel;
-import com.atosalves.view.paineis.menu.EditarMenuPainel;
-import com.atosalves.view.paineis.menu.InicioMenuPainel;
+import com.atosalves.view.paineis.depoisdomenu.*;
+import com.atosalves.view.paineis.inicio.*;
+import com.atosalves.view.paineis.menu.*;
 
 public class PainelFactoryImpl implements PainelFactory {
 
-	private ComponentesFactory factory;
+	private ComponentesFactoryImpl factory;
 
-	public PainelFactoryImpl(ComponentesFactory factory) {
+	public PainelFactoryImpl(ComponentesFactoryImpl factory) {
 		this.factory = factory;
 	}
 
@@ -39,5 +37,20 @@ public class PainelFactoryImpl implements PainelFactory {
 	@Override
 	public Painel editarMenuPainel() {
 		return new EditarMenuPainel(factory).construirPainel();
+	}
+
+	@Override
+	public Painel extratoPainel() {
+		return new ExtratoPainel(factory).construirPainel();
+	}
+
+	@Override
+	public Painel depositarSaldo() {
+		return new DepositarSaldo(factory).construirPainel();
+	}
+
+	@Override
+	public Painel adicionarPainel() {
+		return new AdicionarCreditoPainel(factory).construirPainel();
 	}
 }

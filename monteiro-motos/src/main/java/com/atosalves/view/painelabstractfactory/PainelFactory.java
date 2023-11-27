@@ -8,4 +8,7 @@ public interface PainelFactory {
 	Painel inicioMenuPainel();
 	Painel corridasMenuPainel();
 	Painel editarMenuPainel();
+	Painel extratoPainel();
+	Painel depositarSaldo();
+	Painel adicionarPainel();
 }

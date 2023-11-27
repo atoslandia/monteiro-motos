@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.inicio;
 
 import com.atosalves.view.componentes.*;
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.ConstrutorPainel;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
@@ -9,7 +9,7 @@ import com.atosalves.view.util.Tema;
 
 public class LoginPainel extends ConstrutorPainel {
 
-	public LoginPainel(ComponentesFactory factory) {
+	public LoginPainel(ComponentesFactoryImpl factory) {
 		super(factory);
 	}
 
@@ -19,7 +19,7 @@ public class LoginPainel extends ConstrutorPainel {
 
 	@Override
 	protected void inicializarComponentes() {
-		ComponentesFactory factory = getFactory();
+		ComponentesFactoryImpl factory = getFactory();
 
 		this.email = factory.criarCaixaTexto();
 		this.senha = factory.criarCaixaSenha();

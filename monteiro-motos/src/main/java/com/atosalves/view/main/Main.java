@@ -1,6 +1,6 @@
-package com.atosalves;
+package com.atosalves.view.main;
 
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.janelas.JanelaPrincipal;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.painelabstractfactory.PainelFactory;
@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			ComponentesFactory componenetesFactory = new ComponentesFactory();
+			ComponentesFactoryImpl componenetesFactory = new ComponentesFactoryImpl();
 			PainelFactory painelFactory = new PainelFactoryImpl(componenetesFactory);
 
 			Painel loginPainel = painelFactory.loginPainel();
@@ -47,22 +47,6 @@ public class Main {
 					janela.setPainel(inicioMenuPainel);
 				});
 
-			// BOTOES INICIO
-			inicioMenuPainel
-				.getBotao("SAIR")
-				.aoClicar(() -> {
-					janela.setPainel(loginPainel);
-				});
-			inicioMenuPainel
-				.getBotao("CORRIDAS")
-				.aoClicar(() -> {
-					janela.setPainel(corridasMenuPainel);
-				});
-			inicioMenuPainel
-				.getBotao("EDITAR")
-				.aoClicar(() -> {
-					janela.setPainel(editarMenuPainel);
-				});
 			// BOTOES CORRIDAS
 			corridasMenuPainel
 				.getBotao("SAIR")

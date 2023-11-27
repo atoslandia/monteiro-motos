@@ -1,19 +1,19 @@
 package com.atosalves.view.paineis.depoisdomenu;
 
-import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.componentes.*;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.ConstrutorPainel;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class DepositarSaldo extends ConstrutorPainel {
+public class AdicionarCreditoPainel extends ConstrutorPainel {
 
-	private TextoCaixa valor;
-
-	public DepositarSaldo(ComponentesFactoryImpl factory) {
+	public AdicionarCreditoPainel(ComponentesFactoryImpl factory) {
 		super(factory);
 	}
+
+	private TextoCaixa valor;
 
 	@Override
 	protected void inicializarComponentes() {
@@ -24,9 +24,9 @@ public class DepositarSaldo extends ConstrutorPainel {
 	@Override
 	public Painel construirPainel() {
 		return new PainelBuilderImpl()
-			.setTexto("DEPOSITAR SALDO", Tema.FONTE_MUITO_FORTE)
+			.setTexto("ADICIONAR CRÉDITO", Tema.FONTE_MUITO_FORTE)
 			.setTextoCaixa("VALOR", valor)
-			.setBotao("DEPOSITAR")
+			.setBotao("DEFINIR")
 			.setBotao("VOLTAR")
 			.construir();
 	}

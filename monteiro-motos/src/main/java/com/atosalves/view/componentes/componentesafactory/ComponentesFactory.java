@@ -1,36 +1,19 @@
 package com.atosalves.view.componentes.componentesafactory;
 
-import com.atosalves.enums.TiposUsuario;
-import com.atosalves.view.componentes.*;
+import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.componentes.DataCaixa;
+import com.atosalves.view.componentes.SenhaCaixa;
+import com.atosalves.view.componentes.Texto;
+import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.componentes.TipoUsuarioCombo;
 import java.awt.Font;
 
-public class ComponentesFactory {
-
-	public SenhaCaixa criarCaixaSenha() {
-		return new SenhaCaixa();
-	}
-
-	public TextoCaixa criarCaixaTexto() {
-		return new TextoCaixa();
-	}
-
-	public Texto criarTexto(String texto, Font fonte) {
-		return new Texto(texto, fonte);
-	}
-
-	public DataCaixa criarDataCaixa() {
-		return new DataCaixa();
-	}
-
-	public TipoUsuarioCombo criarComboTipoUsuario() {
-		return new TipoUsuarioCombo(TiposUsuario.values());
-	}
-
-	public Botao criarBotao(String titulo) {
-		return new Botao(titulo);
-	}
-
-	public Botao criarBotaoMenu(String titulo) {
-		return new BotaoMenu(titulo);
-	}
+public interface ComponentesFactory {
+	SenhaCaixa criarCaixaSenha();
+	TextoCaixa criarCaixaTexto();
+	Texto criarTexto(String texto, Font fonte);
+	DataCaixa criarDataCaixa();
+	TipoUsuarioCombo criarComboTipoUsuario();
+	Botao criarBotao(String titulo);
+	Botao criarBotaoMenu(String titulo);
 }

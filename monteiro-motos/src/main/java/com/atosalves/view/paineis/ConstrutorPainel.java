@@ -1,19 +1,21 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import lombok.Data;
 
 @Data
 public abstract class ConstrutorPainel {
 
-	private ComponentesFactory factory;
+	private ComponentesFactoryImpl factory;
 
-	public ConstrutorPainel(ComponentesFactory factory) {
+	// TODO: acrescentar controller no construtor, para configurar o botão
+	// talvez precisará da refência :(
+	public ConstrutorPainel(ComponentesFactoryImpl factory) {
 		this.factory = factory;
 		inicializarComponentes();
 	}
 
-	public abstract Painel construirPainel();
-
 	protected abstract void inicializarComponentes();
+
+	public abstract Painel construirPainel();
 }

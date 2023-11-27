@@ -1,16 +1,16 @@
 package com.atosalves.view.janelas;
 
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.util.Tema;
 import javax.swing.JFrame;
 
 public class JanelaDeErro extends Janela {
 
-	private ComponentesFactory fabrica;
+	private ComponentesFactoryImpl fabrica;
 
 	public JanelaDeErro(String menssagemDeErro) {
 		super();
-		fabrica = new ComponentesFactory();
+		fabrica = new ComponentesFactoryImpl();
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

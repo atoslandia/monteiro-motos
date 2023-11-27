@@ -1,6 +1,6 @@
 package com.atosalves.view.paineis.menu;
 
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.ConstrutorPainel;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
@@ -8,7 +8,7 @@ import com.atosalves.view.util.Tema;
 
 public class EditarMenuPainel extends ConstrutorPainel {
 
-	public EditarMenuPainel(ComponentesFactory factory) {
+	public EditarMenuPainel(ComponentesFactoryImpl factory) {
 		super(factory);
 	}
 

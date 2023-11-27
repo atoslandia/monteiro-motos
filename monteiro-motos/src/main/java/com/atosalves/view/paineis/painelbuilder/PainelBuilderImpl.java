@@ -6,22 +6,23 @@ import com.atosalves.view.componentes.SenhaCaixa;
 import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.componentes.TipoUsuarioCombo;
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactory;
+import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
 import java.awt.Image;
+import javax.swing.JComponent;
 
 public class PainelBuilderImpl implements PainelBuilder {
 
 	private Painel painel;
-	private ComponentesFactory fabrica;
+	private ComponentesFactoryImpl fabrica;
 	private PosicionadorDeComponentes posicionador;
 
 	public PainelBuilderImpl() {
 		this.painel = new Painel();
 
-		this.fabrica = new ComponentesFactory();
+		this.fabrica = new ComponentesFactoryImpl();
 		this.posicionador = new PosicionadorDeComponentes();
 	}
 
@@ -53,7 +54,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 		Botao botao = fabrica.criarBotao(titulo);
 		posicionador.posicionarComponente(botao);
 
-		painel.getBotoes().put(titulo, botao);
+		painel.setBotao(titulo, botao);
 
 		painel.add(botao);
 		return this;
@@ -63,7 +64,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 		Botao botao = fabrica.criarBotaoMenu(titulo);
 		posicionador.posicionarComponente(botao);
 
-		painel.getBotoes().put(titulo, botao);
+		painel.setBotao(titulo, botao);
 
 		painel.add(botao);
 		return this;
@@ -92,5 +93,25 @@ public class PainelBuilderImpl implements PainelBuilder {
 	@Override
 	public Painel construir() {
 		return painel;
+	}
+
+	private class PosicionadorDeComponentes {
+
+		private int posicaoHorizontal = 10;
+		private int posicaoVertical = 5;
+
+		public void posicionarComponente(JComponent componente) {
+			int largura = 320;
+			int altura = 30;
+			componente.setBounds(posicaoHorizontal, posicaoVertical, largura, altura);
+			posicaoVertical += altura + 5;
+		}
+
+		public void posicionarComponenteComTitulo(JComponent componente, String titulo) {
+			int largura = componente.getFontMetrics(componente.getFont()).stringWidth(titulo) + 10;
+			int altura = componente.getFontMetrics(componente.getFont()).getHeight();
+			componente.setBounds(posicaoHorizontal, posicaoVertical, largura, altura);
+			posicaoVertical += altura + 5;
+		}
 	}
 }
