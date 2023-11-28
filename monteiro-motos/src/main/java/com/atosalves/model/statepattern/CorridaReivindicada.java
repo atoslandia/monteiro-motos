@@ -4,11 +4,11 @@ import com.atosalves.model.Corrida;
 
 import lombok.Getter;
 
-public class CorridaFinalizada extends CorridaState {
+public class CorridaReivindicada extends CorridaState{
 
-    public CorridaFinalizada(Corrida corrida) {
+    public CorridaReivindicada(Corrida corrida) {
         super(corrida);
-        nome = "FINALIZADA";
+        nome = "REIVINDICADA";
     }
 
     @Override
@@ -35,4 +35,6 @@ public class CorridaFinalizada extends CorridaState {
         throw new UnsupportedOperationException("Unimplemented method 'cancelarCorrida'");
     }
     
+
+
 }

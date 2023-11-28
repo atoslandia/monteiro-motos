@@ -45,7 +45,7 @@ public class Persistencia {
 		}
 	}
 
-	public void salvarCorridas(ArrayList<Corrida> corridas) throws Exception {
+	public void salvarCorridas(Map<String, ArrayList<Corrida>> corridas) throws Exception {
 		xs.addPermission(AnyTypePermission.ANY);
 		PrintWriter escrever = new PrintWriter(arquivo);
 		String xml = xs.toXML(corridas);
@@ -67,18 +67,24 @@ public class Persistencia {
 		return new HashMap<String,Usuario>();
 	}
 
-	public ArrayList<Corrida> carregarCorridas() throws RuntimeException {
+	public Map<String, ArrayList<Corrida>> carregarCorridas() throws RuntimeException {
+		Map<String, ArrayList<Corrida>> corridas = null;
 		if (arquivo.exists()) {
 			try {
 				FileReader ler = new FileReader(nomeDoArquivo);
 				xs.addPermission(AnyTypePermission.ANY);
-				ArrayList<Corrida> corridas = (ArrayList<Corrida>) xs.fromXML(ler);
+				corridas = (HashMap<String, ArrayList<Corrida>>) xs.fromXML(ler);
 				return corridas;	
 
 			} catch (FileNotFoundException e) {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return new ArrayList<>();
+		corridas = new HashMap<>();
+		corridas.put("PENDENTE", new ArrayList<>());
+		corridas.put("REIVINDICADA", new ArrayList<>());
+		corridas.put("FINALIZADA", new ArrayList<>());
+		corridas.put("CANCELADA", new ArrayList<>());
+		return corridas;
 	}
 }

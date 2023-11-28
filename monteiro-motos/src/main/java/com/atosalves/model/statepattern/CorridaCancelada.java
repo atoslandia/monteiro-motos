@@ -2,22 +2,26 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.model.Corrida;
 
-public class CorridaEmAndamento extends CorridaState{
+import lombok.Getter;
 
-    public CorridaEmAndamento(Corrida corrida) {
+
+public class CorridaCancelada  extends CorridaState{
+
+    public CorridaCancelada(Corrida corrida) {
         super(corrida);
+        nome = "CANCELADA";
     }
 
     @Override
-    public void acionarCorrida() {
+    public void solicitarCorrida() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'acionarCorrida'");
+        throw new UnsupportedOperationException("Unimplemented method 'solicitarCorrida'");
     }
 
     @Override
-    public void aceitarCorrida() {
+    public void finalizarCorrida() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aceitarCorrida'");
+        throw new UnsupportedOperationException("Unimplemented method 'finalizarCorrida'");
     }
 
     @Override
@@ -30,6 +34,6 @@ public class CorridaEmAndamento extends CorridaState{
     public void cancelarCorrida() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cancelarCorrida'");
-    }
+    }  
     
 }
