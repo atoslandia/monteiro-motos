@@ -1,10 +1,12 @@
 package com.atosalves.view.paineis;
 
 import com.atosalves.view.componentes.Botao;
+import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.HashMap;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import lombok.Setter;
 
 public class Painel extends JPanel {
@@ -25,6 +27,11 @@ public class Painel extends JPanel {
 
 	public void setBotao(String titulo, Botao botao) {
 		botoes.put(titulo, botao);
+	}
+
+	public void setPainel(Painel painel) {
+		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
+		janela.setPainel(painel);
 	}
 
 	@Override

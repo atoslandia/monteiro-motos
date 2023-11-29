@@ -1,34 +1,32 @@
 package com.atosalves.view.paineis.painelbuilder;
 
-import com.atosalves.view.componentes.Botao;
-import com.atosalves.view.componentes.DataCaixa;
-import com.atosalves.view.componentes.SenhaCaixa;
-import com.atosalves.view.componentes.Texto;
-import com.atosalves.view.componentes.TextoCaixa;
-import com.atosalves.view.componentes.TipoUsuarioCombo;
+import com.atosalves.view.componentes.*;
 import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 
 public class PainelBuilderImpl implements PainelBuilder {
 
 	private Painel painel;
-	private ComponentesFactoryImpl fabrica;
+
+	private ComponentesFactoryImpl factory;
 	private PosicionadorDeComponentes posicionador;
 
 	public PainelBuilderImpl() {
 		this.painel = new Painel();
 
-		this.fabrica = new ComponentesFactoryImpl();
+		this.factory = new ComponentesFactoryImpl();
 		this.posicionador = new PosicionadorDeComponentes();
 	}
 
 	@Override
 	public PainelBuilder setTexto(String titulo, Font fonte) {
-		Texto texto = fabrica.criarTexto(titulo, fonte);
+		Texto texto = factory.criarTexto(titulo, fonte);
 		posicionador.posicionarComponenteComTitulo(texto, titulo);
 		painel.add(texto);
 		return this;
@@ -50,9 +48,21 @@ public class PainelBuilderImpl implements PainelBuilder {
 		return this;
 	}
 
-	public PainelBuilder setBotao(String titulo) {
-		Botao botao = fabrica.criarBotao(titulo);
+	@Override
+	public PainelBuilder setBotao(String titulo, Runnable... runnables) {
+		Botao botao = factory.criarBotao(titulo);
 		posicionador.posicionarComponente(botao);
+
+		for (Runnable runnable : runnables) {
+			botao.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						runnable.run();
+					}
+				}
+			);
+		}
 
 		painel.setBotao(titulo, botao);
 
@@ -60,9 +70,21 @@ public class PainelBuilderImpl implements PainelBuilder {
 		return this;
 	}
 
-	public PainelBuilder setBotaoMenu(String titulo) {
-		Botao botao = fabrica.criarBotaoMenu(titulo);
+	@Override
+	public PainelBuilder setBotaoMenu(String titulo, Runnable... runnables) {
+		Botao botao = factory.criarBotaoMenu(titulo);
 		posicionador.posicionarComponente(botao);
+
+		for (Runnable runnable : runnables) {
+			botao.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						runnable.run();
+					}
+				}
+			);
+		}
 
 		painel.setBotao(titulo, botao);
 
