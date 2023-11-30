@@ -3,7 +3,7 @@ package com.atosalves.view.paineis.factorymethod.inicio;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.InicioMenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
@@ -16,6 +16,15 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 	private TipoUsuarioCombo comboBox;
 
 	private Painel cadastroPainel;
+
+	private void cadastrarBotao() {
+		// TODO: enviar dados por DTO pro controller
+		cadastroPainel.setPainel(new MenuPainelCreator().criarPainel());
+	}
+
+	private void voltarBotao() {
+		cadastroPainel.setPainel(new LoginPainelCreator().criarPainel());
+	}
 
 	@Override
 	public void inicializarComponentes() {
@@ -37,18 +46,8 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 				.setSenhaCaixa(senhaCaixa)
 				.setTipoUsuarioCombo(comboBox)
 				.setDataCaixa(dataCaixa)
-				.setBotao(
-					"CADASTRAR",
-					() -> {
-						cadastroPainel.setPainel(new InicioMenuPainelCreator().criarPainel());
-					}
-				)
-				.setBotao(
-					"VOLTAR",
-					() -> {
-						cadastroPainel.setPainel(new LoginPainelCreator().criarPainel());
-					}
-				)
+				.setBotao("CADASTRAR", this::cadastrarBotao)
+				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
 	}
 

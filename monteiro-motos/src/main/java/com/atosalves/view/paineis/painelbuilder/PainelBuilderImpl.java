@@ -49,20 +49,18 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
-	public PainelBuilder setBotao(String titulo, Runnable... runnables) {
+	public PainelBuilder setBotao(String titulo, Runnable runnable) {
 		Botao botao = factory.criarBotao(titulo);
 		posicionador.posicionarComponente(botao);
 
-		for (Runnable runnable : runnables) {
-			botao.addActionListener(
-				new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						runnable.run();
-					}
+		botao.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					runnable.run();
 				}
-			);
-		}
+			}
+		);
 
 		painel.setBotao(titulo, botao);
 
@@ -71,20 +69,17 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
-	public PainelBuilder setBotaoMenu(String titulo, Runnable... runnables) {
+	public PainelBuilder setBotaoMenu(String titulo, Runnable runnable) {
 		Botao botao = factory.criarBotaoMenu(titulo);
-		posicionador.posicionarComponente(botao);
 
-		for (Runnable runnable : runnables) {
-			botao.addActionListener(
-				new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						runnable.run();
-					}
+		botao.addActionListener(
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					runnable.run();
 				}
-			);
-		}
+			}
+		);
 
 		painel.setBotao(titulo, botao);
 
@@ -109,6 +104,13 @@ public class PainelBuilderImpl implements PainelBuilder {
 	@Override
 	public PainelBuilder setImagem(Image imagem) {
 		painel.setFundo(imagem);
+		return this;
+	}
+
+	@Override
+	public PainelBuilder addPainel(Painel painelMenor) {
+		painelMenor.setBounds(0, 0, 768, 412);
+		painel.add(painelMenor);
 		return this;
 	}
 

@@ -9,10 +9,11 @@ public interface PainelBuilder {
 	PainelBuilder setTexto(String titulo, Font fonte);
 	PainelBuilder setTextoCaixa(String titulo, TextoCaixa textoCaixa);
 	PainelBuilder setSenhaCaixa(SenhaCaixa senhaCaixa);
-	PainelBuilder setBotao(String titulo, Runnable... runnables);
-	PainelBuilder setBotaoMenu(String titulo, Runnable... runnables);
+	PainelBuilder setBotao(String titulo, Runnable runnable);
+	PainelBuilder setBotaoMenu(String titulo, Runnable runnable);
 	PainelBuilder setDataCaixa(DataCaixa dataCaixa);
 	PainelBuilder setTipoUsuarioCombo(TipoUsuarioCombo tipoUsuarioCombo);
 	PainelBuilder setImagem(Image imagem);
+	PainelBuilder addPainel(Painel painel);
 	Painel construir();
 }
