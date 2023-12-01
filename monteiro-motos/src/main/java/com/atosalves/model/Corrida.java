@@ -1,6 +1,7 @@
 package com.atosalves.model;
 
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import com.atosalves.observerpattern.Observavel;
@@ -22,13 +23,13 @@ public class Corrida extends Observavel{
 
 	private Mototaxista mototaxista;
 	private Passageiro passageiro;
-	private float valor;
+	private final float valor = 5.0f;
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
 
-	public Corrida(Passageiro passageiro, Endereco pontoDeEncontro, Endereco destino) {
+	public Corrida(UsuarioDTO passageiro, Endereco pontoDeEncontro, Endereco destino) {
 		this.id = System.currentTimeMillis();
-		this.passageiro = passageiro;
+		this.passageiro = (Passageiro) passageiro.usuario();
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
 		this.estado = new CorridaPendente(this);

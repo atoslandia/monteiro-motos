@@ -106,17 +106,17 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 
 	
-	public static void main(String[] args) {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		Passageiro p = new Passageiro("Robson", null, null, null);
-		Mototaxista m = new Mototaxista("Atos", null, null, null);
-		gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-		gerenciadorDeCorrida.reivindicarCorrida(m);
-		gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-		gerenciadorDeCorrida.cancelarCorrida();
-		gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-		// gerenciadorDeCorrida.cancelarCorrida();
-	}
+	// public static void main(String[] args) {
+	// 	GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+	// 	Passageiro p = new Passageiro("Robson", null, null, null);
+	// 	Mototaxista m = new Mototaxista("Atos", null, null, null);
+	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
+	// 	gerenciadorDeCorrida.reivindicarCorrida(m);
+	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
+	// 	gerenciadorDeCorrida.cancelarCorrida();
+	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
+	// 	// gerenciadorDeCorrida.cancelarCorrida();
+	// }
 
 
 
