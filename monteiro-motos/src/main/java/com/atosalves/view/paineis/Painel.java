@@ -1,5 +1,6 @@
 package com.atosalves.view.paineis;
 
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.Graphics;
@@ -14,24 +15,34 @@ public class Painel extends JPanel {
 	@Setter
 	private Image fundo;
 
-	private HashMap<String, Botao> botoes;
+	private HashMap<String, Botao> hashBotoes;
 
 	public Painel() {
 		setLayout(null);
-		botoes = new HashMap<>();
+		hashBotoes = new HashMap<>();
 	}
 
 	public Botao getBotao(String titulo) {
-		return botoes.get(titulo);
+		return hashBotoes.get(titulo);
 	}
 
 	public void setBotao(String titulo, Botao botao) {
-		botoes.put(titulo, botao);
+		hashBotoes.put(titulo, botao);
 	}
 
 	public void setPainel(Painel painel) {
-		JanelaPrincipal janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
+		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
 		janela.setPainel(painel);
+	}
+
+	public void setLoginDTO(LoginDTO data) {
+		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
+		janela.setLoginDTO(data);
+	}
+
+	public void sairLoginDTO() {
+		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
+		janela.setLoginDTO(null);
 	}
 
 	@Override

@@ -108,6 +108,13 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
+	public PainelBuilder setListaDeItems(Object[] lista) {
+		ListaDeItems listaDeItens = factory.criarListaDeItems(lista);
+		painel.add(listaDeItens);
+		return this;
+	}
+
+	@Override
 	public PainelBuilder addPainel(Painel painelMenor) {
 		painelMenor.setBounds(0, 0, 768, 412);
 		painel.add(painelMenor);

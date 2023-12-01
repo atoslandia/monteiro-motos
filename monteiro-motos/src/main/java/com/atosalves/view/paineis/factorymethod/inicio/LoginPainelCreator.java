@@ -1,5 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.inicio;
 
+import com.atosalves.controller.UsuarioController;
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -15,9 +17,25 @@ public class LoginPainelCreator implements PainelCreator {
 
 	private Painel loginPainel;
 
+	private LoginDTO getDados() {
+		return new LoginDTO(
+			email.pegarCampo(),
+			senha.pegarCampo(),
+			tipoUsuarioCombo.pegarSelecionado()
+		);
+	}
+
 	private void loginBotao() {
-		// TODO: enviar dados por DTO pro controller
-		loginPainel.setPainel(new MenuPainelCreator().criarPainel());
+		var usuarioController = new UsuarioController();
+		LoginDTO dados = getDados();
+
+		if (usuarioController.login(dados)) {
+			loginPainel.setLoginDTO(dados);
+			loginPainel.setPainel(new MenuPainelCreator().criarPainel());
+		} else {
+			// TODO: apagar depois
+			System.out.println("deu errado");
+		}
 	}
 
 	private void cadastroBotao() {

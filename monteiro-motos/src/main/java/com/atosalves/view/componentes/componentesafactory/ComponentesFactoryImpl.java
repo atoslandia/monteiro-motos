@@ -40,4 +40,9 @@ public class ComponentesFactoryImpl implements ComponentesFactory {
 	public Botao criarBotaoMenu(String titulo) {
 		return new BotaoMenu(titulo);
 	}
+
+	@Override
+	public ListaDeItems criarListaDeItems(Object[] lista) {
+		return new ListaDeItems(lista);
+	}
 }

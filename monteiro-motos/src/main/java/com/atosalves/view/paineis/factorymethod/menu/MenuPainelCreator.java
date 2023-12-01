@@ -4,6 +4,7 @@ import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainelCreator;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroCreator;
 import com.atosalves.view.paineis.factorymethod.inicio.LoginPainelCreator;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
@@ -17,7 +18,7 @@ public class MenuPainelCreator implements PainelCreator {
 	private Painel editarPainel;
 
 	private void solicitarCorridaBotao() {
-		System.out.println();
+		menuPainel.setPainel(new PontoDeEncontroCreator().criarPainel());
 	}
 
 	private void depositarBotao() {
@@ -50,6 +51,7 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void sairBotao() {
+		menuPainel.sairLoginDTO();
 		menuPainel.setPainel(new LoginPainelCreator().criarPainel());
 	}
 
@@ -97,6 +99,7 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void corridasPainel() {
+		Object[] a = { "a", "b", "c" };
 		corridasPainel =
 			new PainelBuilderImpl()
 				.setTexto("CORRIDAS", Tema.FONTE_MUITO_FORTE)
@@ -104,6 +107,7 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotaoMenu("CORRIDAS", this::corridasBotao)
 				.setBotaoMenu("EDITAR", this::editarBotao)
 				.setBotao("SAIR", this::sairBotao)
+				.setListaDeItems(a)
 				.construir();
 
 		corridasPainel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);

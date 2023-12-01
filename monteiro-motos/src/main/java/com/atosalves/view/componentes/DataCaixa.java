@@ -33,7 +33,10 @@ public class DataCaixa extends JDatePickerImpl {
 	public LocalDate pegarCampo() {
 		Date selectedDate = (Date) model.getValue();
 		return selectedDate != null
-			? selectedDate.toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate()
+			? selectedDate
+				.toInstant()
+				.atZone(Calendar.getInstance().getTimeZone().toZoneId())
+				.toLocalDate()
 			: null;
 	}
 

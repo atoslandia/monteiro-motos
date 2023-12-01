@@ -14,6 +14,7 @@ public interface PainelBuilder {
 	PainelBuilder setDataCaixa(DataCaixa dataCaixa);
 	PainelBuilder setTipoUsuarioCombo(TipoUsuarioCombo tipoUsuarioCombo);
 	PainelBuilder setImagem(Image imagem);
+	PainelBuilder setListaDeItems(Object[] lista);
 	PainelBuilder addPainel(Painel painel);
 	Painel construir();
 }
