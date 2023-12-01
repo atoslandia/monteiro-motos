@@ -3,24 +3,14 @@ package com.atosalves.dao;
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
 import com.atosalves.dao.interfaceDAO.DAO;
-import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.Persistencia;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
-import com.atosalves.dto.PassageiroBoletoDTO;
-import com.atosalves.dto.UpdateCorridaDTO;
-import com.atosalves.dto.UpdateUsuarioDTO;
-import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
-import com.atosalves.model.Usuario;
-import com.atosalves.model.facadepattern.MensageiroFacade;
-import com.atosalves.observerpattern.Observador;
-import com.atosalves.observerpattern.Observavel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,17 +69,17 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 	@Override
 	public List<Corrida> buscarCorridasEmAndamento() {
-		return corridas.get("em andamento".toUpperCase());
+		return corridas.get("reivindicada".toUpperCase());
 	}
 
 	@Override
 	public List<Corrida> buscarCorridasCanceladas() {
-		return corridas.get("canceladas".toUpperCase());
+		return corridas.get("cancelada".toUpperCase());
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasReivindicadas() {
-		return corridas.get("reivindicadas".toUpperCase());
+	public List<Corrida> buscarCorridasFinalizadas() {
+		return corridas.get("finalizada".toUpperCase());
 	}
 
 	@Override

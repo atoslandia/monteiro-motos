@@ -21,7 +21,6 @@ public class GerenciadorDeCorrida implements Observador {
 
     @Override
     public void update(CorridaEventoDTO corrida) {
-        //TODO r: Pegar a corrida pelo id usando o estado antigo dela e mudando de array ultilizando o estado novo
         CorridaDTO corridaDTO = new CorridaDTO(corrida.corrida());
         corridaDAO.update(corridaDTO);
         corridaDAO.moverCorrida(corrida);
@@ -36,7 +35,6 @@ public class GerenciadorDeCorrida implements Observador {
         }else{
             System.out.println("Cancele a corrida para poder solicitar outra");
         }
-        
     }
 
     public void reivindicarCorrida(Mototaxista mototaxista){
@@ -46,5 +44,11 @@ public class GerenciadorDeCorrida implements Observador {
     public void cancelarCorrida(){
         corrida.cancelarCorrida();
     }
+
+    public void finalizarCorrida(){
+        corrida.finalizarCorrida();
+        corrida.getPassageiro().pagarCorrida(corrida.getValor());
+    }
+
 
 }

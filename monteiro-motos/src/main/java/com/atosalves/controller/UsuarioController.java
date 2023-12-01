@@ -1,17 +1,25 @@
 package com.atosalves.controller;
 
+import com.atosalves.controller.factory.FabricaSimplesUsuarios;
+import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.model.Usuario;
 
 public class UsuarioController {
+	UsuarioDAO usuarioDAO = new UsuarioDAO();
 
 	public boolean login(LoginDTO data) {
-		// TODO: r: consultar model para verificar dados e retornar
+		if(usuarioDAO.recuperarPeloId(data.email()) != null){
+			return true;
+		}
 		return false;
 	}
 
 	public boolean cadastrar(CadastroDTO data) {
-		// TODO: r: consultar model para verificar dados e retornar
-		return true;
+		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
+		UsuarioDTO usuarioDTO = new UsuarioDTO(fabricaSimplesUsuarios.criaUsuario(data.tipo()));
+		return usuarioDAO.cadastrar(usuarioDTO);
 	}
 }
