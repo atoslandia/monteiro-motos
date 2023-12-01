@@ -19,7 +19,16 @@ public class UsuarioController {
 
 	public boolean cadastrar(CadastroDTO data) {
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
-		UsuarioDTO usuarioDTO = new UsuarioDTO(fabricaSimplesUsuarios.criaUsuario(data.tipo()));
+		Usuario usuario =  fabricaSimplesUsuarios.criaUsuario(data.tipo());
+		UsuarioDTO usuarioDTO = new UsuarioDTO(tranferirDados(data, usuario));
 		return usuarioDAO.cadastrar(usuarioDTO);
+	}
+
+	private Usuario tranferirDados(CadastroDTO dados, Usuario entidade){
+		entidade.setDataNascimento(dados.dataNascimento());
+		entidade.setEmail(dados.email());
+		entidade.setNome(dados.nome());
+		entidade.setSenha(dados.senha());
+		return entidade;
 	}
 }
