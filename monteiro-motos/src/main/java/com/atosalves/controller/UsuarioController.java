@@ -5,8 +5,6 @@ import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UsuarioDTO;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
 
 public class UsuarioController {
@@ -19,15 +17,9 @@ public class UsuarioController {
 		return false;
 	}
 
-	public boolean cadastrarPassageiro(CadastroDTO data) {
-		Passageiro usuario = new Passageiro();
-		tranferirDados(data, usuario);
-		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
-		return usuarioDAO.cadastrar(usuarioDTO);
-	}
-
-	public boolean cadastrarMototaxista(CadastroDTO data){
-		Mototaxista usuario = new Mototaxista();
+	public boolean cadastrar(CadastroDTO data) {
+		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
+		Usuario usuario = fabricaSimplesUsuarios.criaUsuario(data.tipo());
 		tranferirDados(data, usuario);
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		return usuarioDAO.cadastrar(usuarioDTO);
