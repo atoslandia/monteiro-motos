@@ -10,8 +10,10 @@ public class FabricaSimplesUsuarios {
     public Usuario criaUsuario(TiposUsuario tipo){
 
         if(tipo.equals(TiposUsuario.MOTOTAXISTA)){
-            return new Mototaxista();
+            Mototaxista moto = new Mototaxista();
+            return moto;
         }
-        return new Passageiro();
+        Passageiro passageiro = new Passageiro();
+        return passageiro;
     }
 }
