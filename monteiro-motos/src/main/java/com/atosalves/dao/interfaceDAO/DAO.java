@@ -1,10 +1,11 @@
 package com.atosalves.dao.interfaceDAO;
 
+import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 
 public interface DAO<T, K> {
 
 
-	public boolean cadastrar(T entidade);
+	public void cadastrar(T entidade);
 
 	public T recuperarPeloId(K id);
 

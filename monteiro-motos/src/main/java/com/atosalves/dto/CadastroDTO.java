@@ -1,6 +1,6 @@
 package com.atosalves.dto;
 
-import com.atosalves.enums.TiposUsuario;
+import com.atosalves.enums.TipoUsuario;
 import java.time.LocalDate;
 
-public record CadastroDTO(String nome, String email, String senha, LocalDate dataNascimento, TiposUsuario tipo) {}
+public record CadastroDTO(String nome, String email, String senha, LocalDate dataNascimento, TipoUsuario tipo) {}

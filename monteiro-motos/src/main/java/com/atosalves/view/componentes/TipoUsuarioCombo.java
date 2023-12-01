@@ -1,16 +1,16 @@
 package com.atosalves.view.componentes;
 
-import com.atosalves.enums.TiposUsuario;
+import com.atosalves.enums.TipoUsuario;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-public class TipoUsuarioCombo extends JComboBox<TiposUsuario> implements Componente {
+public class TipoUsuarioCombo extends JComboBox<TipoUsuario> implements Componente {
 
-	public TipoUsuarioCombo(TiposUsuario[] tipos) {
-		setModel(new DefaultComboBoxModel<TiposUsuario>(tipos));
+	public TipoUsuarioCombo(TipoUsuario[] tipos) {
+		setModel(new DefaultComboBoxModel<TipoUsuario>(tipos));
 	}
 
-	public TiposUsuario pegarSelecionado() {
-		return (TiposUsuario) getSelectedItem();
+	public TipoUsuario pegarSelecionado() {
+		return (TipoUsuario) getSelectedItem();
 	}
 }

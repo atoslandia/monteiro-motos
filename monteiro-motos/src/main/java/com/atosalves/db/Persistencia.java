@@ -46,13 +46,15 @@ public class Persistencia {
 		}
 	}
 
-	public void salvarCorridas(Map<String, ArrayList<Corrida>> corridas) throws Exception {
+	public void salvarCorridas(Map<String, ArrayList<Corrida>> corridas) {
 		xs.addPermission(AnyTypePermission.ANY);
-		PrintWriter escrever = new PrintWriter(arquivo);
-		xs.autodetectAnnotations(true);
-		String xml = xs.toXML(corridas);
-		escrever.print(xml);
-		escrever.close();
+		try (PrintWriter escrever = new PrintWriter(arquivo)) {
+			xs.autodetectAnnotations(true);
+			String xml = xs.toXML(corridas);
+			escrever.print(xml);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 
 	public Map<String, Usuario> carregarUsuarios() throws RuntimeException {

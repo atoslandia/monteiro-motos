@@ -26,7 +26,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public boolean cadastrar(CorridaDTO entidade) {
+	public void cadastrar(CorridaDTO entidade) {
 		try {
 			Corrida corrida = entidade.corrida();
 			corridas.get(entidade.corrida().getEstado().getNome()).add(corrida);
@@ -34,7 +34,6 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return true;
 	}
 
 	@Override

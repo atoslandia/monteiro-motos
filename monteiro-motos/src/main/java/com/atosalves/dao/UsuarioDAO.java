@@ -5,6 +5,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.Persistencia;
@@ -40,25 +41,14 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
     }
 
     @Override
-    public boolean cadastrar(UsuarioDTO entidade) {
+    public void cadastrar(UsuarioDTO entidade) {
         Usuario usuario = entidade.usuario();
-        LocalDate dataDeNascimento = usuario.getDataNascimento();
-        LocalDate dataAtual = LocalDate.now();
-        Period idade = Period.between(dataDeNascimento, dataAtual);
-
-        UsuarioDTO usuarioDTO = recuperarPeloId(usuario.getEmail());
-        if (usuarioDTO != null || idade.getYears() < 18 ) {
-            // TODO r: fazer exceptions personalizadas
-            return false;
-        }
-        
         usuarios.put(usuario.getEmail(), usuario);
         persistencia.salvarUsuarios(usuarios);
-        return true;
     }
 
     @Override
-    public UsuarioDTO recuperarPeloId(String id) {
+    public UsuarioDTO recuperarPeloId(String id){
         Usuario usuario = usuarios.get(id);
         if(usuario == null){
             return null;
@@ -73,24 +63,24 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
     }
 
 
-    public static void main(String[] args) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = LocalDate.parse("28/02/2004", formato);
-        var usu = new Passageiro("ivan", data , "robsoncaliban@gmail.com", "1234");
-        var dto =  new UsuarioDTO(usu);
-        var teste = new UsuarioDAO();
+    // public static void main(String[] args) {
+    //     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    //     LocalDate data = LocalDate.parse("28/02/2004", formato);
+    //     var usu = new Passageiro("ivan", data , "robsoncaliban@gmail.com", "1234");
+    //     var dto =  new UsuarioDTO(usu);
+    //     var teste = new UsuarioDAO();
         
-        var mototaxista = new Mototaxista("atos", data, "atos@gmail.com", "5555");
-        var dto02 = new UsuarioDTO(mototaxista);
+    //     var mototaxista = new Mototaxista("atos", data, "atos@gmail.com", "5555");
+    //     var dto02 = new UsuarioDTO(mototaxista);
 
 
-        System.out.println(teste.cadastrar(dto));
-        System.out.println(teste.recuperarPeloId(usu.getEmail()));
-        UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO("atos",  "4321");
-        System.out.println(teste.update(updateUsuarioDTO, usu.getEmail()));
+    //     System.out.println(teste.cadastrar(dto));
+    //     System.out.println(teste.recuperarPeloId(usu.getEmail()));
+    //     UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO("atos",  "4321");
+    //     System.out.println(teste.update(updateUsuarioDTO, usu.getEmail()));
 
-        System.out.println(teste.cadastrar(dto02));
-        System.out.println(teste.recuperarPeloId(mototaxista.getEmail()));
+    //     System.out.println(teste.cadastrar(dto02));
+    //     System.out.println(teste.recuperarPeloId(mototaxista.getEmail()));
 
         // teste.deletePeloId(usu.getEmail());
 
@@ -106,6 +96,6 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
     //     } catch (Exception e) {
     //         System.out.println(e.getMessage());
     //     }
-    }
+    // }
     
 }

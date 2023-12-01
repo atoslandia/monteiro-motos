@@ -1,6 +1,6 @@
 package com.atosalves.view.componentes.componentesafactory;
 
-import com.atosalves.enums.TiposUsuario;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.*;
 import java.awt.Font;
 
@@ -28,7 +28,7 @@ public class ComponentesFactoryImpl implements ComponentesFactory {
 
 	@Override
 	public TipoUsuarioCombo criarComboTipoUsuario() {
-		return new TipoUsuarioCombo(TiposUsuario.values());
+		return new TipoUsuarioCombo(TipoUsuario.values());
 	}
 
 	@Override

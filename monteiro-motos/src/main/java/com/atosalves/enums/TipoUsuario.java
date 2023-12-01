@@ -1,6 +1,6 @@
 package com.atosalves.enums;
 
-public enum TiposUsuario {
+public enum TipoUsuario {
 	PASSAGEIRO,
 	MOTOTAXISTA,
 }
