@@ -73,26 +73,26 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
     }
 
 
-    // public static void main(String[] args) {
-    //     DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    //     LocalDate data = LocalDate.parse("28/02/2004", formato);
-    //     var usu = new Passageiro("ivan", data , "robsoncaliban@gmail.com", "1234");
-    //     var dto =  new PassageiroBoletoDTO(usu.getNome(), usu.getEmail());
-    //     // var teste = new UsuarioDAO();
+    public static void main(String[] args) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse("28/02/2004", formato);
+        var usu = new Passageiro("ivan", data , "robsoncaliban@gmail.com", "1234");
+        var dto =  new UsuarioDTO(usu);
+        var teste = new UsuarioDAO();
         
-    //     // var mototaxista = new Mototaxista("atos", data, "atos@gmail.com", "5555");
-    //     // var dto02 = new UsuarioDTO(mototaxista);
+        var mototaxista = new Mototaxista("atos", data, "atos@gmail.com", "5555");
+        var dto02 = new UsuarioDTO(mototaxista);
 
 
-    //     // System.out.println(teste.cadastrar(dto));
-    //     // System.out.println(teste.recuperarPeloId(usu.getEmail()));
-    //     // UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO("atos",  "4321");
-    //     // System.out.println(teste.update(updateUsuarioDTO, usu.getEmail()));
+        System.out.println(teste.cadastrar(dto));
+        System.out.println(teste.recuperarPeloId(usu.getEmail()));
+        UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO("atos",  "4321");
+        System.out.println(teste.update(updateUsuarioDTO, usu.getEmail()));
 
-    //     // System.out.println(teste.cadastrar(dto02));
-    //     // System.out.println(teste.recuperarPeloId(mototaxista.getEmail()));
+        System.out.println(teste.cadastrar(dto02));
+        System.out.println(teste.recuperarPeloId(mototaxista.getEmail()));
 
-    //     // teste.deletePeloId(usu.getEmail());
+        // teste.deletePeloId(usu.getEmail());
 
     //     // try {
     //     //     MensageiroFacade.gerarBoleto(new PassageiroDTO(usu), 100);
@@ -106,6 +106,6 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
     //     } catch (Exception e) {
     //         System.out.println(e.getMessage());
     //     }
-    // }
+    }
     
 }

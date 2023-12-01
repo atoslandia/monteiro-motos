@@ -21,21 +21,22 @@ public class UsuarioController {
 
 	public boolean cadastrarPassageiro(CadastroDTO data) {
 		Passageiro usuario = new Passageiro();
-		UsuarioDTO usuarioDTO = new UsuarioDTO(tranferirDados(data, usuario));
+		tranferirDados(data, usuario);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		return usuarioDAO.cadastrar(usuarioDTO);
 	}
 
 	public boolean cadastrarMototaxista(CadastroDTO data){
 		Mototaxista usuario = new Mototaxista();
-		UsuarioDTO usuarioDTO = new UsuarioDTO(tranferirDados(data, usuario));
+		tranferirDados(data, usuario);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		return usuarioDAO.cadastrar(usuarioDTO);
 	}
 
-	private Usuario tranferirDados(CadastroDTO dados, Usuario entidade){
+	private void tranferirDados(CadastroDTO dados, Usuario entidade){
 		entidade.setDataNascimento(dados.dataNascimento());
 		entidade.setEmail(dados.email());
 		entidade.setNome(dados.nome());
 		entidade.setSenha(dados.senha());
-		return entidade;
 	}
 }
