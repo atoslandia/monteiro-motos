@@ -26,39 +26,30 @@ public class Corrida extends Observavel{
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
 
-	public Corrida(Mototaxista mototaxista, Passageiro passageiro, Endereco pontoDeEncontro, Endereco destino) {
+	public Corrida(Passageiro passageiro, Endereco pontoDeEncontro, Endereco destino) {
 		this.id = System.currentTimeMillis();
-		this.estado = new CorridaPendente(this);
-		this.mototaxista = mototaxista;
 		this.passageiro = passageiro;
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.destino = destino;
+		this.estado = new CorridaPendente(this);
 	}
 
 	public void setEstado(CorridaState estado){
 		String estadoAntigo =  this.estado.getNome();
 		this.estado = estado;
-		String estadoNovo =  this.estado.getNome();
-		CorridaEventoDTO evento =  new CorridaEventoDTO(id, estadoAntigo, estadoNovo);
+		CorridaEventoDTO evento =  new CorridaEventoDTO(estadoAntigo, this);
 		notificarObservador(evento);
-	}
-
-	public void solicitarCorrida(){
-		estado.solicitarCorrida();
 	}
 
 	public void finalizarCorrida(){
 		estado.finalizarCorrida();
 	}
 
-	public void reivindicarCorrida(){
-		estado.reivindicarCorrida();
+	public void reivindicarCorrida(Mototaxista mototaxista){
+		estado.reivindicarCorrida(mototaxista);
 	}
 
 	public void cancelarCorrida(){
 		estado.cancelarCorrida();
 	}
-
-
-
 }

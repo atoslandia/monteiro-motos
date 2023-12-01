@@ -1,6 +1,10 @@
 package com.atosalves.model.statepattern;
 
 import com.atosalves.model.Corrida;
+import com.atosalves.model.Endereco;
+import com.atosalves.model.Mototaxista;
+import com.atosalves.model.Passageiro;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import lombok.Getter;
 
@@ -8,18 +12,18 @@ import lombok.Getter;
 @Getter
 public abstract class CorridaState {
 
-    private Corrida corrida;
+    @XStreamOmitField
+    protected Corrida corrida;
     protected String nome;
 
     public CorridaState(Corrida corrida){
         this.corrida = corrida;
     }
 
-    public abstract void solicitarCorrida();
-	
+
 	public abstract void finalizarCorrida();
 
-	public abstract void reivindicarCorrida();
+	public abstract void reivindicarCorrida(Mototaxista mototaxista);
 
 	public abstract void cancelarCorrida();
 

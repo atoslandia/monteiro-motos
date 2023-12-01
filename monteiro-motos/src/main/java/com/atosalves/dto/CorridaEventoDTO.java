@@ -1,4 +1,5 @@
 package com.atosalves.dto;
 
+import com.atosalves.model.Corrida;
 
-public record CorridaEventoDTO(Long id, String estadoAntigo, String estadoNovo) {}
+public record CorridaEventoDTO(String estadoAntigo, Corrida corrida) {}

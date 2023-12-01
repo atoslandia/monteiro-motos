@@ -2,6 +2,7 @@ package com.atosalves.db;
 
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Usuario;
+import com.atosalves.observerpattern.Observavel;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.security.AnyTypePermission;
@@ -48,6 +49,7 @@ public class Persistencia {
 	public void salvarCorridas(Map<String, ArrayList<Corrida>> corridas) throws Exception {
 		xs.addPermission(AnyTypePermission.ANY);
 		PrintWriter escrever = new PrintWriter(arquivo);
+		xs.autodetectAnnotations(true);
 		String xml = xs.toXML(corridas);
 		escrever.print(xml);
 		escrever.close();

@@ -1,6 +1,7 @@
 package com.atosalves.model.statepattern;
 
 import com.atosalves.model.Corrida;
+import com.atosalves.model.Mototaxista;
 
 import lombok.Getter;
 
@@ -12,28 +13,23 @@ public class CorridaPendente extends CorridaState {
     }
 
     @Override
-    public void solicitarCorrida() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'acionarCorrida'");
-    }
-
-    @Override
     public void finalizarCorrida() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aceitarCorrida'");
+      System.out.println("Corrida Pendente, não é possivel finalizar" );
     }
 
     @Override
-    public void reivindicarCorrida() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reivindicarCorrida'");
+    public void reivindicarCorrida(Mototaxista mototaxista) {
+        corrida.setMototaxista(mototaxista);
+        corrida.setEstado(new CorridaReivindicada(corrida));
     }
 
     @Override
     public void cancelarCorrida() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cancelarCorrida'");
+        corrida.setEstado(new CorridaCancelada(corrida));
+        corrida.removerObservador();
     }
+
+
 
 
 
