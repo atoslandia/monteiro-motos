@@ -34,7 +34,8 @@ public class GerenciadorDeCorrida implements Observador {
 
     public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino){
         UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
-        if(corrida.getObservador() == null){
+        corrida = corridaDAO.buscarCorridaDeUmUsuario(passageiro.usuario().getEmail(), "Pendente").corrida();
+        if(corrida == null){
             corrida = new Corrida(passageiro, pontoDeEnconto, destino);
             CorridaDTO corridaDTO = new CorridaDTO(corrida);
             corrida.adicionarObservador(this);

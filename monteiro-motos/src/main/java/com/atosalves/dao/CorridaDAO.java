@@ -99,6 +99,18 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		dataBase.salvarDados();
 		return new CorridaDTO(corrida);
 	}
+
+	@Override
+	public CorridaDTO buscarCorridaDeUmUsuario(String id, String estado) {
+		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado.toUpperCase());
+		for (Corrida corrida : corridas) {
+			if(corrida.getPassageiro().getEmail().equals(id)){
+				return new CorridaDTO(corrida);
+			}
+		}
+		return null;
+	}
+
 	
 	public static void main(String[] args) {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -123,5 +135,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
 		// gerenciadorDeCorrida.cancelarCorrida();
 	}
+
+
 
 }

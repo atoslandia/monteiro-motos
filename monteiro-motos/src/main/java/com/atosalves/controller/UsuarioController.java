@@ -35,7 +35,6 @@ public class UsuarioController {
 		) {
 			return true;
 		}
-
 		return false;
 	}
 
