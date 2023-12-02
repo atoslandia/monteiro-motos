@@ -1,7 +1,6 @@
 package com.atosalves.view.janelas;
 
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.paineis.Painel;
 import javax.swing.JFrame;
 import lombok.Getter;
@@ -23,8 +22,6 @@ public class JanelaPrincipal extends Janela {
 
 		setVisible(true);
 		setLocationRelativeTo(null);
-
-		loginDTO = new LoginDTO("robin@", "123", TipoUsuario.PASSAGEIRO);
 	}
 
 	public void setPainel(Painel painel) {

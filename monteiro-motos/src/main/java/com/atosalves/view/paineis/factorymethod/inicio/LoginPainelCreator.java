@@ -28,12 +28,11 @@ public class LoginPainelCreator implements PainelCreator {
 
 	private void loginBotao() {
 		var usuarioController = new UsuarioController();
-		LoginDTO dados = getDados();
 
 		try {
-			if (usuarioController.login(dados)) {
+			if (usuarioController.login(getDados())) {
+				loginPainel.setLoginDTO(getDados());
 				loginPainel.setPainel(new MenuPainelCreator().criarPainel());
-				loginPainel.setLoginDTO(dados);
 			} else {
 				// TODO: apagar depois
 				System.out.println("deu errado");

@@ -35,11 +35,15 @@ public class DestinoPainelCreator implements PainelCreator {
 
 	private void solicitarBotao() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		String email = destinoPainel.getLoginDTO().email();
+		gerenciadorDeCorrida.solicitarCorrida(
+			destinoPainel.getLoginDTO(),
+			pontoDeEncontro,
+			getDados()
+		);
 
-		gerenciadorDeCorrida.solicitarCorrida(email, pontoDeEncontro, getDados());
-
-		destinoPainel.setPainel(new CorridaEmEsperaPainelCreator().criarPainel());
+		destinoPainel.setPainel(
+			new CorridaEmEsperaPainelCreator(gerenciadorDeCorrida).criarPainel()
+		);
 	}
 
 	private void voltarBotao() {
