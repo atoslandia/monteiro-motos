@@ -40,6 +40,11 @@ public class Painel extends JPanel {
 		janela.setLoginDTO(data);
 	}
 
+	public LoginDTO getLoginDTO() {
+		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
+		return janela.getLoginDTO();
+	}
+
 	public void sairLoginDTO() {
 		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
 		janela.setLoginDTO(null);

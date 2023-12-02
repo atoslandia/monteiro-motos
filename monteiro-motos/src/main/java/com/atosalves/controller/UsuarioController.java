@@ -1,8 +1,5 @@
 package com.atosalves.controller;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 import com.atosalves.controller.exceptions.UsuarioJaExisteException;
 import com.atosalves.controller.exceptions.UsuarioMenorDeIdadeException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
@@ -15,22 +12,27 @@ import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class UsuarioController {
+
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
 
 	public boolean login(LoginDTO data) throws UsuarioNaoEncontradoException {
 		Usuario usuario = usuarioDAO.recuperarPeloId(data.email()).usuario();
-		if(usuario != null){
+		if (usuario == null) {
 			throw new UsuarioNaoEncontradoException();
 		}
-		if(!usuario.getSenha().equals(data.senha())){
+		if (!usuario.getSenha().equals(data.senha())) {
 			throw new UsuarioNaoEncontradoException();
 		}
-		
-		if(usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)){
+
+		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
 			return true;
-		}else if(usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)){
+		} else if (
+			usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)
+		) {
 			return true;
 		}
 
@@ -39,15 +41,15 @@ public class UsuarioController {
 
 	public boolean cadastrar(CadastroDTO data) throws Exception {
 		LocalDate dataDeNascimento = data.dataNascimento();
-        LocalDate dataAtual = LocalDate.now();
-        Period idade = Period.between(dataDeNascimento, dataAtual);
+		LocalDate dataAtual = LocalDate.now();
+		Period idade = Period.between(dataDeNascimento, dataAtual);
 
-		if(usuarioDAO.recuperarPeloId(data.email()) != null){
+		if (usuarioDAO.recuperarPeloId(data.email()) != null) {
 			throw new UsuarioJaExisteException();
 		}
-		if (idade.getYears() < 18 ) {
-        	throw new UsuarioMenorDeIdadeException();
-        }
+		if (idade.getYears() < 18) {
+			throw new UsuarioMenorDeIdadeException();
+		}
 
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
 		Usuario usuario = fabricaSimplesUsuarios.criaUsuario(data.tipo());
@@ -55,11 +57,11 @@ public class UsuarioController {
 
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		usuarioDAO.cadastrar(usuarioDTO);
-		
+
 		return true;
 	}
 
-	private void tranferirDados(CadastroDTO dados, Usuario entidade){
+	private void tranferirDados(CadastroDTO dados, Usuario entidade) {
 		entidade.setDataNascimento(dados.dataNascimento());
 		entidade.setEmail(dados.email());
 		entidade.setNome(dados.nome());

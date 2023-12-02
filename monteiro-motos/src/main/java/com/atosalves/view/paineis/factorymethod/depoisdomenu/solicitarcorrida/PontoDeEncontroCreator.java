@@ -1,5 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
+import com.atosalves.model.Endereco;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -16,8 +17,18 @@ public class PontoDeEncontroCreator implements PainelCreator {
 	private TextoCaixa ruaCaixa;
 	private TextoCaixa cepCaixa;
 
+	// TODO: mudar para DTO
+	public Endereco getDados() {
+		return new Endereco(
+			enderecoCaixa.pegarCampo(),
+			bairroCaixa.pegarCampo(),
+			ruaCaixa.pegarCampo(),
+			cepCaixa.pegarCampo()
+		);
+	}
+
 	private void confirmarBotao() {
-		solicitarCorridas.setPainel(new DestinoPainelCreator().criarPainel());
+		solicitarCorridas.setPainel(new DestinoPainelCreator(getDados()).criarPainel());
 	}
 
 	private void voltarBotao() {

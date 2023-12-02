@@ -7,9 +7,6 @@ import com.atosalves.db.Persistencia;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.model.Corrida;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +19,13 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public CorridaDAO() {
 		persistencia = Persistencia.getInstance();
 		corridas = persistencia.carregarCorridas();
-		
 	}
 
 	@Override
 	public void cadastrar(CorridaDTO entidade) {
-		try {
-			Corrida corrida = entidade.corrida();
-			corridas.get(entidade.corrida().getEstado().getNome()).add(corrida);
-			persistencia.salvarCorridas(corridas);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		Corrida corrida = entidade.corrida();
+		corridas.get(entidade.corrida().getEstado().getNome()).add(corrida);
+		persistencia.salvarCorridas(corridas);
 	}
 
 	@Override
@@ -47,14 +39,14 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 			}
 		}
 		return null;
-	}	
+	}
 
 	@Override
 	public void deletePeloId(Long id) {
 		try {
 			CorridaDTO corridaDTO = recuperarPeloId(id);
 			corridas.get(corridaDTO.corrida().getEstado().getNome()).remove(corridaDTO.corrida());
-		
+
 			persistencia.salvarCorridas(corridas);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -95,17 +87,14 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 	public CorridaDTO update(CorridaDTO entidade) {
 		Corrida corrida = recuperarPeloId(entidade.corrida().getId()).corrida();
-        corrida = entidade.corrida();
-        try {
+		corrida = entidade.corrida();
+		try {
 			persistencia.salvarCorridas(corridas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return new CorridaDTO(corrida);
+		return new CorridaDTO(corrida);
 	}
-
-
-	
 	// public static void main(String[] args) {
 	// 	GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 	// 	Passageiro p = new Passageiro("Robson", null, null, null);
@@ -117,10 +106,5 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
 	// 	// gerenciadorDeCorrida.cancelarCorrida();
 	// }
-
-
-
-
-
 
 }

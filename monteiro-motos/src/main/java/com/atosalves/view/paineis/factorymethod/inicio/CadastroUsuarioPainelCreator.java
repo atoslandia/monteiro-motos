@@ -32,7 +32,12 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 	private void cadastrarBotao() {
 		var usuarioController = new UsuarioController();
-		usuarioController.cadastrar(getDados());
+		try {
+			usuarioController.cadastrar(getDados());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		LoginDTO loginDTO = new LoginDTO(
 			emailCaixa.pegarCampo(),

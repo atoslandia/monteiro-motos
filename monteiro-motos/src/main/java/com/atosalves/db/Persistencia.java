@@ -21,20 +21,20 @@ public class Persistencia {
 	private final String nomeDoArquivo = "persistencia.xml";
 	private static volatile Persistencia instance;
 
-	private Persistencia(){
+	private Persistencia() {
 		this.arquivo = new File(nomeDoArquivo);
 	}
 
-	public static Persistencia getInstance(){
-		if(instance == null){
-			synchronized(Persistencia.class){
+	public static Persistencia getInstance() {
+		if (instance == null) {
+			synchronized (Persistencia.class) {
 				if (instance == null) {
 					instance = new Persistencia();
 				}
 			}
 		}
 		return instance;
-	} 
+	}
 
 	public void salvarUsuarios(Map<String, Usuario> usuarios) {
 		xs.addPermission(AnyTypePermission.ANY);
@@ -68,7 +68,7 @@ public class Persistencia {
 				throw new RuntimeException(e.getMessage());
 			}
 		}
-		return new HashMap<String,Usuario>();
+		return new HashMap<String, Usuario>();
 	}
 
 	public Map<String, ArrayList<Corrida>> carregarCorridas() throws RuntimeException {
@@ -78,8 +78,7 @@ public class Persistencia {
 				FileReader ler = new FileReader(nomeDoArquivo);
 				xs.addPermission(AnyTypePermission.ANY);
 				corridas = (HashMap<String, ArrayList<Corrida>>) xs.fromXML(ler);
-				return corridas;	
-
+				return corridas;
 			} catch (FileNotFoundException e) {
 				throw new RuntimeException(e.getMessage());
 			}

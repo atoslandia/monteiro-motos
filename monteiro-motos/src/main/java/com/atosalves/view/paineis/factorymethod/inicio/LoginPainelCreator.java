@@ -1,6 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.inicio;
 
 import com.atosalves.controller.UsuarioController;
+import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.paineis.Painel;
@@ -29,12 +30,17 @@ public class LoginPainelCreator implements PainelCreator {
 		var usuarioController = new UsuarioController();
 		LoginDTO dados = getDados();
 
-		if (usuarioController.login(dados)) {
-			loginPainel.setLoginDTO(dados);
-			loginPainel.setPainel(new MenuPainelCreator().criarPainel());
-		} else {
-			// TODO: apagar depois
-			System.out.println("deu errado");
+		try {
+			if (usuarioController.login(dados)) {
+				loginPainel.setPainel(new MenuPainelCreator().criarPainel());
+				loginPainel.setLoginDTO(dados);
+			} else {
+				// TODO: apagar depois
+				System.out.println("deu errado");
+			}
+		} catch (UsuarioNaoEncontradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
