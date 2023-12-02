@@ -1,36 +1,46 @@
 package com.atosalves.dao;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.controller.UsuarioController;
 import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
 import com.atosalves.dao.interfaceDAO.DAO;
+import com.atosalves.db.DB;
 import com.atosalves.db.Persistencia;
+import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
+import com.atosalves.model.Mototaxista;
+import com.atosalves.model.Passageiro;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
-	private Map<String, ArrayList<Corrida>> corridas;
-	private Persistencia persistencia;
+	private DB dataBase;
 
 	public CorridaDAO() {
-		persistencia = Persistencia.getInstance();
-		corridas = persistencia.carregarCorridas();
+		dataBase = DB.getInstance();
 	}
 
 	@Override
 	public void cadastrar(CorridaDTO entidade) {
 		Corrida corrida = entidade.corrida();
-		corridas.get(entidade.corrida().getEstado().getNome()).add(corrida);
-		persistencia.salvarCorridas(corridas);
+		String chave = entidade.corrida().getEstado().getNome();
+		dataBase.getCorridas().get(chave.toUpperCase()).add(corrida);
+		dataBase.salvarDados();
 	}
 
 	@Override
 	public CorridaDTO recuperarPeloId(Long id) {
-		for (ArrayList<Corrida> c : corridas.values()) {
+		for (ArrayList<Corrida> c : dataBase.getCorridas().values()) {
 			for (Corrida corrida : c) {
 				if (corrida.getId().equals(id)) {
 					CorridaDTO corridaDTO = new CorridaDTO(corrida);
@@ -45,9 +55,9 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public void deletePeloId(Long id) {
 		try {
 			CorridaDTO corridaDTO = recuperarPeloId(id);
-			corridas.get(corridaDTO.corrida().getEstado().getNome()).remove(corridaDTO.corrida());
-
-			persistencia.salvarCorridas(corridas);
+			String chave = corridaDTO.corrida().getEstado().getNome();
+			dataBase.getCorridas().get(chave).remove(corridaDTO.corrida());
+			dataBase.salvarDados();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -55,56 +65,63 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 	@Override
 	public List<Corrida> buscarCorridasPendenetes() {
-		return corridas.get("pendente".toUpperCase());
+		return dataBase.getCorridas().get("pendente".toUpperCase());
 	}
 
 	@Override
 	public List<Corrida> buscarCorridasEmAndamento() {
-		return corridas.get("reivindicada".toUpperCase());
+		return dataBase.getCorridas().get("reivindicada".toUpperCase());
 	}
 
 	@Override
 	public List<Corrida> buscarCorridasCanceladas() {
-		return corridas.get("cancelada".toUpperCase());
+		return dataBase.getCorridas().get("cancelada".toUpperCase());
 	}
 
 	@Override
 	public List<Corrida> buscarCorridasFinalizadas() {
-		return corridas.get("finalizada".toUpperCase());
+		return dataBase.getCorridas().get("finalizada".toUpperCase());
 	}
 
 	@Override
 	public void moverCorrida(CorridaEventoDTO evento) {
 		Corrida corrida = recuperarPeloId(evento.corrida().getId()).corrida();
-		corridas.get(evento.estadoAntigo()).remove(corrida);
-		corridas.get(evento.corrida().getEstado().getNome()).add(corrida);
-		try {
-			persistencia.salvarCorridas(corridas);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dataBase.getCorridas().get(evento.estadoAntigo()).remove(corrida);
+		dataBase.getCorridas().get(evento.corrida().getEstado().getNome()).add(corrida);
+		
+		dataBase.salvarDados();;
+		
 	}
 
 	public CorridaDTO update(CorridaDTO entidade) {
 		Corrida corrida = recuperarPeloId(entidade.corrida().getId()).corrida();
 		corrida = entidade.corrida();
-		try {
-			persistencia.salvarCorridas(corridas);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dataBase.salvarDados();
 		return new CorridaDTO(corrida);
 	}
-	// public static void main(String[] args) {
-	// 	GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-	// 	Passageiro p = new Passageiro("Robson", null, null, null);
-	// 	Mototaxista m = new Mototaxista("Atos", null, null, null);
-	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-	// 	gerenciadorDeCorrida.reivindicarCorrida(m);
-	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-	// 	gerenciadorDeCorrida.cancelarCorrida();
-	// 	gerenciadorDeCorrida.solicitarCorrida(p, null, null);
-	// 	// gerenciadorDeCorrida.cancelarCorrida();
-	// }
+	
+	public static void main(String[] args) {
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse("28/02/2004", formato);
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		CadastroDTO cadastroPassageiro = new CadastroDTO("robson", "robson@gmail.com", null, data, TipoUsuario.PASSAGEIRO);
+		CadastroDTO cadastroMototaxista = new CadastroDTO("atos", "atos@gmail.com", null, data, TipoUsuario.MOTOTAXISTA);
+		LoginDTO loginPassageiro = new LoginDTO(cadastroPassageiro.email(), null, cadastroPassageiro.tipo());
+		LoginDTO loginMototaxista = new LoginDTO(cadastroMototaxista.email(), null, cadastroMototaxista.tipo());
+
+		UsuarioController usuarioController = new UsuarioController();
+		try {
+			// usuarioController.cadastrar(cadastroPassageiro);
+			// usuarioController.cadastrar(cadastroMototaxista);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+		// gerenciadorDeCorrida.reivindicarCorrida(loginMototaxista);
+		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+		// gerenciadorDeCorrida.cancelarCorrida(loginPassageiro);
+		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+		// gerenciadorDeCorrida.cancelarCorrida();
+	}
 
 }

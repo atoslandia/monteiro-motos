@@ -8,6 +8,7 @@ import java.util.Map;
 import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.dao.interfaceDAO.UpdateDAO;
+import com.atosalves.db.DB;
 import com.atosalves.db.Persistencia;
 import com.atosalves.dto.PassageiroBoletoDTO;
 import com.atosalves.dto.UpdateUsuarioDTO;
@@ -19,14 +20,12 @@ import com.atosalves.model.facadepattern.MensageiroFacade;
 
 public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO, UpdateUsuarioDTO, String> {
 
-    private Map<String, Usuario> usuarios;
-	private Persistencia persistencia;
-    
-    public UsuarioDAO() {
-        persistencia = Persistencia.getInstance();
-        usuarios = persistencia.carregarUsuarios();
-    }
+    private DB dataBase;
 
+
+    public UsuarioDAO() {
+        dataBase = DB.getInstance();
+    }
 
     @Override
     public UsuarioDTO update(UpdateUsuarioDTO entidade, String id) {
@@ -35,21 +34,21 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
 
         usuario.setNome(entidade.nome());
         usuario.setSenha(entidade.senha());
+        dataBase.salvarDados();
 
-        persistencia.salvarUsuarios(usuarios);
         return new UsuarioDTO(usuario);
     }
 
     @Override
     public void cadastrar(UsuarioDTO entidade) {
         Usuario usuario = entidade.usuario();
-        usuarios.put(usuario.getEmail(), usuario);
-        persistencia.salvarUsuarios(usuarios);
+        dataBase.getUsuarios().put(usuario.getEmail(), usuario);
+        dataBase.salvarDados();
     }
 
     @Override
     public UsuarioDTO recuperarPeloId(String id){
-        Usuario usuario = usuarios.get(id);
+        Usuario usuario = dataBase.getUsuarios().get(id);
         if(usuario == null){
             return null;
         }
@@ -58,8 +57,8 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
 
     @Override
     public void deletePeloId(String id) {
-        usuarios.remove(id);
-        persistencia.salvarUsuarios(usuarios);
+        dataBase.getUsuarios().remove(id);
+        dataBase.salvarDados();
     }
 
 

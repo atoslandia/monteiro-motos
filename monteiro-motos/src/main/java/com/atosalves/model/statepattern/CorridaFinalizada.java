@@ -1,5 +1,8 @@
 package com.atosalves.model.statepattern;
 
+import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoTransacao;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
 
@@ -20,13 +23,13 @@ public class CorridaFinalizada extends CorridaState {
     }
 
     @Override
-    public void cancelarCorrida() {
+    public void cancelarCorrida(TipoUsuario tipoUsuario) {
          System.out.println("Corrida ja foi finalizada");
     }
 
 
     @Override
-    public void reivindicarCorrida(Mototaxista mototaxista) {
+    public void reivindicarCorrida(UsuarioDTO mototaxista) {
          System.out.println("Corrida ja foi finalizada");
     }
     

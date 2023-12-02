@@ -1,5 +1,7 @@
 package com.atosalves.model.statepattern;
 
+import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
 
@@ -18,15 +20,18 @@ public class CorridaPendente extends CorridaState {
     }
 
     @Override
-    public void reivindicarCorrida(Mototaxista mototaxista) {
-        corrida.setMototaxista(mototaxista);
+    public void reivindicarCorrida(UsuarioDTO mototaxista) {
+        corrida.setMototaxista((Mototaxista) mototaxista.usuario());
         corrida.setEstado(new CorridaReivindicada(corrida));
     }
 
     @Override
-    public void cancelarCorrida() {
-        corrida.setEstado(new CorridaCancelada(corrida));
-        corrida.removerObservador();
+    public void cancelarCorrida(TipoUsuario tipoUsuario) {
+        if(tipoUsuario.equals(TipoUsuario.PASSAGEIRO)){
+            corrida.setEstado(new CorridaCancelada(corrida));
+            corrida.removerObservador();
+        }
+        System.out.println("Mototaxista nao pode cancelar corrida");
     }
 
 

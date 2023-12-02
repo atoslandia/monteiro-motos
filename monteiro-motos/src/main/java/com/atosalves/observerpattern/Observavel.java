@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 @Getter
 public abstract class Observavel {
+    
     @XStreamOmitField
     private Observador observador;
 

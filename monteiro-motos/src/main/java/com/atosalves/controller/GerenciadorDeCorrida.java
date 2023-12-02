@@ -4,8 +4,10 @@ import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UpdateCorridaDTO;
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
 import com.atosalves.model.Mototaxista;
@@ -30,8 +32,8 @@ public class GerenciadorDeCorrida implements Observador {
         corridaDAO.moverCorrida(corrida);
     }
 
-    public void solicitarCorrida(String email, Endereco pontoDeEnconto, Endereco destino){
-        UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(email);
+    public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino){
+        UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
         if(corrida.getObservador() == null){
             corrida = new Corrida(passageiro, pontoDeEnconto, destino);
             CorridaDTO corridaDTO = new CorridaDTO(corrida);
@@ -42,12 +44,13 @@ public class GerenciadorDeCorrida implements Observador {
         }
     }
 
-    public void reivindicarCorrida(Mototaxista mototaxista){
+    public void reivindicarCorrida(LoginDTO login){
+        UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
         corrida.reivindicarCorrida(mototaxista);
     }
 
-    public void cancelarCorrida(){
-        corrida.cancelarCorrida();
+    public void cancelarCorrida(LoginDTO login){
+        corrida.cancelarCorrida(login.tipoUsuario());
     }
 
     public void finalizarCorrida(){

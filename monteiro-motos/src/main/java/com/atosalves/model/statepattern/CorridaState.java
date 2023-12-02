@@ -1,5 +1,7 @@
 package com.atosalves.model.statepattern;
 
+import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
 import com.atosalves.model.Mototaxista;
@@ -23,8 +25,8 @@ public abstract class CorridaState {
 
 	public abstract void finalizarCorrida();
 
-	public abstract void reivindicarCorrida(Mototaxista mototaxista);
+	public abstract void reivindicarCorrida(UsuarioDTO mototaxista);
 
-	public abstract void cancelarCorrida();
+	public abstract void cancelarCorrida(TipoUsuario tipoUsuario);
 
 }

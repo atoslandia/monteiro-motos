@@ -2,6 +2,7 @@ package com.atosalves.model;
 
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import com.atosalves.observerpattern.Observavel;
@@ -46,11 +47,12 @@ public class Corrida extends Observavel{
 		estado.finalizarCorrida();
 	}
 
-	public void reivindicarCorrida(Mototaxista mototaxista){
+	public void reivindicarCorrida(UsuarioDTO mototaxista){
+
 		estado.reivindicarCorrida(mototaxista);
 	}
 
-	public void cancelarCorrida(){
-		estado.cancelarCorrida();
+	public void cancelarCorrida(TipoUsuario tipoUsuario){
+		estado.cancelarCorrida(tipoUsuario);
 	}
 }
