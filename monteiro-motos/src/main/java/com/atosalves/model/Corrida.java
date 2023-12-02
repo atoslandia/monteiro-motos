@@ -6,7 +6,6 @@ import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import com.atosalves.observerpattern.Observavel;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.EqualsAndHashCode.Include;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Corrida extends Observavel{
+public class Corrida extends Observavel {
 
 	@Include
 	private Long id;
@@ -36,23 +35,22 @@ public class Corrida extends Observavel{
 		this.estado = new CorridaPendente(this);
 	}
 
-	public void setEstado(CorridaState estado){
-		String estadoAntigo =  this.estado.getNome();
+	public void setEstado(CorridaState estado) {
+		String estadoAntigo = this.estado.getNome();
 		this.estado = estado;
-		CorridaEventoDTO evento =  new CorridaEventoDTO(estadoAntigo, this);
+		CorridaEventoDTO evento = new CorridaEventoDTO(estadoAntigo, this);
 		notificarObservador(evento);
 	}
 
-	public void finalizarCorrida(){
+	public void finalizarCorrida() {
 		estado.finalizarCorrida();
 	}
 
-	public void reivindicarCorrida(UsuarioDTO mototaxista){
-
+	public void reivindicarCorrida(UsuarioDTO mototaxista) {
 		estado.reivindicarCorrida(mototaxista);
 	}
 
-	public void cancelarCorrida(TipoUsuario tipoUsuario){
+	public void cancelarCorrida(TipoUsuario tipoUsuario) {
 		estado.cancelarCorrida(tipoUsuario);
 	}
 }

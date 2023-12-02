@@ -14,50 +14,59 @@ import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
 import com.atosalves.observerpattern.Observador;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public class GerenciadorDeCorrida implements Observador {
-    
-    private Corrida corrida;
-    private CorridaDAO corridaDAO =  new CorridaDAO();
-    private UsuarioDAO usuarioDAO =  new UsuarioDAO();
 
-    public GerenciadorDeCorrida() {
-        corrida = new Corrida();
-    }
+	@XStreamAsAttribute
+	private Corrida corrida;
 
-    @Override
-    public void update(CorridaEventoDTO corrida) {
-        CorridaDTO corridaDTO = new CorridaDTO(corrida.corrida());
-        corridaDAO.update(corridaDTO);
-        corridaDAO.moverCorrida(corrida);
-    }
+	@XStreamAsAttribute
+	private CorridaDAO corridaDAO = new CorridaDAO();
 
-    public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino){
-        UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
-        corrida = corridaDAO.buscarCorridaDeUmUsuario(passageiro.usuario().getEmail(), "Pendente").corrida();
-        if(corrida == null){
-            corrida = new Corrida(passageiro, pontoDeEnconto, destino);
-            CorridaDTO corridaDTO = new CorridaDTO(corrida);
-            corrida.adicionarObservador(this);
-            corridaDAO.cadastrar(corridaDTO); 
-        }else{
-            System.out.println("Cancele a corrida para poder solicitar outra");
-        }
-    }
+	@XStreamAsAttribute
+	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    public void reivindicarCorrida(LoginDTO login){
-        UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
-        corrida.reivindicarCorrida(mototaxista);
-    }
+	public GerenciadorDeCorrida() {
+		corrida = new Corrida();
+	}
 
-    public void cancelarCorrida(LoginDTO login){
-        corrida.cancelarCorrida(login.tipoUsuario());
-    }
+	@Override
+	public void update(CorridaEventoDTO corrida) {
+		CorridaDTO corridaDTO = new CorridaDTO(corrida.corrida());
+		corridaDAO.update(corridaDTO);
+		corridaDAO.moverCorrida(corrida);
+	}
 
-    public void finalizarCorrida(){
-        corrida.finalizarCorrida();
-        corrida.getPassageiro().pagarCorrida(corrida.getValor());
-    }
+	public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino) {
+		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
+		CorridaDTO corridaDTO = corridaDAO.buscarCorridaDeUmUsuario(
+			passageiro.usuario().getEmail(),
+			"Pendente"
+		);
+		if (corridaDTO == null) {
+			corrida = new Corrida(passageiro, pontoDeEnconto, destino);
+			corridaDTO = new CorridaDTO(corrida);
+			corrida.adicionarObservador(this);
+			corridaDAO.cadastrar(corridaDTO);
+		} else {
+			corrida = corridaDTO.corrida();
+			System.out.println("Cancele a corrida para poder solicitar outra");
+		}
+	}
 
+	public void reivindicarCorrida(LoginDTO login) {
+		UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
+		corrida.reivindicarCorrida(mototaxista);
+	}
 
+	public void cancelarCorrida(LoginDTO login) {
+		corrida.cancelarCorrida(login.tipoUsuario());
+	}
+
+	public void finalizarCorrida() {
+		corrida.finalizarCorrida();
+		corrida.getPassageiro().pagarCorrida(corrida.getValor());
+	}
 }

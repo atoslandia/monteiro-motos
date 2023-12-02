@@ -15,7 +15,7 @@ import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
-
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
+	@XStreamAsAttribute
 	private DB dataBase;
 
 	public CorridaDAO() {
@@ -88,9 +89,8 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		Corrida corrida = recuperarPeloId(evento.corrida().getId()).corrida();
 		dataBase.getCorridas().get(evento.estadoAntigo()).remove(corrida);
 		dataBase.getCorridas().get(evento.corrida().getEstado().getNome()).add(corrida);
-		
-		dataBase.salvarDados();;
-		
+
+		dataBase.salvarDados();
 	}
 
 	public CorridaDTO update(CorridaDTO entidade) {
@@ -104,22 +104,41 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public CorridaDTO buscarCorridaDeUmUsuario(String id, String estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado.toUpperCase());
 		for (Corrida corrida : corridas) {
-			if(corrida.getPassageiro().getEmail().equals(id)){
+			if (corrida.getPassageiro().getEmail().equals(id)) {
 				return new CorridaDTO(corrida);
 			}
 		}
 		return null;
 	}
 
-	
 	public static void main(String[] args) {
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = LocalDate.parse("28/02/2004", formato);
+		LocalDate data = LocalDate.parse("28/02/2004", formato);
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		CadastroDTO cadastroPassageiro = new CadastroDTO("robson", "robson@gmail.com", null, data, TipoUsuario.PASSAGEIRO);
-		CadastroDTO cadastroMototaxista = new CadastroDTO("atos", "atos@gmail.com", null, data, TipoUsuario.MOTOTAXISTA);
-		LoginDTO loginPassageiro = new LoginDTO(cadastroPassageiro.email(), null, cadastroPassageiro.tipo());
-		LoginDTO loginMototaxista = new LoginDTO(cadastroMototaxista.email(), null, cadastroMototaxista.tipo());
+		CadastroDTO cadastroPassageiro = new CadastroDTO(
+			"robson",
+			"robson@gmail.com",
+			null,
+			data,
+			TipoUsuario.PASSAGEIRO
+		);
+		CadastroDTO cadastroMototaxista = new CadastroDTO(
+			"atos",
+			"atos@gmail.com",
+			null,
+			data,
+			TipoUsuario.MOTOTAXISTA
+		);
+		LoginDTO loginPassageiro = new LoginDTO(
+			cadastroPassageiro.email(),
+			null,
+			cadastroPassageiro.tipo()
+		);
+		LoginDTO loginMototaxista = new LoginDTO(
+			cadastroMototaxista.email(),
+			null,
+			cadastroMototaxista.tipo()
+		);
 
 		UsuarioController usuarioController = new UsuarioController();
 		try {
@@ -135,7 +154,4 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
 		// gerenciadorDeCorrida.cancelarCorrida();
 	}
-
-
-
 }
