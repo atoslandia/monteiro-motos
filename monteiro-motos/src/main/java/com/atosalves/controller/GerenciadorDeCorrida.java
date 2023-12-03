@@ -1,5 +1,8 @@
 package com.atosalves.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CorridaDTO;
@@ -56,7 +59,8 @@ public class GerenciadorDeCorrida implements Observador {
 		}
 	}
 
-	public void reivindicarCorrida(LoginDTO login) {
+	public void reivindicarCorrida(LoginDTO login, Long id) {
+		corrida = corridaDAO.recuperarPeloId(id).corrida();
 		UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
 		corrida.reivindicarCorrida(mototaxista);
 	}
@@ -69,4 +73,18 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.finalizarCorrida();
 		corrida.getPassageiro().pagarCorrida(corrida.getValor());
 	}
+
+	public Object[][] buscarCorridasPendentes(){
+		List<Corrida> corridas = corridaDAO.buscarCorridasPendenetes();
+		int tamanho = corridas.size();
+		
+		Object[][] corridasView = new Object[3][tamanho];
+		for (int i = 0; i < tamanho; i++) {
+				corridasView[0][i] = corridas.get(i).getId();
+				corridasView[1][i] = corridas.get(i).getPontoDeEncontro().getRua();
+				corridasView[2][i] = corridas.get(i).getDestino().getRua();
+		}
+		return corridasView;
+	}
+
 }
