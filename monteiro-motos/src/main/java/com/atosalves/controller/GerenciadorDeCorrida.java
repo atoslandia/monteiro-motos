@@ -90,9 +90,10 @@ public class GerenciadorDeCorrida implements Observador {
 		Object[] objects = new Object[corridaArray.size()];
 		for (int i = 0; i < objects.length; i++) {
 			Corrida corrida = corridaArray.get(i).corrida();
-			objects[i] = corrida.getId() + " | " 
+			objects[i] = corrida.getId() 			+ " | " 
 			+ corrida.getPontoDeEncontro().getRua() + " | " 
-			+ corrida.getDestino().getRua();
+			+ corrida.getDestino().getRua() 		+ " | "
+			+ corrida.getEstado().getNome();
 		}
 		return objects;
 	}
