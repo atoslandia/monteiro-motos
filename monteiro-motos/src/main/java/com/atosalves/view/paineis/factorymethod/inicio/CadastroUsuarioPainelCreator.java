@@ -44,9 +44,8 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 			senhaCaixa.pegarCampo(),
 			comboBox.pegarSelecionado()
 		);
-		cadastroPainel.setLoginDTO(loginDTO);
 
-		cadastroPainel.setPainel(new MenuPainelCreator().criarPainel());
+		cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	private void voltarBotao() {

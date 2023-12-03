@@ -1,5 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu;
 
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -13,12 +14,18 @@ public class DepositarSaldoCreator implements PainelCreator {
 
 	private Painel depositarSaldoPainel;
 
+	private LoginDTO loginDTO;
+
+	public DepositarSaldoCreator(LoginDTO loginDTO) {
+		this.loginDTO = loginDTO;
+	}
+
 	private void depositarBotao() {
 		// TODO: usar controller para depositar valor
 	}
 
 	private void voltarBotao() {
-		depositarSaldoPainel.setPainel(new MenuPainelCreator().criarPainel());
+		depositarSaldoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	@Override

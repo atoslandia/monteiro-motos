@@ -1,5 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu;
 
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -10,8 +11,14 @@ public class ExtratoPainelCreator implements PainelCreator {
 
 	private Painel extratoPainel;
 
+	private LoginDTO loginDTO;
+
+	public ExtratoPainelCreator(LoginDTO loginDTO) {
+		this.loginDTO = loginDTO;
+	}
+
 	private void voltarBotao() {
-		extratoPainel.setPainel(new MenuPainelCreator().criarPainel());
+		extratoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	@Override

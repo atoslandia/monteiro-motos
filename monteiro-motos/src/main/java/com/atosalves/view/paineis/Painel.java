@@ -35,21 +35,6 @@ public class Painel extends JPanel {
 		janela.setPainel(painel);
 	}
 
-	public void setLoginDTO(LoginDTO data) {
-		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
-		janela.setLoginDTO(data);
-	}
-
-	public LoginDTO getLoginDTO() {
-		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
-		return janela.getLoginDTO();
-	}
-
-	public void sairLoginDTO() {
-		var janela = (JanelaPrincipal) SwingUtilities.getWindowAncestor(this);
-		janela.setLoginDTO(null);
-	}
-
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

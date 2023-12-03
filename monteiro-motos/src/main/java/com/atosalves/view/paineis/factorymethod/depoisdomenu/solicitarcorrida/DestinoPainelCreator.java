@@ -1,6 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.dto.LoginDTO;
 import com.atosalves.model.Endereco;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
@@ -19,8 +20,11 @@ public class DestinoPainelCreator implements PainelCreator {
 
 	private Endereco pontoDeEncontro;
 
-	public DestinoPainelCreator(Endereco pontoDeEncontro) {
+	private LoginDTO loginDTO;
+
+	public DestinoPainelCreator(Endereco pontoDeEncontro, LoginDTO loginDTO) {
 		this.pontoDeEncontro = pontoDeEncontro;
+		this.loginDTO = loginDTO;
 	}
 
 	// TODO: mudar para DTO
@@ -35,19 +39,15 @@ public class DestinoPainelCreator implements PainelCreator {
 
 	private void solicitarBotao() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		gerenciadorDeCorrida.solicitarCorrida(
-			destinoPainel.getLoginDTO(),
-			pontoDeEncontro,
-			getDados()
-		);
+		gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, getDados());
 
 		destinoPainel.setPainel(
-			new CorridaEmEsperaPainelCreator(gerenciadorDeCorrida).criarPainel()
+			new CorridaEmEsperaPainelCreator(gerenciadorDeCorrida, loginDTO).criarPainel()
 		);
 	}
 
 	private void voltarBotao() {
-		destinoPainel.setPainel(new PontoDeEncontroCreator().criarPainel());
+		destinoPainel.setPainel(new PontoDeEncontroCreator(loginDTO).criarPainel());
 	}
 
 	@Override

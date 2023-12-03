@@ -1,5 +1,8 @@
 package com.atosalves.view.paineis.factorymethod.menu;
 
+import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.dto.LoginDTO;
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
@@ -17,16 +20,22 @@ public class MenuPainelCreator implements PainelCreator {
 	private Painel corridasPainel;
 	private Painel editarPainel;
 
+	private LoginDTO loginDTO;
+
+	public MenuPainelCreator(LoginDTO loginDTO) {
+		this.loginDTO = loginDTO;
+	}
+
 	private void solicitarCorridaBotao() {
-		menuPainel.setPainel(new PontoDeEncontroCreator().criarPainel());
+		menuPainel.setPainel(new PontoDeEncontroCreator(loginDTO).criarPainel());
 	}
 
 	private void depositarBotao() {
-		menuPainel.setPainel(new DepositarSaldoCreator().criarPainel());
+		menuPainel.setPainel(new DepositarSaldoCreator(loginDTO).criarPainel());
 	}
 
 	private void extratoBotao() {
-		menuPainel.setPainel(new ExtratoPainelCreator().criarPainel());
+		menuPainel.setPainel(new ExtratoPainelCreator(loginDTO).criarPainel());
 	}
 
 	private void inicioBotao() {
@@ -51,8 +60,15 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void sairBotao() {
-		menuPainel.sairLoginDTO();
 		menuPainel.setPainel(new LoginPainelCreator().criarPainel());
+	}
+
+	private Object[] teste() {
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		if (loginDTO.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
+			return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
+		}
+		return gerenciadorDeCorrida.buscarCorridasPendentes();
 	}
 
 	@Override
@@ -99,7 +115,6 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void corridasPainel() {
-		Object[] a = { "a", "b", "c" };
 		corridasPainel =
 			new PainelBuilderImpl()
 				.setTexto("CORRIDAS", Tema.FONTE_MUITO_FORTE)
@@ -107,7 +122,7 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotaoMenu("CORRIDAS", this::corridasBotao)
 				.setBotaoMenu("EDITAR", this::editarBotao)
 				.setBotao("SAIR", this::sairBotao)
-				.setListaDeItems(a)
+				.setListaDeItems(teste())
 				.construir();
 
 		corridasPainel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
