@@ -30,9 +30,7 @@ public class UsuarioController {
 
 		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
 			return true;
-		} else if (
-			usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)
-		) {
+		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
 			return true;
 		}
 		return false;
