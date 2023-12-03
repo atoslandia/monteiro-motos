@@ -74,17 +74,21 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.getPassageiro().pagarCorrida(corrida.getValor());
 	}
 
-	public Object[][] buscarCorridasPendentes(){
+	public Object[] buscarCorridasPendentes(){
 		List<Corrida> corridas = corridaDAO.buscarCorridasPendenetes();
-		int tamanho = corridas.size();
-		
-		Object[][] corridasView = new Object[3][tamanho];
-		for (int i = 0; i < tamanho; i++) {
-				corridasView[0][i] = corridas.get(i).getId();
-				corridasView[1][i] = corridas.get(i).getPontoDeEncontro().getRua();
-				corridasView[2][i] = corridas.get(i).getDestino().getRua();
-		}
+		Object[] corridasView = transformarEmArray(corridas);
 		return corridasView;
+	}
+
+	private Object[] transformarEmArray(List<Corrida> corridaArray){
+		Object[] objects = new Object[corridaArray.size()];
+		for (int i = 0; i < objects.length; i++) {
+			Corrida corrida = corridaArray.get(i);
+			objects[i] = corrida.getId() + " | " 
+			+ corrida.getPontoDeEncontro().getRua() + " | " 
+			+ corrida.getDestino().getRua();
+		}
+		return objects;
 	}
 
 }
