@@ -65,23 +65,51 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasPendenetes() {
-		return dataBase.getCorridas().get("pendente".toUpperCase());
+	public List<CorridaDTO> buscarCorridasPendenetes() {
+		List<CorridaDTO> corridasDTO = new ArrayList<>();
+		
+		for (Corrida corrida : dataBase.getCorridas().get("pendentes".toUpperCase())) {
+			CorridaDTO corridaDTO = new CorridaDTO(corrida);
+			corridasDTO.add(corridaDTO);
+		}
+
+		return corridasDTO;
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasEmAndamento() {
-		return dataBase.getCorridas().get("reivindicada".toUpperCase());
+	public List<CorridaDTO> buscarCorridasEmAndamento() {
+		List<CorridaDTO> corridasDTO = new ArrayList<>();
+		
+		for (Corrida corrida : dataBase.getCorridas().get("reivindicadas".toUpperCase())) {
+			CorridaDTO corridaDTO = new CorridaDTO(corrida);
+			corridasDTO.add(corridaDTO);
+		}
+
+		return corridasDTO;
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasCanceladas() {
-		return dataBase.getCorridas().get("cancelada".toUpperCase());
+	public List<CorridaDTO> buscarCorridasCanceladas() {
+		List<CorridaDTO> corridasDTO = new ArrayList<>();
+		
+		for (Corrida corrida : dataBase.getCorridas().get("canceladas".toUpperCase())) {
+			CorridaDTO corridaDTO = new CorridaDTO(corrida);
+			corridasDTO.add(corridaDTO);
+		}
+
+		return corridasDTO;
 	}
 
 	@Override
-	public List<Corrida> buscarCorridasFinalizadas() {
-		return dataBase.getCorridas().get("finalizada".toUpperCase());
+	public List<CorridaDTO> buscarCorridasFinalizadas() {
+		List<CorridaDTO> corridasDTO = new ArrayList<>();
+		
+		for (Corrida corrida : dataBase.getCorridas().get("finalizadas".toUpperCase())) {
+			CorridaDTO corridaDTO = new CorridaDTO(corrida);
+			corridasDTO.add(corridaDTO);
+		}
+
+		return corridasDTO;
 	}
 
 	@Override
@@ -92,16 +120,31 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 		dataBase.salvarDados();
 	}
-
+	
 	public CorridaDTO update(CorridaDTO entidade) {
 		Corrida corrida = recuperarPeloId(entidade.corrida().getId()).corrida();
 		corrida = entidade.corrida();
 		dataBase.salvarDados();
 		return new CorridaDTO(corrida);
 	}
-
+	
 	@Override
-	public CorridaDTO buscarCorridaDeUmUsuario(String id, String estado) {
+	public List<CorridaDTO> buscarCorridasDoUsuario(String id) {
+		List<CorridaDTO> corridasDoUsuario = new ArrayList<>();
+
+		for (ArrayList<Corrida> c : dataBase.getCorridas().values()) {
+			for (Corrida corrida : c) {
+				if (id.equals(corrida.getPassageiro().getEmail())) {
+					CorridaDTO corridaDTO = new CorridaDTO(corrida);
+					corridasDoUsuario.add(corridaDTO);
+				}
+			}
+		}
+		return corridasDoUsuario;
+	}
+	
+	@Override
+	public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado.toUpperCase());
 		for (Corrida corrida : corridas) {
 			if (corrida.getPassageiro().getEmail().equals(id)) {
@@ -111,47 +154,48 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate data = LocalDate.parse("28/02/2004", formato);
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		CadastroDTO cadastroPassageiro = new CadastroDTO(
-			"robson",
-			"robson@gmail.com",
-			null,
-			data,
-			TipoUsuario.PASSAGEIRO
-		);
-		CadastroDTO cadastroMototaxista = new CadastroDTO(
-			"atos",
-			"atos@gmail.com",
-			null,
-			data,
-			TipoUsuario.MOTOTAXISTA
-		);
-		LoginDTO loginPassageiro = new LoginDTO(
-			cadastroPassageiro.email(),
-			null,
-			cadastroPassageiro.tipo()
-		);
-		LoginDTO loginMototaxista = new LoginDTO(
-			cadastroMototaxista.email(),
-			null,
-			cadastroMototaxista.tipo()
-		);
-
-		UsuarioController usuarioController = new UsuarioController();
-		try {
-			// usuarioController.cadastrar(cadastroPassageiro);
-			// usuarioController.cadastrar(cadastroMototaxista);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+	// public static void main(String[] args) {
+	// 	DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	// 	LocalDate data = LocalDate.parse("28/02/2004", formato);
+	// 	GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+	// 	CadastroDTO cadastroPassageiro = new CadastroDTO(
+	// 		"robson",
+	// 		"robson@gmail.com",
+	// 		null,
+	// 		data,
+	// 		TipoUsuario.PASSAGEIRO
+	// 	);
+	// 	CadastroDTO cadastroMototaxista = new CadastroDTO(
+	// 		"atos",
+	// 		"atos@gmail.com",
+	// 		null,
+	// 		data,
+	// 		TipoUsuario.MOTOTAXISTA
+	// 		);
+	// 		LoginDTO loginPassageiro = new LoginDTO(
+	// 			cadastroPassageiro.email(),
+	// 			null,
+	// 			cadastroPassageiro.tipo()
+	// 			);
+	// 			LoginDTO loginMototaxista = new LoginDTO(
+	// 				cadastroMototaxista.email(),
+	// 				null,
+	// 				cadastroMototaxista.tipo()
+	// 				);
+					
+	// 				UsuarioController usuarioController = new UsuarioController();
+	// 				try {
+	// 					// usuarioController.cadastrar(cadastroPassageiro);
+	// 					// usuarioController.cadastrar(cadastroMototaxista);
+	// 	} catch (Exception e) {
+	// 		System.out.println(e.getMessage());
+	// 	}
+	// 	gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
 		// gerenciadorDeCorrida.reivindicarCorrida(loginMototaxista);
 		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
 		// gerenciadorDeCorrida.cancelarCorrida(loginPassageiro);
 		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
 		// gerenciadorDeCorrida.cancelarCorrida();
-	}
+	// }
+
 }

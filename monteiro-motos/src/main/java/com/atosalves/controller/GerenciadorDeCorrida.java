@@ -44,7 +44,7 @@ public class GerenciadorDeCorrida implements Observador {
 
 	public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino) {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
-		CorridaDTO corridaDTO = corridaDAO.buscarCorridaDeUmUsuario(
+		CorridaDTO corridaDTO = corridaDAO.buscarUmaCorridaDoUsuario(
 			passageiro.usuario().getEmail(),
 			"Pendente"
 		);
@@ -74,16 +74,22 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.getPassageiro().pagarCorrida(corrida.getValor());
 	}
 
-	public Object[] buscarCorridasPendentes(){
-		List<Corrida> corridas = corridaDAO.buscarCorridasPendenetes();
+	public Object[] buscarHistoricoDeCorridas(LoginDTO login){
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoUsuario(login.email());
 		Object[] corridasView = transformarEmArray(corridas);
 		return corridasView;
 	}
 
-	private Object[] transformarEmArray(List<Corrida> corridaArray){
+	public Object[] buscarCorridasPendentes(){
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridasPendenetes();
+		Object[] corridasView = transformarEmArray(corridas);
+		return corridasView;
+	}
+
+	private Object[] transformarEmArray(List<CorridaDTO> corridaArray){
 		Object[] objects = new Object[corridaArray.size()];
 		for (int i = 0; i < objects.length; i++) {
-			Corrida corrida = corridaArray.get(i);
+			Corrida corrida = corridaArray.get(i).corrida();
 			objects[i] = corrida.getId() + " | " 
 			+ corrida.getPontoDeEncontro().getRua() + " | " 
 			+ corrida.getDestino().getRua();

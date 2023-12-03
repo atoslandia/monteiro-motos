@@ -9,17 +9,19 @@ import com.atosalves.model.Corrida;
 public interface BuscaCorridasDAO {
 
 
-    public List<Corrida> buscarCorridasPendenetes();
+    public List<CorridaDTO> buscarCorridasPendenetes();
 
-    public List<Corrida> buscarCorridasEmAndamento();
+    public List<CorridaDTO> buscarCorridasEmAndamento();
 
-    public List<Corrida> buscarCorridasCanceladas();
+    public List<CorridaDTO> buscarCorridasCanceladas();
 
-    public List<Corrida> buscarCorridasFinalizadas();
+    public List<CorridaDTO> buscarCorridasFinalizadas();
+
+    List<CorridaDTO> buscarCorridasDoUsuario(String id);
 
     public void moverCorrida(CorridaEventoDTO evento);
 
-    public CorridaDTO buscarCorridaDeUmUsuario(String id, String estado);
+    public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado);
 
 
 }
