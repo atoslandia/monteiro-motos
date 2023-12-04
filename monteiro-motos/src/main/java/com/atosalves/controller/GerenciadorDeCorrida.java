@@ -10,6 +10,7 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.observerpattern.Observador;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.util.List;
@@ -29,11 +30,7 @@ public class GerenciadorDeCorrida implements Observador {
 		corridaDAO.moverCorrida(corrida);
 	}
 
-	public CorridaDTO solicitarCorrida(
-		LoginDTO loginDTO,
-		EnderecoViewDTO pontoDeEncontoDTO,
-		EnderecoViewDTO destinoDTO
-	) {
+	public CorridaDTO solicitarCorrida(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontoDTO, EnderecoViewDTO destinoDTO) {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(loginDTO.email());
 		CorridaDTO corridaDTO = corridaDAO.buscarCorridaExistenteDeUmPassageiro(loginDTO);
 
@@ -41,8 +38,7 @@ public class GerenciadorDeCorrida implements Observador {
 			Endereco pontoDeEncontro = new Endereco(
 				pontoDeEncontoDTO.bairro(),
 				pontoDeEncontoDTO.rua(),
-				pontoDeEncontoDTO.cep()
-			);
+				pontoDeEncontoDTO.cep());
 			Endereco destino = new Endereco(destinoDTO.bairro(), destinoDTO.rua(), destinoDTO.cep());
 
 			Corrida corrida = new Corrida(passageiro, new EnderecoDTO(pontoDeEncontro), new EnderecoDTO(destino));
@@ -54,7 +50,7 @@ public class GerenciadorDeCorrida implements Observador {
 		return corridaDTO;
 	}
 
-	public void reivindicarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
+	public void reivindicarCorrida(LoginDTO login, CorridaDTO corridaDTO) throws AcessoNegadoException {
 		Corrida corrida = corridaDAO
 			.buscarUmaCorridaDoUsuario(
 				corridaDTO.corrida().getPassageiro().getEmail(),
@@ -71,18 +67,13 @@ public class GerenciadorDeCorrida implements Observador {
 	}
 
 	// TODO: consertar
-	public void cancelarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
-		Corrida corrida = corridaDAO
-			.buscarUmaCorridaDoUsuario(login.email(), corridaDTO.corrida().getEstado().getNome())
-			.corrida();
+	public void cancelarCorrida(LoginDTO login, CorridaDTO corridaDTO) throws AcessoNegadoException {
+		Corrida corrida = corridaDAO.recuperarPeloId(corridaDTO.corrida().getId()).corrida();
 		corrida.cancelarCorrida(login.tipoUsuario());
 	}
 
-	// TODO: consertar
-	public void finalizarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
-		Corrida corrida = corridaDAO
-			.buscarUmaCorridaDoUsuario(login.email(), corridaDTO.corrida().getEstado().getNome())
-			.corrida();
+	public void finalizarCorrida(CorridaDTO corridaDTO) throws AcessoNegadoException {
+		Corrida corrida = corridaDAO.recuperarPeloId(corridaDTO.corrida().getId()).corrida();
 		corrida.finalizarCorrida();
 	}
 

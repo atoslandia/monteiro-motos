@@ -5,6 +5,7 @@ import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 
 public class CorridaPendente extends CorridaState {
 
@@ -14,8 +15,8 @@ public class CorridaPendente extends CorridaState {
 	}
 
 	@Override
-	public void finalizarCorrida() {
-		System.out.println("Corrida Pendente, não é possivel finalizar");
+	public void finalizarCorrida() throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não foi possivel finalizar");
 	}
 
 	@Override
@@ -25,12 +26,14 @@ public class CorridaPendente extends CorridaState {
 	}
 
 	@Override
-	public void cancelarCorrida(TipoUsuario tipoUsuario) {
+	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		if (tipoUsuario.equals(TipoUsuario.PASSAGEIRO)) {
 			corrida.setEstado(new CorridaCancelada(corrida));
 			corrida.removerObservador();
 		} else {
-			System.out.println("Mototaxista nao pode cancelar corrida");
+			throw new AcessoNegadoException("Não foi possivel Cancelar");
 		}
 	}
+
+
 }

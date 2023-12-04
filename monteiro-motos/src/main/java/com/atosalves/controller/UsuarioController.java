@@ -1,6 +1,6 @@
 package com.atosalves.controller;
 
-import com.atosalves.controller.exceptions.UsuarioJaExisteException;
+import com.atosalves.controller.exceptions.CredenciaisException;
 import com.atosalves.controller.exceptions.UsuarioMenorDeIdadeException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
@@ -19,33 +19,33 @@ public class UsuarioController {
 
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-	public boolean login(LoginDTO data) throws UsuarioNaoEncontradoException {
+	public void login(LoginDTO data) throws CredenciaisException {
 		Usuario usuario = usuarioDAO.recuperarPeloId(data.email()).usuario();
 		if (usuario == null) {
-			throw new UsuarioNaoEncontradoException();
+			throw new CredenciaisException("Usuario não encontrado");
 		}
 		if (!usuario.getSenha().equals(data.senha())) {
-			throw new UsuarioNaoEncontradoException();
+			throw new CredenciaisException("Senha incorreta");
 		}
 
-		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
-			return true;
-		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
-			return true;
+		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
+			return;
+		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
+			return;
 		}
-		return false;
+		throw new CredenciaisException("Tipo de usuario incorreto");
 	}
 
-	public boolean cadastrar(CadastroDTO data) throws Exception {
+	public void cadastrar(CadastroDTO data) throws CredenciaisException {
 		LocalDate dataDeNascimento = data.dataNascimento();
 		LocalDate dataAtual = LocalDate.now();
 		Period idade = Period.between(dataDeNascimento, dataAtual);
 
 		if (usuarioDAO.recuperarPeloId(data.email()) != null) {
-			throw new UsuarioJaExisteException();
+			throw new CredenciaisException("Esse email já foi cadastrado");
 		}
 		if (idade.getYears() < 18) {
-			throw new UsuarioMenorDeIdadeException();
+			throw new CredenciaisException("Idade invalida. Permitido acima de 18 anos");
 		}
 
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
@@ -54,8 +54,6 @@ public class UsuarioController {
 
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		usuarioDAO.cadastrar(usuarioDTO);
-
-		return true;
 	}
 
 	private void tranferirDados(CadastroDTO dados, Usuario entidade) {

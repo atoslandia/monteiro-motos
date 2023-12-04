@@ -4,6 +4,8 @@ import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
+import com.atosalves.model.exceptions.AcessoNegadoException;
+
 import lombok.Getter;
 
 @Getter
@@ -17,9 +19,10 @@ public abstract class CorridaState {
 		this.corrida = corrida;
 	}
 
-	public abstract void finalizarCorrida();
+	public abstract void finalizarCorrida() throws AcessoNegadoException;
 
-	public abstract void reivindicarCorrida(UsuarioDTO mototaxista);
+	public abstract void reivindicarCorrida(UsuarioDTO mototaxista) throws AcessoNegadoException;
 
-	public abstract void cancelarCorrida(TipoUsuario tipoUsuario);
+	public abstract void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException;
+
 }

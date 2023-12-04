@@ -5,6 +5,7 @@ import com.atosalves.dto.EnderecoDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import com.atosalves.observerpattern.Observavel;
@@ -44,15 +45,16 @@ public class Corrida extends Observavel {
 		notificarObservador(evento);
 	}
 
-	public void finalizarCorrida() {
+
+	public void finalizarCorrida() throws AcessoNegadoException {
 		estado.finalizarCorrida();
 	}
 
-	public void reivindicarCorrida(UsuarioDTO mototaxista) {
+	public void reivindicarCorrida(UsuarioDTO mototaxista) throws AcessoNegadoException {
 		estado.reivindicarCorrida(mototaxista);
 	}
 
-	public void cancelarCorrida(TipoUsuario tipoUsuario) {
+	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		estado.cancelarCorrida(tipoUsuario);
 	}
 }

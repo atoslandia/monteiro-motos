@@ -4,6 +4,7 @@ import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 
 public class CorridaReivindicada extends CorridaState {
 
@@ -15,20 +16,23 @@ public class CorridaReivindicada extends CorridaState {
 	@Override
 	public void finalizarCorrida() {
 		corrida.setEstado(new CorridaFinalizada(corrida));
+		corrida.removerObservador();
 	}
 
 	@Override
-	public void cancelarCorrida(TipoUsuario tipoUsuario) {
+	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		if (tipoUsuario.equals(TipoUsuario.MOTOTAXISTA)) {
 			corrida.setEstado(new CorridaCancelada(corrida));
 			corrida.removerObservador();
 		} else {
-			System.out.println("Usuario nao pode cancelar a corrida");
+			throw new AcessoNegadoException("Não foi possivel cancelar");
 		}
 	}
 
 	@Override
-	public void reivindicarCorrida(UsuarioDTO mototaxista) {
-		System.out.println("Corrida ja reivindicada");
+	public void reivindicarCorrida(UsuarioDTO mototaxista) throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não foi possivel reivindicar");
 	}
+
+
 }

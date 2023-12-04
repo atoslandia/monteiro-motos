@@ -4,6 +4,7 @@ import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 
 public class CorridaFinalizada extends CorridaState {
 
@@ -13,17 +14,19 @@ public class CorridaFinalizada extends CorridaState {
 	}
 
 	@Override
-	public void finalizarCorrida() {
-		System.out.println("Corrida ja foi finalizada");
+	public void finalizarCorrida() throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não foi possivel finalizar");
 	}
 
 	@Override
-	public void cancelarCorrida(TipoUsuario tipoUsuario) {
-		System.out.println("Corrida ja foi finalizada");
+	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não foi possivel cancelar");
 	}
 
 	@Override
-	public void reivindicarCorrida(UsuarioDTO mototaxista) {
-		System.out.println("Corrida ja foi finalizada");
+	public void reivindicarCorrida(UsuarioDTO mototaxista) throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não foi possivel reivindicar");
+
 	}
+
 }
