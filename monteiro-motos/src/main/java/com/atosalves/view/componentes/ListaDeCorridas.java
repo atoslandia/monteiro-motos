@@ -41,6 +41,7 @@ public class ListaDeCorridas extends JScrollPane {
 		items.addColumn("ID DA CORRIDA");
 		items.addColumn("PONTO DE ENCONTRO");
 		items.addColumn("DESTINO");
+		items.addColumn("ESTADO");
 
 		for (CorridaDTO corridaDTO : lista) {
 			items.addRow(
@@ -54,6 +55,7 @@ public class ListaDeCorridas extends JScrollPane {
 					corridaDTO.corrida().getDestino().getRua() +
 					", bairro: " +
 					corridaDTO.corrida().getDestino().getBairro(),
+					corridaDTO.corrida().getEstado().getNome(),
 				}
 			);
 		}

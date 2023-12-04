@@ -1,5 +1,6 @@
 package com.atosalves.db;
 
+import com.atosalves.enums.Estado;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Usuario;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -19,16 +20,16 @@ public class DB {
 	private Map<String, Usuario> usuarios;
 
 	@XStreamAsAttribute
-	private Map<String, ArrayList<Corrida>> corridas;
+	private Map<Estado, ArrayList<Corrida>> corridas;
 
 	private DB() {
 		usuarios = new HashMap<>();
 		corridas = new HashMap<>();
 		corridas = new HashMap<>();
-		corridas.put("PENDENTES", new ArrayList<>());
-		corridas.put("REINVINDICADAS", new ArrayList<>());
-		corridas.put("FINALIZADAS", new ArrayList<>());
-		corridas.put("CANCELADAS", new ArrayList<>());
+		corridas.put(Estado.PENDENTE, new ArrayList<>());
+		corridas.put(Estado.REINVINDICADA, new ArrayList<>());
+		corridas.put(Estado.CANCELADA, new ArrayList<>());
+		corridas.put(Estado.FINALIZADA, new ArrayList<>());
 	}
 
 	public void salvarDados() {
@@ -51,7 +52,7 @@ public class DB {
 		return dbInstace.usuarios;
 	}
 
-	public Map<String, ArrayList<Corrida>> getCorridas() {
+	public Map<Estado, ArrayList<Corrida>> getCorridas() {
 		return dbInstace.corridas;
 	}
 }

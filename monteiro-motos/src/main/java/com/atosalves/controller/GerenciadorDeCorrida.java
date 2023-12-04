@@ -7,6 +7,7 @@ import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UpdateCorridaDTO;
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.Estado;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
@@ -45,7 +46,7 @@ public class GerenciadorDeCorrida implements Observador {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
 		CorridaDTO corridaDTO = corridaDAO.buscarUmaCorridaDoUsuario(
 			passageiro.usuario().getEmail(),
-			"Pendente"
+			Estado.PENDENTE
 		);
 		if (corridaDTO == null) {
 			corrida = new Corrida(passageiro, pontoDeEnconto, destino);
@@ -58,8 +59,8 @@ public class GerenciadorDeCorrida implements Observador {
 		}
 	}
 
-	public void reivindicarCorrida(LoginDTO login, Long id) {
-		corrida = corridaDAO.recuperarPeloId(id).corrida();
+	public void reivindicarCorrida(LoginDTO login, Long idCorrida) {
+		corrida = corridaDAO.recuperarPeloId(idCorrida).corrida();
 		UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
 		corrida.reivindicarCorrida(mototaxista);
 	}

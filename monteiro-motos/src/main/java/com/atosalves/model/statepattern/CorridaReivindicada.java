@@ -1,6 +1,7 @@
 package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.Estado;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
@@ -10,7 +11,7 @@ public class CorridaReivindicada extends CorridaState {
 
 	public CorridaReivindicada(Corrida corrida) {
 		super(corrida);
-		nome = "REIVINDICADA";
+		nome = Estado.REINVINDICADA;
 	}
 
 	@Override

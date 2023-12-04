@@ -1,6 +1,7 @@
 package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.Estado;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
@@ -14,7 +15,7 @@ public abstract class CorridaState {
 
 	protected Corrida corrida;
 
-	protected String nome;
+	protected Estado nome;
 
 	public CorridaState(Corrida corrida) {
 		this.corrida = corrida;

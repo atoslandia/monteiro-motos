@@ -2,11 +2,12 @@ package com.atosalves.dao.interfaceDAO;
 
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.enums.Estado;
 import com.atosalves.model.Corrida;
 import java.util.List;
 
 public interface BuscaCorridasDAO {
-	public List<CorridaDTO> buscarCorridasPendenetes();
+	public List<CorridaDTO> buscarCorridasPendentes();
 
 	public List<CorridaDTO> buscarCorridasEmAndamento();
 
@@ -18,5 +19,5 @@ public interface BuscaCorridasDAO {
 
 	public void moverCorrida(CorridaEventoDTO evento);
 
-	public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado);
+	public CorridaDTO buscarUmaCorridaDoUsuario(String id, Estado estado);
 }

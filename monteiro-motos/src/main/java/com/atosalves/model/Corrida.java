@@ -2,6 +2,7 @@ package com.atosalves.model;
 
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.enums.Estado;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
@@ -36,7 +37,7 @@ public class Corrida extends Observavel {
 	}
 
 	public void setEstado(CorridaState estado) {
-		String estadoAntigo = this.estado.getNome();
+		Estado estadoAntigo = this.estado.getNome();
 		this.estado = estado;
 		CorridaEventoDTO evento = new CorridaEventoDTO(estadoAntigo, this);
 		notificarObservador(evento);

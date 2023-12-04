@@ -1,5 +1,6 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu;
+package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 
+import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
@@ -22,7 +23,16 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 		this.loginDTO = loginDTO;
 	}
 
-	private void voltar() {
+	private void reinvidicarBotao() {
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO.corrida().getId());
+
+		detalhadorDeCorrida.setPainel(
+			new CorridaEmAndamentoPainelCreator(loginDTO, gerenciadorDeCorrida).criarPainel()
+		);
+	}
+
+	private void voltarBotao() {
 		detalhadorDeCorrida.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
@@ -49,10 +59,10 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 		PainelBuilder builder = new PainelBuilderImpl()
 			.setTexto("DETALHES DA CORRIDA", Tema.FONTE_MUITO_FORTE)
 			.setMuitoTexto(detalhamentoCorrida())
-			.setBotao("VOLTAR", this::voltar);
+			.setBotao("VOLTAR", this::voltarBotao);
 
 		if (loginDTO.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
-			builder.setBotao("REINVINDICAR", null);
+			builder.setBotao("REINVINDICAR", this::reinvidicarBotao);
 		}
 
 		detalhadorDeCorrida = builder.construir();

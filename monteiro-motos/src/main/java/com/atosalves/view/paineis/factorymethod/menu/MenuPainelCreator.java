@@ -8,10 +8,11 @@ import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.DetalhadorDeCorridaCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainelCreator;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroCreator;
 import com.atosalves.view.paineis.factorymethod.inicio.LoginPainelCreator;
+import com.atosalves.view.paineis.painelbuilder.PainelBuilder;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
@@ -51,7 +52,7 @@ public class MenuPainelCreator implements PainelCreator {
 
 	private CorridaDTO[] getListaDeCorridas() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		if (loginDTO.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
+		if (isPassageiro()) {
 			return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
 		}
 		return gerenciadorDeCorrida.buscarCorridasPendentes();
@@ -82,16 +83,20 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void inicioPainel() {
-		inicioPainel =
-			new PainelBuilderImpl()
-				.setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE)
+		PainelBuilder builder = new PainelBuilderImpl()
+			.setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE)
+			.setBotaoMenu("INICIO", this::inicioBotao, false)
+			.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
+			.setBotaoMenu("PERFIL", this::editarBotao, true);
+
+		if (isPassageiro()) {
+			builder
 				.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao)
 				.setBotao("DEPOSITAR", this::depositarBotao)
-				.setBotao("EXTRATO", this::extratoBotao)
-				.setBotaoMenu("INICIO", this::inicioBotao, false)
-				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
-				.setBotaoMenu("PERFIL", this::editarBotao, true)
-				.construir();
+				.setBotao("EXTRATO", this::extratoBotao);
+		}
+
+		inicioPainel = builder.construir();
 	}
 
 	private void corridasPainel() {
@@ -103,6 +108,7 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotaoMenu("CORRIDAS", this::corridasBotao, false)
 				.setBotaoMenu("PERFIL", this::editarBotao, true)
 				.construir();
+		corridasPainel.setVisible(false);
 	}
 
 	private void editarPainel() {
@@ -116,6 +122,7 @@ public class MenuPainelCreator implements PainelCreator {
 				.construir();
 
 		editarPainel.getBotao("SAIR").setBounds(630, 10, 100, 35);
+		editarPainel.setVisible(false);
 	}
 
 	private void sairBotao() {
@@ -141,5 +148,9 @@ public class MenuPainelCreator implements PainelCreator {
 		corridasPainel.setVisible(false);
 		editarPainel.setVisible(true);
 		menuPainel.repaint();
+	}
+
+	private boolean isPassageiro() {
+		return loginDTO.tipoUsuario().equals(TipoUsuario.PASSAGEIRO);
 	}
 }
