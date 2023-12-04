@@ -1,27 +1,22 @@
 package com.atosalves.dao.interfaceDAO;
 
-import java.util.List;
-
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.model.Corrida;
+import java.util.List;
 
 public interface BuscaCorridasDAO {
+	public List<CorridaDTO> buscarCorridasPendenetes();
 
+	public List<CorridaDTO> buscarCorridasEmAndamento();
 
-    public List<CorridaDTO> buscarCorridasPendenetes();
+	public List<CorridaDTO> buscarCorridasCanceladas();
 
-    public List<CorridaDTO> buscarCorridasEmAndamento();
+	public List<CorridaDTO> buscarCorridasFinalizadas();
 
-    public List<CorridaDTO> buscarCorridasCanceladas();
+	List<CorridaDTO> buscarCorridasDoPassageiro(String id);
 
-    public List<CorridaDTO> buscarCorridasFinalizadas();
+	public void moverCorrida(CorridaEventoDTO evento);
 
-    List<CorridaDTO> buscarCorridasDoUsuario(String id);
-
-    public void moverCorrida(CorridaEventoDTO evento);
-
-    public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado);
-
-
+	public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado);
 }

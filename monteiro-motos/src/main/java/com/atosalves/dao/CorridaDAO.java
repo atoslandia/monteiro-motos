@@ -15,6 +15,7 @@ import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
+import com.atosalves.model.statepattern.CorridaPendente;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -64,11 +65,17 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		}
 	}
 
+	// TODO: poha de método é esse
 	@Override
 	public List<CorridaDTO> buscarCorridasPendenetes() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
-		
-		for (Corrida corrida : dataBase.getCorridas().get("pendentes".toUpperCase())) {
+
+		System.out.println(dataBase.getCorridas().get("CANCELADAS"));
+		System.out.println(dataBase.getCorridas().get("FINALIZADAS"));
+		System.out.println(dataBase.getCorridas().get("REINVINDICADAS"));
+		System.out.println(dataBase.getCorridas().get("PENDENTES"));
+
+		for (Corrida corrida : dataBase.getCorridas().get("PENDENTES")) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -79,8 +86,8 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	@Override
 	public List<CorridaDTO> buscarCorridasEmAndamento() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
-		
-		for (Corrida corrida : dataBase.getCorridas().get("reivindicadas".toUpperCase())) {
+
+		for (Corrida corrida : dataBase.getCorridas().get("REINVINDICADAS")) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -91,8 +98,8 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	@Override
 	public List<CorridaDTO> buscarCorridasCanceladas() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
-		
-		for (Corrida corrida : dataBase.getCorridas().get("canceladas".toUpperCase())) {
+
+		for (Corrida corrida : dataBase.getCorridas().get("CANCELADAS")) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -103,8 +110,8 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	@Override
 	public List<CorridaDTO> buscarCorridasFinalizadas() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
-		
-		for (Corrida corrida : dataBase.getCorridas().get("finalizadas".toUpperCase())) {
+
+		for (Corrida corrida : dataBase.getCorridas().get("FINALIZADAS")) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -120,16 +127,31 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 		dataBase.salvarDados();
 	}
-	
+
 	public CorridaDTO update(CorridaDTO entidade) {
 		Corrida corrida = recuperarPeloId(entidade.corrida().getId()).corrida();
 		corrida = entidade.corrida();
 		dataBase.salvarDados();
 		return new CorridaDTO(corrida);
 	}
-	
+
+	// TODO: refatorar depois, criei para testar mototaxista
+	public List<CorridaDTO> buscarCorridasPendentes() {
+		List<CorridaDTO> corridasDoUsuario = new ArrayList<>();
+
+		for (ArrayList<Corrida> c : dataBase.getCorridas().values()) {
+			for (Corrida corrida : c) {
+				if (corrida.getEstado() instanceof CorridaPendente) {
+					CorridaDTO corridaDTO = new CorridaDTO(corrida);
+					corridasDoUsuario.add(corridaDTO);
+				}
+			}
+		}
+		return corridasDoUsuario;
+	}
+
 	@Override
-	public List<CorridaDTO> buscarCorridasDoUsuario(String id) {
+	public List<CorridaDTO> buscarCorridasDoPassageiro(String id) {
 		List<CorridaDTO> corridasDoUsuario = new ArrayList<>();
 
 		for (ArrayList<Corrida> c : dataBase.getCorridas().values()) {
@@ -142,7 +164,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		}
 		return corridasDoUsuario;
 	}
-	
+
 	@Override
 	public CorridaDTO buscarUmaCorridaDoUsuario(String id, String estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado.toUpperCase());
@@ -153,7 +175,6 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		}
 		return null;
 	}
-
 	// public static void main(String[] args) {
 	// 	DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	// 	LocalDate data = LocalDate.parse("28/02/2004", formato);
@@ -182,7 +203,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	// 				null,
 	// 				cadastroMototaxista.tipo()
 	// 				);
-					
+
 	// 				UsuarioController usuarioController = new UsuarioController();
 	// 				try {
 	// 					// usuarioController.cadastrar(cadastroPassageiro);
@@ -191,11 +212,11 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	// 		System.out.println(e.getMessage());
 	// 	}
 	// 	gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-		// gerenciadorDeCorrida.reivindicarCorrida(loginMototaxista);
-		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-		// gerenciadorDeCorrida.cancelarCorrida(loginPassageiro);
-		// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-		// gerenciadorDeCorrida.cancelarCorrida();
+	// gerenciadorDeCorrida.reivindicarCorrida(loginMototaxista);
+	// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+	// gerenciadorDeCorrida.cancelarCorrida(loginPassageiro);
+	// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
+	// gerenciadorDeCorrida.cancelarCorrida();
 	// }
 
 }

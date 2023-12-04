@@ -1,11 +1,14 @@
 package com.atosalves.view.paineis.factorymethod.menu;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.DetalhadorDeCorridaCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroCreator;
 import com.atosalves.view.paineis.factorymethod.inicio.LoginPainelCreator;
@@ -19,6 +22,8 @@ public class MenuPainelCreator implements PainelCreator {
 	private Painel inicioPainel;
 	private Painel corridasPainel;
 	private Painel editarPainel;
+
+	private ListaDeCorridas listaDeItems;
 
 	private LoginDTO loginDTO;
 
@@ -38,32 +43,13 @@ public class MenuPainelCreator implements PainelCreator {
 		menuPainel.setPainel(new ExtratoPainelCreator(loginDTO).criarPainel());
 	}
 
-	private void inicioBotao() {
-		inicioPainel.setVisible(true);
-		corridasPainel.setVisible(false);
-		editarPainel.setVisible(false);
-		menuPainel.repaint();
+	private void listaCorrida() {
+		menuPainel.setPainel(
+			new DetalhadorDeCorridaCreator(listaDeItems.pegarSelecionado(), loginDTO).criarPainel()
+		);
 	}
 
-	private void corridasBotao() {
-		inicioPainel.setVisible(false);
-		corridasPainel.setVisible(true);
-		editarPainel.setVisible(false);
-		menuPainel.repaint();
-	}
-
-	private void editarBotao() {
-		inicioPainel.setVisible(false);
-		corridasPainel.setVisible(false);
-		editarPainel.setVisible(true);
-		menuPainel.repaint();
-	}
-
-	private void sairBotao() {
-		menuPainel.setPainel(new LoginPainelCreator().criarPainel());
-	}
-
-	private Object[] teste() {
+	private CorridaDTO[] getListaDeCorridas() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 		if (loginDTO.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
 			return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
@@ -72,7 +58,9 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	@Override
-	public void inicializarComponentes() {}
+	public void inicializarComponentes() {
+		listaDeItems = COMPONENTES_FACTORY.criarListaDeItems(getListaDeCorridas());
+	}
 
 	@Override
 	public void construirPainel() {
@@ -100,56 +88,58 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao)
 				.setBotao("DEPOSITAR", this::depositarBotao)
 				.setBotao("EXTRATO", this::extratoBotao)
-				.setBotao("SAIR", this::sairBotao)
-				.setBotaoMenu("INICIO", this::inicioBotao)
-				.setBotaoMenu("CORRIDAS", this::corridasBotao)
-				.setBotaoMenu("EDITAR", this::editarBotao)
+				.setBotaoMenu("INICIO", this::inicioBotao, false)
+				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
+				.setBotaoMenu("PERFIL", this::editarBotao, true)
 				.construir();
-
-		inicioPainel.getBotao("INICIO").setBounds(0, 300, 200, 80);
-		inicioPainel.getBotao("INICIO").setEnabled(false);
-
-		inicioPainel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
-		inicioPainel.getBotao("EDITAR").setBounds(543, 300, 210, 80);
-		inicioPainel.getBotao("SAIR").setBounds(630, 10, 100, 35);
 	}
 
 	private void corridasPainel() {
 		corridasPainel =
 			new PainelBuilderImpl()
 				.setTexto("CORRIDAS", Tema.FONTE_MUITO_FORTE)
-				.setBotaoMenu("INICIO", this::inicioBotao)
-				.setBotaoMenu("CORRIDAS", this::corridasBotao)
-				.setBotaoMenu("EDITAR", this::editarBotao)
-				.setBotao("SAIR", this::sairBotao)
-				.setListaDeItems(teste())
+				.setListaDeItems(listaDeItems, this::listaCorrida)
+				.setBotaoMenu("INICIO", this::inicioBotao, true)
+				.setBotaoMenu("CORRIDAS", this::corridasBotao, false)
+				.setBotaoMenu("PERFIL", this::editarBotao, true)
 				.construir();
-
-		corridasPainel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
-		corridasPainel.getBotao("CORRIDAS").setEnabled(false);
-
-		corridasPainel.getBotao("INICIO").setBounds(0, 300, 200, 80);
-		corridasPainel.getBotao("EDITAR").setBounds(543, 300, 210, 80);
-
-		corridasPainel.getBotao("SAIR").setBounds(630, 10, 100, 35);
 	}
 
 	private void editarPainel() {
 		editarPainel =
 			new PainelBuilderImpl()
 				.setTexto("EDITAR PERFIL", Tema.FONTE_MUITO_FORTE)
-				.setBotaoMenu("INICIO", this::inicioBotao)
-				.setBotaoMenu("CORRIDAS", this::corridasBotao)
-				.setBotaoMenu("EDITAR", this::editarBotao)
+				.setBotaoMenu("INICIO", this::inicioBotao, true)
+				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
+				.setBotaoMenu("PERFIL", this::editarBotao, false)
 				.setBotao("SAIR", this::sairBotao)
 				.construir();
 
-		editarPainel.getBotao("INICIO").setBounds(0, 300, 200, 80);
-		editarPainel.getBotao("CORRIDAS").setBounds(199, 300, 345, 80);
-
-		editarPainel.getBotao("EDITAR").setBounds(543, 300, 210, 80);
-		editarPainel.getBotao("EDITAR").setEnabled(false);
-
 		editarPainel.getBotao("SAIR").setBounds(630, 10, 100, 35);
+	}
+
+	private void sairBotao() {
+		menuPainel.setPainel(new LoginPainelCreator().criarPainel());
+	}
+
+	private void inicioBotao() {
+		inicioPainel.setVisible(true);
+		corridasPainel.setVisible(false);
+		editarPainel.setVisible(false);
+		menuPainel.repaint();
+	}
+
+	private void corridasBotao() {
+		inicioPainel.setVisible(false);
+		corridasPainel.setVisible(true);
+		editarPainel.setVisible(false);
+		menuPainel.repaint();
+	}
+
+	private void editarBotao() {
+		inicioPainel.setVisible(false);
+		corridasPainel.setVisible(false);
+		editarPainel.setVisible(true);
+		menuPainel.repaint();
 	}
 }

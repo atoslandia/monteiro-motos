@@ -25,10 +25,10 @@ public class DB {
 		usuarios = new HashMap<>();
 		corridas = new HashMap<>();
 		corridas = new HashMap<>();
-		corridas.put("PENDENTE", new ArrayList<>());
-		corridas.put("REIVINDICADA", new ArrayList<>());
-		corridas.put("FINALIZADA", new ArrayList<>());
-		corridas.put("CANCELADA", new ArrayList<>());
+		corridas.put("PENDENTES", new ArrayList<>());
+		corridas.put("REINVINDICADAS", new ArrayList<>());
+		corridas.put("FINALIZADAS", new ArrayList<>());
+		corridas.put("CANCELADAS", new ArrayList<>());
 	}
 
 	public void salvarDados() {

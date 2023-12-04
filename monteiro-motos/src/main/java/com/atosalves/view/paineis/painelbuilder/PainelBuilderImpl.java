@@ -33,9 +33,18 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
+	public PainelBuilder setMuitoTexto(String titulo) {
+		Texto texto = factory.criarTexto(titulo, Tema.FONTE_NORMAL);
+		posicionador.posicionarComponenteGrande(texto);
+
+		painel.add(texto);
+		return this;
+	}
+
+	@Override
 	public PainelBuilder setTextoCaixa(String titulo, TextoCaixa textoCaixa) {
 		setTexto(titulo, Tema.FONTE_NORMAL);
-		posicionador.posicionarComponente(textoCaixa);
+		posicionador.posicionarComponenteNormal(textoCaixa);
 		painel.add(textoCaixa);
 		return this;
 	}
@@ -43,7 +52,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 	@Override
 	public PainelBuilder setSenhaCaixa(SenhaCaixa senhaCaixa) {
 		setTexto("SENHA", Tema.FONTE_NORMAL);
-		posicionador.posicionarComponente(senhaCaixa);
+		posicionador.posicionarComponenteNormal(senhaCaixa);
 		painel.add(senhaCaixa);
 		return this;
 	}
@@ -51,7 +60,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 	@Override
 	public PainelBuilder setBotao(String titulo, Runnable runnable) {
 		Botao botao = factory.criarBotao(titulo);
-		posicionador.posicionarComponente(botao);
+		posicionador.posicionarComponenteNormal(botao);
 
 		botao.addActionListener(
 			new ActionListener() {
@@ -69,8 +78,17 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
-	public PainelBuilder setBotaoMenu(String titulo, Runnable runnable) {
+	public PainelBuilder setBotaoMenu(String titulo, Runnable runnable, boolean isAtivo) {
 		Botao botao = factory.criarBotaoMenu(titulo);
+		if (titulo.equals("INICIO")) {
+			botao.setBounds(0, 300, 200, 80);
+		} else if (titulo.equals("CORRIDAS")) {
+			botao.setBounds(199, 300, 345, 80);
+		} else {
+			botao.setBounds(543, 300, 210, 80);
+		}
+
+		botao.setEnabled(isAtivo);
 
 		botao.addActionListener(
 			new ActionListener() {
@@ -89,14 +107,14 @@ public class PainelBuilderImpl implements PainelBuilder {
 
 	@Override
 	public PainelBuilder setDataCaixa(DataCaixa dataCaixa) {
-		posicionador.posicionarComponente(dataCaixa);
+		posicionador.posicionarComponenteNormal(dataCaixa);
 		painel.add(dataCaixa);
 		return this;
 	}
 
 	@Override
 	public PainelBuilder setTipoUsuarioCombo(TipoUsuarioCombo tipoUsuarioCombo) {
-		posicionador.posicionarComponente(tipoUsuarioCombo);
+		posicionador.posicionarComponenteNormal(tipoUsuarioCombo);
 		painel.add(tipoUsuarioCombo);
 		return this;
 	}
@@ -108,9 +126,10 @@ public class PainelBuilderImpl implements PainelBuilder {
 	}
 
 	@Override
-	public PainelBuilder setListaDeItems(Object[] lista) {
-		ListaDeItems listaDeItens = factory.criarListaDeItems(lista);
-		painel.add(listaDeItens);
+	public PainelBuilder setListaDeItems(ListaDeCorridas listaDeItems, Runnable runnable) {
+		listaDeItems.aoClicar(runnable);
+		posicionador.posicionarComponenteGrande(listaDeItems);
+		painel.add(listaDeItems);
 		return this;
 	}
 
@@ -131,7 +150,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 		private int posicaoHorizontal = 10;
 		private int posicaoVertical = 5;
 
-		public void posicionarComponente(JComponent componente) {
+		public void posicionarComponenteNormal(JComponent componente) {
 			int largura = 320;
 			int altura = 30;
 			componente.setBounds(posicaoHorizontal, posicaoVertical, largura, altura);
@@ -141,6 +160,13 @@ public class PainelBuilderImpl implements PainelBuilder {
 		public void posicionarComponenteComTitulo(JComponent componente, String titulo) {
 			int largura = componente.getFontMetrics(componente.getFont()).stringWidth(titulo) + 10;
 			int altura = componente.getFontMetrics(componente.getFont()).getHeight();
+			componente.setBounds(posicaoHorizontal, posicaoVertical, largura, altura);
+			posicaoVertical += altura + 5;
+		}
+
+		public void posicionarComponenteGrande(JComponent componente) {
+			int largura = 730;
+			int altura = 200;
 			componente.setBounds(posicaoHorizontal, posicaoVertical, largura, altura);
 			posicaoVertical += altura + 5;
 		}

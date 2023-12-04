@@ -1,5 +1,6 @@
 package com.atosalves.view.componentes.componentesafactory;
 
+import com.atosalves.dto.CorridaDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.*;
 import java.awt.Font;
@@ -42,7 +43,7 @@ public class ComponentesFactoryImpl implements ComponentesFactory {
 	}
 
 	@Override
-	public ListaDeItems criarListaDeItems(Object[] lista) {
-		return new ListaDeItems(lista);
+	public ListaDeCorridas criarListaDeItems(CorridaDTO[] lista) {
+		return new ListaDeCorridas(lista);
 	}
 }

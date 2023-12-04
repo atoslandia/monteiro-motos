@@ -1,8 +1,5 @@
 package com.atosalves.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CorridaDTO;
@@ -19,6 +16,8 @@ import com.atosalves.model.Usuario;
 import com.atosalves.observerpattern.Observador;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GerenciadorDeCorrida implements Observador {
 
@@ -65,6 +64,11 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.reivindicarCorrida(mototaxista);
 	}
 
+	public CorridaDTO getCorridaById(Long id) {
+		corrida = corridaDAO.recuperarPeloId(id).corrida();
+		return new CorridaDTO(corrida);
+	}
+
 	public void cancelarCorrida(LoginDTO login) {
 		corrida.cancelarCorrida(login.tipoUsuario());
 	}
@@ -74,28 +78,23 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.getPassageiro().pagarCorrida(corrida.getValor());
 	}
 
-	public Object[] buscarHistoricoDeCorridas(LoginDTO login){
-		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoUsuario(login.email());
-		Object[] corridasView = transformarEmArray(corridas);
+	public CorridaDTO[] buscarHistoricoDeCorridas(LoginDTO login) {
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoPassageiro(login.email());
+		CorridaDTO[] corridasView = transformarEmArray(corridas);
 		return corridasView;
 	}
 
-	public Object[] buscarCorridasPendentes(){
-		List<CorridaDTO> corridas = corridaDAO.buscarCorridasPendenetes();
-		Object[] corridasView = transformarEmArray(corridas);
+	public CorridaDTO[] buscarCorridasPendentes() {
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridasPendentes();
+		CorridaDTO[] corridasView = transformarEmArray(corridas);
 		return corridasView;
 	}
 
-	private Object[] transformarEmArray(List<CorridaDTO> corridaArray){
-		Object[] objects = new Object[corridaArray.size()];
+	private CorridaDTO[] transformarEmArray(List<CorridaDTO> corridaArray) {
+		CorridaDTO[] objects = new CorridaDTO[corridaArray.size()];
 		for (int i = 0; i < objects.length; i++) {
-			Corrida corrida = corridaArray.get(i).corrida();
-			objects[i] = corrida.getId() 			+ " | " 
-			+ corrida.getPontoDeEncontro().getRua() + " | " 
-			+ corrida.getDestino().getRua() 		+ " | "
-			+ corrida.getEstado().getNome();
+			objects[i] = corridaArray.get(i);
 		}
 		return objects;
 	}
-
 }

@@ -1,6 +1,5 @@
 package com.atosalves.view.paineis;
 
-import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.janelas.JanelaPrincipal;
 import java.awt.Graphics;

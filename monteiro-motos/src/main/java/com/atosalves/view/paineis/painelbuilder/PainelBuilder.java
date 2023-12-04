@@ -7,14 +7,15 @@ import java.awt.Image;
 
 public interface PainelBuilder {
 	PainelBuilder setTexto(String titulo, Font fonte);
+	PainelBuilder setMuitoTexto(String titulo);
 	PainelBuilder setTextoCaixa(String titulo, TextoCaixa textoCaixa);
 	PainelBuilder setSenhaCaixa(SenhaCaixa senhaCaixa);
 	PainelBuilder setBotao(String titulo, Runnable runnable);
-	PainelBuilder setBotaoMenu(String titulo, Runnable runnable);
+	PainelBuilder setBotaoMenu(String titulo, Runnable runnable, boolean isAtivo);
 	PainelBuilder setDataCaixa(DataCaixa dataCaixa);
 	PainelBuilder setTipoUsuarioCombo(TipoUsuarioCombo tipoUsuarioCombo);
 	PainelBuilder setImagem(Image imagem);
-	PainelBuilder setListaDeItems(Object[] lista);
+	PainelBuilder setListaDeItems(ListaDeCorridas listaDeItems, Runnable runnable);
 	PainelBuilder addPainel(Painel painel);
 	Painel construir();
 }
