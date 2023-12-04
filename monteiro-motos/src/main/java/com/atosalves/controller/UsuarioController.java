@@ -1,10 +1,8 @@
 package com.atosalves.controller;
 
 import com.atosalves.controller.exceptions.CredenciaisException;
-import com.atosalves.controller.exceptions.UsuarioMenorDeIdadeException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
-import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UsuarioDTO;
@@ -28,9 +26,9 @@ public class UsuarioController {
 			throw new CredenciaisException("Senha incorreta");
 		}
 
-		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
+		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
 			return;
-		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
+		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
 			return;
 		}
 		throw new CredenciaisException("Tipo de usuario incorreto");

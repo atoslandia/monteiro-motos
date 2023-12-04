@@ -3,6 +3,8 @@ package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
+import com.atosalves.model.exceptions.AcessoNegadoException;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -22,10 +24,13 @@ public class CorridaEmEsperaPainelCreator implements PainelCreator {
 	}
 
 	private void cancelarCorridaBotao() {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
-
-		corridaEmEsperaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		try {
+			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+			gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
+			corridaEmEsperaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		} catch (AcessoNegadoException e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	@Override

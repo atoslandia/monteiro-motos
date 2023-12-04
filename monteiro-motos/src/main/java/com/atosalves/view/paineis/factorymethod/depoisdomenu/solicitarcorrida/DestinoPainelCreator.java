@@ -5,6 +5,8 @@ import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.exception.CampoInvalidoException;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
@@ -27,17 +29,25 @@ public class DestinoPainelCreator implements PainelCreator {
 		this.loginDTO = loginDTO;
 	}
 
-	private EnderecoViewDTO getDados() {
-		return new EnderecoViewDTO(bairroCaixa.pegarCampo(), ruaCaixa.pegarCampo(), cepCaixa.pegarCampo());
+	private EnderecoViewDTO getDados() throws CampoInvalidoException {
+		String bairro = bairroCaixa.pegarCampo();
+		String rua = ruaCaixa.pegarCampo();
+		String cep = cepCaixa.pegarCampo();
+		EnderecoViewDTO dto = new EnderecoViewDTO(bairro, rua, cep);
+		return dto;
 	}
 
 	private void solicitarBotao() {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		EnderecoViewDTO destino = getDados();
+		try {
+			EnderecoViewDTO destino = getDados();
 
-		CorridaDTO corridaDTO = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
+			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+			CorridaDTO corridaDTO = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
 
-		destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, corridaDTO).criarPainel());
+			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, corridaDTO).criarPainel());
+		} catch (CampoInvalidoException e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	private void voltarBotao() {

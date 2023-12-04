@@ -1,9 +1,10 @@
 package com.atosalves.view.paineis.factorymethod.inicio;
 
 import com.atosalves.controller.UsuarioController;
-import com.atosalves.dao.exceptions.UsuarioNaoEncontradoException;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.exception.CampoInvalidoException;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -18,28 +19,18 @@ public class LoginPainelCreator implements PainelCreator {
 
 	private Painel loginPainel;
 
-	private LoginDTO getDados() {
-		return new LoginDTO(
-			email.pegarCampo(),
-			senha.pegarCampo(),
-			tipoUsuarioCombo.pegarSelecionado()
-		);
+	private LoginDTO getDados() throws CampoInvalidoException {
+		return new LoginDTO(email.pegarCampo(), senha.pegarCampo(), tipoUsuarioCombo.pegarSelecionado());
 	}
 
 	private void loginBotao() {
-		var usuarioController = new UsuarioController();
-		LoginDTO dados = getDados();
-
 		try {
-			if (usuarioController.login(dados)) {
-				loginPainel.setPainel(new MenuPainelCreator(dados).criarPainel());
-			} else {
-				// TODO: apagar depois
-				System.out.println("deu errado");
-			}
-		} catch (UsuarioNaoEncontradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LoginDTO dados = getDados();
+			var usuarioController = new UsuarioController();
+			usuarioController.login(dados);
+			loginPainel.setPainel(new MenuPainelCreator(dados).criarPainel());
+		} catch (Exception e) {
+			new JanelaDeErro(e.getMessage());
 		}
 	}
 

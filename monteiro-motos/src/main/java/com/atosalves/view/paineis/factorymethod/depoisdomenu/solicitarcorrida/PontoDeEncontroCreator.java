@@ -3,6 +3,8 @@ package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
+import com.atosalves.view.exception.CampoInvalidoException;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -24,12 +26,16 @@ public class PontoDeEncontroCreator implements PainelCreator {
 		this.loginDTO = loginDTO;
 	}
 
-	public EnderecoViewDTO getPontoEndereco() {
+	public EnderecoViewDTO getPontoEndereco() throws CampoInvalidoException {
 		return new EnderecoViewDTO(bairroCaixa.pegarCampo(), ruaCaixa.pegarCampo(), cepCaixa.pegarCampo());
 	}
 
 	private void confirmarBotao() {
-		solicitarCorridas.setPainel(new DestinoPainelCreator(loginDTO, getPontoEndereco()).criarPainel());
+		try {
+			solicitarCorridas.setPainel(new DestinoPainelCreator(loginDTO, getPontoEndereco()).criarPainel());
+		} catch (Exception e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	private void voltarBotao() {

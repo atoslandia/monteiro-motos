@@ -4,6 +4,7 @@ import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -21,7 +22,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 	private Painel cadastroPainel;
 
-	private CadastroDTO getDados() {
+	private CadastroDTO getDados() throws CampoInvalidoException {
 		return new CadastroDTO(
 			nomeCaixa.pegarCampo(),
 			emailCaixa.pegarCampo(),
@@ -32,14 +33,11 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 	}
 
 	private void cadastrarBotao() {
-		var usuarioController = new UsuarioController();
 		try {
+			UsuarioController usuarioController = new UsuarioController();
 			usuarioController.cadastrar(getDados());
-			LoginDTO loginDTO = new LoginDTO(
-				emailCaixa.pegarCampo(),
-				senhaCaixa.pegarCampo(),
-				comboBox.pegarSelecionado()
-			);
+
+			LoginDTO loginDTO = new LoginDTO(emailCaixa.pegarCampo(), senhaCaixa.pegarCampo(), comboBox.pegarSelecionado());
 
 			cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {

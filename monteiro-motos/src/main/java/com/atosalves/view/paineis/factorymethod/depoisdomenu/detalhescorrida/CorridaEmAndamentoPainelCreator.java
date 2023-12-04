@@ -3,6 +3,7 @@ package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -25,13 +26,21 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 	}
 
 	private void finalizarBotao() {
-		gerenciadorDeCorrida.finalizarCorrida(loginDTO, corridaDTO);
-		corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		try {
+			gerenciadorDeCorrida.finalizarCorrida(corridaDTO);
+			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		} catch (Exception e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	private void cancelarBotao() {
-		gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
-		corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		try {
+			gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
+			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		} catch (Exception e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -24,10 +25,14 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 	}
 
 	private void reinvidicarBotao() {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO);
+		try {
+			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+			gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO);
 
-		detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, corridaDTO).criarPainel());
+			detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, corridaDTO).criarPainel());
+		} catch (Exception e) {
+			new JanelaDeErro(e.getMessage());
+		}
 	}
 
 	private void voltarBotao() {
