@@ -1,7 +1,7 @@
 package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.UsuarioDTO;
-import com.atosalves.enums.Estado;
+import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoTransacao;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
@@ -12,7 +12,7 @@ public class CorridaFinalizada extends CorridaState {
 
 	public CorridaFinalizada(Corrida corrida) {
 		super(corrida);
-		nome = Estado.FINALIZADA;
+		nome = EstadoCorrida.FINALIZADA;
 	}
 
 	@Override

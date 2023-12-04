@@ -1,6 +1,6 @@
 package com.atosalves.dto;
 
-import com.atosalves.enums.Estado;
+import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.model.Corrida;
 
-public record CorridaEventoDTO(Estado estadoAntigo, Corrida corrida) {}
+public record CorridaEventoDTO(EstadoCorrida estadoAntigo, Corrida corrida) {}

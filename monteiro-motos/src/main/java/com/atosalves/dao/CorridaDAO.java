@@ -11,7 +11,7 @@ import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UsuarioDTO;
-import com.atosalves.enums.Estado;
+import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
@@ -36,7 +36,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	@Override
 	public void cadastrar(CorridaDTO entidade) {
 		Corrida corrida = entidade.corrida();
-		Estado chave = entidade.corrida().getEstado().getNome();
+		EstadoCorrida chave = entidade.corrida().getEstado().getNome();
 		dataBase.getCorridas().get(chave).add(corrida);
 		dataBase.salvarDados();
 	}
@@ -58,7 +58,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public void deletePeloId(Long id) {
 		try {
 			CorridaDTO corridaDTO = recuperarPeloId(id);
-			Estado chave = corridaDTO.corrida().getEstado().getNome();
+			EstadoCorrida chave = corridaDTO.corrida().getEstado().getNome();
 			dataBase.getCorridas().get(chave).remove(corridaDTO.corrida());
 			dataBase.salvarDados();
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public List<CorridaDTO> buscarCorridasPendentes() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
-		for (Corrida corrida : dataBase.getCorridas().get(Estado.PENDENTE)) {
+		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.PENDENTE)) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -82,7 +82,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public List<CorridaDTO> buscarCorridasEmAndamento() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
-		for (Corrida corrida : dataBase.getCorridas().get(Estado.REINVINDICADA)) {
+		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA)) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -94,7 +94,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public List<CorridaDTO> buscarCorridasCanceladas() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
-		for (Corrida corrida : dataBase.getCorridas().get(Estado.CANCELADA)) {
+		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.CANCELADA)) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -106,7 +106,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	public List<CorridaDTO> buscarCorridasFinalizadas() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
-		for (Corrida corrida : dataBase.getCorridas().get(Estado.FINALIZADA)) {
+		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.FINALIZADA)) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -131,7 +131,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public List<CorridaDTO> buscarCorridasDoPassageiro(String id) {
+	public List<CorridaDTO> buscarCorridasDoUsuario(String id) {
 		List<CorridaDTO> corridasDoUsuario = new ArrayList<>();
 
 		for (ArrayList<Corrida> c : dataBase.getCorridas().values()) {
@@ -146,7 +146,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public CorridaDTO buscarUmaCorridaDoUsuario(String id, Estado estado) {
+	public CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado);
 
 		if (corridas != null) {

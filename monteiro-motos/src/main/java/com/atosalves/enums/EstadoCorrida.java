@@ -1,6 +1,6 @@
 package com.atosalves.enums;
 
-public enum Estado {
+public enum EstadoCorrida {
 	PENDENTE,
 	REINVINDICADA,
 	CANCELADA,

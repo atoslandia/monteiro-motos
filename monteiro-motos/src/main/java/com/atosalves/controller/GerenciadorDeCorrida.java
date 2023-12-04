@@ -7,7 +7,7 @@ import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UpdateCorridaDTO;
 import com.atosalves.dto.UsuarioDTO;
-import com.atosalves.enums.Estado;
+import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
@@ -44,17 +44,14 @@ public class GerenciadorDeCorrida implements Observador {
 
 	public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino) {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
-		CorridaDTO corridaDTO = corridaDAO.buscarUmaCorridaDoUsuario(
-			passageiro.usuario().getEmail(),
-			Estado.PENDENTE
-		);
-		if (corridaDTO == null) {
+		List<CorridaDTO> corridasDTO = corridaDAO.buscarCorridasDoUsuario(passageiro.usuario().getEmail());
+		corrida = corridasDTO.get(0).corrida();
+		if (corrida.getObservador() == null) {
 			corrida = new Corrida(passageiro, pontoDeEnconto, destino);
-			corridaDTO = new CorridaDTO(corrida);
+			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corrida.adicionarObservador(this);
 			corridaDAO.cadastrar(corridaDTO);
 		} else {
-			corrida = corridaDTO.corrida();
 			System.out.println("Cancele a corrida para poder solicitar outra");
 		}
 	}
@@ -80,7 +77,7 @@ public class GerenciadorDeCorrida implements Observador {
 	}
 
 	public CorridaDTO[] buscarHistoricoDeCorridas(LoginDTO login) {
-		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoPassageiro(login.email());
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoUsuario(login.email());
 		CorridaDTO[] corridasView = transformarEmArray(corridas);
 		return corridasView;
 	}
