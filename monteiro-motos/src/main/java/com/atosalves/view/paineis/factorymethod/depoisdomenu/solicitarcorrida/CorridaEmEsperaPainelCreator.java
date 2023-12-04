@@ -1,6 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -12,20 +13,17 @@ public class CorridaEmEsperaPainelCreator implements PainelCreator {
 
 	private Painel corridaEmEsperaPainel;
 
-	private GerenciadorDeCorrida gerenciadorDeCorrida;
-
 	private LoginDTO loginDTO;
+	private CorridaDTO corridaDTO;
 
-	public CorridaEmEsperaPainelCreator(
-		GerenciadorDeCorrida gerenciadorDeCorrida,
-		LoginDTO loginDTO
-	) {
-		this.gerenciadorDeCorrida = gerenciadorDeCorrida;
+	public CorridaEmEsperaPainelCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
 		this.loginDTO = loginDTO;
+		this.corridaDTO = corridaDTO;
 	}
 
 	private void cancelarCorridaBotao() {
-		gerenciadorDeCorrida.cancelarCorrida(loginDTO);
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
 
 		corridaEmEsperaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}

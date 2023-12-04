@@ -17,7 +17,6 @@ public interface ComponentesFactory {
 	DataCaixa criarDataCaixa();
 	TipoUsuarioCombo criarComboTipoUsuario();
 	Botao criarBotao(String titulo);
-	// TODO: apagar esse método depois
 	Botao criarBotaoMenu(String titulo);
 	ListaDeCorridas criarListaDeItems(CorridaDTO[] lista);
 }

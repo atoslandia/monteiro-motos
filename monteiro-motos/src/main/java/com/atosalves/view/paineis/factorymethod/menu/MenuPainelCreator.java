@@ -5,6 +5,8 @@ import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.ListaDeCorridas;
+import com.atosalves.view.componentes.SenhaCaixa;
+import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
@@ -23,6 +25,9 @@ public class MenuPainelCreator implements PainelCreator {
 	private Painel inicioPainel;
 	private Painel corridasPainel;
 	private Painel editarPainel;
+
+	private TextoCaixa nomeCaixa;
+	private SenhaCaixa senhaCaixa;
 
 	private ListaDeCorridas listaDeItems;
 
@@ -45,9 +50,7 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void listaCorrida() {
-		menuPainel.setPainel(
-			new DetalhadorDeCorridaCreator(listaDeItems.pegarSelecionado(), loginDTO).criarPainel()
-		);
+		menuPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeItems.pegarSelecionado()).criarPainel());
 	}
 
 	private CorridaDTO[] getListaDeCorridas() {
@@ -61,6 +64,8 @@ public class MenuPainelCreator implements PainelCreator {
 	@Override
 	public void inicializarComponentes() {
 		listaDeItems = COMPONENTES_FACTORY.criarListaDeItems(getListaDeCorridas());
+		nomeCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
+		senhaCaixa = COMPONENTES_FACTORY.criarCaixaSenha();
 	}
 
 	@Override
@@ -118,6 +123,10 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotaoMenu("INICIO", this::inicioBotao, true)
 				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
 				.setBotaoMenu("PERFIL", this::editarBotao, false)
+				.setTextoCaixa("NOME", nomeCaixa)
+				.setSenhaCaixa(senhaCaixa)
+				.setBotao("EXCLUIR CONTA", null)
+				.setBotao("EDITAR", null)
 				.setBotao("SAIR", this::sairBotao)
 				.construir();
 

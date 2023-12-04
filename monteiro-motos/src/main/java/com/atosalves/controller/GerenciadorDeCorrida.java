@@ -4,36 +4,23 @@ import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.EnderecoDTO;
+import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.UpdateCorridaDTO;
 import com.atosalves.dto.UsuarioDTO;
-import com.atosalves.enums.EstadoCorrida;
-import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
-import com.atosalves.model.Usuario;
 import com.atosalves.observerpattern.Observador;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GerenciadorDeCorrida implements Observador {
-
-	@XStreamAsAttribute
-	private Corrida corrida;
 
 	@XStreamAsAttribute
 	private CorridaDAO corridaDAO = new CorridaDAO();
 
 	@XStreamAsAttribute
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
-
-	public GerenciadorDeCorrida() {
-		corrida = new Corrida();
-	}
 
 	@Override
 	public void update(CorridaEventoDTO corrida) {
@@ -42,38 +29,61 @@ public class GerenciadorDeCorrida implements Observador {
 		corridaDAO.moverCorrida(corrida);
 	}
 
-	public void solicitarCorrida(LoginDTO login, Endereco pontoDeEnconto, Endereco destino) {
-		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(login.email());
-		List<CorridaDTO> corridasDTO = corridaDAO.buscarCorridasDoUsuario(passageiro.usuario().getEmail());
-		corrida = corridasDTO.get(0).corrida();
-		if (corrida.getObservador() == null) {
-			corrida = new Corrida(passageiro, pontoDeEnconto, destino);
-			CorridaDTO corridaDTO = new CorridaDTO(corrida);
+	public CorridaDTO solicitarCorrida(
+		LoginDTO loginDTO,
+		EnderecoViewDTO pontoDeEncontoDTO,
+		EnderecoViewDTO destinoDTO
+	) {
+		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(loginDTO.email());
+		CorridaDTO corridaDTO = corridaDAO.buscarCorridaExistenteDeUmPassageiro(loginDTO);
+
+		if (corridaDTO == null) {
+			Endereco pontoDeEncontro = new Endereco(
+				pontoDeEncontoDTO.bairro(),
+				pontoDeEncontoDTO.rua(),
+				pontoDeEncontoDTO.cep()
+			);
+			Endereco destino = new Endereco(destinoDTO.bairro(), destinoDTO.rua(), destinoDTO.cep());
+
+			Corrida corrida = new Corrida(passageiro, new EnderecoDTO(pontoDeEncontro), new EnderecoDTO(destino));
+
+			corridaDTO = new CorridaDTO(corrida);
 			corrida.adicionarObservador(this);
 			corridaDAO.cadastrar(corridaDTO);
-		} else {
-			System.out.println("Cancele a corrida para poder solicitar outra");
 		}
+		return corridaDTO;
 	}
 
-	public void reivindicarCorrida(LoginDTO login, Long idCorrida) {
-		corrida = corridaDAO.recuperarPeloId(idCorrida).corrida();
+	public void reivindicarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
+		Corrida corrida = corridaDAO
+			.buscarUmaCorridaDoUsuario(
+				corridaDTO.corrida().getPassageiro().getEmail(),
+				corridaDTO.corrida().getEstado().getNome()
+			)
+			.corrida();
 		UsuarioDTO mototaxista = usuarioDAO.recuperarPeloId(login.email());
 		corrida.reivindicarCorrida(mototaxista);
 	}
 
-	public CorridaDTO getCorridaById(Long id) {
-		corrida = corridaDAO.recuperarPeloId(id).corrida();
+	public CorridaDTO buscarCorridaPeloId(Long id) {
+		Corrida corrida = corridaDAO.recuperarPeloId(id).corrida();
 		return new CorridaDTO(corrida);
 	}
 
-	public void cancelarCorrida(LoginDTO login) {
+	// TODO: consertar
+	public void cancelarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
+		Corrida corrida = corridaDAO
+			.buscarUmaCorridaDoUsuario(login.email(), corridaDTO.corrida().getEstado().getNome())
+			.corrida();
 		corrida.cancelarCorrida(login.tipoUsuario());
 	}
 
-	public void finalizarCorrida() {
+	// TODO: consertar
+	public void finalizarCorrida(LoginDTO login, CorridaDTO corridaDTO) {
+		Corrida corrida = corridaDAO
+			.buscarUmaCorridaDoUsuario(login.email(), corridaDTO.corrida().getEstado().getNome())
+			.corrida();
 		corrida.finalizarCorrida();
-		corrida.getPassageiro().pagarCorrida(corrida.getValor());
 	}
 
 	public CorridaDTO[] buscarHistoricoDeCorridas(LoginDTO login) {

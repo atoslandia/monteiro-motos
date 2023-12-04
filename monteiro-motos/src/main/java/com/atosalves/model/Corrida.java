@@ -1,6 +1,7 @@
 package com.atosalves.model;
 
 import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.EnderecoDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
@@ -28,11 +29,11 @@ public class Corrida extends Observavel {
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
 
-	public Corrida(UsuarioDTO passageiro, Endereco pontoDeEncontro, Endereco destino) {
+	public Corrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) {
 		this.id = System.currentTimeMillis();
 		this.passageiro = (Passageiro) passageiro.usuario();
-		this.pontoDeEncontro = pontoDeEncontro;
-		this.destino = destino;
+		this.pontoDeEncontro = pontoDeEncontro.endereco();
+		this.destino = destino.endereco();
 		this.estado = new CorridaPendente(this);
 	}
 

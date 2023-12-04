@@ -14,21 +14,23 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 	private Painel corridaEmAndamentoPainel;
 
 	private LoginDTO loginDTO;
+	private CorridaDTO corridaDTO;
 
 	private GerenciadorDeCorrida gerenciadorDeCorrida;
 
-	public CorridaEmAndamentoPainelCreator(LoginDTO loginDTO, GerenciadorDeCorrida gerenciadorDeCorrida) {
+	public CorridaEmAndamentoPainelCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
 		this.loginDTO = loginDTO;
-		this.gerenciadorDeCorrida = gerenciadorDeCorrida;
+		this.corridaDTO = corridaDTO;
+		this.gerenciadorDeCorrida = new GerenciadorDeCorrida();
 	}
 
 	private void finalizarBotao() {
-		gerenciadorDeCorrida.finalizarCorrida();
+		gerenciadorDeCorrida.finalizarCorrida(loginDTO, corridaDTO);
 		corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	private void cancelarBotao() {
-		gerenciadorDeCorrida.cancelarCorrida(loginDTO);
+		gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
 		corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 

@@ -2,11 +2,8 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
-import com.atosalves.enums.TipoTransacao;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
-import com.atosalves.model.Mototaxista;
-import lombok.Getter;
 
 public class CorridaFinalizada extends CorridaState {
 

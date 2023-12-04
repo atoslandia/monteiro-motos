@@ -18,18 +18,16 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 	private CorridaDTO corridaDTO;
 	private LoginDTO loginDTO;
 
-	public DetalhadorDeCorridaCreator(CorridaDTO corridaDTO, LoginDTO loginDTO) {
+	public DetalhadorDeCorridaCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
 		this.corridaDTO = corridaDTO;
 		this.loginDTO = loginDTO;
 	}
 
 	private void reinvidicarBotao() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO.corrida().getId());
+		gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO);
 
-		detalhadorDeCorrida.setPainel(
-			new CorridaEmAndamentoPainelCreator(loginDTO, gerenciadorDeCorrida).criarPainel()
-		);
+		detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, corridaDTO).criarPainel());
 	}
 
 	private void voltarBotao() {

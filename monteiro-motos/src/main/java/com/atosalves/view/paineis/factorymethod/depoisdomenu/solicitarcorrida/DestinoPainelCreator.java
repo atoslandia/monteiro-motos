@@ -1,8 +1,9 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.dto.CorridaDTO;
+import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.model.Endereco;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -18,32 +19,25 @@ public class DestinoPainelCreator implements PainelCreator {
 	private TextoCaixa ruaCaixa;
 	private TextoCaixa cepCaixa;
 
-	private Endereco pontoDeEncontro;
-
+	private EnderecoViewDTO pontoDeEncontro;
 	private LoginDTO loginDTO;
 
-	public DestinoPainelCreator(Endereco pontoDeEncontro, LoginDTO loginDTO) {
+	public DestinoPainelCreator(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontro) {
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.loginDTO = loginDTO;
 	}
 
-	// TODO: mudar para DTO
-	private Endereco getDados() {
-		return new Endereco(
-			enderecoCaixa.pegarCampo(),
-			bairroCaixa.pegarCampo(),
-			ruaCaixa.pegarCampo(),
-			cepCaixa.pegarCampo()
-		);
+	private EnderecoViewDTO getDados() {
+		return new EnderecoViewDTO(bairroCaixa.pegarCampo(), ruaCaixa.pegarCampo(), cepCaixa.pegarCampo());
 	}
 
 	private void solicitarBotao() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, getDados());
+		EnderecoViewDTO destino = getDados();
 
-		destinoPainel.setPainel(
-			new CorridaEmEsperaPainelCreator(gerenciadorDeCorrida, loginDTO).criarPainel()
-		);
+		CorridaDTO corridaDTO = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
+
+		destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, corridaDTO).criarPainel());
 	}
 
 	private void voltarBotao() {

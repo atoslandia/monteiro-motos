@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
+import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.model.Endereco;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -24,20 +24,12 @@ public class PontoDeEncontroCreator implements PainelCreator {
 		this.loginDTO = loginDTO;
 	}
 
-	// TODO: mudar para DTO
-	public Endereco getPontoEndereco() {
-		return new Endereco(
-			enderecoCaixa.pegarCampo(),
-			bairroCaixa.pegarCampo(),
-			ruaCaixa.pegarCampo(),
-			cepCaixa.pegarCampo()
-		);
+	public EnderecoViewDTO getPontoEndereco() {
+		return new EnderecoViewDTO(bairroCaixa.pegarCampo(), ruaCaixa.pegarCampo(), cepCaixa.pegarCampo());
 	}
 
 	private void confirmarBotao() {
-		solicitarCorridas.setPainel(
-			new DestinoPainelCreator(getPontoEndereco(), loginDTO).criarPainel()
-		);
+		solicitarCorridas.setPainel(new DestinoPainelCreator(loginDTO, getPontoEndereco()).criarPainel());
 	}
 
 	private void voltarBotao() {

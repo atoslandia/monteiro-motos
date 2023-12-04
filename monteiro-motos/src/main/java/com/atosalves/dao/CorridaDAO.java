@@ -1,28 +1,16 @@
 package com.atosalves.dao;
 
-import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.controller.UsuarioController;
 import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
 import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.db.DB;
-import com.atosalves.db.Persistencia;
-import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
-import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
-import com.atosalves.model.statepattern.CorridaPendente;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
@@ -79,7 +67,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public List<CorridaDTO> buscarCorridasEmAndamento() {
+	public List<CorridaDTO> buscarCorridasReinvidicadas() {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
 		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA)) {
@@ -146,6 +134,7 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
+	// TODO: ver esse método
 	public CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado);
 
@@ -153,6 +142,27 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 			for (Corrida corrida : corridas) {
 				if (corrida.getPassageiro().getEmail().equals(id)) {
 					return new CorridaDTO(corrida);
+				}
+			}
+		}
+		return null;
+	}
+
+	public CorridaDTO buscarCorridaExistenteDeUmPassageiro(LoginDTO loginDTO) {
+		List<CorridaDTO> listaPendentes = buscarCorridasReinvidicadas();
+		List<CorridaDTO> listaReinvindicados = buscarCorridasPendentes();
+
+		if (listaPendentes != null) {
+			for (CorridaDTO c : listaPendentes) {
+				if (loginDTO.email().equals(c.corrida().getPassageiro().getEmail())) {
+					return c;
+				}
+			}
+		}
+		if (listaReinvindicados != null) {
+			for (CorridaDTO c : listaReinvindicados) {
+				if (loginDTO.email().equals(c.corrida().getPassageiro().getEmail())) {
+					return c;
 				}
 			}
 		}

@@ -5,7 +5,6 @@ import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Mototaxista;
-import lombok.Getter;
 
 public class CorridaPendente extends CorridaState {
 

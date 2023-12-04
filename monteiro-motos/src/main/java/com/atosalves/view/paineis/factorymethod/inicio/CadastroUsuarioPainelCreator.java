@@ -4,6 +4,7 @@ import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
@@ -34,18 +35,16 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 		var usuarioController = new UsuarioController();
 		try {
 			usuarioController.cadastrar(getDados());
+			LoginDTO loginDTO = new LoginDTO(
+				emailCaixa.pegarCampo(),
+				senhaCaixa.pegarCampo(),
+				comboBox.pegarSelecionado()
+			);
+
+			cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new JanelaDeErro(e.getMessage());
 		}
-
-		LoginDTO loginDTO = new LoginDTO(
-			emailCaixa.pegarCampo(),
-			senhaCaixa.pegarCampo(),
-			comboBox.pegarSelecionado()
-		);
-
-		cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	private void voltarBotao() {

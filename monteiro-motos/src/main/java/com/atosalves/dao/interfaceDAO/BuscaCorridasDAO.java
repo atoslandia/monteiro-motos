@@ -3,13 +3,12 @@ package com.atosalves.dao.interfaceDAO;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.enums.EstadoCorrida;
-import com.atosalves.model.Corrida;
 import java.util.List;
 
 public interface BuscaCorridasDAO {
 	public List<CorridaDTO> buscarCorridasPendentes();
 
-	public List<CorridaDTO> buscarCorridasEmAndamento();
+	public List<CorridaDTO> buscarCorridasReinvidicadas();
 
 	public List<CorridaDTO> buscarCorridasCanceladas();
 

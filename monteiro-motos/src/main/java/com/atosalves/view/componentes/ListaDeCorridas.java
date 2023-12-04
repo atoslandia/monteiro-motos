@@ -68,7 +68,7 @@ public class ListaDeCorridas extends JScrollPane {
 		Long idCorrida = (Long) model.getValueAt(linhaSelecionada, 0);
 
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		CorridaDTO corrida = gerenciadorDeCorrida.getCorridaById(idCorrida);
+		CorridaDTO corrida = gerenciadorDeCorrida.buscarCorridaPeloId(idCorrida);
 
 		return corrida;
 	}

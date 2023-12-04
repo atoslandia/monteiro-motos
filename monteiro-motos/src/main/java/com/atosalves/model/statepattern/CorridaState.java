@@ -4,10 +4,6 @@ import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
-import com.atosalves.model.Endereco;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 
 @Getter

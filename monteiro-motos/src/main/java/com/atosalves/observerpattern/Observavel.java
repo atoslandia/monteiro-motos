@@ -1,10 +1,7 @@
 package com.atosalves.observerpattern;
 
 import com.atosalves.dto.CorridaEventoDTO;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.Getter;
 
 @Getter
