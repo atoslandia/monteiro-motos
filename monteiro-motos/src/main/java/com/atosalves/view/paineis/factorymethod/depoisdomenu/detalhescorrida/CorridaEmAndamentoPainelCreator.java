@@ -1,7 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
@@ -15,19 +14,19 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 	private Painel corridaEmAndamentoPainel;
 
 	private LoginDTO loginDTO;
-	private CorridaDTO corridaDTO;
+	private Long idCorrida;
 
 	private GerenciadorDeCorrida gerenciadorDeCorrida;
 
-	public CorridaEmAndamentoPainelCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
+	public CorridaEmAndamentoPainelCreator(LoginDTO loginDTO, Long idCorrida) {
 		this.loginDTO = loginDTO;
-		this.corridaDTO = corridaDTO;
+		this.idCorrida = idCorrida;
 		this.gerenciadorDeCorrida = new GerenciadorDeCorrida();
 	}
 
 	private void finalizarBotao() {
 		try {
-			gerenciadorDeCorrida.finalizarCorrida(corridaDTO);
+			gerenciadorDeCorrida.finalizarCorrida(idCorrida);
 			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e.getMessage());
@@ -36,7 +35,7 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 
 	private void cancelarBotao() {
 		try {
-			gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
+			gerenciadorDeCorrida.cancelarCorrida(loginDTO, idCorrida);
 			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e.getMessage());

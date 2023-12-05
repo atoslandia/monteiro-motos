@@ -1,5 +1,7 @@
 package com.atosalves.model.statepattern;
 
+import com.atosalves.dto.CorridaDTO;
+import com.atosalves.dto.EnderecoDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
@@ -26,7 +28,11 @@ public class CorridaFinalizada extends CorridaState {
 	@Override
 	public void reivindicarCorrida(UsuarioDTO mototaxista) throws AcessoNegadoException {
 		throw new AcessoNegadoException("Não foi possivel reivindicar");
-
 	}
 
+	@Override
+	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) {
+		corrida = new Corrida(passageiro, pontoDeEncontro, destino);
+		return new CorridaDTO(corrida);
+	}
 }

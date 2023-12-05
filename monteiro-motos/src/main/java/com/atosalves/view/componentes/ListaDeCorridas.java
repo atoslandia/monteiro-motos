@@ -1,6 +1,5 @@
 package com.atosalves.view.componentes;
 
-import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -51,26 +50,20 @@ public class ListaDeCorridas extends JScrollPane {
 					corridaDTO.corrida().getPontoDeEncontro().getRua() +
 					", bairro: " +
 					corridaDTO.corrida().getPontoDeEncontro().getBairro(),
-					"rua: " +
-					corridaDTO.corrida().getDestino().getRua() +
-					", bairro: " +
-					corridaDTO.corrida().getDestino().getBairro(),
+					"rua: " + corridaDTO.corrida().getDestino().getRua() + ", bairro: " + corridaDTO.corrida().getDestino().getBairro(),
 					corridaDTO.corrida().getEstado().getNome(),
 				}
 			);
 		}
 	}
 
-	public CorridaDTO pegarSelecionado() {
+	public Long pegarSelecionado() {
 		int linhaSelecionada = tabela.getSelectedRow();
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 
 		Long idCorrida = (Long) model.getValueAt(linhaSelecionada, 0);
 
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		CorridaDTO corrida = gerenciadorDeCorrida.buscarCorridaPeloId(idCorrida);
-
-		return corrida;
+		return idCorrida;
 	}
 
 	public void aoClicar(Runnable acao) {

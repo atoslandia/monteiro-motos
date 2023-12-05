@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.CorridaDTO;
+import com.atosalves.controller.exceptions.SolicitarCorridaException;
 import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
@@ -38,15 +38,19 @@ public class DestinoPainelCreator implements PainelCreator {
 	}
 
 	private void solicitarBotao() {
+		Long idCorrida = null;
 		try {
 			EnderecoViewDTO destino = getDados();
 
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-			CorridaDTO corridaDTO = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
-
-			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, corridaDTO).criarPainel());
-		} catch (CampoInvalidoException e) {
+			idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
+		} catch (SolicitarCorridaException e) {
+			idCorrida = e.getIdCorrida();
 			new JanelaDeErro(e.getMessage());
+		} catch (Exception e1) {
+			new JanelaDeErro(e1.getMessage());
+		} finally {
+			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
 		}
 	}
 

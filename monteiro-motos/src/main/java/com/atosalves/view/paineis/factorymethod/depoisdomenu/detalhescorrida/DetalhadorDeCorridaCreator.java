@@ -16,20 +16,20 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 
 	private Painel detalhadorDeCorrida;
 
-	private CorridaDTO corridaDTO;
+	private Long idCorrida;
 	private LoginDTO loginDTO;
 
-	public DetalhadorDeCorridaCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
-		this.corridaDTO = corridaDTO;
+	public DetalhadorDeCorridaCreator(LoginDTO loginDTO, Long idCorrida) {
+		this.idCorrida = idCorrida;
 		this.loginDTO = loginDTO;
 	}
 
 	private void reinvidicarBotao() {
 		try {
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-			gerenciadorDeCorrida.reivindicarCorrida(loginDTO, corridaDTO);
+			gerenciadorDeCorrida.reivindicarCorrida(loginDTO, idCorrida);
 
-			detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, corridaDTO).criarPainel());
+			detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, idCorrida).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e.getMessage());
 		}
@@ -40,6 +40,8 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 	}
 
 	private String detalhamentoCorrida() {
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		CorridaDTO corridaDTO = gerenciadorDeCorrida.buscarCorridaPeloId(idCorrida);
 		return (
 			"<html>" +
 			"ID: " +

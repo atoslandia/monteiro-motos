@@ -26,6 +26,7 @@ public class MenuPainelCreator implements PainelCreator {
 	private Painel corridasPainel;
 	private Painel editarPainel;
 
+	private TextoCaixa emailCaixa;
 	private TextoCaixa nomeCaixa;
 	private SenhaCaixa senhaCaixa;
 
@@ -61,9 +62,18 @@ public class MenuPainelCreator implements PainelCreator {
 		return gerenciadorDeCorrida.buscarCorridasPendentes();
 	}
 
+	private void excluirContaBotao() {
+		// TODO: excluir conta usando o controller
+	}
+
+	private void editarContaBotao() {
+		// TODO: editar conta usando o controller
+	}
+
 	@Override
 	public void inicializarComponentes() {
 		listaDeItems = COMPONENTES_FACTORY.criarListaDeItems(getListaDeCorridas());
+		emailCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
 		nomeCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
 		senhaCaixa = COMPONENTES_FACTORY.criarCaixaSenha();
 	}
@@ -74,12 +84,7 @@ public class MenuPainelCreator implements PainelCreator {
 		corridasPainel();
 		editarPainel();
 
-		menuPainel =
-			new PainelBuilderImpl()
-				.addPainel(inicioPainel)
-				.addPainel(corridasPainel)
-				.addPainel(editarPainel)
-				.construir();
+		menuPainel = new PainelBuilderImpl().addPainel(inicioPainel).addPainel(corridasPainel).addPainel(editarPainel).construir();
 	}
 
 	@Override
@@ -123,12 +128,16 @@ public class MenuPainelCreator implements PainelCreator {
 				.setBotaoMenu("INICIO", this::inicioBotao, true)
 				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
 				.setBotaoMenu("PERFIL", this::editarBotao, false)
+				.setTextoCaixa("EMAIL", emailCaixa)
 				.setTextoCaixa("NOME", nomeCaixa)
 				.setSenhaCaixa(senhaCaixa)
-				.setBotao("EXCLUIR CONTA", null)
-				.setBotao("EDITAR", null)
+				.setBotao("EXCLUIR CONTA", this::excluirContaBotao)
+				.setBotao("EDITAR", this::editarContaBotao)
 				.setBotao("SAIR", this::sairBotao)
 				.construir();
+
+		emailCaixa.setEnabled(false);
+		emailCaixa.setText(loginDTO.email());
 
 		editarPainel.getBotao("SAIR").setBounds(630, 10, 100, 35);
 		editarPainel.setVisible(false);

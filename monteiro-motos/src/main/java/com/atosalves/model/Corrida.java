@@ -1,5 +1,6 @@
 package com.atosalves.model;
 
+import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.EnderecoDTO;
 import com.atosalves.dto.UsuarioDTO;
@@ -45,7 +46,6 @@ public class Corrida extends Observavel {
 		notificarObservador(evento);
 	}
 
-
 	public void finalizarCorrida() throws AcessoNegadoException {
 		estado.finalizarCorrida();
 	}
@@ -56,5 +56,10 @@ public class Corrida extends Observavel {
 
 	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		estado.cancelarCorrida(tipoUsuario);
+	}
+
+	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
+		throws AcessoNegadoException {
+		return estado.solicitarCorrida(passageiro, pontoDeEncontro, destino);
 	}
 }

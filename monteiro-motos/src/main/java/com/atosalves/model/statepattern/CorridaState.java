@@ -1,11 +1,12 @@
 package com.atosalves.model.statepattern;
 
+import com.atosalves.dto.CorridaDTO;
+import com.atosalves.dto.EnderecoDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.exceptions.AcessoNegadoException;
-
 import lombok.Getter;
 
 @Getter
@@ -25,4 +26,6 @@ public abstract class CorridaState {
 
 	public abstract void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException;
 
+	public abstract CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
+		throws AcessoNegadoException;
 }

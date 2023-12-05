@@ -1,7 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.view.janelas.JanelaDeErro;
@@ -16,17 +15,17 @@ public class CorridaEmEsperaPainelCreator implements PainelCreator {
 	private Painel corridaEmEsperaPainel;
 
 	private LoginDTO loginDTO;
-	private CorridaDTO corridaDTO;
+	private Long idCorrida;
 
-	public CorridaEmEsperaPainelCreator(LoginDTO loginDTO, CorridaDTO corridaDTO) {
+	public CorridaEmEsperaPainelCreator(LoginDTO loginDTO, Long idCorrida) {
 		this.loginDTO = loginDTO;
-		this.corridaDTO = corridaDTO;
+		this.idCorrida = idCorrida;
 	}
 
 	private void cancelarCorridaBotao() {
 		try {
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-			gerenciadorDeCorrida.cancelarCorrida(loginDTO, corridaDTO);
+			gerenciadorDeCorrida.cancelarCorrida(loginDTO, idCorrida);
 			corridaEmEsperaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (AcessoNegadoException e) {
 			new JanelaDeErro(e.getMessage());
