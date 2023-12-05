@@ -30,7 +30,7 @@ public class LoginPainelCreator implements PainelCreator {
 			usuarioController.login(dados);
 			loginPainel.setPainel(new MenuPainelCreator(dados).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

@@ -11,28 +11,15 @@ public class Tema {
 
 	public static final Font FONTE_FORTE = new Font("Helvetica", Font.BOLD | Font.ITALIC, 20);
 
-	public static final Font FONTE_MUITO_FORTE = new Font(
-		"Cocogoose Pro Italic",
-		Font.BOLD | Font.ITALIC,
-		40
-	);
+	public static final Font FONTE_MUITO_FORTE = new Font("Cocogoose Pro Italic", Font.BOLD | Font.ITALIC, 40);
 
-	public static final Font FONTE_AMARELA = new Font(
-		"Cocogoose Pro Italic",
-		Font.BOLD | Font.ITALIC,
-		40
-	);
+	public static final Font FONTE_AMARELA = new Font("Cocogoose Pro Italic", Font.BOLD | Font.ITALIC, 40);
 	public static final Color AMARELO = new Color(255, 205, 0);
 	public static final Color AMARELO_ESCURO = new Color(220, 170, 0);
 	public static final Color PRETO = new Color(48, 48, 48);
 	public static final Color CINZA = new Color(204, 204, 204);
 
-	public static final Image FUNDO_CINZA = new ImageIcon(
-		"monteiro-motos\\src\\main\\resources\\fundo-padrao.png"
-	)
-		.getImage();
-	public static final Image FUNDO_LOGIN = new ImageIcon(
-		"monteiro-motos\\src\\main\\resources\\fundo-login.png"
-	)
-		.getImage();
+	public static final Image FUNDO_CINZA = new ImageIcon("monteiro-motos\\src\\main\\resources\\fundo-padrao.png").getImage();
+	public static final Image FUNDO_LOGIN = new ImageIcon("monteiro-motos\\src\\main\\resources\\fundo-login.png").getImage();
+	public static final Image ICONE = new ImageIcon("monteiro-motos\\src\\main\\resources\\icone.png").getImage();
 }

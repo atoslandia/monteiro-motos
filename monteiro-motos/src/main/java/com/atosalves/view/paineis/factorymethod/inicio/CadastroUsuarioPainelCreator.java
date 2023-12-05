@@ -41,7 +41,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 			cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

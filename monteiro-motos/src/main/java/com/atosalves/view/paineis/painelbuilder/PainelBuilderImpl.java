@@ -1,7 +1,8 @@
 package com.atosalves.view.paineis.painelbuilder;
 
 import com.atosalves.view.componentes.*;
-import com.atosalves.view.componentes.componentesafactory.ComponentesFactoryImpl;
+import com.atosalves.view.componentes.abstractfactory.componentesafactory.ComponentesFactoryImpl;
+import com.atosalves.view.componentes.abstractfactory.menucomponentesfactory.ComponentesMenuFactoryImpl;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.util.Tema;
 import java.awt.Font;
@@ -79,7 +80,7 @@ public class PainelBuilderImpl implements PainelBuilder {
 
 	@Override
 	public PainelBuilder setBotaoMenu(String titulo, Runnable runnable, boolean isAtivo) {
-		Botao botao = factory.criarBotaoMenu(titulo);
+		Botao botao = new ComponentesMenuFactoryImpl().criarBotao(titulo);
 		if (titulo.equals("INICIO")) {
 			botao.setBounds(0, 300, 200, 80);
 		} else if (titulo.equals("CORRIDAS")) {

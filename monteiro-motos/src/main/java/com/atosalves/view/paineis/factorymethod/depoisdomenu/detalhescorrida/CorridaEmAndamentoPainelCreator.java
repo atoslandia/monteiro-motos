@@ -29,7 +29,7 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 			gerenciadorDeCorrida.finalizarCorrida(idCorrida);
 			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 			gerenciadorDeCorrida.cancelarCorrida(loginDTO, idCorrida);
 			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

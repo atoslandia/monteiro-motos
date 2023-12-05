@@ -34,7 +34,7 @@ public class PontoDeEncontroCreator implements PainelCreator {
 		try {
 			solicitarCorridas.setPainel(new DestinoPainelCreator(loginDTO, getPontoEndereco()).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

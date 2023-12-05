@@ -1,6 +1,5 @@
 package com.atosalves.controller;
 
-import com.atosalves.controller.exceptions.SolicitarCorridaException;
 import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CorridaDTO;
@@ -14,8 +13,6 @@ import com.atosalves.model.Endereco;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.observerpattern.Observador;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
 import java.util.List;
 
 public class GerenciadorDeCorrida implements Observador {
@@ -33,19 +30,21 @@ public class GerenciadorDeCorrida implements Observador {
 		corridaDAO.moverCorrida(corrida);
 	}
 
-	public Long solicitarCorrida(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontoDTO, EnderecoViewDTO destinoDTO) throws AcessoNegadoException {
+	public Long solicitarCorrida(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontoDTO, EnderecoViewDTO destinoDTO)
+		throws AcessoNegadoException {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(loginDTO.email());
 		List<CorridaDTO> todasAsCorridas = corridaDAO.buscarCorridasDoUsuario(loginDTO.email());
-		
+
 		CorridaDTO corridaDTO = null;
 		Corrida corrida = null;
 		Endereco pontoDeEncontro = new Endereco(pontoDeEncontoDTO.bairro(), pontoDeEncontoDTO.rua(), pontoDeEncontoDTO.cep());
 		Endereco destino = new Endereco(destinoDTO.bairro(), destinoDTO.rua(), destinoDTO.cep());
 
-		if(!todasAsCorridas.isEmpty()){
+		if (!todasAsCorridas.isEmpty()) {
 			corridaDTO = todasAsCorridas.get(0);
-			corrida = corridaDTO.corrida().solicitarCorrida(passageiro, new EnderecoDTO(pontoDeEncontro) , new EnderecoDTO(destino)).corrida();
-		}else{
+			corrida =
+				corridaDTO.corrida().solicitarCorrida(passageiro, new EnderecoDTO(pontoDeEncontro), new EnderecoDTO(destino)).corrida();
+		} else {
 			corrida = new Corrida(passageiro, new EnderecoDTO(pontoDeEncontro), new EnderecoDTO(destino));
 		}
 
@@ -58,9 +57,9 @@ public class GerenciadorDeCorrida implements Observador {
 	public void reivindicarCorrida(LoginDTO login, Long idCorrida) throws AcessoNegadoException {
 		CorridaDTO corridaDTO = corridaDAO.buscarCorridaReivindicadaMototaxista(login.email());
 		Corrida corrida = null;
-		if(corridaDTO != null){
-			corrida = corridaDTO.corrida(); 
-		}else{
+		if (corridaDTO != null) {
+			corrida = corridaDTO.corrida();
+		} else {
 			corridaDTO = corridaDAO.recuperarPeloId(idCorrida);
 			corrida = corridaDTO.corrida();
 		}

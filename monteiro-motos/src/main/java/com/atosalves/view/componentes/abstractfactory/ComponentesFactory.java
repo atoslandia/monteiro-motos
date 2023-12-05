@@ -1,4 +1,4 @@
-package com.atosalves.view.componentes.componentesafactory;
+package com.atosalves.view.componentes.abstractfactory;
 
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.view.componentes.Botao;
@@ -17,6 +17,5 @@ public interface ComponentesFactory {
 	DataCaixa criarDataCaixa();
 	TipoUsuarioCombo criarComboTipoUsuario();
 	Botao criarBotao(String titulo);
-	Botao criarBotaoMenu(String titulo);
 	ListaDeCorridas criarListaDeItems(CorridaDTO[] lista);
 }

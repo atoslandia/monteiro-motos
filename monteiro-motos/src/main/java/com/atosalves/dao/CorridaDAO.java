@@ -128,13 +128,18 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 					CorridaDTO corridaDTO = new CorridaDTO(corrida);
 					corridasDoUsuario.add(corridaDTO);
 				}
+				if (corrida.getMototaxista() != null) {
+					if (id.equals(corrida.getMototaxista().getEmail())) {
+						CorridaDTO corridaDTO = new CorridaDTO(corrida);
+						corridasDoUsuario.add(corridaDTO);
+					}
+				}
 			}
 		}
 		return corridasDoUsuario;
 	}
 
 	@Override
-	// TODO: ver esse método
 	public CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado) {
 		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado);
 
@@ -168,17 +173,15 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public CorridaDTO buscarCorridaReivindicadaMototaxista(String id) {
 		List<Corrida> corridasReivindicadas = dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA);
 		for (Corrida corrida : corridasReivindicadas) {
-			if(corrida.getMototaxista().getEmail().equals(id)){
+			if (corrida.getMototaxista().getEmail().equals(id)) {
 				return new CorridaDTO(corrida);
 			}
 		}
 		return null;
 	}
-
-
 }

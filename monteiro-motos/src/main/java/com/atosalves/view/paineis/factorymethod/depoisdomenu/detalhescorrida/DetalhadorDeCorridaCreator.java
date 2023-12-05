@@ -31,7 +31,7 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 
 			detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, idCorrida).criarPainel());
 		} catch (Exception e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

@@ -1,7 +1,5 @@
 package com.atosalves.model;
 
-import java.time.LocalDate;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +9,7 @@ public class Passageiro extends Usuario {
 
 	private GerenciadorDePagamento gerenciadorDePagamento;
 
-	// TODO r: APAGAR DEPOIS
-	public Passageiro(String nome, LocalDate dataNascimento, String email, String senha) {
-		super(nome, dataNascimento, email, senha);
-	}
-
-	public Passageiro(){
+	public Passageiro() {
 		this.gerenciadorDePagamento = new GerenciadorDePagamento(0f);
 	}
 

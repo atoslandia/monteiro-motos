@@ -28,7 +28,7 @@ public class CorridaEmEsperaPainelCreator implements PainelCreator {
 			gerenciadorDeCorrida.cancelarCorrida(loginDTO, idCorrida);
 			corridaEmEsperaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 		} catch (AcessoNegadoException e) {
-			new JanelaDeErro(e.getMessage());
+			new JanelaDeErro(e);
 		}
 	}
 

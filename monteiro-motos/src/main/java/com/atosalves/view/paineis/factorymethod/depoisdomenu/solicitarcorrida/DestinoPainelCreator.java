@@ -1,7 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.controller.exceptions.SolicitarCorridaException;
 import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
@@ -23,6 +22,7 @@ public class DestinoPainelCreator implements PainelCreator {
 	private TextoCaixa cepCaixa;
 
 	private EnderecoViewDTO pontoDeEncontro;
+	private EnderecoViewDTO destino;
 	private LoginDTO loginDTO;
 
 	public DestinoPainelCreator(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontro) {
@@ -38,21 +38,21 @@ public class DestinoPainelCreator implements PainelCreator {
 		return dto;
 	}
 
-	// TODO atos: esse finally ta bugado, se os dados da corrida for errado ele abre a janela de cancelar
 	private void solicitarBotao() {
-		Long idCorrida = null;
 		try {
-			EnderecoViewDTO destino = getDados();
-
-			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-			idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
-		} catch (AcessoNegadoException e) {
-			idCorrida = e.getIdCorrida();
-			new JanelaDeErro(e.getMessage());
-		} catch (Exception e1) {
-			new JanelaDeErro(e1.getMessage());
-		} finally {
-			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+			destino = getDados();
+			Long idCorrida = null;
+			try {
+				GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+				idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
+			} catch (AcessoNegadoException e) {
+				idCorrida = e.getIdCorrida();
+				new JanelaDeErro(e);
+			} finally {
+				destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+			}
+		} catch (CampoInvalidoException e) {
+			new JanelaDeErro(e);
 		}
 	}
 

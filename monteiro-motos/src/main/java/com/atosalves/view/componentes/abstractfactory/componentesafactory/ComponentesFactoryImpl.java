@@ -1,8 +1,9 @@
-package com.atosalves.view.componentes.componentesafactory;
+package com.atosalves.view.componentes.abstractfactory.componentesafactory;
 
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.*;
+import com.atosalves.view.componentes.abstractfactory.ComponentesFactory;
 import java.awt.Font;
 
 public class ComponentesFactoryImpl implements ComponentesFactory {
@@ -35,11 +36,6 @@ public class ComponentesFactoryImpl implements ComponentesFactory {
 	@Override
 	public Botao criarBotao(String titulo) {
 		return new Botao(titulo);
-	}
-
-	@Override
-	public Botao criarBotaoMenu(String titulo) {
-		return new BotaoMenu(titulo);
 	}
 
 	@Override
