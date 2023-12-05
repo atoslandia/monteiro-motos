@@ -6,17 +6,19 @@ import com.atosalves.enums.EstadoCorrida;
 import java.util.List;
 
 public interface BuscaCorridasDAO {
-	public List<CorridaDTO> buscarCorridasPendentes();
+	List<CorridaDTO> buscarCorridasPendentes();
 
-	public List<CorridaDTO> buscarCorridasReinvidicadas();
+	List<CorridaDTO> buscarCorridasReinvidicadas();
 
-	public List<CorridaDTO> buscarCorridasCanceladas();
+	List<CorridaDTO> buscarCorridasCanceladas();
 
-	public List<CorridaDTO> buscarCorridasFinalizadas();
+	List<CorridaDTO> buscarCorridasFinalizadas();
 
 	List<CorridaDTO> buscarCorridasDoUsuario(String id);
 
-	public void moverCorrida(CorridaEventoDTO evento);
+	void moverCorrida(CorridaEventoDTO evento);
 
-	public CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado);
+	CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado);
+
+	CorridaDTO buscarCorridaReivindicadaMototaxista(String id);
 }

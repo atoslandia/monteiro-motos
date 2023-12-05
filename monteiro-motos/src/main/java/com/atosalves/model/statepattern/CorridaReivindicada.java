@@ -39,6 +39,6 @@ public class CorridaReivindicada extends CorridaState {
 	@Override
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
 		throws AcessoNegadoException {
-		throw new AcessoNegadoException("Já tem uma corrida em andamento");
+		throw new AcessoNegadoException(corrida.getId(),"Já tem uma corrida em andamento");
 	}
 }

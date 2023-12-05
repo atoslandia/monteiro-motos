@@ -168,48 +168,17 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 		}
 		return null;
 	}
-	// public static void main(String[] args) {
-	// 	DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	// 	LocalDate data = LocalDate.parse("28/02/2004", formato);
-	// 	GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-	// 	CadastroDTO cadastroPassageiro = new CadastroDTO(
-	// 		"robson",
-	// 		"robson@gmail.com",
-	// 		null,
-	// 		data,
-	// 		TipoUsuario.PASSAGEIRO
-	// 	);
-	// 	CadastroDTO cadastroMototaxista = new CadastroDTO(
-	// 		"atos",
-	// 		"atos@gmail.com",
-	// 		null,
-	// 		data,
-	// 		TipoUsuario.MOTOTAXISTA
-	// 		);
-	// 		LoginDTO loginPassageiro = new LoginDTO(
-	// 			cadastroPassageiro.email(),
-	// 			null,
-	// 			cadastroPassageiro.tipo()
-	// 			);
-	// 			LoginDTO loginMototaxista = new LoginDTO(
-	// 				cadastroMototaxista.email(),
-	// 				null,
-	// 				cadastroMototaxista.tipo()
-	// 				);
+	
+	@Override
+	public CorridaDTO buscarCorridaReivindicadaMototaxista(String id) {
+		List<Corrida> corridasReivindicadas = dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA);
+		for (Corrida corrida : corridasReivindicadas) {
+			if(corrida.getMototaxista().getEmail().equals(id)){
+				return new CorridaDTO(corrida);
+			}
+		}
+		return null;
+	}
 
-	// 				UsuarioController usuarioController = new UsuarioController();
-	// 				try {
-	// 					// usuarioController.cadastrar(cadastroPassageiro);
-	// 					// usuarioController.cadastrar(cadastroMototaxista);
-	// 	} catch (Exception e) {
-	// 		System.out.println(e.getMessage());
-	// 	}
-	// 	gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-	// gerenciadorDeCorrida.reivindicarCorrida(loginMototaxista);
-	// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-	// gerenciadorDeCorrida.cancelarCorrida(loginPassageiro);
-	// gerenciadorDeCorrida.solicitarCorrida(loginPassageiro, null, null);
-	// gerenciadorDeCorrida.cancelarCorrida();
-	// }
 
 }

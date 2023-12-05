@@ -40,6 +40,6 @@ public class CorridaPendente extends CorridaState {
 	@Override
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
 		throws AcessoNegadoException {
-		throw new AcessoNegadoException("Cancele a corrida para pedir outra");
+		throw new AcessoNegadoException(corrida.getId(),"Cancele a corrida para pedir outra");
 	}
 }
