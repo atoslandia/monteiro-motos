@@ -95,6 +95,7 @@ public class GerenciadorDeCorrida implements Observador {
 		if(corrida.isAvaliavel()){
 			Avaliacao avaliacao = new Avaliacao(new UsuarioDTO(corrida.getPassageiro()), estrelas);
 			corrida.getMototaxista().setAvaliacoes(avaliacao);
+			usuarioDAO.update(new UsuarioDTO(corrida.getPassageiro()), corrida.getPassageiro().getEmail());
 		}else{
 			throw new NaoAvaliavelException("Não pode avaliar o mototaxista");
 		}
