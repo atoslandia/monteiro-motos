@@ -40,8 +40,6 @@ public class Corrida extends Observavel {
 		this.pontoDeEncontro = pontoDeEncontro.endereco();
 		this.destino = destino.endereco();
 		this.passageiro.pagarCorrida(valor);
-		MensageiroFacade.enviarBoletoPorEmail(new PassageiroBoletoDTO(this.passageiro.getNome(), 
-		this.passageiro.getEmail()), valor);
 		this.estado = new CorridaPendente(this);
 	}
 

@@ -14,7 +14,7 @@ import com.atosalves.view.util.Tema;
 
 public class LoginPainelCreator implements PainelCreator {
 
-	private TextoCaixa email;
+	private EmailCaixa email;
 	private SenhaCaixa senha;
 	private TipoUsuarioCombo tipoUsuarioCombo;
 
@@ -43,7 +43,7 @@ public class LoginPainelCreator implements PainelCreator {
 
 	@Override
 	public void inicializarComponentes() {
-		this.email = COMPONENTES_FACTORY.criarCaixaTexto();
+		this.email = COMPONENTES_FACTORY.criarEmailCaixa();
 		this.senha = COMPONENTES_FACTORY.criarCaixaSenha();
 		this.tipoUsuarioCombo = COMPONENTES_FACTORY.criarComboTipoUsuario();
 	}

@@ -14,15 +14,11 @@ public class MensageiroFacade {
 				pdfPath
 			);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
-	public static void enviarCodigoPorEmail(String destinatario, String corpo) {
-		try {
-			EmailService.enviarEmail(destinatario, "CONFIRME SEU EMAIL", "Seu código é " + corpo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void enviarCodigoPorEmail(String destinatario, String corpo) throws RuntimeException {
+		EmailService.enviarEmail(destinatario, "CONFIRME SEU EMAIL", "Seu código é " + corpo);
 	}
 }

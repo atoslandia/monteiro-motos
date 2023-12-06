@@ -1,5 +1,6 @@
 package com.atosalves.controller;
 
+import com.atosalves.controller.exceptions.NenhumaCorridaEncontradaException;
 import com.atosalves.controller.observerpattern.Observador;
 import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
@@ -11,8 +12,6 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
-import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -104,5 +103,14 @@ public class GerenciadorDeCorrida implements Observador {
 			objects[i] = corridaArray.get(i);
 		}
 		return objects;
+	}
+
+	public CorridaDTO[] buscarCorridaReinvidicada(LoginDTO login) throws NenhumaCorridaEncontradaException {
+		CorridaDTO corrida = corridaDAO.buscarCorridaReivindicadaMototaxista(login.email());
+		if (corrida == null) {
+			throw new NenhumaCorridaEncontradaException("Nenhuma corrida foi encontrada!");
+		}
+		CorridaDTO[] corridas = { corrida };
+		return corridas;
 	}
 }

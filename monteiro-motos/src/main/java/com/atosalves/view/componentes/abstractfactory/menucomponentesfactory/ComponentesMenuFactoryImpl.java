@@ -4,7 +4,9 @@ import com.atosalves.dto.CorridaDTO;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.BotaoMenu;
 import com.atosalves.view.componentes.DataCaixa;
+import com.atosalves.view.componentes.EmailCaixa;
 import com.atosalves.view.componentes.ListaDeCorridas;
+import com.atosalves.view.componentes.NumeroCaixa;
 import com.atosalves.view.componentes.SenhaCaixa;
 import com.atosalves.view.componentes.Texto;
 import com.atosalves.view.componentes.TextoCaixa;
@@ -47,5 +49,15 @@ public class ComponentesMenuFactoryImpl implements ComponentesFactory {
 	@Override
 	public ListaDeCorridas criarListaDeItems(CorridaDTO[] lista) {
 		throw new UnsupportedOperationException("Unimplemented method 'criarListaDeItems'");
+	}
+
+	@Override
+	public EmailCaixa criarEmailCaixa() {
+		throw new UnsupportedOperationException("Unimplemented method 'emailCaixa'");
+	}
+
+	@Override
+	public NumeroCaixa criarNumeroCaixa() {
+		throw new UnsupportedOperationException("Unimplemented method 'criarNumeroCaixa'");
 	}
 }

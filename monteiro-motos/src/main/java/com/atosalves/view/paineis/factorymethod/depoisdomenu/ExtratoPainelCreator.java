@@ -1,5 +1,6 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu;
 
+import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -13,12 +14,19 @@ public class ExtratoPainelCreator implements PainelCreator {
 
 	private LoginDTO loginDTO;
 
+	private String saldo;
+
 	public ExtratoPainelCreator(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
+		this.saldo = Float.toString(new UsuarioController().consultarSaldo(loginDTO)) + " R$";
 	}
 
 	private void voltarBotao() {
 		extratoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+	}
+
+	private void enviarHistorico() {
+		// TODO: fazer enviar histórico
 	}
 
 	@Override
@@ -26,7 +34,8 @@ public class ExtratoPainelCreator implements PainelCreator {
 		extratoPainel =
 			new PainelBuilderImpl()
 				.setTexto("EXTRATO", Tema.FONTE_MUITO_FORTE)
-				// TODO: consultar controller para retornas uma lista com o extrato
+				.setTexto(saldo, Tema.FONTE_FORTE)
+				.setBotao("ENVIAR HISTÓRICO", this::enviarHistorico)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
 	}

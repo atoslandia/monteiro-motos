@@ -5,6 +5,7 @@ import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.exception.CampoInvalidoException;
+import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
@@ -15,7 +16,7 @@ import com.atosalves.view.util.Tema;
 public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 	private TextoCaixa nomeCaixa;
-	private TextoCaixa emailCaixa;
+	private EmailCaixa emailCaixa;
 	private SenhaCaixa senhaCaixa;
 	private DataCaixa dataCaixa;
 	private TipoUsuarioCombo comboBox;
@@ -34,12 +35,16 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 	private void cadastrarBotao() {
 		try {
+			LoginDTO loginDTO = new LoginDTO(emailCaixa.pegarCampo(), senhaCaixa.pegarCampo(), comboBox.pegarSelecionado());
+
+			new JanelaDeAviso(loginDTO);
+
 			UsuarioController usuarioController = new UsuarioController();
 			usuarioController.cadastrar(getDados());
 
-			LoginDTO loginDTO = new LoginDTO(emailCaixa.pegarCampo(), senhaCaixa.pegarCampo(), comboBox.pegarSelecionado());
-
 			cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		} catch (RuntimeException r) {
+			new JanelaDeErro(r);
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
@@ -52,7 +57,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 	@Override
 	public void inicializarComponentes() {
 		this.nomeCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
-		this.emailCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
+		this.emailCaixa = COMPONENTES_FACTORY.criarEmailCaixa();
 		this.senhaCaixa = COMPONENTES_FACTORY.criarCaixaSenha();
 		this.dataCaixa = COMPONENTES_FACTORY.criarDataCaixa();
 		this.comboBox = COMPONENTES_FACTORY.criarComboTipoUsuario();

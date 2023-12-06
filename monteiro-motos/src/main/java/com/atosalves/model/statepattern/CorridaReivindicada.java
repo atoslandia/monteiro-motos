@@ -17,7 +17,8 @@ public class CorridaReivindicada extends CorridaState {
 
 	@Override
 	public void finalizarCorrida() {
-		corrida.getMototaxista().setLucro(corrida.getValor() - ((corrida.getValor() * 20) / 100));
+		float saldoAnterior = corrida.getMototaxista().getLucro();
+		corrida.getMototaxista().setLucro(saldoAnterior + (corrida.getValor() - ((corrida.getValor() * 20) / 100)));
 		corrida.setEstado(new CorridaFinalizada(corrida));
 		corrida.removerObservador();
 	}
@@ -41,6 +42,6 @@ public class CorridaReivindicada extends CorridaState {
 	@Override
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
 		throws AcessoNegadoException {
-		throw new AcessoNegadoException(corrida.getId(),"Já tem uma corrida em andamento");
+		throw new AcessoNegadoException(corrida.getId(), "Já tem uma corrida em andamento");
 	}
 }

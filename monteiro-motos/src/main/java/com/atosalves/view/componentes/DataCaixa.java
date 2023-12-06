@@ -1,5 +1,6 @@
 package com.atosalves.view.componentes;
 
+import com.atosalves.view.exception.CampoInvalidoException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -30,14 +31,12 @@ public class DataCaixa extends JDatePickerImpl {
 		getJFormattedTextField().setText("DEFINIR DATA");
 	}
 
-	public LocalDate pegarCampo() {
+	public LocalDate pegarCampo() throws CampoInvalidoException {
 		Date selectedDate = (Date) model.getValue();
-		return selectedDate != null
-			? selectedDate
-				.toInstant()
-				.atZone(Calendar.getInstance().getTimeZone().toZoneId())
-				.toLocalDate()
-			: null;
+		if (selectedDate == null) {
+			throw new CampoInvalidoException();
+		}
+		return selectedDate.toInstant().atZone(Calendar.getInstance().getTimeZone().toZoneId()).toLocalDate();
 	}
 
 	private static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {

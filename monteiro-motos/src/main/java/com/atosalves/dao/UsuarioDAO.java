@@ -3,8 +3,6 @@ package com.atosalves.dao;
 import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.DB;
-import com.atosalves.dto.UpdateUsuarioDTO;
-import com.atosalves.dto.UpdateUsuarioViewDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Usuario;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

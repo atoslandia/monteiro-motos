@@ -5,7 +5,6 @@ import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.db.DB;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
-import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.model.Corrida;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -79,30 +78,6 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 	}
 
 	@Override
-	public List<CorridaDTO> buscarCorridasCanceladas() {
-		List<CorridaDTO> corridasDTO = new ArrayList<>();
-
-		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.CANCELADA)) {
-			CorridaDTO corridaDTO = new CorridaDTO(corrida);
-			corridasDTO.add(corridaDTO);
-		}
-
-		return corridasDTO;
-	}
-
-	@Override
-	public List<CorridaDTO> buscarCorridasFinalizadas() {
-		List<CorridaDTO> corridasDTO = new ArrayList<>();
-
-		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.FINALIZADA)) {
-			CorridaDTO corridaDTO = new CorridaDTO(corrida);
-			corridasDTO.add(corridaDTO);
-		}
-
-		return corridasDTO;
-	}
-
-	@Override
 	public void moverCorrida(CorridaEventoDTO evento) {
 		Corrida corrida = recuperarPeloId(evento.corrida().getId()).corrida();
 		dataBase.getCorridas().get(evento.estadoAntigo()).remove(corrida);
@@ -137,41 +112,6 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 			}
 		}
 		return corridasDoUsuario;
-	}
-
-	@Override
-	public CorridaDTO buscarUmaCorridaDoUsuario(String id, EstadoCorrida estado) {
-		ArrayList<Corrida> corridas = dataBase.getCorridas().get(estado);
-
-		if (corridas != null) {
-			for (Corrida corrida : corridas) {
-				if (corrida.getPassageiro().getEmail().equals(id)) {
-					return new CorridaDTO(corrida);
-				}
-			}
-		}
-		return null;
-	}
-
-	public CorridaDTO buscarCorridaExistenteDeUmPassageiro(LoginDTO loginDTO) {
-		List<CorridaDTO> listaPendentes = buscarCorridasReinvidicadas();
-		List<CorridaDTO> listaReinvindicados = buscarCorridasPendentes();
-
-		if (listaPendentes != null) {
-			for (CorridaDTO c : listaPendentes) {
-				if (loginDTO.email().equals(c.corrida().getPassageiro().getEmail())) {
-					return c;
-				}
-			}
-		}
-		if (listaReinvindicados != null) {
-			for (CorridaDTO c : listaReinvindicados) {
-				if (loginDTO.email().equals(c.corrida().getPassageiro().getEmail())) {
-					return c;
-				}
-			}
-		}
-		return null;
 	}
 
 	@Override

@@ -4,8 +4,6 @@ import com.atosalves.enums.TipoTransacao;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Stack;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class GerenciadorDePagamento {
 
 	private float saldo;
-	private Stack<OperacaoFinanceira> historicoDepositos;
-	private Stack<OperacaoFinanceira> historicoPagamentos;
+	private ArrayList<OperacaoFinanceira> historicoDepositos;
+	private ArrayList<OperacaoFinanceira> historicoPagamentos;
 
 	public GerenciadorDePagamento(float saldo) {
 		this.saldo = saldo;
-		this.historicoDepositos = new Stack<>();
-		this.historicoPagamentos = new Stack<>();
+		this.historicoDepositos = new ArrayList<>();
+		this.historicoPagamentos = new ArrayList<>();
 	}
 
 	public void depositar(float valor) {
@@ -35,14 +33,14 @@ public class GerenciadorDePagamento {
 			throw new SaldoInsuficienteExceptions("Faça um deposito.");
 		}
 		LocalDateTime dataPagamento = LocalDateTime.now();
-		var pagamento = new OperacaoFinanceira(TipoTransacao.DEPOSITO, dataPagamento, valor);
+		var pagamento = new OperacaoFinanceira(TipoTransacao.PAGAMENTO, dataPagamento, valor);
 		saldo -= valor;
 		historicoDepositos.add(pagamento);
 	}
 
-	public void reembolso(){
-		setSaldo(getSaldo()-historicoDepositos.peek().getValor());
-		historicoPagamentos.pop();
+	public void reembolso() {
+		OperacaoFinanceira ultimoDeposito = historicoDepositos.get(historicoDepositos.size() - 1);
+		setSaldo(getSaldo() + ultimoDeposito.getValor());
+		historicoPagamentos.remove(ultimoDeposito);
 	}
-
 }

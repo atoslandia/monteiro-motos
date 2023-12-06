@@ -5,14 +5,14 @@ import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CadastroDTO;
 import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.PassageiroBoletoDTO;
 import com.atosalves.dto.UpdateUsuarioViewDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-
+import com.atosalves.model.facadepattern.MensageiroFacade;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -84,22 +84,21 @@ public class UsuarioController {
 		entidade.setSenha(dados.senha());
 	}
 
-	public void depositarNaConta(LoginDTO login, float valor){
+	public void depositarNaConta(LoginDTO login, float valor) {
 		Passageiro passageiro = (Passageiro) usuarioDAO.recuperarPeloId(login.email()).usuario();
 		passageiro.depositar(valor);
 		usuarioDAO.update(new UsuarioDTO(passageiro), login.email());
+		MensageiroFacade.enviarBoletoPorEmail(new PassageiroBoletoDTO(passageiro.getNome(), passageiro.getEmail()), valor);
 	}
 
-	public float consultarSaldo(LoginDTO login){
+	public float consultarSaldo(LoginDTO login) {
 		Usuario usuario = usuarioDAO.recuperarPeloId(login.email()).usuario();
 
-		if(login.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)){
+		if (login.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
 			Passageiro passageiro = (Passageiro) usuario;
 			return passageiro.getGerenciadorDePagamento().getSaldo();
 		}
 		Mototaxista mototaxista = (Mototaxista) usuario;
 		return mototaxista.getLucro();
 	}
-
-
 }

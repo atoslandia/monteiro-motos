@@ -13,9 +13,10 @@ import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
 import com.atosalves.view.paineis.factorymethod.PainelCreator;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.CorridasPendentesPainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.MinhasCorridasPainelCreator;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.MinhaCorridaReinvidicadaPainelCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaCreator;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroCreator;
 import com.atosalves.view.paineis.factorymethod.inicio.LoginPainelCreator;
@@ -51,7 +52,7 @@ public class MenuPainelCreator implements PainelCreator {
 		menuPainel.setPainel(new DepositarSaldoCreator(loginDTO).criarPainel());
 	}
 
-	private void extratoBotao() {
+	private void saldoBotao() {
 		menuPainel.setPainel(new ExtratoPainelCreator(loginDTO).criarPainel());
 	}
 
@@ -59,20 +60,17 @@ public class MenuPainelCreator implements PainelCreator {
 		menuPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeItems.pegarSelecionado()).criarPainel());
 	}
 
-	private void minhasCorridasBotao() {
-		menuPainel.setPainel(new MinhasCorridasPainelCreator(loginDTO).criarPainel());
+	private void corridasPendentesBotao() {
+		menuPainel.setPainel(new CorridasPendentesPainelCreator(loginDTO).criarPainel());
 	}
 
 	private CorridaDTO[] listarCorridas() {
 		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		if (isPassageiro()) {
-			return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
-		}
-		return gerenciadorDeCorrida.buscarCorridasPendentes();
+		return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
 	}
 
 	private void excluirContaBotao() {
-		// TODO: excluir conta usando o controller
+		// TODO: fazer um painel de confirmação
 		UsuarioController usuarioController = new UsuarioController();
 		usuarioController.excluirUsuario(loginDTO.email());
 		new JanelaDeAviso("Conta excluída com sucesso");
@@ -92,6 +90,10 @@ public class MenuPainelCreator implements PainelCreator {
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
+	}
+
+	private void minhaCorridaBotao() {
+		menuPainel.setPainel(new MinhaCorridaReinvidicadaPainelCreator(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -117,27 +119,27 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void inicioPainel() {
-		PainelBuilder builder = new PainelBuilderImpl()
-			.setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE)
-			.setBotaoMenu("INICIO", this::inicioBotao, false)
-			.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
-			.setBotaoMenu("PERFIL", this::editarBotao, true);
+		PainelBuilder builder = new PainelBuilderImpl().setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE);
+
 		if (isPassageiro()) {
-			builder
-				.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao)
-				.setBotao("DEPOSITAR", this::depositarBotao)
-				.setBotao("EXTRATO", this::extratoBotao);
+			builder.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao).setBotao("DEPOSITAR", this::depositarBotao);
 		} else {
-			builder.setBotao("MINHAS CORRIDAS", this::minhasCorridasBotao);
+			builder.setBotao("CORRIDAS PENDENTES", this::corridasPendentesBotao).setBotao("MINHA CORRIDA", this::minhaCorridaBotao);
 		}
 
-		inicioPainel = builder.construir();
+		inicioPainel =
+			builder
+				.setBotaoMenu("INICIO", this::inicioBotao, false)
+				.setBotaoMenu("CORRIDAS", this::corridasBotao, true)
+				.setBotaoMenu("PERFIL", this::editarBotao, true)
+				.setBotao("SALDO", this::saldoBotao)
+				.construir();
 	}
 
 	private void corridasPainel() {
 		corridasPainel =
 			new PainelBuilderImpl()
-				.setTexto("CORRIDAS", Tema.FONTE_MUITO_FORTE)
+				.setTexto("HISTÓRICO DE CORRIDAS", Tema.FONTE_MUITO_FORTE)
 				.setListaDeItems(listaDeItems, this::detalharCorrida)
 				.setBotaoMenu("INICIO", this::inicioBotao, true)
 				.setBotaoMenu("CORRIDAS", this::corridasBotao, false)

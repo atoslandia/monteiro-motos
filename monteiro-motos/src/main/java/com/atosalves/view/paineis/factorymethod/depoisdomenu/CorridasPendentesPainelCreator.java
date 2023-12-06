@@ -11,29 +11,24 @@ import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class MinhasCorridasPainelCreator implements PainelCreator {
+public class CorridasPendentesPainelCreator implements PainelCreator {
 
-	private Painel minhasCorridasPainel;
+	private Painel corridasPendentesPainel;
 
 	private ListaDeCorridas listaDeCorridas;
 
 	private LoginDTO loginDTO;
 
-	public MinhasCorridasPainelCreator(LoginDTO loginDTO) {
+	public CorridasPendentesPainelCreator(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
 	}
 
 	private void detalharCorrida() {
-		minhasCorridasPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel());
-	}
-
-	private CorridaDTO[] listarCorridas() {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-		return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
+		corridasPendentesPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel());
 	}
 
 	private void voltarBotao() {
-		minhasCorridasPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		corridasPendentesPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -41,11 +36,16 @@ public class MinhasCorridasPainelCreator implements PainelCreator {
 		listaDeCorridas = COMPONENTES_FACTORY.criarListaDeItems(listarCorridas());
 	}
 
+	private CorridaDTO[] listarCorridas() {
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		return gerenciadorDeCorrida.buscarCorridasPendentes();
+	}
+
 	@Override
 	public void construirPainel() {
-		minhasCorridasPainel =
+		corridasPendentesPainel =
 			new PainelBuilderImpl()
-				.setTexto("MINHAS CORRIDAS", Tema.FONTE_MUITO_FORTE)
+				.setTexto("INICIAR CORRIDA", Tema.FONTE_MUITO_FORTE)
 				.setListaDeItems(listaDeCorridas, this::detalharCorrida)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
@@ -53,6 +53,6 @@ public class MinhasCorridasPainelCreator implements PainelCreator {
 
 	@Override
 	public Painel factoryMethod() {
-		return minhasCorridasPainel;
+		return corridasPendentesPainel;
 	}
 }

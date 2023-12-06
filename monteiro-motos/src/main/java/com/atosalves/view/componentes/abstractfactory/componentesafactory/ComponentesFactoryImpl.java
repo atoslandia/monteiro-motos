@@ -42,4 +42,14 @@ public class ComponentesFactoryImpl implements ComponentesFactory {
 	public ListaDeCorridas criarListaDeItems(CorridaDTO[] lista) {
 		return new ListaDeCorridas(lista);
 	}
+
+	@Override
+	public EmailCaixa criarEmailCaixa() {
+		return new EmailCaixa();
+	}
+
+	@Override
+	public NumeroCaixa criarNumeroCaixa() {
+		return new NumeroCaixa();
+	}
 }
