@@ -4,6 +4,7 @@ import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CadastroDTO;
+import com.atosalves.dto.GerenciadorDePagamentoDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.dto.PassageiroBoletoDTO;
 import com.atosalves.dto.UpdateUsuarioViewDTO;
@@ -13,14 +14,13 @@ import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
 import com.atosalves.model.facadepattern.MensageiroFacade;
+
 import java.time.LocalDate;
 import java.time.Period;
 
 public class UsuarioController {
 
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
-
-	// TODO: implementar o mensageiro para pegar o extrato
 
 	public void login(LoginDTO data) throws CredenciaisInvalidasException {
 		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(data.email());
@@ -60,6 +60,13 @@ public class UsuarioController {
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		usuarioDAO.cadastrar(usuarioDTO);
 	}
+
+	public void enviarExtrato(LoginDTO login){
+		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(login.email());
+		Passageiro passageiro = (Passageiro) usuarioDTO.usuario();
+		MensageiroFacade.enviarExtratoPorEmail(login.email(), new GerenciadorDePagamentoDTO(passageiro.getGerenciadorDePagamento()));
+	}
+
 
 	public void editar(UpdateUsuarioViewDTO updateUsuarioDTO, String email) {
 		Usuario usuario = usuarioDAO.recuperarPeloId(email).usuario();

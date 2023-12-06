@@ -19,6 +19,7 @@ public class CorridaReivindicada extends CorridaState {
 	public void finalizarCorrida() {
 		float saldoAnterior = corrida.getMototaxista().getLucro();
 		corrida.getMototaxista().setLucro(saldoAnterior + (corrida.getValor() - ((corrida.getValor() * 20) / 100)));
+		corrida.setAvaliavel(true);
 		corrida.setEstado(new CorridaFinalizada(corrida));
 		corrida.removerObservador();
 	}

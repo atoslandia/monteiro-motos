@@ -1,14 +1,13 @@
 package com.atosalves.model;
 
 import java.time.LocalDate;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@Setter
+
 public class Mototaxista extends Usuario {
 
-	private int avaliacao;
+	private List<Avaliacao> avaliacoes;
 
 	private float lucro;
 
@@ -16,6 +15,23 @@ public class Mototaxista extends Usuario {
 
 	public Mototaxista(String nome, LocalDate dataNascimento, String email, String senha) {
 		super(nome, dataNascimento, email, senha);
-		this.avaliacao = 0;
+		avaliacoes = new ArrayList<>();
+		
+	}
+
+	public List<Avaliacao> getAvaliacoes() {
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(Avaliacao avaliacao) {
+		avaliacoes.add(avaliacao);
+	}
+
+	public float getLucro() {
+		return lucro;
+	}
+
+	public void setLucro(float lucro) {
+		this.lucro = lucro;
 	}
 }

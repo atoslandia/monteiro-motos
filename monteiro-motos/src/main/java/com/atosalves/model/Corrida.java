@@ -33,6 +33,7 @@ public class Corrida extends Observavel {
 	private final float valor = 5.0f;
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
+	private boolean avaliavel;
 
 	public Corrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) throws SaldoInsuficienteExceptions {
 		this.id = System.currentTimeMillis();
@@ -41,6 +42,7 @@ public class Corrida extends Observavel {
 		this.destino = destino.endereco();
 		this.passageiro.pagarCorrida(valor);
 		this.estado = new CorridaPendente(this);
+		this.avaliavel = false;
 	}
 
 	public void setEstado(CorridaState estado) {
