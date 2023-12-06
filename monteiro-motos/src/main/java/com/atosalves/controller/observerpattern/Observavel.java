@@ -1,4 +1,4 @@
-package com.atosalves.observerpattern;
+package com.atosalves.controller.observerpattern;
 
 import com.atosalves.dto.CorridaEventoDTO;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;

@@ -17,6 +17,7 @@ public class CorridaReivindicada extends CorridaState {
 
 	@Override
 	public void finalizarCorrida() {
+		corrida.getMototaxista().setLucro(corrida.getValor() - ((corrida.getValor() * 20) / 100));
 		corrida.setEstado(new CorridaFinalizada(corrida));
 		corrida.removerObservador();
 	}

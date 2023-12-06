@@ -1,6 +1,8 @@
 package com.atosalves.model;
 
 import com.atosalves.enums.TipoTransacao;
+import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import lombok.Data;
@@ -27,13 +29,14 @@ public class GerenciadorDePagamento {
 		historicoDepositos.add(deposito);
 	}
 
-	public boolean pagarCorrida(float valor) {
+	public void pagarCorrida(float valor) throws DinheiroInsuficienteExceptions{
 		if (valor > saldo) {
-			return false;
+			throw new DinheiroInsuficienteExceptions("Faça um deposito.");
 		}
 		LocalDateTime dataPagamento = LocalDateTime.now();
 		var pagamento = new OperacaoFinanceira(TipoTransacao.DEPOSITO, dataPagamento, valor);
 		saldo -= valor;
-		return historicoDepositos.add(pagamento);
+		historicoDepositos.add(pagamento);
 	}
+
 }

@@ -7,6 +7,7 @@ import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.exceptions.AcessoNegadoException;
+import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
 
 public class CorridaCancelada extends CorridaState {
 
@@ -31,7 +32,7 @@ public class CorridaCancelada extends CorridaState {
 	}
 
 	@Override
-	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) {
+	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) throws DinheiroInsuficienteExceptions {
 		corrida = new Corrida(passageiro, pontoDeEncontro, destino);
 		return new CorridaDTO(corrida);
 	}

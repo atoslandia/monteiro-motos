@@ -7,6 +7,8 @@ import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.exceptions.AcessoNegadoException;
+import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
+
 import lombok.Getter;
 
 @Getter
@@ -27,5 +29,5 @@ public abstract class CorridaState {
 	public abstract void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException;
 
 	public abstract CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
-		throws AcessoNegadoException;
+		throws AcessoNegadoException, DinheiroInsuficienteExceptions;
 }

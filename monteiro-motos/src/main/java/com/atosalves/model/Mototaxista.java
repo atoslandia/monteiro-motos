@@ -10,6 +10,8 @@ public class Mototaxista extends Usuario {
 
 	private int avaliacao;
 
+	private float lucro;
+
 	public Mototaxista() {}
 
 	public Mototaxista(String nome, LocalDate dataNascimento, String email, String senha) {
