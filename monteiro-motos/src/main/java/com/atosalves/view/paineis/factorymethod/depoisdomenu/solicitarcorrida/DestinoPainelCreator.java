@@ -4,6 +4,7 @@ import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.EnderecoViewDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
+import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
@@ -39,20 +40,20 @@ public class DestinoPainelCreator implements PainelCreator {
 	}
 
 	private void solicitarBotao() {
+		Long idCorrida = null;
 		try {
 			destino = getDados();
-			Long idCorrida = null;
-			try {
-				GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
-				idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
-			} catch (AcessoNegadoException e) {
-				idCorrida = e.getIdCorrida();
-				new JanelaDeErro(e);
-			} finally {
-				destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
-			}
-		} catch (CampoInvalidoException e) {
-			new JanelaDeErro(e);
+			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+			idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
+			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+		} catch (AcessoNegadoException acessoNegado) {
+			idCorrida = acessoNegado.getIdCorrida();
+			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+			new JanelaDeErro(acessoNegado);
+		} catch (CampoInvalidoException campoInvalido) {
+			new JanelaDeErro(campoInvalido);
+		} catch (SaldoInsuficienteExceptions saldoInsuficiente) {
+			new JanelaDeErro(saldoInsuficiente);
 		}
 	}
 

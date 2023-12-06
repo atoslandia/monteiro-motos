@@ -1,6 +1,6 @@
 package com.atosalves.controller;
 
-import com.atosalves.controller.exceptions.CredenciaisException;
+import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
 import com.atosalves.dto.CadastroDTO;
@@ -22,13 +22,15 @@ public class UsuarioController {
 	// TODO: implementar a busca por saldo
 	// TODO: implementar o mensageiro para pegar o extrato
 
-	public void login(LoginDTO data) throws CredenciaisException {
-		Usuario usuario = usuarioDAO.recuperarPeloId(data.email()).usuario();
-		if (usuario == null) {
-			throw new CredenciaisException("Usuario não encontrado");
+	public void login(LoginDTO data) throws CredenciaisInvalidasException {
+		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(data.email());
+		if (usuarioDTO == null) {
+			throw new CredenciaisInvalidasException("Usuario não encontrado");
 		}
+		Usuario usuario = usuarioDTO.usuario();
+
 		if (!usuario.getSenha().equals(data.senha())) {
-			throw new CredenciaisException("Senha incorreta");
+			throw new CredenciaisInvalidasException("Senha incorreta");
 		}
 
 		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
@@ -36,19 +38,19 @@ public class UsuarioController {
 		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
 			return;
 		}
-		throw new CredenciaisException("Tipo de usuario incorreto");
+		throw new CredenciaisInvalidasException("Tipo de usuario incorreto");
 	}
 
-	public void cadastrar(CadastroDTO data) throws CredenciaisException {
+	public void cadastrar(CadastroDTO data) throws CredenciaisInvalidasException {
 		LocalDate dataDeNascimento = data.dataNascimento();
 		LocalDate dataAtual = LocalDate.now();
 		Period idade = Period.between(dataDeNascimento, dataAtual);
 
 		if (usuarioDAO.recuperarPeloId(data.email()) != null) {
-			throw new CredenciaisException("Esse email já foi cadastrado");
+			throw new CredenciaisInvalidasException("Esse email já foi cadastrado");
 		}
 		if (idade.getYears() < 18) {
-			throw new CredenciaisException("Idade invalida. Permitido acima de 18 anos");
+			throw new CredenciaisInvalidasException("Idade invalida. Permitido acima de 18 anos");
 		}
 
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();

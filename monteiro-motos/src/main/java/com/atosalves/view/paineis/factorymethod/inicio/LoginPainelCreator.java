@@ -1,6 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.inicio;
 
 import com.atosalves.controller.UsuarioController;
+import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.exception.CampoInvalidoException;
@@ -29,8 +30,10 @@ public class LoginPainelCreator implements PainelCreator {
 			var usuarioController = new UsuarioController();
 			usuarioController.login(dados);
 			loginPainel.setPainel(new MenuPainelCreator(dados).criarPainel());
-		} catch (Exception e) {
-			new JanelaDeErro(e);
+		} catch (CredenciaisInvalidasException CredenciaisInvalidas) {
+			new JanelaDeErro(CredenciaisInvalidas);
+		} catch (Exception exception) {
+			new JanelaDeErro(exception);
 		}
 	}
 

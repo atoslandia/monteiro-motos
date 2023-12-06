@@ -14,7 +14,7 @@ import com.atosalves.model.Endereco;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.exceptions.AcessoNegadoException;
-import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
+import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class GerenciadorDeCorrida implements Observador {
 	}
 
 	public Long solicitarCorrida(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontoDTO, EnderecoViewDTO destinoDTO)
-		throws AcessoNegadoException, DinheiroInsuficienteExceptions {
+		throws AcessoNegadoException, SaldoInsuficienteExceptions {
 		UsuarioDTO passageiro = usuarioDAO.recuperarPeloId(loginDTO.email());
 
 		List<CorridaDTO> todasAsCorridas = corridaDAO.buscarCorridasDoUsuario(loginDTO.email());

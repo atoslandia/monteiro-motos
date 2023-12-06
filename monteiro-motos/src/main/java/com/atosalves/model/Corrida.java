@@ -8,10 +8,9 @@ import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.exceptions.AcessoNegadoException;
-import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
+import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.EqualsAndHashCode.Include;
@@ -33,7 +32,7 @@ public class Corrida extends Observavel {
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
 
-	public Corrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) throws DinheiroInsuficienteExceptions {
+	public Corrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) throws SaldoInsuficienteExceptions {
 		this.id = System.currentTimeMillis();
 		this.passageiro = (Passageiro) passageiro.usuario();
 		this.pontoDeEncontro = pontoDeEncontro.endereco();
@@ -62,7 +61,7 @@ public class Corrida extends Observavel {
 	}
 
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
-		throws AcessoNegadoException, DinheiroInsuficienteExceptions {
+		throws AcessoNegadoException, SaldoInsuficienteExceptions {
 		return estado.solicitarCorrida(passageiro, pontoDeEncontro, destino);
 	}
 }

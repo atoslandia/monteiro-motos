@@ -1,7 +1,6 @@
 package com.atosalves.model;
 
-import com.atosalves.model.exceptions.DinheiroInsuficienteExceptions;
-
+import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,7 @@ public class Passageiro extends Usuario {
 		gerenciadorDePagamento.depositar(valor);
 	}
 
-	public void pagarCorrida(float valor) throws DinheiroInsuficienteExceptions {
+	public void pagarCorrida(float valor) throws SaldoInsuficienteExceptions {
 		gerenciadorDePagamento.pagarCorrida(valor);
 	}
 }
