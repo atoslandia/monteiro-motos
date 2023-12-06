@@ -25,6 +25,7 @@ public class CorridaReivindicada extends CorridaState {
 	@Override
 	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		if (tipoUsuario.equals(TipoUsuario.MOTOTAXISTA)) {
+			corrida.getPassageiro().getGerenciadorDePagamento().reembolso();
 			corrida.setEstado(new CorridaCancelada(corrida));
 			corrida.removerObservador();
 		} else {

@@ -4,6 +4,8 @@ import com.atosalves.enums.TipoTransacao;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Stack;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class GerenciadorDePagamento {
 
 	private float saldo;
-	private ArrayList<OperacaoFinanceira> historicoDepositos;
-	private ArrayList<OperacaoFinanceira> historicoPagamentos;
+	private Stack<OperacaoFinanceira> historicoDepositos;
+	private Stack<OperacaoFinanceira> historicoPagamentos;
 
 	public GerenciadorDePagamento(float saldo) {
 		this.saldo = saldo;
-		this.historicoDepositos = new ArrayList<>();
-		this.historicoPagamentos = new ArrayList<>();
+		this.historicoDepositos = new Stack<>();
+		this.historicoPagamentos = new Stack<>();
 	}
 
 	public void depositar(float valor) {
@@ -37,4 +39,10 @@ public class GerenciadorDePagamento {
 		saldo -= valor;
 		historicoDepositos.add(pagamento);
 	}
+
+	public void reembolso(){
+		setSaldo(getSaldo()-historicoDepositos.peek().getValor());
+		historicoPagamentos.pop();
+	}
+
 }
