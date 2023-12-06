@@ -1,4 +1,7 @@
 package com.atosalves.dto;
 
-public record UpdateUsuarioDTO(String nome, String senha) {
+import com.atosalves.model.Usuario;
+
+public record UpdateUsuarioDTO(Usuario usuario) {
+
 }

@@ -4,11 +4,12 @@ import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.DB;
 import com.atosalves.dto.UpdateUsuarioDTO;
+import com.atosalves.dto.UpdateUsuarioViewDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.model.Usuario;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
-public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO, UpdateUsuarioDTO, String> {
+public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO, String> {
 
 	@XStreamAsAttribute
 	private DB dataBase;
@@ -18,12 +19,9 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
 	}
 
 	@Override
-	public UsuarioDTO update(UpdateUsuarioDTO entidade, String id) {
-		UsuarioDTO usuarioDTO = recuperarPeloId(id);
-		Usuario usuario = usuarioDTO.usuario();
-
-		usuario.setNome(entidade.nome());
-		usuario.setSenha(entidade.senha());
+	public UsuarioDTO update(UsuarioDTO entidade, String id) {
+		Usuario usuario = recuperarPeloId(id).usuario();
+		usuario = entidade.usuario();
 		dataBase.salvarDados();
 
 		return new UsuarioDTO(usuario);

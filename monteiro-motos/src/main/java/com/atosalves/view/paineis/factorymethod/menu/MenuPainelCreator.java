@@ -4,7 +4,7 @@ import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.UpdateUsuarioDTO;
+import com.atosalves.dto.UpdateUsuarioViewDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.componentes.SenhaCaixa;
@@ -84,7 +84,7 @@ public class MenuPainelCreator implements PainelCreator {
 		try {
 			String nome = nomeCaixa.pegarCampo();
 			String senha = senhaCaixa.pegarCampo();
-			UpdateUsuarioDTO updateUsuarioDTO = new UpdateUsuarioDTO(nome, senha);
+			UpdateUsuarioViewDTO updateUsuarioDTO = new UpdateUsuarioViewDTO(nome, senha);
 
 			UsuarioController usuarioController = new UsuarioController();
 			usuarioController.editar(updateUsuarioDTO, loginDTO.email());

@@ -30,6 +30,10 @@ public class CorridaPendente extends CorridaState {
 	@Override
 	public void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException {
 		if (tipoUsuario.equals(TipoUsuario.PASSAGEIRO)) {
+			float saldoAntigo = corrida.getPassageiro().getGerenciadorDePagamento().getSaldo();
+			corrida.getPassageiro().getGerenciadorDePagamento().setSaldo(saldoAntigo + corrida.getValor());
+			int size = corrida.getPassageiro().getGerenciadorDePagamento().getHistoricoPagamentos().size();
+			corrida.getPassageiro().getGerenciadorDePagamento().getHistoricoPagamentos().remove(size);
 			corrida.setEstado(new CorridaCancelada(corrida));
 			corrida.removerObservador();
 		} else {

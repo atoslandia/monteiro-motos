@@ -4,11 +4,13 @@ import com.atosalves.controller.observerpattern.Observavel;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.CorridaEventoDTO;
 import com.atosalves.dto.EnderecoDTO;
+import com.atosalves.dto.PassageiroBoletoDTO;
 import com.atosalves.dto.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
+import com.atosalves.model.facadepattern.MensageiroFacade;
 import com.atosalves.model.statepattern.CorridaPendente;
 import com.atosalves.model.statepattern.CorridaState;
 import lombok.Data;
@@ -38,6 +40,8 @@ public class Corrida extends Observavel {
 		this.pontoDeEncontro = pontoDeEncontro.endereco();
 		this.destino = destino.endereco();
 		this.passageiro.pagarCorrida(valor);
+		MensageiroFacade.enviarBoletoPorEmail(new PassageiroBoletoDTO(this.passageiro.getNome(), 
+		this.passageiro.getEmail()), valor);
 		this.estado = new CorridaPendente(this);
 	}
 
