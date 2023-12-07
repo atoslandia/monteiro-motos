@@ -2,7 +2,7 @@ package com.atosalves.view;
 
 import com.atosalves.view.janelas.JanelaPrincipal;
 import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.inicio.LoginPainel;
+import com.atosalves.view.paineis.painelmethod.inicio.LoginPainel;
 import javax.swing.SwingUtilities;
 
 public class Main {

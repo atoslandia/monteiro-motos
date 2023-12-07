@@ -1,11 +1,11 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu.detalhescorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class CorridaEmAndamentoPainel extends PainelTemplate {

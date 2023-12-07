@@ -1,13 +1,13 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.dto.corrida.EnderecoViewDTO;
 import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class PontoDeEncontroPainel extends PainelTemplate {

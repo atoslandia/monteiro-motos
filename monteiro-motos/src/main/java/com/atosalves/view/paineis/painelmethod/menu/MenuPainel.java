@@ -1,4 +1,4 @@
-package com.atosalves.view.paineis.factorymethod.menu;
+package com.atosalves.view.paineis.painelmethod.menu;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.controller.UsuarioController;
@@ -12,16 +12,16 @@ import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.CorridasPendentesPainel;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoPainel;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainel;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.MinhaCorridaReinvidicadaPainel;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaPainel;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroPainel;
-import com.atosalves.view.paineis.factorymethod.inicio.LoginPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilder;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.CorridasPendentesPainel;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.DepositarSaldoPainel;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.ExtratoPainel;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.MinhaCorridaReinvidicadaPainel;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaPainel;
+import com.atosalves.view.paineis.painelmethod.depoisdomenu.solicitarcorrida.PontoDeEncontroPainel;
+import com.atosalves.view.paineis.painelmethod.inicio.LoginPainel;
 import com.atosalves.view.util.Tema;
 
 public class MenuPainel extends PainelTemplate {
@@ -113,14 +113,21 @@ public class MenuPainel extends PainelTemplate {
 		corridasPainel();
 		editarPainel();
 
-		painel = new PainelBuilderImpl().addPainel(inicioPainel).addPainel(corridasPainel).addPainel(editarPainel).construir();
+		painel =
+			new PainelBuilderImpl()
+				.addPainel(inicioPainel)
+				.addPainel(corridasPainel)
+				.addPainel(editarPainel)
+				.construir();
 	}
 
 	private void inicioPainel() {
 		PainelBuilder builder = new PainelBuilderImpl().setTexto("BEM VINDO(A)", Tema.FONTE_MUITO_FORTE);
 
 		if (isPassageiro()) {
-			builder.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao).setBotao("DEPOSITAR", this::depositarBotao);
+			builder
+				.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao)
+				.setBotao("DEPOSITAR", this::depositarBotao);
 		} else {
 			builder
 				.setTexto("MINHA AVALIAÇÃO: " + avaliacaoMototaxista, Tema.FONTE_NORMAL)

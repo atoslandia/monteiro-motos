@@ -1,13 +1,13 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.janelas.JanelaDeAviso;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilder;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class ExtratoPainel extends PainelTemplate {
@@ -32,7 +32,9 @@ public class ExtratoPainel extends PainelTemplate {
 
 	@Override
 	public void construirPainel() {
-		PainelBuilder builder = new PainelBuilderImpl().setTexto("EXTRATO", Tema.FONTE_MUITO_FORTE).setTexto(saldo, Tema.FONTE_FORTE);
+		PainelBuilder builder = new PainelBuilderImpl()
+			.setTexto("EXTRATO", Tema.FONTE_MUITO_FORTE)
+			.setTexto(saldo, Tema.FONTE_FORTE);
 		if (loginDTO.tipoUsuario() == TipoUsuario.PASSAGEIRO) {
 			builder.setBotao("ENVIAR HISTÓRICO", this::enviarHistorico);
 		}

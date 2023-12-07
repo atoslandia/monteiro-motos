@@ -1,13 +1,13 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu;
 
 import com.atosalves.controller.UsuarioController;
 import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.componentes.NumeroCaixa;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class DepositarSaldoPainel extends PainelTemplate {

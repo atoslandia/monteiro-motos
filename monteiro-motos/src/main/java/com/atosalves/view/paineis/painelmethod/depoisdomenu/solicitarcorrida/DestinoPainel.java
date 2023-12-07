@@ -1,4 +1,4 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.corrida.EnderecoViewDTO;
@@ -8,8 +8,8 @@ import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
 import com.atosalves.view.util.Tema;
 
 public class DestinoPainel extends PainelTemplate {

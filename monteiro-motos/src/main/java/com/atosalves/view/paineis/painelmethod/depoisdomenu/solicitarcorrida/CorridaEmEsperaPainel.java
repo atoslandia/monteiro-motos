@@ -1,12 +1,12 @@
-package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
+package com.atosalves.view.paineis.painelmethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.factorymethod.PainelTemplate;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
+import com.atosalves.view.paineis.painelmethod.PainelTemplate;
+import com.atosalves.view.paineis.painelmethod.menu.MenuPainel;
 import com.atosalves.view.util.Tema;
 
 public class CorridaEmEsperaPainel extends PainelTemplate {

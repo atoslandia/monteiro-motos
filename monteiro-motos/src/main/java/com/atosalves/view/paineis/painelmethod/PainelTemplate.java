@@ -1,4 +1,4 @@
-package com.atosalves.view.paineis.factorymethod;
+package com.atosalves.view.paineis.painelmethod;
 
 import com.atosalves.view.componentes.abstractfactory.ComponentesFactory;
 import com.atosalves.view.componentes.abstractfactory.componentesafactory.*;
