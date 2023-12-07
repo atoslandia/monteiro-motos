@@ -2,7 +2,6 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.corrida.CorridaDTO;
 import com.atosalves.dto.corrida.EnderecoDTO;
-import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;

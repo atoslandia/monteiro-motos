@@ -2,7 +2,6 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.corrida.CorridaDTO;
 import com.atosalves.dto.corrida.EnderecoDTO;
-import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
@@ -43,7 +42,7 @@ public class CorridaPendente extends CorridaState {
 	@Override
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
 		throws AcessoNegadoException {
-		throw new AcessoNegadoException(corrida.getId(),"Cancele a corrida para pedir outra");
+		throw new AcessoNegadoException(corrida.getId(), "Cancele a corrida para pedir outra");
 	}
 
 	@Override

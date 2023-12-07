@@ -12,7 +12,6 @@ import com.atosalves.view.util.Tema;
 
 public class PontoDeEncontroPainel extends PainelTemplate {
 
-	private TextoCaixa enderecoCaixa;
 	private TextoCaixa bairroCaixa;
 	private TextoCaixa ruaCaixa;
 	private TextoCaixa cepCaixa;
@@ -41,7 +40,6 @@ public class PontoDeEncontroPainel extends PainelTemplate {
 
 	@Override
 	public void inicializarComponentes() {
-		enderecoCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
 		bairroCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
 		ruaCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
 		cepCaixa = COMPONENTES_FACTORY.criarCaixaTexto();
@@ -52,7 +50,6 @@ public class PontoDeEncontroPainel extends PainelTemplate {
 		painel =
 			new PainelBuilderImpl()
 				.setTexto("PONTO DE ENCONTRO", Tema.FONTE_MUITO_FORTE)
-				.setTextoCaixa("ENDEREÇO", enderecoCaixa)
 				.setTextoCaixa("BAIRRO", bairroCaixa)
 				.setTextoCaixa("RUA", ruaCaixa)
 				.setTextoCaixa("CEP", cepCaixa)

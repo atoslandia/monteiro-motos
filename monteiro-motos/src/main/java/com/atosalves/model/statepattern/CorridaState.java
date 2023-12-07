@@ -2,7 +2,6 @@ package com.atosalves.model.statepattern;
 
 import com.atosalves.dto.corrida.CorridaDTO;
 import com.atosalves.dto.corrida.EnderecoDTO;
-import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
@@ -29,8 +28,11 @@ public abstract class CorridaState {
 
 	public abstract void cancelarCorrida(TipoUsuario tipoUsuario) throws AcessoNegadoException;
 
-	public abstract CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
-		throws AcessoNegadoException, SaldoInsuficienteExceptions;
+	public abstract CorridaDTO solicitarCorrida(
+		UsuarioDTO passageiro,
+		EnderecoDTO pontoDeEncontro,
+		EnderecoDTO destino
+	) throws AcessoNegadoException, SaldoInsuficienteExceptions;
 
-    public abstract void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException;
+	public abstract void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException;
 }
