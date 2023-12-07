@@ -5,15 +5,12 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class PontoDeEncontroCreator implements PainelCreator {
-
-	private Painel solicitarCorridas;
+public class PontoDeEncontroPainel extends PainelTemplate {
 
 	private TextoCaixa enderecoCaixa;
 	private TextoCaixa bairroCaixa;
@@ -22,7 +19,7 @@ public class PontoDeEncontroCreator implements PainelCreator {
 
 	private LoginDTO loginDTO;
 
-	public PontoDeEncontroCreator(LoginDTO loginDTO) {
+	public PontoDeEncontroPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
 	}
 
@@ -32,14 +29,14 @@ public class PontoDeEncontroCreator implements PainelCreator {
 
 	private void confirmarBotao() {
 		try {
-			solicitarCorridas.setPainel(new DestinoPainelCreator(loginDTO, getPontoEndereco()).criarPainel());
+			painel.setPainel(new DestinoPainel(loginDTO, getPontoEndereco()).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
 	}
 
 	private void voltarBotao() {
-		solicitarCorridas.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -52,7 +49,7 @@ public class PontoDeEncontroCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		solicitarCorridas =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("PONTO DE ENCONTRO", Tema.FONTE_MUITO_FORTE)
 				.setTextoCaixa("ENDEREÇO", enderecoCaixa)
@@ -62,10 +59,5 @@ public class PontoDeEncontroCreator implements PainelCreator {
 				.setBotao("CONFIRMAR", this::confirmarBotao)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return solicitarCorridas;
 	}
 }

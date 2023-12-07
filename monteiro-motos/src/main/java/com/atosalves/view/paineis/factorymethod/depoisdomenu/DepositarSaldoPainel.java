@@ -5,21 +5,17 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.NumeroCaixa;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class DepositarSaldoCreator implements PainelCreator {
+public class DepositarSaldoPainel extends PainelTemplate {
 
 	private NumeroCaixa valor;
-
-	private Painel depositarSaldoPainel;
-
 	private LoginDTO loginDTO;
 
-	public DepositarSaldoCreator(LoginDTO loginDTO) {
+	public DepositarSaldoPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
 	}
 
@@ -33,14 +29,14 @@ public class DepositarSaldoCreator implements PainelCreator {
 			usuarioController.depositarNaConta(loginDTO, valor);
 
 			new JanelaDeAviso("Depositado com sucesso!");
-			depositarSaldoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+			painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 		} catch (Exception exception) {
 			new JanelaDeErro(exception);
 		}
 	}
 
 	private void voltarBotao() {
-		depositarSaldoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -50,17 +46,12 @@ public class DepositarSaldoCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		depositarSaldoPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("DEPOSITAR SALDO", Tema.FONTE_MUITO_FORTE)
 				.setTextoCaixa("VALOR", valor)
 				.setBotao("DEPOSITAR", this::depositarBotao)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return depositarSaldoPainel;
 	}
 }

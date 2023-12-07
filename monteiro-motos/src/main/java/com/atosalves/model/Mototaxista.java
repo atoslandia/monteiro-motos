@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Mototaxista extends Usuario {
 
-	private List<Avaliacao> avaliacoes;
+	private List<Avaliacao> avaliacoes = new ArrayList<>();
 
 	private float lucro;
 
@@ -15,8 +14,6 @@ public class Mototaxista extends Usuario {
 
 	public Mototaxista(String nome, LocalDate dataNascimento, String email, String senha) {
 		super(nome, dataNascimento, email, senha);
-		avaliacoes = new ArrayList<>();
-		
 	}
 
 	public List<Avaliacao> getAvaliacoes() {

@@ -4,31 +4,27 @@ import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.ListaDeCorridas;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaPainel;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class CorridasPendentesPainelCreator implements PainelCreator {
-
-	private Painel corridasPendentesPainel;
+public class CorridasPendentesPainel extends PainelTemplate {
 
 	private ListaDeCorridas listaDeCorridas;
-
 	private LoginDTO loginDTO;
 
-	public CorridasPendentesPainelCreator(LoginDTO loginDTO) {
+	public CorridasPendentesPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
 	}
 
 	private void detalharCorrida() {
-		corridasPendentesPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel());
+		painel.setPainel(new DetalhadorDeCorridaPainel(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel());
 	}
 
 	private void voltarBotao() {
-		corridasPendentesPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -43,16 +39,11 @@ public class CorridasPendentesPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		corridasPendentesPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("INICIAR CORRIDA", Tema.FONTE_MUITO_FORTE)
 				.setListaDeItems(listaDeCorridas, this::detalharCorrida)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return corridasPendentesPainel;
 	}
 }

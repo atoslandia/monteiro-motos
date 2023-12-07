@@ -8,14 +8,11 @@ import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class DestinoPainelCreator implements PainelCreator {
-
-	private Painel destinoPainel;
+public class DestinoPainel extends PainelTemplate {
 
 	private TextoCaixa enderecoCaixa;
 	private TextoCaixa bairroCaixa;
@@ -26,7 +23,7 @@ public class DestinoPainelCreator implements PainelCreator {
 	private EnderecoViewDTO destino;
 	private LoginDTO loginDTO;
 
-	public DestinoPainelCreator(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontro) {
+	public DestinoPainel(LoginDTO loginDTO, EnderecoViewDTO pontoDeEncontro) {
 		this.pontoDeEncontro = pontoDeEncontro;
 		this.loginDTO = loginDTO;
 	}
@@ -45,10 +42,10 @@ public class DestinoPainelCreator implements PainelCreator {
 			destino = getDados();
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 			idCorrida = gerenciadorDeCorrida.solicitarCorrida(loginDTO, pontoDeEncontro, destino);
-			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+			painel.setPainel(new CorridaEmEsperaPainel(loginDTO, idCorrida).criarPainel());
 		} catch (AcessoNegadoException acessoNegado) {
 			idCorrida = acessoNegado.getIdCorrida();
-			destinoPainel.setPainel(new CorridaEmEsperaPainelCreator(loginDTO, idCorrida).criarPainel());
+			painel.setPainel(new CorridaEmEsperaPainel(loginDTO, idCorrida).criarPainel());
 			new JanelaDeErro(acessoNegado);
 		} catch (CampoInvalidoException campoInvalido) {
 			new JanelaDeErro(campoInvalido);
@@ -58,7 +55,7 @@ public class DestinoPainelCreator implements PainelCreator {
 	}
 
 	private void voltarBotao() {
-		destinoPainel.setPainel(new PontoDeEncontroCreator(loginDTO).criarPainel());
+		painel.setPainel(new PontoDeEncontroPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -71,7 +68,7 @@ public class DestinoPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		destinoPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("DESTINO", Tema.FONTE_MUITO_FORTE)
 				.setTextoCaixa("ENDEREÇO", enderecoCaixa)
@@ -81,10 +78,5 @@ public class DestinoPainelCreator implements PainelCreator {
 				.setBotao("SOLICITAR", this::solicitarBotao)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return destinoPainel;
 	}
 }

@@ -7,21 +7,18 @@ import com.atosalves.view.componentes.*;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class CadastroUsuarioPainelCreator implements PainelCreator {
+public class CadastroUsuarioPainel extends PainelTemplate {
 
 	private TextoCaixa nomeCaixa;
 	private EmailCaixa emailCaixa;
 	private SenhaCaixa senhaCaixa;
 	private DataCaixa dataCaixa;
 	private TipoUsuarioCombo comboBox;
-
-	private Painel cadastroPainel;
 
 	private CadastroDTO getDados() throws CampoInvalidoException {
 		return new CadastroDTO(
@@ -42,7 +39,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 			UsuarioController usuarioController = new UsuarioController();
 			usuarioController.cadastrar(getDados());
 
-			cadastroPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+			painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 		} catch (RuntimeException r) {
 			new JanelaDeErro(r);
 		} catch (Exception e) {
@@ -51,7 +48,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 	}
 
 	private void voltarBotao() {
-		cadastroPainel.setPainel(new LoginPainelCreator().criarPainel());
+		painel.setPainel(new LoginPainel().criarPainel());
 	}
 
 	@Override
@@ -65,7 +62,7 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		cadastroPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setImagem(Tema.FUNDO_CINZA)
 				.setTexto("CADASTRO", Tema.FONTE_MUITO_FORTE)
@@ -77,10 +74,5 @@ public class CadastroUsuarioPainelCreator implements PainelCreator {
 				.setBotao("CADASTRAR", this::cadastrarBotao)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return cadastroPainel;
 	}
 }

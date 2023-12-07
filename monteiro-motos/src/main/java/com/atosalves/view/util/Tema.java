@@ -3,6 +3,7 @@ package com.atosalves.view.util;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class Tema {
@@ -22,4 +23,6 @@ public class Tema {
 	public static final Image FUNDO_CINZA = new ImageIcon("monteiro-motos\\src\\main\\resources\\fundo-padrao.png").getImage();
 	public static final Image FUNDO_LOGIN = new ImageIcon("monteiro-motos\\src\\main\\resources\\fundo-login.png").getImage();
 	public static final Image ICONE = new ImageIcon("monteiro-motos\\src\\main\\resources\\icone.png").getImage();
+
+	public static final Icon AVALIACAO_ICONE = new ImageIcon("monteiro-motos\\src\\main\\resources\\icone-avaliacao.png");
 }

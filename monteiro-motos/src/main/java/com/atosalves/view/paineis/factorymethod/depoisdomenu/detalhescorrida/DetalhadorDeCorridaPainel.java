@@ -1,25 +1,24 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
+import com.atosalves.controller.exceptions.NaoAvaliavelException;
 import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilder;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
+import javax.swing.JOptionPane;
 
-public class DetalhadorDeCorridaCreator implements PainelCreator {
-
-	private Painel detalhadorDeCorrida;
+public class DetalhadorDeCorridaPainel extends PainelTemplate {
 
 	private Long idCorrida;
 	private LoginDTO loginDTO;
 
-	public DetalhadorDeCorridaCreator(LoginDTO loginDTO, Long idCorrida) {
+	public DetalhadorDeCorridaPainel(LoginDTO loginDTO, Long idCorrida) {
 		this.idCorrida = idCorrida;
 		this.loginDTO = loginDTO;
 	}
@@ -29,14 +28,14 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 			gerenciadorDeCorrida.reivindicarCorrida(loginDTO, idCorrida);
 
-			detalhadorDeCorrida.setPainel(new CorridaEmAndamentoPainelCreator(loginDTO, idCorrida).criarPainel());
+			painel.setPainel(new CorridaEmAndamentoPainel(loginDTO, idCorrida).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
 	}
 
 	private void voltarBotao() {
-		detalhadorDeCorrida.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 	}
 
 	private String detalhamentoCorrida() {
@@ -56,6 +55,29 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 		);
 	}
 
+	private void avaliarCorridaBotao() {
+		new JOptionPane();
+		int nota =
+			JOptionPane.showOptionDialog(
+				null,
+				"AVALIE O MOTOTAXISTA",
+				"AVALIAÇÃO",
+				0,
+				0,
+				Tema.AVALIACAO_ICONE,
+				new Object[] { 1, 2, 3, 4, 5 },
+				null
+			) +
+			1;
+
+		try {
+			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
+			gerenciadorDeCorrida.avaliarMototaxista(idCorrida, nota);
+		} catch (NaoAvaliavelException e) {
+			new JanelaDeErro(e);
+		}
+	}
+
 	@Override
 	public void inicializarComponentes() {}
 
@@ -63,18 +85,14 @@ public class DetalhadorDeCorridaCreator implements PainelCreator {
 	public void construirPainel() {
 		PainelBuilder builder = new PainelBuilderImpl()
 			.setTexto("DETALHES DA CORRIDA", Tema.FONTE_MUITO_FORTE)
-			.setMuitoTexto(detalhamentoCorrida())
-			.setBotao("VOLTAR", this::voltarBotao);
+			.setMuitoTexto(detalhamentoCorrida());
 
 		if (loginDTO.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
 			builder.setBotao("REINVINDICAR", this::reinvidicarBotao);
+		} else {
+			builder.setBotao("AVALIAR MOTOTAXISTA", this::avaliarCorridaBotao);
 		}
 
-		detalhadorDeCorrida = builder.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return detalhadorDeCorrida;
+		painel = builder.setBotao("VOLTAR", this::voltarBotao).construir();
 	}
 }

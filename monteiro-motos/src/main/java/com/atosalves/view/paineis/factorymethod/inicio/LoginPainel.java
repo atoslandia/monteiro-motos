@@ -6,19 +6,16 @@ import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class LoginPainelCreator implements PainelCreator {
+public class LoginPainel extends PainelTemplate {
 
 	private EmailCaixa email;
 	private SenhaCaixa senha;
 	private TipoUsuarioCombo tipoUsuarioCombo;
-
-	private Painel loginPainel;
 
 	private LoginDTO getDados() throws CampoInvalidoException {
 		return new LoginDTO(email.pegarCampo(), senha.pegarCampo(), tipoUsuarioCombo.pegarSelecionado());
@@ -29,7 +26,7 @@ public class LoginPainelCreator implements PainelCreator {
 			LoginDTO dados = getDados();
 			var usuarioController = new UsuarioController();
 			usuarioController.login(dados);
-			loginPainel.setPainel(new MenuPainelCreator(dados).criarPainel());
+			painel.setPainel(new MenuPainel(dados).criarPainel());
 		} catch (CredenciaisInvalidasException CredenciaisInvalidas) {
 			new JanelaDeErro(CredenciaisInvalidas);
 		} catch (Exception exception) {
@@ -38,7 +35,7 @@ public class LoginPainelCreator implements PainelCreator {
 	}
 
 	private void cadastroBotao() {
-		loginPainel.setPainel(new CadastroUsuarioPainelCreator().criarPainel());
+		painel.setPainel(new CadastroUsuarioPainel().criarPainel());
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class LoginPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		loginPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setImagem(Tema.FUNDO_LOGIN)
 				.setTexto("MONTEIRO MOTOS", Tema.FONTE_MUITO_FORTE)
@@ -60,10 +57,5 @@ public class LoginPainelCreator implements PainelCreator {
 				.setBotao("LOGIN", this::loginBotao)
 				.setBotao("CADASTRO", this::cadastroBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return loginPainel;
 	}
 }

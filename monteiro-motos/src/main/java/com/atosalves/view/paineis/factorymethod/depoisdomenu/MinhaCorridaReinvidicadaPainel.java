@@ -6,33 +6,28 @@ import com.atosalves.dto.CorridaDTO;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.CorridaEmAndamentoPainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.CorridaEmAndamentoPainel;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class MinhaCorridaReinvidicadaPainelCreator implements PainelCreator {
-
-	private Painel minhaCorridaReinvidicadaPainel;
+public class MinhaCorridaReinvidicadaPainel extends PainelTemplate {
 
 	private ListaDeCorridas listaDeCorridas;
 
 	private LoginDTO loginDTO;
 
-	public MinhaCorridaReinvidicadaPainelCreator(LoginDTO loginDTO) {
+	public MinhaCorridaReinvidicadaPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
 	}
 
 	private void abrirCorrida() {
-		minhaCorridaReinvidicadaPainel.setPainel(
-			new CorridaEmAndamentoPainelCreator(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel()
-		);
+		painel.setPainel(new CorridaEmAndamentoPainel(loginDTO, listaDeCorridas.pegarSelecionado()).criarPainel());
 	}
 
 	private void voltarBotao() {
-		minhaCorridaReinvidicadaPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -53,16 +48,11 @@ public class MinhaCorridaReinvidicadaPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		minhaCorridaReinvidicadaPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("CORRIDA REINVIDICADA", Tema.FONTE_MUITO_FORTE)
 				.setListaDeItems(listaDeCorridas, this::abrirCorrida)
 				.setBotao("VOLTAR", this::voltarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return minhaCorridaReinvidicadaPainel;
 	}
 }

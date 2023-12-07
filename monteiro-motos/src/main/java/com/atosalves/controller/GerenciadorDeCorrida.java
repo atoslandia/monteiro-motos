@@ -15,7 +15,6 @@ import com.atosalves.model.Avaliacao;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
 import com.atosalves.model.Mototaxista;
-import com.atosalves.model.Passageiro;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -89,30 +88,32 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.finalizarCorrida();
 	}
 
-	public void avaliarMototaxista(long idCorrida, int estrelas) throws NaoAvaliavelException{
-		Corrida corrida =  corridaDAO.recuperarPeloId(idCorrida).corrida();
+	public void avaliarMototaxista(long idCorrida, int estrelas) throws NaoAvaliavelException {
+		Corrida corrida = corridaDAO.recuperarPeloId(idCorrida).corrida();
 
-		if(corrida.isAvaliavel()){
+		if (corrida.isAvaliavel()) {
 			Avaliacao avaliacao = new Avaliacao(new UsuarioDTO(corrida.getPassageiro()), estrelas);
 			corrida.getMototaxista().setAvaliacoes(avaliacao);
 			usuarioDAO.update(new UsuarioDTO(corrida.getPassageiro()), corrida.getPassageiro().getEmail());
-		}else{
+		} else {
 			throw new NaoAvaliavelException("Não pode avaliar o mototaxista");
 		}
 	}
 
-	public float avaliacaoMediaDoMototaxista(LoginDTO login){
-		Mototaxista mototaxista = (Mototaxista)usuarioDAO.recuperarPeloId(login.email()).usuario();
+	public float avaliacaoMediaDoMototaxista(LoginDTO login) {
+		Mototaxista mototaxista = (Mototaxista) usuarioDAO.recuperarPeloId(login.email()).usuario();
 		List<Avaliacao> avaliacoes = mototaxista.getAvaliacoes();
-		float soma = 0;
 		float media = 0;
+		if (avaliacoes == null) {
+			return media;
+		}
+		float soma = 0;
 		for (Avaliacao avaliacao : avaliacoes) {
 			soma += avaliacao.getEstrelas();
 		}
 		media = soma / avaliacoes.size();
 		return media;
 	}
-
 
 	public CorridaDTO[] buscarHistoricoDeCorridas(LoginDTO login) {
 		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoUsuario(login.email());

@@ -3,22 +3,19 @@ package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.dto.LoginDTO;
 import com.atosalves.view.janelas.JanelaDeErro;
-import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.menu.MenuPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class CorridaEmAndamentoPainelCreator implements PainelCreator {
-
-	private Painel corridaEmAndamentoPainel;
+public class CorridaEmAndamentoPainel extends PainelTemplate {
 
 	private LoginDTO loginDTO;
 	private Long idCorrida;
 
 	private GerenciadorDeCorrida gerenciadorDeCorrida;
 
-	public CorridaEmAndamentoPainelCreator(LoginDTO loginDTO, Long idCorrida) {
+	public CorridaEmAndamentoPainel(LoginDTO loginDTO, Long idCorrida) {
 		this.loginDTO = loginDTO;
 		this.idCorrida = idCorrida;
 		this.gerenciadorDeCorrida = new GerenciadorDeCorrida();
@@ -27,7 +24,7 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 	private void finalizarBotao() {
 		try {
 			gerenciadorDeCorrida.finalizarCorrida(idCorrida);
-			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+			painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
@@ -36,7 +33,7 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 	private void cancelarBotao() {
 		try {
 			gerenciadorDeCorrida.cancelarCorrida(loginDTO, idCorrida);
-			corridaEmAndamentoPainel.setPainel(new MenuPainelCreator(loginDTO).criarPainel());
+			painel.setPainel(new MenuPainel(loginDTO).criarPainel());
 		} catch (Exception e) {
 			new JanelaDeErro(e);
 		}
@@ -47,16 +44,11 @@ public class CorridaEmAndamentoPainelCreator implements PainelCreator {
 
 	@Override
 	public void construirPainel() {
-		corridaEmAndamentoPainel =
+		painel =
 			new PainelBuilderImpl()
 				.setTexto("CORRIDA EM ANDAMENTO", Tema.FONTE_MUITO_FORTE)
 				.setBotao("FINALIZAR", this::finalizarBotao)
 				.setBotao("CANCELAR", this::cancelarBotao)
 				.construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return corridaEmAndamentoPainel;
 	}
 }

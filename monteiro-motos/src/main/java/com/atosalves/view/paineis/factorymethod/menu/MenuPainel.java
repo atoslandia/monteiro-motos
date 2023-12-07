@@ -12,21 +12,19 @@ import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.Painel;
-import com.atosalves.view.paineis.factorymethod.PainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.CorridasPendentesPainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.MinhaCorridaReinvidicadaPainelCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaCreator;
-import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroCreator;
-import com.atosalves.view.paineis.factorymethod.inicio.LoginPainelCreator;
+import com.atosalves.view.paineis.factorymethod.PainelTemplate;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.CorridasPendentesPainel;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.DepositarSaldoPainel;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.ExtratoPainel;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.MinhaCorridaReinvidicadaPainel;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaPainel;
+import com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida.PontoDeEncontroPainel;
+import com.atosalves.view.paineis.factorymethod.inicio.LoginPainel;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilder;
 import com.atosalves.view.paineis.painelbuilder.PainelBuilderImpl;
 import com.atosalves.view.util.Tema;
 
-public class MenuPainelCreator implements PainelCreator {
-
-	private Painel menuPainel;
+public class MenuPainel extends PainelTemplate {
 
 	private Painel inicioPainel;
 	private Painel corridasPainel;
@@ -39,33 +37,39 @@ public class MenuPainelCreator implements PainelCreator {
 	private ListaDeCorridas listaDeItems;
 
 	private LoginDTO loginDTO;
+	private float avaliacaoMototaxista;
 
-	public MenuPainelCreator(LoginDTO loginDTO) {
+	private GerenciadorDeCorrida gerenciadorDeCorrida;
+
+	public MenuPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
+		gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		if (!isPassageiro()) {
+			avaliacaoMototaxista = gerenciadorDeCorrida.avaliacaoMediaDoMototaxista(loginDTO);
+		}
 	}
 
 	private void solicitarCorridaBotao() {
-		menuPainel.setPainel(new PontoDeEncontroCreator(loginDTO).criarPainel());
+		painel.setPainel(new PontoDeEncontroPainel(loginDTO).criarPainel());
 	}
 
 	private void depositarBotao() {
-		menuPainel.setPainel(new DepositarSaldoCreator(loginDTO).criarPainel());
+		painel.setPainel(new DepositarSaldoPainel(loginDTO).criarPainel());
 	}
 
 	private void saldoBotao() {
-		menuPainel.setPainel(new ExtratoPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new ExtratoPainel(loginDTO).criarPainel());
 	}
 
 	private void detalharCorrida() {
-		menuPainel.setPainel(new DetalhadorDeCorridaCreator(loginDTO, listaDeItems.pegarSelecionado()).criarPainel());
+		painel.setPainel(new DetalhadorDeCorridaPainel(loginDTO, listaDeItems.pegarSelecionado()).criarPainel());
 	}
 
 	private void corridasPendentesBotao() {
-		menuPainel.setPainel(new CorridasPendentesPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new CorridasPendentesPainel(loginDTO).criarPainel());
 	}
 
 	private CorridaDTO[] listarCorridas() {
-		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 		return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
 	}
 
@@ -78,7 +82,6 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void editarContaBotao() {
-		// TODO: editar conta usando o controller
 		try {
 			String nome = nomeCaixa.pegarCampo();
 			String senha = senhaCaixa.pegarCampo();
@@ -93,7 +96,7 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void minhaCorridaBotao() {
-		menuPainel.setPainel(new MinhaCorridaReinvidicadaPainelCreator(loginDTO).criarPainel());
+		painel.setPainel(new MinhaCorridaReinvidicadaPainel(loginDTO).criarPainel());
 	}
 
 	@Override
@@ -110,12 +113,7 @@ public class MenuPainelCreator implements PainelCreator {
 		corridasPainel();
 		editarPainel();
 
-		menuPainel = new PainelBuilderImpl().addPainel(inicioPainel).addPainel(corridasPainel).addPainel(editarPainel).construir();
-	}
-
-	@Override
-	public Painel factoryMethod() {
-		return menuPainel;
+		painel = new PainelBuilderImpl().addPainel(inicioPainel).addPainel(corridasPainel).addPainel(editarPainel).construir();
 	}
 
 	private void inicioPainel() {
@@ -124,7 +122,10 @@ public class MenuPainelCreator implements PainelCreator {
 		if (isPassageiro()) {
 			builder.setBotao("SOLICITAR CORRIDA", this::solicitarCorridaBotao).setBotao("DEPOSITAR", this::depositarBotao);
 		} else {
-			builder.setBotao("CORRIDAS PENDENTES", this::corridasPendentesBotao).setBotao("MINHA CORRIDA", this::minhaCorridaBotao);
+			builder
+				.setTexto("MINHA AVALIAÇÃO: " + avaliacaoMototaxista, Tema.FONTE_NORMAL)
+				.setBotao("CORRIDAS PENDENTES", this::corridasPendentesBotao)
+				.setBotao("MINHA CORRIDA", this::minhaCorridaBotao);
 		}
 
 		inicioPainel =
@@ -173,28 +174,28 @@ public class MenuPainelCreator implements PainelCreator {
 	}
 
 	private void sairBotao() {
-		menuPainel.setPainel(new LoginPainelCreator().criarPainel());
+		painel.setPainel(new LoginPainel().criarPainel());
 	}
 
 	private void inicioBotao() {
 		inicioPainel.setVisible(true);
 		corridasPainel.setVisible(false);
 		editarPainel.setVisible(false);
-		menuPainel.repaint();
+		painel.repaint();
 	}
 
 	private void corridasBotao() {
 		inicioPainel.setVisible(false);
 		corridasPainel.setVisible(true);
 		editarPainel.setVisible(false);
-		menuPainel.repaint();
+		painel.repaint();
 	}
 
 	private void editarBotao() {
 		inicioPainel.setVisible(false);
 		corridasPainel.setVisible(false);
 		editarPainel.setVisible(true);
-		menuPainel.repaint();
+		painel.repaint();
 	}
 
 	private boolean isPassageiro() {
