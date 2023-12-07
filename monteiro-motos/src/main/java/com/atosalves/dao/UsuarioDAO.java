@@ -1,13 +1,12 @@
 package com.atosalves.dao;
 
 import com.atosalves.dao.interfaceDAO.DAO;
-import com.atosalves.dao.interfaceDAO.UpdateDAO;
 import com.atosalves.db.DB;
-import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.model.Usuario;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
-public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO, String> {
+public class UsuarioDAO implements DAO<UsuarioDTO, String> {
 
 	@XStreamAsAttribute
 	private DB dataBase;
@@ -21,7 +20,6 @@ public class UsuarioDAO implements DAO<UsuarioDTO, String>, UpdateDAO<UsuarioDTO
 		Usuario usuario = recuperarPeloId(id).usuario();
 		usuario = entidade.usuario();
 		dataBase.salvarDados();
-
 		return new UsuarioDTO(usuario);
 	}
 

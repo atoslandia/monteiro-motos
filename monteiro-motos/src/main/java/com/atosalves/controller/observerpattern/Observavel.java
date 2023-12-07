@@ -1,6 +1,6 @@
 package com.atosalves.controller.observerpattern;
 
-import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.corrida.CorridaEventoDTO;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import lombok.Getter;
 

@@ -7,7 +7,7 @@ import org.apache.commons.mail.MultiPartEmail;
 
 class EmailService {
 
-	public static void enviarEmailComAnexo(String destinatario, String assunto, String mensagem, String anexoPath) {
+	public void enviarEmailComAnexo(String destinatario, String assunto, String mensagem, String anexoPath) {
 		try {
 			MultiPartEmail email = new MultiPartEmail();
 
@@ -34,7 +34,7 @@ class EmailService {
 		}
 	}
 
-	public static void enviarEmail(String destinatario, String assunto, String mensagem) {
+	public void enviarEmail(String destinatario, String assunto, String mensagem) {
 		enviarEmailComAnexo(destinatario, assunto, mensagem, null);
 	}
 }

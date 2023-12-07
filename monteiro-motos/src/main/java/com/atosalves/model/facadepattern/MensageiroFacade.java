@@ -1,19 +1,22 @@
 package com.atosalves.model.facadepattern;
 
-import com.atosalves.dto.PassageiroBoletoDTO;
-import com.atosalves.dto.GerenciadorDePagamentoDTO;
+import com.atosalves.dto.usuario.GerenciadorDePagamentoDTO;
+import com.atosalves.dto.usuario.PassageiroBoletoDTO;
 
 public class MensageiroFacade {
 
+	private static EmailService emailService = new EmailService();
+	private static GeradorPDF geradorPDF = new GeradorPDF();
+
 	public static void enviarExtratoPorEmail(String destinatario, GerenciadorDePagamentoDTO passageiroDTO){
-		String pdfPath = GeradorPDF.gerarExtrato(passageiroDTO);
-		EmailService.enviarEmailComAnexo(destinatario, "EXTRATO",
+		String pdfPath = geradorPDF.gerarExtrato(passageiroDTO);
+		emailService.enviarEmailComAnexo(destinatario, "EXTRATO",
 		"Seu historico de pagamentos e depositos :)", pdfPath);
 	}
 
 	public static void enviarBoletoPorEmail(PassageiroBoletoDTO passageiro, float valor) {
-			String pdfPath = GeradorPDF.gerarBoletoPDF(passageiro, valor);
-			EmailService.enviarEmailComAnexo(
+			String pdfPath = geradorPDF.gerarBoletoPDF(passageiro, valor);
+			emailService.enviarEmailComAnexo(
 				passageiro.email(),
 				"BOLETO",
 				"Enviamos seu boleto, Obrigado pela compra sr. " + passageiro.nome(),
@@ -22,6 +25,6 @@ public class MensageiroFacade {
 	}
 
 	public static void enviarCodigoPorEmail(String destinatario, String corpo) throws RuntimeException {
-		EmailService.enviarEmail(destinatario, "CONFIRME SEU EMAIL", "Seu código é " + corpo);
+		emailService.enviarEmail(destinatario, "CONFIRME SEU EMAIL", "Seu código é " + corpo);
 	}
 }

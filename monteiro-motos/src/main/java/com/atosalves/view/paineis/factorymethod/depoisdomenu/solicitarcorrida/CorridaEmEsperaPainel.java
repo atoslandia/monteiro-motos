@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.factorymethod.PainelTemplate;

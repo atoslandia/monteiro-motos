@@ -3,8 +3,8 @@ package com.atosalves.dao;
 import com.atosalves.dao.interfaceDAO.BuscaCorridasDAO;
 import com.atosalves.dao.interfaceDAO.DAO;
 import com.atosalves.db.DB;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.CorridaEventoDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.corrida.CorridaEventoDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.model.Corrida;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -43,33 +43,18 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 	@Override
 	public void deletePeloId(Long id) {
-		try {
-			CorridaDTO corridaDTO = recuperarPeloId(id);
-			EstadoCorrida chave = corridaDTO.corrida().getEstado().getNome();
-			dataBase.getCorridas().get(chave).remove(corridaDTO.corrida());
-			dataBase.salvarDados();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		CorridaDTO corridaDTO = recuperarPeloId(id);
+		EstadoCorrida chave = corridaDTO.corrida().getEstado().getNome();
+		dataBase.getCorridas().get(chave).remove(corridaDTO.corrida());
+		dataBase.salvarDados();
 	}
 
-	@Override
-	public List<CorridaDTO> buscarCorridasPendentes() {
-		List<CorridaDTO> corridasDTO = new ArrayList<>();
-
-		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.PENDENTE)) {
-			CorridaDTO corridaDTO = new CorridaDTO(corrida);
-			corridasDTO.add(corridaDTO);
-		}
-
-		return corridasDTO;
-	}
 
 	@Override
-	public List<CorridaDTO> buscarCorridasReinvidicadas() {
+	public List<CorridaDTO> buscarCorridaPeloEstado(EstadoCorrida estadoCorrida) {
 		List<CorridaDTO> corridasDTO = new ArrayList<>();
 
-		for (Corrida corrida : dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA)) {
+		for (Corrida corrida : dataBase.getCorridas().get(estadoCorrida)) {
 			CorridaDTO corridaDTO = new CorridaDTO(corrida);
 			corridasDTO.add(corridaDTO);
 		}
@@ -85,9 +70,10 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 		dataBase.salvarDados();
 	}
-
-	public CorridaDTO update(CorridaDTO entidade) {
-		Corrida corrida = recuperarPeloId(entidade.corrida().getId()).corrida();
+	
+	@Override
+	public CorridaDTO update(CorridaDTO entidade, Long id) {
+		Corrida corrida = recuperarPeloId(id).corrida();
 		corrida = entidade.corrida();
 		dataBase.salvarDados();
 		return new CorridaDTO(corrida);
@@ -103,11 +89,10 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 					CorridaDTO corridaDTO = new CorridaDTO(corrida);
 					corridasDoUsuario.add(corridaDTO);
 				}
-				if (corrida.getMototaxista() != null) {
-					if (id.equals(corrida.getMototaxista().getEmail())) {
+				if (corrida.getMototaxista() != null &&  (id.equals(corrida.getMototaxista().getEmail()))) {
 						CorridaDTO corridaDTO = new CorridaDTO(corrida);
 						corridasDoUsuario.add(corridaDTO);
-					}
+					
 				}
 			}
 		}
@@ -116,12 +101,13 @@ public class CorridaDAO implements DAO<CorridaDTO, Long>, BuscaCorridasDAO {
 
 	@Override
 	public CorridaDTO buscarCorridaReivindicadaMototaxista(String id) {
-		List<Corrida> corridasReivindicadas = dataBase.getCorridas().get(EstadoCorrida.REINVINDICADA);
-		for (Corrida corrida : corridasReivindicadas) {
-			if (corrida.getMototaxista().getEmail().equals(id)) {
-				return new CorridaDTO(corrida);
+		List<CorridaDTO> corridasReivindicadas = buscarCorridaPeloEstado(EstadoCorrida.REINVINDICADA);
+		for (CorridaDTO corridaDTO : corridasReivindicadas) {
+			if (corridaDTO.corrida().getMototaxista().getEmail().equals(id)) {
+				return corridaDTO;
 			}
 		}
 		return null;
 	}
+
 }

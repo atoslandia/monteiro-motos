@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu;
 
 import com.atosalves.controller.UsuarioController;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.janelas.JanelaDeAviso;
 import com.atosalves.view.paineis.factorymethod.PainelTemplate;

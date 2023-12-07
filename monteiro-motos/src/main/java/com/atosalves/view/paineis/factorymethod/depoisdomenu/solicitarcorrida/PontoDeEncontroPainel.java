@@ -1,7 +1,7 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
-import com.atosalves.dto.EnderecoViewDTO;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.corrida.EnderecoViewDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.componentes.TextoCaixa;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeErro;

@@ -1,8 +1,8 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.paineis.factorymethod.PainelTemplate;
 import com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida.DetalhadorDeCorridaPainel;

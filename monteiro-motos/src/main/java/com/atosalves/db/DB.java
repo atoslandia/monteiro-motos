@@ -30,6 +30,7 @@ public class DB {
 		corridas.put(EstadoCorrida.REINVINDICADA, new ArrayList<>());
 		corridas.put(EstadoCorrida.CANCELADA, new ArrayList<>());
 		corridas.put(EstadoCorrida.FINALIZADA, new ArrayList<>());
+		corridas.put(EstadoCorrida.AVALIADA, new ArrayList<>());
 	}
 
 	public void salvarDados() {

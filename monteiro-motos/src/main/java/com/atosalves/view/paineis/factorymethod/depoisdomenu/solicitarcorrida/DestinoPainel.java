@@ -1,8 +1,8 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.solicitarcorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.dto.EnderecoViewDTO;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.corrida.EnderecoViewDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import com.atosalves.view.componentes.TextoCaixa;

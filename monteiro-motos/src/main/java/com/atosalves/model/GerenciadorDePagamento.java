@@ -35,12 +35,12 @@ public class GerenciadorDePagamento {
 		LocalDateTime dataPagamento = LocalDateTime.now();
 		var pagamento = new OperacaoFinanceira(TipoTransacao.PAGAMENTO, dataPagamento, valor);
 		saldo -= valor;
-		historicoDepositos.add(pagamento);
+		historicoPagamentos.add(pagamento);
 	}
 
 	public void reembolso() {
-		OperacaoFinanceira ultimoDeposito = historicoDepositos.get(historicoDepositos.size() - 1);
-		setSaldo(getSaldo() + ultimoDeposito.getValor());
-		historicoPagamentos.remove(ultimoDeposito);
+		OperacaoFinanceira ultimoPagamento = historicoPagamentos.get(historicoPagamentos.size() - 1);
+		setSaldo(getSaldo() + ultimoPagamento.getValor());
+		historicoPagamentos.remove(ultimoPagamento);
 	}
 }

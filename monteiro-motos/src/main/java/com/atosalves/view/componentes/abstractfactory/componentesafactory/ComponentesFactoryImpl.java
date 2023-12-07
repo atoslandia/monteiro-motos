@@ -1,6 +1,6 @@
 package com.atosalves.view.componentes.abstractfactory.componentesafactory;
 
-import com.atosalves.dto.CorridaDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.componentes.abstractfactory.ComponentesFactory;

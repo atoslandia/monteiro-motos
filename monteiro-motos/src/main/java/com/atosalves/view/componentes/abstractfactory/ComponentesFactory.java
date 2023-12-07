@@ -1,6 +1,6 @@
 package com.atosalves.view.componentes.abstractfactory;
 
-import com.atosalves.dto.CorridaDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
 import com.atosalves.view.componentes.Botao;
 import com.atosalves.view.componentes.DataCaixa;
 import com.atosalves.view.componentes.EmailCaixa;

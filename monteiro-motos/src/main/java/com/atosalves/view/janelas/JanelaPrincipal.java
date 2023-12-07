@@ -1,6 +1,6 @@
 package com.atosalves.view.janelas;
 
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.paineis.Painel;
 import javax.swing.JFrame;
 import lombok.Getter;

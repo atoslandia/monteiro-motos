@@ -1,10 +1,10 @@
 package com.atosalves.view.paineis.factorymethod.depoisdomenu.detalhescorrida;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
-import com.atosalves.controller.exceptions.NaoAvaliavelException;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.view.janelas.JanelaDeErro;
 import com.atosalves.view.paineis.factorymethod.PainelTemplate;
 import com.atosalves.view.paineis.factorymethod.menu.MenuPainel;
@@ -73,7 +73,7 @@ public class DetalhadorDeCorridaPainel extends PainelTemplate {
 		try {
 			GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 			gerenciadorDeCorrida.avaliarMototaxista(idCorrida, nota);
-		} catch (NaoAvaliavelException e) {
+		} catch (AcessoNegadoException e) {
 			new JanelaDeErro(e);
 		}
 	}

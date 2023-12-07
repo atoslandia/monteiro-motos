@@ -1,6 +1,6 @@
 package com.atosalves.view.janelas;
 
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.model.facadepattern.MensageiroFacade;
 import com.atosalves.view.exception.CampoInvalidoException;
 import javax.swing.JOptionPane;

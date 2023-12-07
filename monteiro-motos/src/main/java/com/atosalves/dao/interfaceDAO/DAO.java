@@ -1,9 +1,11 @@
 package com.atosalves.dao.interfaceDAO;
 
 public interface DAO<T, K> {
-	public void cadastrar(T entidade);
+	void cadastrar(T entidade);
 
-	public T recuperarPeloId(K id);
+	T recuperarPeloId(K id);
 
-	public void deletePeloId(K id);
+	void deletePeloId(K id);
+
+	T update(T entidade, K id);
 }

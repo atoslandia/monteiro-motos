@@ -1,10 +1,12 @@
 package com.atosalves.model.statepattern;
 
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.EnderecoDTO;
-import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.corrida.EnderecoDTO;
+import com.atosalves.dto.usuario.LoginDTO;
+import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.model.Avaliacao;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 
@@ -19,9 +21,7 @@ public class CorridaReivindicada extends CorridaState {
 	public void finalizarCorrida() {
 		float saldoAnterior = corrida.getMototaxista().getLucro();
 		corrida.getMototaxista().setLucro(saldoAnterior + (corrida.getValor() - ((corrida.getValor() * 20) / 100)));
-		corrida.setAvaliavel(true);
 		corrida.setEstado(new CorridaFinalizada(corrida));
-		corrida.removerObservador();
 	}
 
 	@Override
@@ -44,5 +44,10 @@ public class CorridaReivindicada extends CorridaState {
 	public CorridaDTO solicitarCorrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino)
 		throws AcessoNegadoException {
 		throw new AcessoNegadoException(corrida.getId(), "Já tem uma corrida em andamento");
+	}
+
+	@Override
+	public void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException {
+		throw new AcessoNegadoException("Não pode ser avaliada");
 	}
 }

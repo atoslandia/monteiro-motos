@@ -2,9 +2,9 @@ package com.atosalves.view.paineis.factorymethod.menu;
 
 import com.atosalves.controller.GerenciadorDeCorrida;
 import com.atosalves.controller.UsuarioController;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.UpdateUsuarioViewDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.usuario.LoginDTO;
+import com.atosalves.dto.usuario.UpdateUsuarioViewDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.view.componentes.ListaDeCorridas;
 import com.atosalves.view.componentes.SenhaCaixa;

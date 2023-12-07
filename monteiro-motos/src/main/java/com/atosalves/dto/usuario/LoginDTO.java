@@ -1,4 +1,4 @@
-package com.atosalves.dto;
+package com.atosalves.dto.usuario;
 
 import com.atosalves.enums.TipoUsuario;
 

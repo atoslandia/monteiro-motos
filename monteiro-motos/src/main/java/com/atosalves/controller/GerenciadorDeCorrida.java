@@ -1,16 +1,16 @@
 package com.atosalves.controller;
 
-import com.atosalves.controller.exceptions.NaoAvaliavelException;
 import com.atosalves.controller.exceptions.NenhumaCorridaEncontradaException;
 import com.atosalves.controller.observerpattern.Observador;
 import com.atosalves.dao.CorridaDAO;
 import com.atosalves.dao.UsuarioDAO;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.CorridaEventoDTO;
-import com.atosalves.dto.EnderecoDTO;
-import com.atosalves.dto.EnderecoViewDTO;
-import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.corrida.CorridaEventoDTO;
+import com.atosalves.dto.corrida.EnderecoDTO;
+import com.atosalves.dto.corrida.EnderecoViewDTO;
+import com.atosalves.dto.usuario.LoginDTO;
+import com.atosalves.dto.usuario.UsuarioDTO;
+import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.model.Avaliacao;
 import com.atosalves.model.Corrida;
 import com.atosalves.model.Endereco;
@@ -31,7 +31,7 @@ public class GerenciadorDeCorrida implements Observador {
 	@Override
 	public void update(CorridaEventoDTO corrida) {
 		CorridaDTO corridaDTO = new CorridaDTO(corrida.corrida());
-		corridaDAO.update(corridaDTO);
+		corridaDAO.update(corridaDTO, corrida.corrida().getId());
 		corridaDAO.moverCorrida(corrida);
 	}
 
@@ -88,16 +88,10 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.finalizarCorrida();
 	}
 
-	public void avaliarMototaxista(long idCorrida, int estrelas) throws NaoAvaliavelException {
+	public void avaliarMototaxista(long idCorrida, int estrelas) throws AcessoNegadoException {
 		Corrida corrida = corridaDAO.recuperarPeloId(idCorrida).corrida();
-
-		if (corrida.isAvaliavel()) {
-			Avaliacao avaliacao = new Avaliacao(new UsuarioDTO(corrida.getPassageiro()), estrelas);
-			corrida.getMototaxista().setAvaliacoes(avaliacao);
-			usuarioDAO.update(new UsuarioDTO(corrida.getPassageiro()), corrida.getPassageiro().getEmail());
-		} else {
-			throw new NaoAvaliavelException("Não pode avaliar o mototaxista");
-		}
+		Avaliacao avaliacao = new Avaliacao(new UsuarioDTO(corrida.getPassageiro()), estrelas);
+		corrida.avaliarMototaxista(avaliacao);
 	}
 
 	public float avaliacaoMediaDoMototaxista(LoginDTO login) {
@@ -122,7 +116,7 @@ public class GerenciadorDeCorrida implements Observador {
 	}
 
 	public CorridaDTO[] buscarCorridasPendentes() {
-		List<CorridaDTO> corridas = corridaDAO.buscarCorridasPendentes();
+		List<CorridaDTO> corridas = corridaDAO.buscarCorridaPeloEstado(EstadoCorrida.PENDENTE);
 		CorridaDTO[] corridasView = transformarEmArray(corridas);
 		return corridasView;
 	}

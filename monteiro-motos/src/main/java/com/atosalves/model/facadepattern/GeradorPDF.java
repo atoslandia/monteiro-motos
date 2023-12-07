@@ -1,7 +1,7 @@
 package com.atosalves.model.facadepattern;
 
-import com.atosalves.dto.PassageiroBoletoDTO;
-import com.atosalves.dto.GerenciadorDePagamentoDTO;
+import com.atosalves.dto.usuario.GerenciadorDePagamentoDTO;
+import com.atosalves.dto.usuario.PassageiroBoletoDTO;
 import com.atosalves.model.GerenciadorDePagamento;
 import com.atosalves.model.OperacaoFinanceira;
 import com.itextpdf.text.Document;
@@ -17,11 +17,10 @@ import java.util.ArrayList;
 
 
 class GeradorPDF {
-
-	public static String gerarExtrato(GerenciadorDePagamentoDTO passageiro) {
+	public  String gerarExtrato(GerenciadorDePagamentoDTO gerenciador) {
 		String pdfPath = "extrato.pdf";
 
-		GerenciadorDePagamento gerenciadorDePagamento = passageiro.gerenciadorDePagamento();
+		GerenciadorDePagamento gerenciadorDePagamento = gerenciador.gerenciadorDePagamento();
 		ArrayList<OperacaoFinanceira> depositos = gerenciadorDePagamento.getHistoricoDepositos();
 		ArrayList<OperacaoFinanceira> pagamentos = gerenciadorDePagamento.getHistoricoPagamentos();
 
@@ -33,10 +32,10 @@ class GeradorPDF {
             doc.open();
 
             PdfPTable tabelaDepositos = criarTabela("Depositos");
-            adicionarLinhas(tabelaDepositos, pagamentos); 
+            adicionarLinhas(tabelaDepositos, depositos); 
 
             PdfPTable tabelaPagamentos = criarTabela("Pagamentos");
-            adicionarLinhas(tabelaPagamentos, depositos); 
+            adicionarLinhas(tabelaPagamentos, pagamentos); 
 
 			doc.add(new Paragraph("EXTRATO GERADO"));
 			doc.add(new Paragraph(" "));
@@ -53,7 +52,7 @@ class GeradorPDF {
         }
     }
 
-    private static PdfPTable criarTabela(String titulo) {
+    private  PdfPTable criarTabela(String titulo) {
         PdfPTable table = new PdfPTable(2); // Duas colunas
         table.setWidthPercentage(100);
         PdfPCell cell = new PdfPCell(new Paragraph(titulo));
@@ -62,7 +61,7 @@ class GeradorPDF {
         return table;
     }
 
-    private static void adicionarLinhas(PdfPTable table, ArrayList<OperacaoFinanceira> operacoes) {
+    private  void adicionarLinhas(PdfPTable table, ArrayList<OperacaoFinanceira> operacoes) {
         for (OperacaoFinanceira operacao : operacoes) {
             table.addCell(Float.toString(operacao.getValor()));
             table.addCell(operacao.getData().toString());
@@ -70,7 +69,7 @@ class GeradorPDF {
     }
 
 
-	public static String gerarBoletoPDF(PassageiroBoletoDTO passageiro, float valor) {
+	public  String gerarBoletoPDF(PassageiroBoletoDTO passageiro, float valor) {
 		try {
 
 			String pdfPath = "boleto.pdf";

@@ -5,4 +5,5 @@ public enum EstadoCorrida {
 	REINVINDICADA,
 	CANCELADA,
 	FINALIZADA,
+	AVALIADA
 }

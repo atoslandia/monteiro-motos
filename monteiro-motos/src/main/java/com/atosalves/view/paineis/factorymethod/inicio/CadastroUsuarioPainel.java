@@ -1,8 +1,8 @@
 package com.atosalves.view.paineis.factorymethod.inicio;
 
 import com.atosalves.controller.UsuarioController;
-import com.atosalves.dto.CadastroDTO;
-import com.atosalves.dto.LoginDTO;
+import com.atosalves.dto.usuario.CadastroDTO;
+import com.atosalves.dto.usuario.LoginDTO;
 import com.atosalves.view.componentes.*;
 import com.atosalves.view.exception.CampoInvalidoException;
 import com.atosalves.view.janelas.JanelaDeAviso;

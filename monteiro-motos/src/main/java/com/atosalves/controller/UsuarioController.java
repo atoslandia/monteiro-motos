@@ -3,12 +3,12 @@ package com.atosalves.controller;
 import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
-import com.atosalves.dto.CadastroDTO;
-import com.atosalves.dto.GerenciadorDePagamentoDTO;
-import com.atosalves.dto.LoginDTO;
-import com.atosalves.dto.PassageiroBoletoDTO;
-import com.atosalves.dto.UpdateUsuarioViewDTO;
-import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.dto.usuario.CadastroDTO;
+import com.atosalves.dto.usuario.GerenciadorDePagamentoDTO;
+import com.atosalves.dto.usuario.LoginDTO;
+import com.atosalves.dto.usuario.PassageiroBoletoDTO;
+import com.atosalves.dto.usuario.UpdateUsuarioViewDTO;
+import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
@@ -56,9 +56,16 @@ public class UsuarioController {
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
 		Usuario usuario = fabricaSimplesUsuarios.criaUsuario(data.tipo());
 		tranferirDados(data, usuario);
-
+		
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		usuarioDAO.cadastrar(usuarioDTO);
+	}
+	
+	private void tranferirDados(CadastroDTO dados, Usuario entidade) {
+		entidade.setDataNascimento(dados.dataNascimento());
+		entidade.setEmail(dados.email());
+		entidade.setNome(dados.nome());
+		entidade.setSenha(dados.senha());
 	}
 
 	public void enviarExtrato(LoginDTO login){
@@ -82,13 +89,6 @@ public class UsuarioController {
 	public String buscarNomeUsuario(String email) {
 		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(email);
 		return usuarioDTO.usuario().getNome();
-	}
-
-	private void tranferirDados(CadastroDTO dados, Usuario entidade) {
-		entidade.setDataNascimento(dados.dataNascimento());
-		entidade.setEmail(dados.email());
-		entidade.setNome(dados.nome());
-		entidade.setSenha(dados.senha());
 	}
 
 	public void depositarNaConta(LoginDTO login, float valor) {

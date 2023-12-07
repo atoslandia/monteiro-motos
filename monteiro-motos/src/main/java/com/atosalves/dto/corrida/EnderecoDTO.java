@@ -1,4 +1,4 @@
-package com.atosalves.dto;
+package com.atosalves.dto.corrida;
 
 import com.atosalves.model.Endereco;
 

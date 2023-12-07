@@ -1,11 +1,12 @@
 package com.atosalves.model;
 
 import com.atosalves.controller.observerpattern.Observavel;
-import com.atosalves.dto.CorridaDTO;
-import com.atosalves.dto.CorridaEventoDTO;
-import com.atosalves.dto.EnderecoDTO;
-import com.atosalves.dto.PassageiroBoletoDTO;
-import com.atosalves.dto.UsuarioDTO;
+import com.atosalves.dto.corrida.CorridaDTO;
+import com.atosalves.dto.corrida.CorridaEventoDTO;
+import com.atosalves.dto.corrida.EnderecoDTO;
+import com.atosalves.dto.usuario.LoginDTO;
+import com.atosalves.dto.usuario.PassageiroBoletoDTO;
+import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.EstadoCorrida;
 import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.exceptions.AcessoNegadoException;
@@ -33,7 +34,6 @@ public class Corrida extends Observavel {
 	private final float valor = 5.0f;
 	private Endereco pontoDeEncontro;
 	private Endereco destino;
-	private boolean avaliavel;
 
 	public Corrida(UsuarioDTO passageiro, EnderecoDTO pontoDeEncontro, EnderecoDTO destino) throws SaldoInsuficienteExceptions {
 		this.id = System.currentTimeMillis();
@@ -42,7 +42,6 @@ public class Corrida extends Observavel {
 		this.destino = destino.endereco();
 		this.passageiro.pagarCorrida(valor);
 		this.estado = new CorridaPendente(this);
-		this.avaliavel = false;
 	}
 
 	public void setEstado(CorridaState estado) {
@@ -68,4 +67,10 @@ public class Corrida extends Observavel {
 		throws AcessoNegadoException, SaldoInsuficienteExceptions {
 		return estado.solicitarCorrida(passageiro, pontoDeEncontro, destino);
 	}
+
+	public void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException{
+		estado.avaliarMototaxista(avaliacao);
+	}
+
+
 }

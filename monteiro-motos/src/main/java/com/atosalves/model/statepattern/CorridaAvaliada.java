@@ -11,11 +11,10 @@ import com.atosalves.model.Corrida;
 import com.atosalves.model.exceptions.AcessoNegadoException;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 
-public class CorridaFinalizada extends CorridaState {
-
-	public CorridaFinalizada(Corrida corrida) {
+public class CorridaAvaliada extends CorridaState{
+    public CorridaAvaliada(Corrida corrida) {
 		super(corrida);
-		nome = EstadoCorrida.FINALIZADA;
+		nome = EstadoCorrida.AVALIADA;
 	}
 
 	@Override
@@ -42,8 +41,6 @@ public class CorridaFinalizada extends CorridaState {
 
 	@Override
 	public void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException {
-		corrida.getMototaxista().setAvaliacoes(avaliacao);
-		corrida.setEstado(new CorridaAvaliada(corrida));
-		corrida.removerObservador();
+		throw new AcessoNegadoException("Corrida já avaliada");
 	}
 }
