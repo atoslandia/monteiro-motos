@@ -78,7 +78,6 @@ public class PainelBuilderImpl implements PainelBuilder {
 		return this;
 	}
 
-	@Override
 	public PainelBuilder setBotaoMenu(String titulo, Runnable runnable, boolean isAtivo) {
 		Botao botao = new ComponentesMenuFactoryImpl().criarBotao(titulo);
 		if (titulo.equals("INICIO")) {

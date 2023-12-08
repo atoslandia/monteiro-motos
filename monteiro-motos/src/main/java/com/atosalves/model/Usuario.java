@@ -1,6 +1,5 @@
 package com.atosalves.model;
 
-
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,5 +26,8 @@ public abstract class Usuario {
 		this.senha = senha;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Nome: " + nome + "\nEmail: " + email;
+	}
 }

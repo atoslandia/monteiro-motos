@@ -31,7 +31,7 @@ public class ExtratoPainel extends PainelTemplate {
 	}
 
 	@Override
-	public void construirPainel() {
+	protected void construirPainel() {
 		PainelBuilder builder = new PainelBuilderImpl()
 			.setTexto("EXTRATO", Tema.FONTE_MUITO_FORTE)
 			.setTexto(saldo, Tema.FONTE_FORTE);
@@ -42,5 +42,5 @@ public class ExtratoPainel extends PainelTemplate {
 	}
 
 	@Override
-	public void inicializarComponentes() {}
+	protected void inicializarComponentes() {}
 }

@@ -69,4 +69,22 @@ public class Corrida extends Observavel {
 	public void avaliarMototaxista(Avaliacao avaliacao) throws AcessoNegadoException {
 		estado.avaliarMototaxista(avaliacao);
 	}
+
+	@Override
+	public String toString() {
+		return (
+			"Id da corrida: " +
+			id +
+			"\nEstado: " +
+			estado +
+			"\nMototaxista: " +
+			mototaxista +
+			"\nPassageiro: " +
+			passageiro +
+			"\nPonto de encontro: " +
+			pontoDeEncontro +
+			"\nDestino: " +
+			destino
+		);
+	}
 }
