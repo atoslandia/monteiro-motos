@@ -10,6 +10,7 @@ import com.atosalves.dto.usuario.PassageiroBoletoDTO;
 import com.atosalves.dto.usuario.UpdateUsuarioViewDTO;
 import com.atosalves.dto.usuario.UsuarioDTO;
 import com.atosalves.enums.TipoUsuario;
+import com.atosalves.model.Avaliacao;
 import com.atosalves.model.Mototaxista;
 import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
@@ -17,6 +18,7 @@ import com.atosalves.model.facadepattern.MensageiroFacade;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 public class UsuarioController {
 
@@ -96,6 +98,21 @@ public class UsuarioController {
 		passageiro.depositar(valor);
 		usuarioDAO.update(new UsuarioDTO(passageiro), login.email());
 		MensageiroFacade.enviarBoletoPorEmail(new PassageiroBoletoDTO(passageiro.getNome(), passageiro.getEmail()), valor);
+	}
+
+	public float avaliacaoMediaDoMototaxista(LoginDTO login) {
+		Mototaxista mototaxista = (Mototaxista) usuarioDAO.recuperarPeloId(login.email()).usuario();
+		List<Avaliacao> avaliacoes = mototaxista.getAvaliacoes();
+		float media = 0;
+		if (avaliacoes == null) {
+			return media;
+		}
+		float soma = 0;
+		for (Avaliacao avaliacao : avaliacoes) {
+			soma += avaliacao.getEstrelas();
+		}
+		media = soma / avaliacoes.size();
+		return media;
 	}
 
 	public float consultarSaldo(LoginDTO login) {

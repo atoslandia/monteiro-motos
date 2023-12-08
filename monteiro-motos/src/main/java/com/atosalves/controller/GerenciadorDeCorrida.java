@@ -94,21 +94,6 @@ public class GerenciadorDeCorrida implements Observador {
 		corrida.avaliarMototaxista(avaliacao);
 	}
 
-	public float avaliacaoMediaDoMototaxista(LoginDTO login) {
-		Mototaxista mototaxista = (Mototaxista) usuarioDAO.recuperarPeloId(login.email()).usuario();
-		List<Avaliacao> avaliacoes = mototaxista.getAvaliacoes();
-		float media = 0;
-		if (avaliacoes == null) {
-			return media;
-		}
-		float soma = 0;
-		for (Avaliacao avaliacao : avaliacoes) {
-			soma += avaliacao.getEstrelas();
-		}
-		media = soma / avaliacoes.size();
-		return media;
-	}
-
 	public CorridaDTO[] buscarHistoricoDeCorridas(LoginDTO login) {
 		List<CorridaDTO> corridas = corridaDAO.buscarCorridasDoUsuario(login.email());
 		CorridaDTO[] corridasView = transformarEmArray(corridas);

@@ -39,13 +39,13 @@ public class MenuPainel extends PainelTemplate {
 	private LoginDTO loginDTO;
 	private float avaliacaoMototaxista;
 
-	private GerenciadorDeCorrida gerenciadorDeCorrida;
+	private UsuarioController usuarioController;
 
 	public MenuPainel(LoginDTO loginDTO) {
 		this.loginDTO = loginDTO;
-		gerenciadorDeCorrida = new GerenciadorDeCorrida();
+		usuarioController = new UsuarioController();
 		if (!isPassageiro()) {
-			avaliacaoMototaxista = gerenciadorDeCorrida.avaliacaoMediaDoMototaxista(loginDTO);
+			avaliacaoMototaxista = usuarioController.avaliacaoMediaDoMototaxista(loginDTO);
 		}
 	}
 
@@ -70,6 +70,7 @@ public class MenuPainel extends PainelTemplate {
 	}
 
 	private CorridaDTO[] listarCorridas() {
+		GerenciadorDeCorrida gerenciadorDeCorrida = new GerenciadorDeCorrida();
 		return gerenciadorDeCorrida.buscarHistoricoDeCorridas(loginDTO);
 	}
 
@@ -87,7 +88,6 @@ public class MenuPainel extends PainelTemplate {
 			String senha = senhaCaixa.pegarCampo();
 			UpdateUsuarioViewDTO updateUsuarioDTO = new UpdateUsuarioViewDTO(nome, senha);
 
-			UsuarioController usuarioController = new UsuarioController();
 			usuarioController.editar(updateUsuarioDTO, loginDTO.email());
 			new JanelaDeAviso("Editado com sucesso");
 		} catch (Exception e) {
