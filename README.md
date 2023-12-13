@@ -1,13 +1,6 @@
 # MONTEIRO-MOTOS
 O projeto Monteiro-Motos representa uma solução de software dedicado ao transporte alternativo na cidade de Monteiro, no estado da Paraíba. Inspirado no  UBER, essa aplicação foi concebida para enfrentar a questão da mobilidade urbana, proporcionando aos moradores da região uma maneira mais eficiente e conveniente de solicitar serviços de mototaxistas.
 
-## Índice
-- [Sobre](sobre)
-- [Ferramentas usadas](ferramentas-usadas)
-- [Funcionalidades e demonstrações](funcionalidades-e-demonstrações)
-- [Colaboradores](colaboradores)
-- [Agradecimentos](agradecimentos)
-
 ## Sobre
 O projeto consiste em aplicar padrões de projetos do livro Padrões de Projetos: Soluções Reutilizáveis de Software, além de outros padrões, tanto de software quanto arquiteturais, como DAO (Data Access Object) e DTO (Data Transfer Object).
 Nossa aplicação possui sete padrões de projetos catalogados pelo livro, são eles:
