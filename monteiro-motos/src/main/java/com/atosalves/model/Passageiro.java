@@ -1,5 +1,6 @@
 package com.atosalves.model;
 
+import com.atosalves.enums.TipoUsuario;
 import com.atosalves.model.exceptions.SaldoInsuficienteExceptions;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,10 @@ public class Passageiro extends Usuario {
 	public void pagarCorrida(float valor) throws SaldoInsuficienteExceptions {
 		gerenciadorDePagamento.pagarCorrida(valor);
 	}
+
+	@Override
+	public TipoUsuario getTipo(){
+		return TipoUsuario.PASSAGEIRO;
+	}
+
 }

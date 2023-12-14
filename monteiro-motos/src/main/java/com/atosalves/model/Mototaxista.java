@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.atosalves.enums.TipoUsuario;
+
 public class Mototaxista extends Usuario {
 
 	private List<Avaliacao> avaliacoes = new ArrayList<>();
@@ -31,4 +33,10 @@ public class Mototaxista extends Usuario {
 	public void setLucro(float lucro) {
 		this.lucro = lucro;
 	}
+
+	@Override
+	public TipoUsuario getTipo(){
+		return TipoUsuario.MOTOTAXISTA;
+	}
+
 }

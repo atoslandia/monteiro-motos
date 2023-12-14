@@ -14,6 +14,7 @@ Nossa aplicação possui sete padrões de projetos catalogados pelo livro, são 
   - State
   - Observer
   - Template Method
+  - Chain of Responsibility
  
 ## Ferramentas usadas
 - Java 17

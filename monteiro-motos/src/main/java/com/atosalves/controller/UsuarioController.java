@@ -1,5 +1,9 @@
 package com.atosalves.controller;
 
+import com.atosalves.controller.chainpattern.TratadorEtapaLogin;
+import com.atosalves.controller.chainpattern.TratarEmail;
+import com.atosalves.controller.chainpattern.TratarSenha;
+import com.atosalves.controller.chainpattern.TratarTipo;
 import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
@@ -26,21 +30,15 @@ public class UsuarioController {
 
 	public void login(LoginDTO data) throws CredenciaisInvalidasException {
 		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(data.email());
-		if (usuarioDTO == null) {
-			throw new CredenciaisInvalidasException("Usuario não encontrado");
-		}
-		Usuario usuario = usuarioDTO.usuario();
+		TratadorEtapaLogin tratadorEmail = new TratarEmail();
+		TratadorEtapaLogin tratadorSenha = new TratarSenha();
+		TratadorEtapaLogin tratadorTipo = new TratarTipo();
 
-		if (!usuario.getSenha().equals(data.senha())) {
-			throw new CredenciaisInvalidasException("Senha incorreta");
-		}
+		tratadorEmail.setProximoTratador(tratadorSenha);
+		tratadorSenha.setProximoTratador(tratadorTipo);
 
-		if (usuario instanceof Mototaxista && data.tipoUsuario().equals(TipoUsuario.MOTOTAXISTA)) {
-			return;
-		} else if (usuario instanceof Passageiro && data.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
-			return;
-		}
-		throw new CredenciaisInvalidasException("Tipo de usuario incorreto");
+		tratadorEmail.tratarRequisicao(data, usuarioDTO);
+
 	}
 
 	public void cadastrar(CadastroDTO data) throws CredenciaisInvalidasException {

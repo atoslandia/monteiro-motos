@@ -1,6 +1,9 @@
 package com.atosalves.model;
 
 import java.time.LocalDate;
+
+import com.atosalves.enums.TipoUsuario;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.EqualsAndHashCode.Include;
@@ -30,4 +33,7 @@ public abstract class Usuario {
 	public String toString() {
 		return "Nome: " + nome + "\nEmail: " + email;
 	}
+
+	public abstract TipoUsuario getTipo();
+
 }
