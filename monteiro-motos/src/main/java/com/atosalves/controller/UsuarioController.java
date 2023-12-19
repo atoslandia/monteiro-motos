@@ -1,9 +1,10 @@
 package com.atosalves.controller;
 
-import com.atosalves.controller.chainpattern.TratadorEtapaLogin;
-import com.atosalves.controller.chainpattern.TratarEmail;
-import com.atosalves.controller.chainpattern.TratarSenha;
-import com.atosalves.controller.chainpattern.TratarTipo;
+import com.atosalves.controller.chainpattern.TratadorEtapa;
+import com.atosalves.controller.chainpattern.TratadorEmail;
+import com.atosalves.controller.chainpattern.TratadorIdade;
+import com.atosalves.controller.chainpattern.TratadorSenha;
+import com.atosalves.controller.chainpattern.TratadorTipo;
 import com.atosalves.controller.exceptions.CredenciaisInvalidasException;
 import com.atosalves.controller.factory.FabricaSimplesUsuarios;
 import com.atosalves.dao.UsuarioDAO;
@@ -20,8 +21,6 @@ import com.atosalves.model.Passageiro;
 import com.atosalves.model.Usuario;
 import com.atosalves.model.facadepattern.MensageiroFacade;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 public class UsuarioController {
@@ -30,28 +29,21 @@ public class UsuarioController {
 
 	public void login(LoginDTO data) throws CredenciaisInvalidasException {
 		UsuarioDTO usuarioDTO = usuarioDAO.recuperarPeloId(data.email());
-		TratadorEtapaLogin tratadorEmail = new TratarEmail();
-		TratadorEtapaLogin tratadorSenha = new TratarSenha();
-		TratadorEtapaLogin tratadorTipo = new TratarTipo();
+		TratadorEtapa tratadorEmail = new TratadorEmail();
+		TratadorEtapa tratadorSenha = new TratadorSenha();
+		TratadorEtapa tratadorTipo = new TratadorTipo();
 
 		tratadorEmail.setProximoTratador(tratadorSenha);
 		tratadorSenha.setProximoTratador(tratadorTipo);
 
 		tratadorEmail.tratarRequisicao(data, usuarioDTO);
-
 	}
 
 	public void cadastrar(CadastroDTO data) throws CredenciaisInvalidasException {
-		LocalDate dataDeNascimento = data.dataNascimento();
-		LocalDate dataAtual = LocalDate.now();
-		Period idade = Period.between(dataDeNascimento, dataAtual);
-
-		if (usuarioDAO.recuperarPeloId(data.email()) != null) {
-			throw new CredenciaisInvalidasException("Esse email já foi cadastrado");
-		}
-		if (idade.getYears() < 18) {
-			throw new CredenciaisInvalidasException("Idade invalida. Permitido acima de 18 anos");
-		}
+		TratadorEtapa tratadorEmail = new TratadorEmail();
+		TratadorEtapa tratadorIdade = new TratadorIdade();
+		tratadorEmail.setProximoTratador(tratadorIdade);
+		tratadorEmail.tratarRequisicao(data);
 
 		FabricaSimplesUsuarios fabricaSimplesUsuarios = new FabricaSimplesUsuarios();
 		Usuario usuario = fabricaSimplesUsuarios.criaUsuario(data.tipo());
@@ -116,7 +108,7 @@ public class UsuarioController {
 	public float consultarSaldo(LoginDTO login) {
 		Usuario usuario = usuarioDAO.recuperarPeloId(login.email()).usuario();
 
-		if (login.tipoUsuario().equals(TipoUsuario.PASSAGEIRO)) {
+		if (usuario.getTipo().equals(TipoUsuario.PASSAGEIRO)) {
 			Passageiro passageiro = (Passageiro) usuario;
 			return passageiro.getGerenciadorDePagamento().getSaldo();
 		}
